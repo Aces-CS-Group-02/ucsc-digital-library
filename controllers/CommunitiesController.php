@@ -5,22 +5,26 @@ namespace app\controllers;
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
-use app\models\Communities;
 use app\core\exception\NotFoundException;
+use app\models\Community;
 
 class CommunitiesController extends Controller
 {
     public function createNewCommunity(Request $request)
     {
-        $communityModel = new Communities();
-        $communityModel->loadData($request->getBody());
+        $communityModel = new Community();
 
-        if ($communityModel->validate() && $communityModel->save()) {
-            Application::$app->session->setFlashMessage('success-community-creation', 'Top level community Successfully created');
-            Application::$app->response->redirect('/communities');
-            // return $this->render('communities', ['model' => $communityModel]);
+        if ($request->getMethod() === 'POST') {
+            $communityModel->loadData($request->getBody());
+
+            if ($communityModel->validate() && $communityModel->save()) {
+                Application::$app->session->setFlashMessage('success-community-creation', 'Top level community created');
+                Application::$app->response->redirect('/communities');
+                exit;
+            }
+
+            return $this->render('createtoplevelcommunities', ['model' => $communityModel]);
         }
-        return $this->render('createtoplevelcommunities', ['model' => $communityModel]);
     }
 
 
@@ -28,32 +32,33 @@ class CommunitiesController extends Controller
     {
         $data = $request->getBody();
 
-        $communityModel = new Communities();
+        $communityModel = new Community();
 
         if ($request->getMethod() === 'POST') {
 
             $communityModel->loadData($data);
 
-            if ($communityModel->validate()) {
-
-                $updateRequiredFileds = $communityModel->wantsToUpdate($data['ID']);
-
-                if (!empty($updateRequiredFileds)) {
-
-                    echo "You have to update";
-                    echo '<pre>';
-                    var_dump($data);
-                    echo '</pre>';
-
-                    $communityModel->update($data, $updateRequiredFileds);
+            // wantstoUpdate returns array of update required filed names
+            $updateRequiredFileds = $communityModel->wantsToUpdate();
+            // If updateRequiredFields not empty means there is something to update (Name or Description)
+            if (!empty($updateRequiredFileds)) {
+                if (in_array("Name", $updateRequiredFileds)) {
+                    // Need to validate and check wheater there already exsist any  other community with this new Name
+                    if ($communityModel->validate() && $communityModel->update($data, $updateRequiredFileds)) {
+                        Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
+                        return $this->render('Updatecommunities', ['model' => $communityModel]);
+                    }
+                } else {
+                    // No need to validate if Name filed has no change
+                    if ($communityModel->update($data, $updateRequiredFileds)) {
+                        Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
+                        return $this->render('Updatecommunities', ['model' => $communityModel]);
+                    }
                 }
-
-
-                return $this->render('Updatecommunities', ['model' => $communityModel]);
             }
-
             return $this->render('Updatecommunities', ['model' => $communityModel]);
         } else {
+
             if ($communityModel->loadCommunity($data['ID'])) {
                 return $this->render('Updatecommunities', ['model' => $communityModel]);
             } else {
@@ -67,24 +72,17 @@ class CommunitiesController extends Controller
     {
         $data = $request->getBody();
 
-        // var_dump($data);
-
-
-        $communityModel = new Communities();
+        $communityModel = new Community();
 
         if ($data['deleteCommunity']) {
 
             if ($communityModel->deleteCommunity($data['communityID'])) {
+                // Send success as response to AJAX request
                 echo "success";
             } else {
+                // Send error as response to AJAX request
                 echo "error";
             }
         }
-
-
-        // var_dump($data);
-
-        // echo $data['communityID'];
-        // echo $data['community-ID'];
     }
 }

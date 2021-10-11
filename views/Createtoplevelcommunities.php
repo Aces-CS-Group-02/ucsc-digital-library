@@ -2,7 +2,7 @@
 
 <form action="" method="POST">
     <div class="input-group">
-        <input type="text" placeholder="Enter new Top level community Name" name="Name">
+        <input type="text" placeholder="Enter new Top level community Name" name="Name" value="<?php echo $params['model']->Name ?? "" ?>">
         <?php
         $attr_name = 'Name';
         if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
@@ -15,7 +15,7 @@
     </div>
     <div class="input-group">
 
-        <input type="text" placeholder="Community description" name="Description">
+        <input type="text" placeholder="Community description" name="Description" value="<?php echo $params['model']->Description ?? "" ?>">
     </div>
 
     <input type="submit" Value="Create">

@@ -4,9 +4,16 @@
 <?php
 
 
-echo '<pre>';
-var_dump($params['model']);
-echo '</pre>';
+// echo '<pre>';
+// var_dump($params['model']);
+// echo '</pre>';
+
+use app\core\Application;
+
+if (isset($params['model']) && !$params['model']->hasErrors("Name")) {
+    echo '<h3>' . Application::$app->session->getFlashMessage('update-success') ?? "" . '</h3>';
+}
+
 
 ?>
 
@@ -37,7 +44,10 @@ echo '</pre>';
 
         ?>
     </div>
+
+    <button name="CommunityID" value="<?php echo $params['model']->CommunityID ?>">Update</button>
+
     <?php
-    echo '<button name="ID" value="' . $params['model']->CommunityID . '">Update</button>';
+    // echo '<button name="ID" value="' . $params['model']->CommunityID . '">Update</button>';
     ?>
 </form>

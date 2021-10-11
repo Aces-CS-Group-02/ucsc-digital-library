@@ -5,10 +5,10 @@ namespace app\models;
 use app\core\DbModel;
 use PDO;
 
-class Communities extends DbModel
+class Community extends DbModel
 {
-    public string $CommunityID = '';
-    public string $Name = '';
+    public $CommunityID = '';
+    public string $Name = "";
     public string $Description = '';
     public $ParentCommunityID = null;
 
@@ -30,20 +30,17 @@ class Communities extends DbModel
     public function rules(): array
     {
         return [
-            'Name' => [self::RULE_REQUIRED]
+            'Name' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class]]
         ];
     }
+
 
     public function getAllTopLevelCommunities()
     {
         $tableName = static::tableName();
         $statement = self::prepare("SELECT * FROM $tableName WHERE ParentCommunityID IS NULL");
         $statement->execute();
-        return $result = $statement->fetchAll();
-
-        // echo '<pre>';
-        // var_dump($result);
-        // echo '</pre>';
+        return $statement->fetchAll();
     }
 
     public function createNewTopLevelCommunity($data)
@@ -59,14 +56,18 @@ class Communities extends DbModel
     }
 
 
-    public function deleteCommunity($data)
+    public function deleteCommunity($CommunityID)
     {
         $tableName = static::tableName();
 
-        $statement_1 = self::prepare("SELECT * FROM $tableName WHERE CommunityID = $data");
-        $statement_1->execute();
-        if ($statement_1->fetchObject()) {
-            $statement = self::prepare("DELETE FROM $tableName WHERE CommunityID = $data");
+        /* Statement_check cheks wheather the given community ID exsists in DB
+           Then statement execute delete if Statement_check operation was success
+        */
+
+        $statement_check = self::prepare("SELECT * FROM $tableName WHERE CommunityID = $CommunityID");
+        $statement_check->execute();
+        if ($statement_check->fetchObject()) {
+            $statement = self::prepare("DELETE FROM $tableName WHERE CommunityID = $CommunityID");
             return $statement->execute();
         } else {
             return false;
@@ -91,18 +92,18 @@ class Communities extends DbModel
         }
     }
 
-    public function wantsToUpdate($data)
+    public function wantsToUpdate()
     {
         // echo "wants to update" . $data;
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT Name, Description FROM $tableName WHERE CommunityID = $data");
+        $statement = self::prepare("SELECT Name, Description FROM $tableName WHERE CommunityID = $this->CommunityID");
         $statement->execute();
         $result = $statement->fetchObject();
 
 
         $updateRequiredFileds = [];
 
-        $this->CommunityID = $data;
+        // $this->CommunityID = $this->CommunityID;
 
 
         if ($result->Name !== $this->Name) {
@@ -129,6 +130,6 @@ class Communities extends DbModel
 
         $statement = self::prepare("UPDATE $tableName SET $temp WHERE CommunityID = $this->CommunityID ");
 
-        $statement->execute();
+        return $statement->execute();
     }
 }
