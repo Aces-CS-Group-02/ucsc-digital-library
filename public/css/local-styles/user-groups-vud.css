@@ -1,0 +1,148 @@
+body{
+    min-height: 100vh !important;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#user-group-main-content{
+    flex-grow: 1;
+}
+
+.page-header-container{
+    max-width: 1400px;
+    width: 96%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(131, 131, 131);
+    padding: 15px 0;
+}
+
+#page-header-title{
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.search-N-sort-components-container{
+    margin-top: 20px;
+}
+
+.ug-search-input-wrapper > input, 
+.ug-search-input-wrapper > button{
+    height: 1.4rem;
+} 
+
+.ug-search-input-wrapper > input{
+    border: none;
+    outline: none;
+    padding: 0 5px;
+    width: 200px;
+} 
+
+
+.ug-search-input-wrapper > button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: #C4C4C4;
+}
+
+
+.ug-search-input-wrapper{
+    display: flex;
+    align-items: center;
+    border: 1px solid #A1A1A1;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+
+/* <<<<<<<<<<<<<<<<<<<<<< A to Z component <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+
+.a-to-z-sort-component-container{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.a-to-z-sort-btn{
+    width: 26px;
+    height: 26px;
+    padding: 2px;
+    border-radius: 4px;
+    outline: none;
+    background-color: #F9F9F9;
+    border: 1px solid #E3E3E3;
+    margin: 2px 2px;
+    font-size: 0.8rem;
+    transition: background-color 0.2s ease;
+}
+
+.a-to-z-sort-btn:hover{
+    background-color: #eeeeee;  
+}
+
+.a-to-z-sort-btn:focus{
+    background-color: #5185EC;
+    color: white;
+}
+
+.a-to-z-all-btn{
+    /* width: 36px; */
+}
+
+#a-to-z-sort-name{
+    font-family: "Poppins", sans-serif;
+    /* background-color: blanchedalmond; */
+    height: 26px;
+    padding: 2px;
+    margin: 2px 7px 0 0 ;
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+
+.a-to-z-sort-main-container{
+    display: flex;
+    flex-direction: column;
+}
+
+/* >>>>>>>>>>>>>>>>>> A to Z component >>>>>>>>>>>>>>>>>>>>>>>>  */
+
+
+
+.record-block-a{
+    flex-basis: 110px;
+}
+
+.record-block-b{
+    flex-basis: 110px;
+}
+
+
+.record-block-c{
+    flex-basis: 160px;
+}
+
+.record-block-d{
+    flex: 1;
+}
+
+
+.user-groups-headers-container{
+    width: 100%;
+    display: flex;
+    font-weight: 500;
+    /* background-color: rgb(238, 238, 238); */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-radius: 10px;
+}

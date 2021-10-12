@@ -23,7 +23,7 @@ class CommunitiesController extends Controller
                 exit;
             }
 
-            return $this->render('createtoplevelcommunities', ['model' => $communityModel]);
+            return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel]);
         }
     }
 
@@ -46,21 +46,21 @@ class CommunitiesController extends Controller
                     // Need to validate and check wheater there already exsist any  other community with this new Name
                     if ($communityModel->validate() && $communityModel->update($data, $updateRequiredFileds)) {
                         Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
-                        return $this->render('Updatecommunities', ['model' => $communityModel]);
+                        return $this->render('admin/updatecommunities', ['model' => $communityModel]);
                     }
                 } else {
                     // No need to validate if Name filed has no change
                     if ($communityModel->update($data, $updateRequiredFileds)) {
                         Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
-                        return $this->render('Updatecommunities', ['model' => $communityModel]);
+                        return $this->render('admin/updatecommunities', ['model' => $communityModel]);
                     }
                 }
             }
-            return $this->render('Updatecommunities', ['model' => $communityModel]);
+            return $this->render('admin/updatecommunities', ['model' => $communityModel]);
         } else {
 
             if ($communityModel->loadCommunity($data['ID'])) {
-                return $this->render('Updatecommunities', ['model' => $communityModel]);
+                return $this->render('admin/updatecommunities', ['model' => $communityModel]);
             } else {
                 throw new NotFoundException();
             };

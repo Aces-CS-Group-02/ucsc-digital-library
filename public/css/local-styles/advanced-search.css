@@ -1,0 +1,73 @@
+.main-container{
+    margin: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    /* background-color: crimson; */
+}
+
+.input-container{
+    margin: 10px;
+    /* background-color: blue; */
+    flex:3;
+}
+
+.info-container{
+    margin: 10px;
+    /* background-color: blueviolet; */
+    flex:2;
+}
+
+.info-container-content{
+    margin: 10px;
+}
+
+.info-container-content > p , h2 , h4, quote{
+    margin: 10px;
+}
+
+.form-override{
+    width:100% !important;
+}
+
+.custom-select-override{
+    width: 100% !important;
+}
+
+.input-group-override-1{
+    flex-direction: row !important;
+    align-items: baseline !important;
+}
+
+.input-group-override-1{
+    flex-direction: row !important;
+    align-items: baseline !important;
+}
+
+.label-override{
+    white-space: nowrap !important;
+}
+
+.add-margin{
+    margin: 5px !important;
+}
+
+.add-icon{
+    font-size : 2em;
+    position: relative;
+}
+
+.change-height{
+    height: 38px !important;
+}
+
+@media only screen and (max-width: 700px){
+    .info-container,.input-container{
+        flex-direction: column;
+        flex:100%;
+    }
+
+    .input-group-override{
+        flex-direction: column !important;
+        flex:100%;
+    }
+  }

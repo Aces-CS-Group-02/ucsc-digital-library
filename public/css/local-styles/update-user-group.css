@@ -1,0 +1,53 @@
+body{
+    min-height: 100vh !important;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#update-user-main-content{
+    flex-grow: 1;
+}
+
+.page-header-container{
+    max-width: 1400px;
+    width: 96%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(210, 210, 210);
+    padding: 15px 0;
+}
+
+#page-header-title{
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+
+}
+
+
+.wrapper {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    transition: all 0.2s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+      width: 92%;
+    }    
+}
