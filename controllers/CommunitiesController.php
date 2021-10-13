@@ -7,6 +7,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\core\exception\NotFoundException;
 use app\models\Community;
+use Exception;
 
 class CommunitiesController extends Controller
 {
@@ -36,31 +37,49 @@ class CommunitiesController extends Controller
 
         if ($request->getMethod() === 'POST') {
 
+            // db_data contains data fetched from the database about the community
+            //  data contains user POST data
+            $db_data = $communityModel->findCommunity($data['CommunityID']);
+
+            if (!$db_data) {
+                throw new NotFoundException();
+            }
+
+            $updateRequiredFileds = $communityModel->wantsToUpdate($data, $db_data);
+
             $communityModel->loadData($data);
 
-            // wantstoUpdate returns array of update required filed names
-            $updateRequiredFileds = $communityModel->wantsToUpdate();
-            // If updateRequiredFields not empty means there is something to update (Name or Description)
             if (!empty($updateRequiredFileds)) {
                 if (in_array("Name", $updateRequiredFileds)) {
-                    // Need to validate and check wheater there already exsist any  other community with this new Name
-                    if ($communityModel->validate() && $communityModel->update($data, $updateRequiredFileds)) {
-                        Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
-                        return $this->render('admin/updatecommunities', ['model' => $communityModel]);
+                    if ($communityModel->validate()) {
+                        if ($communityModel->update($updateRequiredFileds)) {
+                            Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
+                            return $this->render('admin/updatecommunities', ['communityName' => $communityModel->Name, 'model' => $communityModel]);
+                        } else {
+                            Application::$app->session->setFlashMessage('update-fail', 'community successfully updated');
+                            return $this->render('admin/updatecommunities', ['communityName' => $db_data->Name, 'model' => $communityModel]);
+                        }
+                    } else {
+                        return $this->render('admin/updatecommunities', ['communityName' => $db_data->Name, 'model' => $communityModel]);
                     }
                 } else {
-                    // No need to validate if Name filed has no change
-                    if ($communityModel->update($data, $updateRequiredFileds)) {
+                    if ($communityModel->update($updateRequiredFileds)) {
                         Application::$app->session->setFlashMessage('update-success', 'community successfully updated');
-                        return $this->render('admin/updatecommunities', ['model' => $communityModel]);
+                        return $this->render('admin/updatecommunities', ['communityName' => $communityModel->Name, 'model' => $communityModel]);
+                    } else {
+                        Application::$app->session->setFlashMessage('update-fail', 'community successfully updated');
+                        return $this->render('admin/updatecommunities', ['communityName' => $db_data->Name, 'model' => $communityModel]);
                     }
                 }
+            } else {
+                return $this->render('admin/updatecommunities', ['communityName' => $communityModel->Name, 'model' => $communityModel]);
             }
-            return $this->render('admin/updatecommunities', ['model' => $communityModel]);
-        } else {
 
+
+            // Get request
+        } else {
             if ($communityModel->loadCommunity($data['ID'])) {
-                return $this->render('admin/updatecommunities', ['model' => $communityModel]);
+                return $this->render('admin/updatecommunities', ['communityName' => $communityModel->Name, 'model' => $communityModel]);
             } else {
                 throw new NotFoundException();
             };

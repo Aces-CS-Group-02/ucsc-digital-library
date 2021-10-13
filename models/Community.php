@@ -92,33 +92,62 @@ class Community extends DbModel
         }
     }
 
-    public function wantsToUpdate()
+    public function findCommunity($data)
     {
-        // echo "wants to update" . $data;
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT Name, Description FROM $tableName WHERE CommunityID = $this->CommunityID");
+        $statement = self::prepare("SELECT CommunityID, Name, Description FROM $tableName WHERE CommunityID = $data");
         $statement->execute();
         $result = $statement->fetchObject();
+        return $result;
+    }
 
+
+    public function wantsToUpdate($data, $db_data)
+    {
+
+        // echo "Wants to update :";
+        // echo '<pre>';
+        // var_dump($data);
+        // echo '</pre>';
+
+        // echo "Wants to update : DB";
+        // echo '<pre>';
+        // var_dump($db_data);
+        // echo '</pre>';
+
+        // echo "wants to update" . $data;
+
+        // $tableName = static::tableName();
+        // $statement = self::prepare("SELECT Name, Description FROM $tableName WHERE CommunityID = $this->CommunityID");
+        // $statement->execute();
+        // $result = $statement->fetchObject();
 
         $updateRequiredFileds = [];
 
         // $this->CommunityID = $this->CommunityID;
 
-
-        if ($result->Name !== $this->Name) {
+        if ($data['Name'] !== $db_data->Name) {
             array_push($updateRequiredFileds, "Name");
         }
 
-        if ($result->Description !== $this->Description) {
+        if ($data['Description'] !== $db_data->Description) {
             array_push($updateRequiredFileds, "Description");
         }
+
+
+        // if ($result->Name !== $this->Name) {
+        //     array_push($updateRequiredFileds, "Name");
+        // }
+
+        // if ($result->Description !== $this->Description) {
+        //     array_push($updateRequiredFileds, "Description");
+        // }
 
         return $updateRequiredFileds;
     }
 
 
-    public function update($data, $updateRequiredFileds)
+    public function update($updateRequiredFileds)
     {
         $tableName = static::tableName();
 

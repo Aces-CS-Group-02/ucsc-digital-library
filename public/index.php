@@ -39,6 +39,9 @@ $app->router->post('/contact', [SiteController::class, "handleContact"]);
 
 $app->router->get('/profile', [AuthController::class, "profile"]);
 
+
+
+
 $app->router->get('/communities', [SiteController::class, "communities"]);
 $app->router->get('/create-top-level-communities', [SiteController::class, "createTopLevelCommunities"]);
 $app->router->post('/create-top-level-communities', [CommunitiesController::class, "createNewCommunity"]);

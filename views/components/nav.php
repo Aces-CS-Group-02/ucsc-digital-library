@@ -3,7 +3,7 @@
 <div class="nav">
     <div class="nav-wrapper">
         <div class="nav-logo">
-            <img id="ucsc-logo" src="./../assets/nav/ucsc-logo-white.png" alt="ucsc-logo">
+            <img id="ucsc-logo" src="/../assets/nav/ucsc-logo-white.png" alt="ucsc-logo">
             <p id="logo-txt">Digital Library</p>
         </div>
         <div class="nav-links">
@@ -17,7 +17,7 @@
                 echo '<a id="sign-up-btn" class = "nav-link" href="./registration.php">Sign Up</a>';
             } else {
                 echo '<a id="notification-nav-link" href="#"><i class="fas fa-bell"></i></a>';
-                echo '<div class="user-profile-circle" style="background-image: url(' . "./assets/nav/profile.jpg" . ');"></div> ';
+                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpg" . ');"></div> ';
             }
 
             ?>
@@ -34,7 +34,7 @@
                 echo '<a id="user-nav-link" href="./login.php"><i class="fas fa-user"></i></a>';
             } else {
 
-                echo '<div class="user-profile-circle" style="background-image: url(' . "./assets/nav/profile.jpg" . ');"></div> ';
+                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpg" . ');"></div> ';
             }
 
             ?>
@@ -51,7 +51,7 @@
     <?php if ($isLoggedIn) : ?>
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
-            <div class="user-profile-circle-dropdown-menu" style="background-image: url('./assets/nav/profile.jpg');"></div>
+            <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpg');"></div>
             <p id="user-name">Jane Doe</p>
             <p id="user-role">Administrator</p>
             <div class="line-break"></div>

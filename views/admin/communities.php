@@ -13,17 +13,17 @@ $userRole = "student";
 
 
     <!-- Global Styles -->
-    <link rel="stylesheet" href="./css/global-styles/style.css">
-    <link rel="stylesheet" href="./css/global-styles/nav.css">
-    <link rel="stylesheet" href="./css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/style.css">
+    <link rel="stylesheet" href="/css/global-styles/nav.css">
+    <link rel="stylesheet" href="/css/global-styles/footer.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Aces css framework -->
-    <link rel="stylesheet" href="./css/aces-css-framework/style.css">
+    <link rel="stylesheet" href="/css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="./css/local-styles/communities-admin-panel.css">
+    <link rel="stylesheet" href="/css/local-styles/communities-admin-panel.css">
 
 
 
@@ -159,7 +159,7 @@ $userRole = "student";
 
 
                                                                                                     if ($community['Description'] === "") {
-                                                                                                        echo "Empty";
+                                                                                                        echo "N/A";
                                                                                                     } else {
                                                                                                         echo $community['Description'];
                                                                                                     }
@@ -169,8 +169,8 @@ $userRole = "student";
                         </div>
                         <div class="block-d">
                             <div>
-                                <button class="btn action-btn-1-edit btn-view" type="button">View</button>
-                                <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['CommunityID'] ?>">Update</button>
+                                <button class="btn action-btn-1-edit btn-view" type="button">Manage</button>
+                                <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['CommunityID'] ?>">Edit</button>
                                 <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['CommunityID'] ?>">Delete</button>
                             </div>
                         </div>
