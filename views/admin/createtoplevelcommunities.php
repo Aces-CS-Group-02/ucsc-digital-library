@@ -117,7 +117,13 @@ $userRole = "student";
 
                     </div>
 
-                    <button class="btn btn-primary" id="create-community-btn">Create</button>
+                    <button class="btn btn-primary" id="create-community-btn" <?php if (isset($params['ParentID'])) {
+                                                                                    echo 'Name="ParentCommunityID"';
+                                                                                } ?> "
+                                                                                
+                                                                                <?php if (isset($params['ParentID'])) {
+                                                                                    echo 'value="' . $params['ParentID'];
+                                                                                }  ?>">Create</button>
                 </div>
             </form>
 

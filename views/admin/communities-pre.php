@@ -39,18 +39,13 @@ $userRole = "student";
 
     <?php
     include_once dirname(__DIR__) . '/components/nav.php';
-
     ?>
 
     <!-- Main Content Container -->
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Manage <?php if (isset($params['communityType'])) {
-                                                    echo $params['communityType'];
-                                                    echo "  >  ";
-                                                    echo $params['communityName'] ?? "";
-                                                }  ?></p>
+            <p id="page-header-title">Manage Top Level Communities</p>
         </div>
 
         <div class="wrapper">
@@ -102,11 +97,7 @@ $userRole = "student";
                         </div>
                     </form> -->
                     <div class="create-new-community-btn-container">
-                        <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if ($params['communityType'] === "Sub communities") {
-                                                                                                        echo "sub community";
-                                                                                                    } else {
-                                                                                                        echo "top level community";
-                                                                                                    } ?> </button>
+                        <button class="btn action-btn-0-edit" id="create-new-community-btn">Create Top Level Community</button>
                     </div>
                 </div>
             </div>
@@ -129,7 +120,7 @@ $userRole = "student";
 
                 <?php
 
-                $communities = $params['communities'] ?? "";
+                $allTopLevelCommunities = $params['allTopLevelCommunities'] ?? "";
                 $first_record = true;
 
                 ?>
@@ -138,8 +129,8 @@ $userRole = "student";
                 <div class="user-group-info"></div>
 
                 <!-- This loop render all the communities to the page -->
-                <?php if ($communities) {
-                    foreach ($communities as $community) { ?>
+                <?php if ($allTopLevelCommunities) {
+                    foreach ($allTopLevelCommunities as $community) { ?>
 
                         <div class="user-group-info " data-id="<?php echo $community['CommunityID'] ?>">
                             <div class="block-a">
@@ -189,7 +180,7 @@ $userRole = "student";
                 <?php }
                 } ?>
 
-                <?php if (empty($communities)) { ?>
+                <?php if (empty($allTopLevelCommunities)) { ?>
                     <p class="no-records-available">No Records Available :(</p>
                 <?php } ?>
 
@@ -200,8 +191,8 @@ $userRole = "student";
     include_once dirname(__DIR__) . './components/footer.php';
     ?>
 
-    <script src="/javascript/nav.js"></script>
-    <script src="/javascript/profile.js"></script>
+    <script src=" ./javascript/nav.js"></script>
+    <script src="./javascript/profile.js"></script>
 
     <Script>
         (() => {
@@ -327,14 +318,7 @@ $userRole = "student";
 
             const createnewcommunityBtn = document.getElementById('create-new-community-btn');
             createnewcommunityBtn.onclick = function() {
-
-                <?php if ($params['communityType'] === "Sub communities") {
-                    echo 'window.location = "/create-sub-community?parent-ID=' . $params['parentID'] . '  "';
-                } else {
-                    echo "window.location = '/create-top-level-communities'";
-                } ?>
-
-                // window.location = '/create-top-level-communities';
+                window.location = '/create-top-level-communities';
             }
 
             const flashMessage = document.getElementById('flash-msg-alert');

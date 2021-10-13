@@ -19,11 +19,17 @@ class SiteController extends Controller
     {
         $community = new Community();
         $allTopCommunities = $community->getAllTopLevelCommunities();
-        return $this->render('admin/communities', ['allTopLevelCommunities' => $allTopCommunities]);
+        return $this->render('admin/communities', ['communityType' => 'Top level communities', 'communities' => $allTopCommunities]);
     }
 
     public function createTopLevelCommunities()
     {
         return $this->render('admin/createtoplevelcommunities');
+    }
+
+    public function createSubCommunity(Request $request)
+    {
+        $data = $request->getBody();
+        return $this->render('admin/createtoplevelcommunities', ['ParentID' => $data['parent-ID']]);
     }
 }

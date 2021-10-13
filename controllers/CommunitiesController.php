@@ -7,6 +7,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\core\exception\NotFoundException;
 use app\models\Community;
+use app\models\SubCommunity;
 use Exception;
 
 class CommunitiesController extends Controller
@@ -20,11 +21,40 @@ class CommunitiesController extends Controller
 
             if ($communityModel->validate() && $communityModel->save()) {
                 Application::$app->session->setFlashMessage('success-community-creation', 'Top level community created');
-                Application::$app->response->redirect('/communities');
+                Application::$app->response->redirect('/manage/communities');
                 exit;
             }
 
             return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel]);
+        }
+    }
+
+    public function createNewSubCommunity(Request $request)
+    {
+        $data = $request->getBody();
+
+        echo '<pre>';
+        var_dump($data);
+        echo '</pre>';
+
+        $communityModel = new Community();
+        $subcommunityModel = new SubCommunity();
+
+
+        if ($request->getMethod() === 'POST') {
+            $communityModel->loadData($data);
+
+            echo '<pre>';
+            var_dump($communityModel);
+            echo '</pre>';
+
+
+
+            if ($communityModel->validate() && $communityModel->createSubCommunity($subcommunityModel)) {
+                Application::$app->session->setFlashMessage('success-community-creation', 'community successfully updated');
+                Application::$app->response->redirect('/manage/community?ID=' . $communityModel->ParentCommunityID);
+            } else {
+            }
         }
     }
 
@@ -103,5 +133,40 @@ class CommunitiesController extends Controller
                 echo "error";
             }
         }
+    }
+
+    public function manage(Request $request)
+    {
+        $data = $request->getBody();
+
+
+        $subcommunityModel = new SubCommunity();
+        $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_id' => $data['ID']]);
+
+
+        $allSubcommunities_ID_List = array();
+        $communityModel = new Community();
+
+
+        $communityModel->loadCommunity($data['ID']);
+
+
+
+
+        $communities = [];
+
+
+        if ($allsubcommunities) {
+            foreach ($allsubcommunities as $subcommunity) {
+                array_push($allSubcommunities_ID_List, $subcommunity->child_id);
+            }
+
+            $communities = $communityModel->getCommunitiesByID($allSubcommunities_ID_List);
+        }
+
+
+
+
+        return $this->render('admin/communities', ['parentID' => $data['ID'], 'communityType' => 'Sub communities', 'communityName' => $communityModel->Name, 'communities' => $communities]);
     }
 }

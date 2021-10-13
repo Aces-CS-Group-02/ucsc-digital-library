@@ -4,6 +4,9 @@ namespace app\models;
 
 use app\core\DbModel;
 use PDO;
+use app\core\Application;
+use ErrorException;
+use Exception;
 
 class Community extends DbModel
 {
@@ -92,6 +95,7 @@ class Community extends DbModel
         }
     }
 
+
     public function findCommunity($data)
     {
         $tableName = static::tableName();
@@ -160,5 +164,46 @@ class Community extends DbModel
         $statement = self::prepare("UPDATE $tableName SET $temp WHERE CommunityID = $this->CommunityID ");
 
         return $statement->execute();
+    }
+
+    public function getCommunitiesByID($id_list)
+    {
+        $tableName = static::tableName();
+
+        $idlist = implode(',', $id_list);
+
+        $statement = self::prepare("SELECT * FROM $tableName WHERE CommunityID IN ($idlist)");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function createSubCommunity(SubCommunity $subCommunityModel)
+    {
+        $subCommunityModel->parent_id = $this->ParentCommunityID;
+
+        $tableName_1 = $this->tableName();
+        $tableName_2 = "communityhassubcommunity";
+
+        $attributes_1 = $this->attributes();
+        $params_1 = array_map(fn ($attr) => ":$attr", $attributes_1);
+
+        // Transaction
+        try {
+            Application::$app->db->pdo->beginTransaction();
+            $statement = self::prepare("INSERT INTO " . $tableName_1 . "(" . implode(',', $attributes_1) . ") VALUES(" . implode(',', $params_1) . ")");
+            foreach ($attributes_1 as $attribute) {
+                $statement->bindValue(":$attribute", $this->{$attribute});
+            }
+            $statement->execute();
+            $last_inserted_id = Application::$app->db->pdo->lastInsertId();
+            $statement2 = self::prepare("INSERT INTO $tableName_2 VALUES($this->ParentCommunityID, $last_inserted_id)");
+            $statement2->execute();
+            Application::$app->db->pdo->commit();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
