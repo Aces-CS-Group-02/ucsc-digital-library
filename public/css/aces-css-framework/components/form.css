@@ -1,0 +1,320 @@
+.form{
+  padding: 21px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+box-sizing:border-box;
+
+}
+
+/*--for each container<div> containing (label + item) --*/
+
+.input-group{
+  flex: 1 !important;
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/*--for each form label*/
+
+.labelPlace{
+display: flex;
+margin-bottom: 0.3rem;
+box-sizing:border-box;
+}
+
+/*--text input type--*/
+
+.form-control {
+  display: flex;
+  width: 100%;
+  height: 2rem;
+  padding-top: 0.1875rem;
+  padding-bottom: 0.1875rem;
+  padding-left: 0.75rem;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #344050;
+  vertical-align: middle;
+  background: #F9F9F9;
+  border: 1px solid #d8e2ef;
+  border-radius: 0.25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-bottom: 1rem;
+  /*-webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+*/
+}
+
+.form-control:focus {
+  color: #000000;
+  background-color: #F9F9F9;
+  border-color: #9ec2f3;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+  box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #ABABAB;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+  color: #ABABAB;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #ABABAB;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #ABABAB;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.form-control::placeholder {
+  color: #ABABAB;
+  font-weight: 400;
+  opacity: 1;
+}
+
+/*--for each container<div> containing password item--*/
+
+.form-password {
+  margin-bottom: 1rem;
+  display: flex;
+  margin-top: 0;
+  height: 2rem;
+box-sizing:border-box;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #F9F9F9;
+  align-items: center;
+  border: 1px solid #d8e2ef;
+  border-radius: 0.25rem;
+}
+
+/*--password input type--*/
+
+.inputStyle {
+  border: none;
+  outline: none;
+  padding-top: 0.1875rem;
+  padding-bottom: 0.1875rem;
+  padding-left: 0.35rem;
+  color: #000000;
+  font-weight: 400;
+  box-sizing: border-box;
+  flex: 1;
+height: 1.8rem;
+  width:95%;
+  margin-left: 0.5rem;
+  margin-top: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F9F9F9;
+  border-radius: 0;
+}
+
+.form-password > button {
+  flex-basis: 30px;
+  border: none;
+  outline: none;
+box-sizing:border-box;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.add-border {
+  border: 1px solid #d8e2ef;
+  border-radius: 0.5rem;
+  color: #000000;
+  background-color: #F9F9F9;
+  border-color: #9ec2f3;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+  box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+}
+
+/*--selection menu type--*/
+
+.custom-select {
+  display: flex;
+  /* width: 100%; */
+  height: 2rem;
+  padding-top: 0.1875rem;
+  padding-bottom: 0.1875rem;
+  padding-left: 0.95rem;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #000000;
+  vertical-align: middle;
+  background: #F9F9F9 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%234d5969' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 1rem center/8px 10px;
+  background-color: #F9F9F9;
+  border: 1px solid #d8e2ef;
+  border-radius: 0.25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-bottom: 1rem;
+}
+
+.custom-select:focus {
+  color: #000000;
+  background-color: #F9F9F9;
+  border-color: #9ec2f3;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+  box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+}
+
+.custom-select:focus::-ms-value {
+  color: #000000;
+  background-color: #F9F9F9;
+}
+
+.custom-select > option{
+  background-color: #F9F9F9;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+/*--for each container<div> containing upload item--*/
+
+.custom-file {
+  position: relative;
+  display: flex;
+  height: 2rem;
+  margin-top: 0;
+  box-sizing:border-box;
+  margin-bottom: 1rem;
+}
+
+/*--upload item type--*/
+
+.custom-file-input {
+  position: relative;
+  z-index: 2;
+  height: 2rem;
+  margin: 0;
+box-sizing:border-box;
+  opacity: 0;
+}
+
+.custom-file-input:focus ~ .custom-file-label {
+  color: #000000;
+  background-color: #F9F9F9;
+  border-color: #9ec2f3;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+  box-shadow: 0 0 0 0.2rem rgba(249, 249, 249, 1);
+}
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "Browse";
+}
+
+.custom-file-input ~ .custom-file-label[data-browse]::after {
+  content: attr(data-browse);
+}
+
+.custom-file-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 2rem;
+  padding: 0.3125rem 1rem;
+box-sizing:border-box;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #344050;
+  background-color: #F9F9F9;
+  border: 1px solid #d8e2ef;
+  border-radius: 0.25rem;
+}
+
+.custom-file-label::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  padding: 0.3125rem 1rem;
+box-sizing:border-box;
+  line-height: 1.5;
+  color: #344050;
+  content: "Browse";
+  background-color: #E2E2E2;
+  border-left: inherit;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/*--for each container<div> containing check-box item--*/
+
+.custom-control {
+  flex: 1 !important;
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+box-sizing:border-box;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/*--check-box item type--*/
+
+.checkbox{
+  display: flex;
+box-sizing:border-box;
+  align-items: flex-start;
+}
+
+.checkbox > input{
+  margin: 4px;
+box-sizing:border-box;
+}
+
+.checkbox > p{
+  margin-top: 2px;
+box-sizing:border-box;
+  margin-bottom: 2px;
+  margin-left: 10px;
+  text-align: left;
+}
+
+/*------------------------------------------------*/
+
+@media only screen and (max-width:600px){
+  .form{
+      width: 90%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      font-size: 0.75rem;
+  }
+}

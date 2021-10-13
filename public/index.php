@@ -39,7 +39,10 @@ $app->router->post('/contact', [SiteController::class, "handleContact"]);
 
 $app->router->get('/profile', [AuthController::class, "profile"]);
 
-$app->router->get('/communities', [SiteController::class, "communities"]);
+
+
+
+$app->router->get('/manage/communities', [SiteController::class, "communities"]);
 $app->router->get('/create-top-level-communities', [SiteController::class, "createTopLevelCommunities"]);
 $app->router->post('/create-top-level-communities', [CommunitiesController::class, "createNewCommunity"]);
 
@@ -49,6 +52,19 @@ $app->router->post('/ajax/delete-top-level-community', [CommunitiesController::c
 
 $app->router->get('/communities/update/community', [CommunitiesController::class, "update"]);
 $app->router->post('/communities/update/community', [CommunitiesController::class, "update"]);
+
+
+$app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
+$app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
+$app->router->post('/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
+
+
+
+
+
+
+// $app->router->post('/manage/community', [CommunitiesController::class, "update"]);
+
 
 
 

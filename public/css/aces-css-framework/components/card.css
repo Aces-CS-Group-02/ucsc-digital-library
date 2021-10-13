@@ -1,0 +1,234 @@
+.container {
+  max-width: 350px;
+  margin: 30px;
+}
+
+/*===================== C A R D -- A ==========================*/
+
+.card {
+  width: 100%;
+  min-height: 130px;
+  height: fit-content;
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+  /* cursor: pointer; */
+}
+
+.card-icon {
+  background-color: rgb(241, 241, 241);
+  flex-basis: 100px;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms ease-in-out;
+}
+
+.card-content {
+  padding: 25px;
+  background-color: rgb(255, 255, 255);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.875rem;
+}
+
+.card:hover .card-icon {
+  background-color: rgb(232, 235, 255);
+}
+
+/*===================== C A R D -- B ==========================*/
+
+.card-item-pattern {
+  width: 15%;
+  background-color: rgb(199, 199, 199);
+  background-image: linear-gradient(to bottom, #bcd7ff, #e9f2ff);
+}
+
+.card-item-text {
+  flex: 1;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-item-title {
+  font-weight: 700;
+  /* font-family: "Poppins", sans-serif; */
+  font-family: "Roboto", sans-serif;
+  /* margin-bottom: 10px; */
+  /* background-color: bisque; */
+}
+
+.card-item-description {
+  font-size: 0.75rem;
+  /* font-family: "Poppins", sans-serif; */
+  font-family: "Roboto", sans-serif;
+  /* background-color: rgb(252, 207, 152); */
+  margin: 10px 0;
+}
+
+.card-item-view-more {
+  flex: 1;
+  width: 100%;
+  text-align: right;
+  /* background-color: rgb(255, 182, 93); */
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.card-item-view-more-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #0000ee;
+}
+
+.card-item-view-more-link > p {
+  font-size: 0.875rem;
+}
+
+.card-item-view-more-link > i {
+  margin-left: 10px;
+  transform: scale(1);
+}
+
+.line-clamp {
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  position: relative;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 !important;
+}
+
+.line-clamp:after {
+  content: "...";
+  text-align: right;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  display: block;
+  position: absolute;
+  height: calc(1em * 1.2);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1) 75%
+  );
+}
+
+@supports (-webkit-line-clamp: 1) {
+  .line-clamp:after {
+    display: none !important;
+  }
+}
+
+.line-clamp-1-description {
+  -webkit-line-clamp: 1;
+  height: calc(1em * 1.2 * 1);
+}
+
+.line-clamp-2-description {
+  -webkit-line-clamp: 2;
+  height: calc(1em * 1.2 * 2);
+}
+
+.line-clamp-x-description {
+  -webkit-line-clamp: 3;
+  height: calc(1em * 1.2 * 3);
+}
+
+@media only screen and (max-width: 480px) {
+  .container {
+    max-width: 80%;
+  }
+
+  .line-clamp-x-description {
+    -webkit-line-clamp: 2;
+    height: calc(1em * 1.2 * 2);
+  }
+}
+
+/*===================== C A R D -- C ==========================*/
+
+.type-column {
+  flex-direction: column;
+}
+
+.card-title {
+  padding: 10px 20px;
+}
+
+.card-title > p {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/*=====================================================================*/
+
+.card-img > img {
+  object-fit: cover;
+  min-width: 100% !important;
+  height: 200px;
+}
+
+.book-card-content {
+  padding: 10px;
+}
+
+.book-card-content > p {
+  text-align: center;
+}
+
+/*=========================Font -sizes*================================*/
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-800 {
+  font-weight: 800;
+}
+
+.fw-900 {
+  font-weight: 900;
+}
+
+.box-shadow-1 {
+  box-shadow: 0 3px 7px 0 rgb(65 69 88 / 10%), 0 3px 3px 0 rgb(0 0 0 / 7%);
+}
+
+.box-shadow-2 {
+  box-shadow: 2px 2px 6px 0px rgba(31, 31, 31, 0.2);
+}
+
+.border-1 {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,36 @@
+.admin-dashboard-text {
+    font-size: 1.9rem;
+    font-family: sans-serif;
+    font-style: italic;
+    margin: 2rem 2rem;
+    border-bottom: 2px solid rgb(212, 212, 212);
+    flex-grow: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.info-dashboard-main-content {
+    flex-grow: 1;
+}
+
+.btn-grid-container {
+    /* position: relative; */
+    border: 1px solid blueviolet;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    /* border: 1px solid red; */
+    margin: 1rem 10rem;
+    padding: 5px;
+}
+
+.table {
+    width: 70% !important;
+    margin: auto !important;
+}

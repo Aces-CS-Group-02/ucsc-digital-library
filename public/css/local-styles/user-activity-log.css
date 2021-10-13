@@ -1,0 +1,139 @@
+body{
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction:column !important;
+}
+
+.user-activity-log-main-content{
+    flex-grow: 1;
+    /* border: 1px solid red; */
+    width: 100%;
+}
+
+.activity-log-container{
+    width: 100%;
+    /* height: 100px; */
+    /* background-color: antiquewhite; */
+    padding: 0 10px;
+}
+
+.activity-record{
+    width: 100%;
+    height: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    display: flex;
+    align-items: flex-start;
+    /* border: 1px dotted rgb(0, 102, 255); */
+    /* border-top: 1px solid gray; */
+    border-bottom: 1px solid rgb(201, 201, 201);
+    padding: 10px 0;
+
+}
+
+.first-activity-record{
+    border-top: 1px solid rgb(201, 201, 201);
+
+}
+
+.record-block-a,
+.record-block-b,
+.record-block-c,
+.record-block-d{
+    /* height: 100%; */
+    /* border: 1px dotted red; */
+}
+
+
+
+.record-block-a{
+    flex-basis: 110px;
+}
+
+.record-block-b{
+    flex-basis: 110px;
+}
+
+
+.record-block-c{
+    flex-basis: 160px;
+}
+
+.record-block-d{
+    flex: 1;
+}
+
+.record-block-title{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    /* margin-bottom: 2px; */
+}
+
+.activity-log-headers-container{
+    width: 100%;
+    display: flex;
+    font-weight: 500;
+    background-color: rgb(238, 238, 238);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-radius: 10px;
+}
+
+@media only screen and (min-width: 684px){
+    .record-block-title{
+        display: none;
+    }
+}
+
+
+@media only screen and (max-width: 684px){
+    .activity-log-headers-container{
+        display: none;
+    }
+    .activity-record{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .record-block-a,
+    .record-block-b,
+    .record-block-c,
+    .record-block-d{
+        width: 100%;
+        flex-basis: 0;
+        height: fit-content;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
+        /* border: 1px dotted red; */
+        display: flex;
+        align-items: flex-start;
+    }
+
+
+    .record-block-a > p,
+    .record-block-b > p,
+    .record-block-c > p,
+    .record-block-d > p{
+        /* background-color: antiquewhite; */
+        flex: 1;
+    }
+
+    .record-block-title{
+        flex-basis: 90px !important;
+        min-width: 90px;
+        padding-right: 20px;
+        /* background-color: antiquewhite; */
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* .record-block-a,
+    .record-block-b{
+        flex-basis: calc(100% / 3);
+        margin-bottom: 10px;
+    } */
+}
