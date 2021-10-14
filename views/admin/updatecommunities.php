@@ -43,7 +43,7 @@ $userRole = "student";
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Edit Community | <?php echo $params['communityName'] ?? "" ?></p>
+            <p id="page-header-title">Edit Community | <?php echo $params['communityname'] ?? "" ?></p>
         </div>
 
         <div class="wrapper">
@@ -94,7 +94,7 @@ $userRole = "student";
 
 
             <?php
-            $attr_name = 'Name';
+            $attr_name = 'name';
             $errors_on_name = false;
             if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
                 $errors_on_name = true;
@@ -106,10 +106,10 @@ $userRole = "student";
 
                     <label class="labelPlace <?php if ($errors_on_name) {
                                                     echo "danger-text";
-                                                } ?>" for="Name">Community Name</label>
+                                                } ?>" for="Name">Community name</label>
                     <input class="form-control <?php if ($errors_on_name) {
                                                     echo "danger-border";
-                                                } ?>" id="Name" type="text" name="Name" value="<?php echo $params['model']->Name ?? "" ?>" />
+                                                } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
 
                     <?php
                     if ($errors_on_name) {
@@ -125,13 +125,13 @@ $userRole = "student";
 
                 </div>
                 <div class="input-group">
-                    <label class="labelPlace" for="description-text-area">Community Description</label>
-                    <textarea class="form-control" id="description-text-area" type="text" name="Description" value=""><?php echo $params['model']->Description ?? "" ?></textarea>
+                    <label class="labelPlace" for="description-text-area">Community description</label>
+                    <textarea class="form-control" id="description-text-area" type="text" name="description" value=""><?php echo $params['model']->description ?? "" ?></textarea>
 
 
                 </div>
 
-                <button class="btn btn-primary" id="update-community-btn" name="CommunityID" value="<?php echo $params['model']->CommunityID ?>">Update</button>
+                <button class="btn btn-primary" id="update-community-btn" name="community_id" value="<?php echo $params['model']->community_id ?>">Update</button>
 
             </form>
 

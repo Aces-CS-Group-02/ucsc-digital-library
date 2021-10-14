@@ -43,7 +43,7 @@
                     "email": "hello@gjcampbell.co.uk"
                 }
             ],
-            "description": "An Implementation Of The Result Type",
+            "": "An Implementation Of The Result Type",
             "keywords": [
                 "Graham Campbell",
                 "GrahamCampbell",
@@ -113,7 +113,7 @@
                     "email": "hello@gjcampbell.co.uk"
                 }
             ],
-            "description": "Option Type for PHP",
+            "": "Option Type for PHP",
             "keywords": [
                 "language",
                 "option",
@@ -188,7 +188,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill for ctype functions",
+            "": "Symfony polyfill for ctype functions",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -267,7 +267,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill for the Mbstring extension",
+            "": "Symfony polyfill for the Mbstring extension",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -351,7 +351,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+            "": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -436,7 +436,7 @@
                     "homepage": "https://vancelucas.com/"
                 }
             ],
-            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
             "keywords": [
                 "dotenv",
                 "env",

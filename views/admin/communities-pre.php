@@ -132,7 +132,7 @@ $userRole = "student";
                 <?php if ($allTopLevelCommunities) {
                     foreach ($allTopLevelCommunities as $community) { ?>
 
-                        <div class="user-group-info " data-id="<?php echo $community['CommunityID'] ?>">
+                        <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
                             <div class="block-a">
                                 <p>
                                 <div class="input-group custom-control">
@@ -170,9 +170,9 @@ $userRole = "student";
                             </div>
                             <div class="block-d">
                                 <div>
-                                    <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['CommunityID'] ?>">Manage</button>
-                                    <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['CommunityID'] ?>">Edit</button>
-                                    <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['CommunityID'] ?>">Delete</button>
+                                    <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
+                                    <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
+                                    <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -233,7 +233,7 @@ $userRole = "student";
                 if (confirm("Are you sure?")) {
                     const delRequest = new XMLHttpRequest();
                     let params = [];
-                    params = `deleteCommunity=true&communityID=${id}`;
+                    params = `deleteCommunity=true&community_id=${id}`;
                     delRequest.open('POST', '/ajax/delete-top-level-community');
                     delRequest.onreadystatechange = function() {
                         if (delRequest.responseText === 'success') {

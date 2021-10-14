@@ -30,6 +30,6 @@ class SiteController extends Controller
     public function createSubCommunity(Request $request)
     {
         $data = $request->getBody();
-        return $this->render('admin/createtoplevelcommunities', ['ParentID' => $data['parent-id']]);
+        return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id']]);
     }
 }

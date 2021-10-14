@@ -100,7 +100,7 @@ $userRole = "student";
                 <div class="input-row-group">
 
                     <?php {
-                        $attr_name = 'Name';
+                        $attr_name = 'name';
                         $errors_on_name = false;
                         if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
                             $errors_on_name = true;
@@ -113,7 +113,7 @@ $userRole = "student";
                                                         } ?>" for="Name">Community Name</label>
                             <input class="form-control <?php if ($errors_on_name) {
                                                             echo "danger-border";
-                                                        } ?>" id="Name" type="text" name="Name" value="<?php echo $params['model']->Name ?? "" ?>" />
+                                                        } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
 
                             <?php
                             if ($errors_on_name) {
@@ -132,18 +132,18 @@ $userRole = "student";
                     <?php } ?>
 
                     <div class="input-group">
-                        <label class="labelPlace" for="description-text-area">Community Description</label>
-                        <textarea class="form-control" id="description-text-area" type="text" name="Description" value="<?php echo $params['model']->Description ?? "" ?>"></textarea>
+                        <label class="labelPlace" for="description-text-area">Community description</label>
+                        <textarea class="form-control" id="description-text-area" type="text" name="description" value="<?php echo $params['model']->description ?? "" ?>"></textarea>
 
 
                     </div>
 
-                    <button class="btn btn-primary" id="create-community-btn" <?php if (isset($params['ParentID'])) {
-                                                                                    echo 'Name="ParentCommunityID"';
+                    <button class="btn btn-primary" id="create-community-btn" <?php if (isset($params['parent_community_id'])) {
+                                                                                    echo 'name="parent_community_id"';
                                                                                 } ?> "
                                                                                 
-                                                                                <?php if (isset($params['ParentID'])) {
-                                                                                    echo 'value="' . $params['ParentID'];
+                                                                                <?php if (isset($params['parent_community_id'])) {
+                                                                                    echo 'value="' . $params['parent_community_id'];
                                                                                 }  ?>">Create</button>
                 </div>
             </form>
