@@ -72,6 +72,27 @@ $userRole = "student";
 
             <?php } ?>
 
+            <?php
+
+
+            if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+                <div class="alert alert-success" id="flash-msg-alert">
+                    <strong>Success!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+
+
+            <?php } ?>
+
+
 
 
 

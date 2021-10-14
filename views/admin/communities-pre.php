@@ -261,7 +261,7 @@ $userRole = "student";
                 // console.log(id_update);
 
                 // AJAX request
-                window.location = `/communities/update/community?ID=${id_update}`;
+                window.location = `/communities/update/community?id=${id_update}`;
             }
 
             // ==========================================================

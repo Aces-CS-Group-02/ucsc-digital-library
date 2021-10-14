@@ -57,7 +57,7 @@ abstract class Model
         return $this->errors[$attribute] ?? false;
     }
 
-    public function validate()
+    public function validate($statement_spec = "")
     {
 
         foreach ($this->rules() as $attribute => $rules) {
@@ -94,7 +94,7 @@ abstract class Model
                     $className = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
                     $tableName = $className::tableName();
-                    $Statement =  Application::$app->db->pdo->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr");
+                    $Statement =  Application::$app->db->pdo->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr $statement_spec");
                     $Statement->bindValue(":attr", $value);
                     $Statement->execute();
                     $record = $Statement->fetchObject();

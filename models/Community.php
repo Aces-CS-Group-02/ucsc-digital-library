@@ -99,7 +99,7 @@ class Community extends DbModel
     public function findCommunity($data)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT CommunityID, Name, Description FROM $tableName WHERE CommunityID = $data");
+        $statement = self::prepare("SELECT CommunityID, Name, Description, ParentCommunityID FROM $tableName WHERE CommunityID = $data");
         $statement->execute();
         $result = $statement->fetchObject();
         return $result;

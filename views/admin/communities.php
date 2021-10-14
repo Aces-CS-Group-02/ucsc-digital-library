@@ -1,6 +1,9 @@
 <?php
 $isLoggedIn = true;
 $userRole = "student";
+
+use app\core\Application;
+
 ?>
 
 <!DOCTYPE html>
@@ -48,25 +51,25 @@ $userRole = "student";
         <div class="page-header-container">
             <p id="page-header-title">Manage <?php if (isset($params['communityType'])) {
                                                     echo $params['communityType'];
-                                                    echo "  >  ";
-                                                    echo $params['communityName'] ?? "";
-                                                }  ?></p>
+                                                } ?> <?php if ($params['communityType'] === 'Sub communities') {
+                                                            echo "  >  ";
+                                                        }
+                                                        echo $params['communityName'] ?? "";
+                                                        ?></p>
         </div>
 
         <div class="wrapper">
 
-            <!-- Flash Message -->
+            <!-- Flash Message Succss -->
             <?php
 
-            use app\core\Application;
-
-            if (Application::$app->session->getFlashMessage('success-community-creation')) { ?>
+            if (Application::$app->session->getFlashMessage('success')) { ?>
 
 
                 <div class="alert alert-success" id="flash-msg-alert">
                     <strong>Success!</strong>
 
-                    <?php echo Application::$app->session->getFlashMessage('success-community-creation'); ?>
+                    <?php echo Application::$app->session->getFlashMessage('success'); ?>
 
                     <button class="close" type="button" id="flash-msg-remove">
                         <span class="font-weight-light"></span>
@@ -75,6 +78,24 @@ $userRole = "student";
                 </div>
 
 
+            <?php } ?>
+
+
+
+
+            <!-- Flash Message Error -->
+            <?php
+            if (Application::$app->session->getFlashMessage('error')) { ?>
+                <div class="alert alert-warning" id="flash-msg-alert">
+                    <strong>Error!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
             <?php } ?>
 
 
@@ -222,7 +243,7 @@ $userRole = "student";
             }) => {
                 if (!ID_MAP_1.has(currentTarget)) return;
                 const id_manage = ID_MAP_1.get(currentTarget);
-                window.location = `/manage/community?ID=${id_manage}`;
+                window.location = `/manage/community?id=${id_manage}`;
             }
 
             const handleDelete = ({
@@ -270,7 +291,7 @@ $userRole = "student";
                 // console.log(id_update);
 
                 // AJAX request
-                window.location = `/communities/update/community?ID=${id_update}`;
+                window.location = `/communities/update/community?id=${id_update}`;
             }
 
             // ==========================================================
@@ -329,7 +350,7 @@ $userRole = "student";
             createnewcommunityBtn.onclick = function() {
 
                 <?php if ($params['communityType'] === "Sub communities") {
-                    echo 'window.location = "/create-sub-community?parent-ID=' . $params['parentID'] . '  "';
+                    echo 'window.location = "/create-sub-community?parent-id=' . $params['parentID'] . '  "';
                 } else {
                     echo "window.location = '/create-top-level-communities'";
                 } ?>

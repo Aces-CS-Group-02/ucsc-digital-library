@@ -8,8 +8,8 @@ use PDO;
 class SubCommunity extends DbModel
 {
 
-    public string $parent_id = '';
-    public string $child_id = '';
+    public $parent_id = '';
+    public $child_id = '';
 
 
     public static function tableName(): string
