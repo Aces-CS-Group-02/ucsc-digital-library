@@ -176,13 +176,17 @@ class CommunitiesController extends Controller
     {
         $data = $request->getBody();
 
-
         $subcommunityModel = new SubCommunity();
+        $communityModel = new Community();
+
+        if (!$communityModel->findCommunity($data['id'])) {
+            throw new NotFoundException();
+        }
+
         $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['id']]);
 
 
         $allSubcommunities_ID_List = array();
-        $communityModel = new Community();
 
 
         $communityModel->loadCommunity($data['id']);
