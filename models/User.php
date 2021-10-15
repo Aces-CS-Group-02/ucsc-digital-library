@@ -6,14 +6,14 @@ use app\core\DbModel;
 
 class User extends DbModel
 {
-    public $reg_no = '';
+    public int $reg_no = 0;
     public string $first_name = '';
     public string $last_name = '';
     public string $email = '';
     public string $password = '';
     public int $attempt_count = 0;
     public string $confirm_password = '';
-    public $role_id = '';
+    public int $role_id = 0;
 
     public static function tableName(): string
     {
@@ -22,7 +22,7 @@ class User extends DbModel
 
     public function attributes(): array
     {
-        return ["first_name", "last_name", "email", "password", "attempt_count"];
+        return ["first_name", "last_name", "email", "password", "role_id", "attempt_count"];
     }
 
     public static function primaryKey(): string

@@ -26,3 +26,14 @@ body {
     font-family: "Poppins", sans-serif;
     /* font-family: "Roboto", sans-serif; */
 }
+
+.validation-error{
+    color: red;
+    display: flex;
+    align-items: flex-start;
+}
+
+.validation-error > p{
+    margin-left: 7px;
+    margin-top: -2px;
+}

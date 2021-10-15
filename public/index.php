@@ -1,8 +1,10 @@
 <?php
 
 use app\controllers\AdministrationController;
+use app\controllers\ApproveController;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
+use app\controllers\UserController;
 use app\controllers\Communities;
 use app\controllers\CommunitiesController;
 use app\core\Application;
@@ -26,14 +28,25 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', [SiteController::class, "home"]);
+$app->router->get('/search', [SiteController::class, "search"]);
+$app->router->get('/browse', [SiteController::class, "browse"]);
 
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
 
-$app->router->get('/logout', [AuthController::class, "logout"]);
+$app->router->post('/logout', [AuthController::class, "logout"]);
+
+$app->router->get('/forgot-password', [AuthController::class, "forgotPassword"]);
+$app->router->post('/forgot-password', [AuthController::class, "forgotPassword"]);
+
 
 $app->router->get('/register', [AuthController::class, "register"]);
 $app->router->post('/register', [AuthController::class, "register"]);
+// $app->router->get('/registration-request', [AuthController::class, "registerRequest"]);
+$app->router->post('/registration-request', [AuthController::class, "registerRequest"]);
+$app->router->get('/verify-email',[AuthController::class, "verifyEmail"]);
+$app->router->post('/verify-email',[AuthController::class, "verifyEmail"]);
+
 
 $app->router->get('/contact', [SiteController::class, "contact"]);
 $app->router->post('/contact', [SiteController::class, "handleContact"]);
@@ -61,7 +74,12 @@ $app->router->post('/create-sub-community', [CommunitiesController::class, "crea
 
 
 
+//User routes
+$app->router->get('/profile', [UserController::class, "profile"]);
 
+
+//Admin approve
+$app->router->get('/admin/approve/user', [ApproveController::class, "approveNewUser"]);
 
 $app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
 $app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
