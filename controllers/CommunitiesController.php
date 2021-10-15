@@ -86,9 +86,19 @@ class CommunitiesController extends Controller
 
             $communityModel->loadData($data);
 
+            // Check whether the same name is allocated to any other community 
+            if ($db_data->parent_community_id) {
+                // If parent ID is not null then we have to check inside that community level
+                $statement_spec = "AND parent_community_id = " . $db_data->parent_community_id;
+            } else {
+                // If parent community ID is null then it is a top level community. So check within top level communities level
+                $statement_spec = "AND parent_community_id IS NULL";
+            }
+
+
             if (!empty($updateRequiredFileds)) {
                 if (in_array("name", $updateRequiredFileds)) {
-                    if ($communityModel->validate()) {
+                    if ($communityModel->validate($statement_spec)) {
                         if ($communityModel->update($updateRequiredFileds)) {
                             Application::$app->session->setFlashMessage('success', 'community successfully updated');
                             // return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
