@@ -133,11 +133,6 @@ class AdministrationController extends Controller
         }
     }
 
-    public function verifyNewUsers(Request $request)
-    {
-        return $this->render("admin/user/verify-new-users");
-    }
-
     public function manageUsers(Request $request)
     {
         return $this->render("admin/user/users-view-update-delete");

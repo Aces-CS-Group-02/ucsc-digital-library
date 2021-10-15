@@ -78,9 +78,6 @@ $app->router->post('/create-sub-community', [CommunitiesController::class, "crea
 $app->router->get('/profile', [UserController::class, "profile"]);
 
 
-//Admin approve
-$app->router->get('/admin/approve/user', [ApproveController::class, "approveNewUser"]);
-
 $app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
 $app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
 
@@ -107,7 +104,7 @@ $app->router->get('/admin/remove-content', [AdministrationController::class, "re
 
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
-$app->router->get('/admin/verify-new-users', [AdministrationController::class, "verifyNewUsers"]);
+$app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 $app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
 $app->router->post('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);

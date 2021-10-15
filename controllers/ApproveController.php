@@ -16,6 +16,6 @@ class ApproveController extends Controller
 
         $allRequests = $registrationRequest->getAll();
 
-        return $this->render('admin/approve/verify-new-users', ['model' => $allRequests]);
+        return $this->render('admin/user/verify-new-users', ['model' => $allRequests]);
     }
 }

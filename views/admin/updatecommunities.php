@@ -141,7 +141,7 @@ $userRole = "student";
         </div>
     </div>
     <?php
-    include_once dirname(__DIR__) . './components/footer.php';
+    include_once dirname(__DIR__) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/profile.js"></script>
