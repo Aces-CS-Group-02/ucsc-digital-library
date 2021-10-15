@@ -38,6 +38,8 @@ body {
 
 .card {
     height: 130px;
+    text-decoration: none;
+    color: black;
 }
 
 .card-icon {

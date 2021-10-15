@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AdministrationController;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\Communities;
@@ -57,6 +58,70 @@ $app->router->post('/communities/update/community', [CommunitiesController::clas
 $app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
 $app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
 $app->router->post('/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
+
+
+
+
+
+$app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
+$app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
+
+$app->router->get('/admin/create-library-information-assistant', [SiteController::class, "createLibraryInformationAssistant"]);
+$app->router->post('/admin/create-library-information-assistant', [AdministrationController::class, "createLibraryInformationAssistant"]);
+
+
+
+
+// Admin Routes
+$app->router->get('/admin/dashboard', [AdministrationController::class, "adminDashboard"]);
+$app->router->get('/admin/dashboard/manage-content', [AdministrationController::class, "manageContentDashboard"]);
+$app->router->get('/admin/dashboard/manage-users', [AdministrationController::class, "manageUsersDashboard"]);
+$app->router->get('/admin/dashboard/manage-approvals', [AdministrationController::class, "manageApprovalsDashboard"]);
+
+
+$app->router->get('/admin/upload-content', [AdministrationController::class, "uploadContent"]);
+$app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
+$app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
+$app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
+$app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
+$app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
+
+
+$app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
+$app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
+$app->router->get('/admin/verify-new-users', [AdministrationController::class, "verifyNewUsers"]);
+$app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
+$app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
+$app->router->post('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
+$app->router->post('/admin/create-user-group/review', [AdministrationController::class, "reviewUserGroup"]);
+$app->router->get('/admin/manage-user-groups', [AdministrationController::class, "manageUserGroup"]);
+
+
+$app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
+$app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

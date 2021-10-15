@@ -10,30 +10,30 @@ use Exception;
 
 class Community extends DbModel
 {
-    public $CommunityID = '';
-    public string $Name = "";
-    public string $Description = '';
-    public $ParentCommunityID = null;
+    public $community_id = '';
+    public string $name = "";
+    public string $description = '';
+    public $parent_community_id = null;
 
     public static function tableName(): string
     {
-        return "communities";
+        return "community";
     }
 
     public function attributes(): array
     {
-        return ['Name', 'Description', 'ParentCommunityID'];
+        return ['name', 'description', 'parent_community_id'];
     }
 
     public static function primaryKey(): string
     {
-        return "CommunityID";
+        return "community_id";
     }
 
     public function rules(): array
     {
         return [
-            'Name' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class]]
+            'name' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class]]
         ];
     }
 
@@ -41,7 +41,7 @@ class Community extends DbModel
     public function getAllTopLevelCommunities()
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT * FROM $tableName WHERE ParentCommunityID IS NULL");
+        $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL");
         $statement->execute();
         return $statement->fetchAll();
     }
@@ -59,7 +59,7 @@ class Community extends DbModel
     }
 
 
-    public function deleteCommunity($CommunityID)
+    public function deleteCommunity($community_id)
     {
         $tableName = static::tableName();
 
@@ -67,10 +67,10 @@ class Community extends DbModel
            Then statement execute delete if Statement_check operation was success
         */
 
-        $statement_check = self::prepare("SELECT * FROM $tableName WHERE CommunityID = $CommunityID");
+        $statement_check = self::prepare("SELECT * FROM $tableName WHERE community_id = $community_id");
         $statement_check->execute();
         if ($statement_check->fetchObject()) {
-            $statement = self::prepare("DELETE FROM $tableName WHERE CommunityID = $CommunityID");
+            $statement = self::prepare("DELETE FROM $tableName WHERE community_id = $community_id");
             return $statement->execute();
         } else {
             return false;
@@ -80,15 +80,15 @@ class Community extends DbModel
     public function loadCommunity($data)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT CommunityID, Name, Description FROM $tableName WHERE CommunityID = $data");
+        $statement = self::prepare("SELECT community_id, name, description FROM $tableName WHERE community_id = $data");
         $statement->execute();
         $result = $statement->fetchObject();
 
 
         if ($result) {
-            $this->CommunityID = $result->CommunityID;
-            $this->Name = $result->Name;
-            $this->Description = $result->Description;
+            $this->community_id = $result->community_id;
+            $this->name = $result->name;
+            $this->description = $result->description;
             return true;
         } else {
             return false;
@@ -99,7 +99,7 @@ class Community extends DbModel
     public function findCommunity($data)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT CommunityID, Name, Description FROM $tableName WHERE CommunityID = $data");
+        $statement = self::prepare("SELECT community_id, name, description, parent_community_id FROM $tableName WHERE community_id = $data");
         $statement->execute();
         $result = $statement->fetchObject();
         return $result;
@@ -122,29 +122,29 @@ class Community extends DbModel
         // echo "wants to update" . $data;
 
         // $tableName = static::tableName();
-        // $statement = self::prepare("SELECT Name, Description FROM $tableName WHERE CommunityID = $this->CommunityID");
+        // $statement = self::prepare("SELECT name, description FROM $tablename WHERE community_id = $this->community_id");
         // $statement->execute();
         // $result = $statement->fetchObject();
 
         $updateRequiredFileds = [];
 
-        // $this->CommunityID = $this->CommunityID;
+        // $this->community_id = $this->community_id;
 
-        if ($data['Name'] !== $db_data->Name) {
-            array_push($updateRequiredFileds, "Name");
+        if ($data['name'] !== $db_data->name) {
+            array_push($updateRequiredFileds, "name");
         }
 
-        if ($data['Description'] !== $db_data->Description) {
-            array_push($updateRequiredFileds, "Description");
+        if ($data['description'] !== $db_data->description) {
+            array_push($updateRequiredFileds, "description");
         }
 
 
-        // if ($result->Name !== $this->Name) {
-        //     array_push($updateRequiredFileds, "Name");
+        // if ($result->name !== $this->name) {
+        //     array_push($updateRequiredFileds, "name");
         // }
 
-        // if ($result->Description !== $this->Description) {
-        //     array_push($updateRequiredFileds, "Description");
+        // if ($result->description !== $this->description) {
+        //     array_push($updateRequiredFileds, "description");
         // }
 
         return $updateRequiredFileds;
@@ -161,7 +161,7 @@ class Community extends DbModel
         }
         $temp = implode(", ", $temp);
 
-        $statement = self::prepare("UPDATE $tableName SET $temp WHERE CommunityID = $this->CommunityID ");
+        $statement = self::prepare("UPDATE $tableName SET $temp WHERE community_id = $this->community_id ");
 
         return $statement->execute();
     }
@@ -172,7 +172,7 @@ class Community extends DbModel
 
         $idlist = implode(',', $id_list);
 
-        $statement = self::prepare("SELECT * FROM $tableName WHERE CommunityID IN ($idlist)");
+        $statement = self::prepare("SELECT * FROM $tableName WHERE community_id IN ($idlist)");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -180,10 +180,10 @@ class Community extends DbModel
 
     public function createSubCommunity(SubCommunity $subCommunityModel)
     {
-        $subCommunityModel->parent_id = $this->ParentCommunityID;
+        $subCommunityModel->parent_community_id = $this->parent_community_id;
 
         $tableName_1 = $this->tableName();
-        $tableName_2 = "communityhassubcommunity";
+        $tableName_2 = "sub_community";
 
         $attributes_1 = $this->attributes();
         $params_1 = array_map(fn ($attr) => ":$attr", $attributes_1);
@@ -197,7 +197,7 @@ class Community extends DbModel
             }
             $statement->execute();
             $last_inserted_id = Application::$app->db->pdo->lastInsertId();
-            $statement2 = self::prepare("INSERT INTO $tableName_2 VALUES($this->ParentCommunityID, $last_inserted_id)");
+            $statement2 = self::prepare("INSERT INTO $tableName_2 VALUES($this->parent_community_id, $last_inserted_id)");
             $statement2->execute();
             Application::$app->db->pdo->commit();
         } catch (Exception $e) {

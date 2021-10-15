@@ -8,23 +8,23 @@ use PDO;
 class SubCommunity extends DbModel
 {
 
-    public string $parent_id = '';
-    public string $child_id = '';
+    public $parent_community_id = '';
+    public $child_community_id = '';
 
 
     public static function tableName(): string
     {
-        return "communityhassubcommunity";
+        return "sub_community";
     }
 
     public function attributes(): array
     {
-        return ['ParentID', 'ChildID'];
+        return ['parent_community_id', 'child_community_id'];
     }
 
     public static function primaryKey(): string
     {
-        return "CommunityID, SubCommunityID";
+        return "community_id, Subcommunity_id";
     }
 
     public function rules(): array
@@ -35,11 +35,14 @@ class SubCommunity extends DbModel
 
     public function getAllSubCommunities($where)
     {
+
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
 
-        $statement = self::prepare("SELECT child_id FROM $tableName WHERE $sql");
+
+        $statement = self::prepare("SELECT child_community_id FROM $tableName WHERE $sql");
+
 
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);

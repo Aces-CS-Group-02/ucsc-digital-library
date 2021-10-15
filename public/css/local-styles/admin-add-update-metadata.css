@@ -1,0 +1,77 @@
+.admin-dashboard-text {
+    font-size: 1.9rem;
+    margin: 2rem 2rem;
+    border-bottom: 2px solid rgb(212, 212, 212);
+    flex-grow: 1;
+}
+
+.content-dashboard-text {
+    font-size: 1.4rem;
+    border-bottom: 1px solid rgb(212, 212, 212);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-basis: 100%;
+    margin: 0px 100px;
+    padding: 10px 0px;
+}
+
+.admin-dashboard-main-content {
+    flex-grow: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.form-container {
+    width: 50%;
+    max-width: 768px;
+    min-height: fit-content;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#form-features {
+    width: 100%;
+    align-content: center;
+    margin-top: 2rem;
+}
+
+#adjustments {
+    width: 50%;
+}
+
+.input-group-override {
+    flex-direction: row;
+    align-items: center;
+}
+
+.labelPlace-override {
+    padding-right: 20px;
+    width: 100px;
+}
+
+.e-book-form-container {
+    margin-bottom: 5rem;
+}
+
+.constant-size {
+    margin: 0 auto;
+}
+
+@media only screen and (max-width:768px) {
+    .form-container {
+        width: 90%;
+    }
+    .content-dashboard-text {
+        margin: 0px 50px;
+    }
+    .input-group-override {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
