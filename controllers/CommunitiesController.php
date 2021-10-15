@@ -19,7 +19,11 @@ class CommunitiesController extends Controller
         if ($request->getMethod() === 'POST') {
             $communityModel->loadData($request->getBody());
 
-            if ($communityModel->validate() && $communityModel->save()) {
+            // Check whether the same name is allocated to any other top level community
+            $statement_spec = "AND parent_community_id IS NULL";
+
+
+            if ($communityModel->validate($statement_spec) && $communityModel->save()) {
                 Application::$app->session->setFlashMessage('success', 'Top level community created');
                 Application::$app->response->redirect('/manage/communities');
                 exit;
@@ -41,11 +45,11 @@ class CommunitiesController extends Controller
 
 
 
-            if ($communityModel->parent_community_id) {
-                $statement_spec = "AND parent_community_id = " . $communityModel->parent_community_id;
-            } else {
-                $statement_spec = "AND parent_community_id IS NULL";
-            }
+            // if ($communityModel->parent_community_id) {
+            $statement_spec = "AND parent_community_id = " . $communityModel->parent_community_id;
+            // } else {
+            // $statement_spec = "AND parent_community_id IS NULL";
+            // }
 
             if ($communityModel->validate($statement_spec)) {
                 if ($communityModel->createSubCommunity($subcommunityModel)) {
