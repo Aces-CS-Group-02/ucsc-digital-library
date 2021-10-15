@@ -49,6 +49,8 @@ body {
 
 .card {
     min-height: 90px !important;
+    text-decoration: none;
+    color: black;
 }
 
 .card-icon {

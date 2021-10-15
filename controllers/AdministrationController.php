@@ -68,4 +68,113 @@ class AdministrationController extends Controller
 
         // return $this->render('admin/manage-library-information-assistant');
     }
+
+
+    public function adminDashboard(Request $request)
+    {
+        return $this->render("admin/admin-dashboard");
+    }
+
+    public function manageContentDashboard(Request $request)
+    {
+        return $this->render("admin/content/admin-manage-content");
+    }
+
+    public function manageUsersDashboard(Request $request)
+    {
+        return $this->render("admin/user/admin-manage-users");
+    }
+
+
+    public function manageApprovalsDashboard(Request $request)
+    {
+        return $this->render("admin/approve/admin-approvals");
+    }
+
+    public function bulkUpload(Request $request)
+    {
+        return $this->render("admin/content/bulk-upload");
+    }
+
+    public function uploadContent(Request $request)
+    {
+        return $this->render("admin/content/admin-upload-content");
+    }
+
+    public function publishContent(Request $request)
+    {
+        return $this->render("admin/content/publish-content");
+    }
+
+    public function unpublishContent(Request $request)
+    {
+        return $this->render("admin/content/unpublish-content");
+    }
+
+    public function editMetadata(Request $request)
+    {
+        return $this->render("admin/content/admin-add-update-metadata");
+    }
+
+    public function removeContent(Request $request)
+    {
+        return $this->render("admin/content/delete-content");
+    }
+
+
+    public function bulkRegister(Request $request)
+    {
+        if ($request->getMethod() === 'GET') {
+            return $this->render("admin/user/admin-bulk-registering");
+        }
+
+        if ($request->getMethod() === 'POST') {
+            return $this->render("admin/user/bulk-register");
+        }
+    }
+
+    public function verifyNewUsers(Request $request)
+    {
+        return $this->render("admin/user/verify-new-users");
+    }
+
+    public function manageUsers(Request $request)
+    {
+        return $this->render("admin/user/users-view-update-delete");
+    }
+
+    public function createUserGroup(Request $request)
+    {
+
+        return $this->render("admin/user/admin-create-user-group");
+    }
+
+    public function addUsersToUserGroup(Request $request)
+    {
+        if ($request->getMethod() === 'POST') {
+            return $this->render("admin/user/add-users");
+        }
+    }
+
+    public function reviewUserGroup(Request $request)
+    {
+        if ($request->getMethod() === 'POST') {
+            return $this->render("admin/user/review-user-group");
+        }
+    }
+
+    public function manageUserGroup(Request $request)
+    {
+        return $this->render("admin/user/user-groups-vud");
+    }
+
+    public function approveContentGroup(Request $request)
+    {
+        return $this->render("admin/approve/approve-content-categories");
+    }
+
+    public function approveUserGroup(Request $request)
+    {
+        return $this->render("admin/approve/approve-user-groups");
+    }
 }
