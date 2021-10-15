@@ -30,12 +30,12 @@ $userRole = "student";
 </head>
 
 <body>
-
     <!-- NAVIGATION BAR -->
 
     <?php
     include_once dirname(dirname(__DIR__)) . '/components/nav.php';
     ?>
+
 
     <!-- VERIFY NEW USERS PAGE -->
 
@@ -86,244 +86,64 @@ $userRole = "student";
             <div class="block-a"> </div>
             <div class="block-b">Registered Date</div>
             <div class="block-c">User Email</div>
+            <div class="block-d">Verification</div>
             <div class="block-d">Name</div>
             <div class="block-e">Action</div>
         </div>
 
         <div class="new-user-container">
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+
+            <?php foreach ($params['model'] as $request) { ?>
+                <div class="new-user-info">
+                    <div class="block-a">
+                        <p>
+                        <div class="input-group custom-control">
+                            <div class="checkbox checkbox-edit">
+                                <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                            </div>
                         </div>
+                        </p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-b">
+                        <div class="block-title">
+                            <p>Registered Date</p>
+                            <p>:</p>
                         </div>
+                        <p><?php
+                            $date = new DateTime($request->date);
+                            echo $date->format('Y-m-d'); ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-c">
+                        <div class="block-title">
+                            <p>User Email</p>
+                            <p>:</p>
                         </div>
+                        <p><?php echo $request->email; ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-d">
+                        <div class="block-title">
+                            <p>Verification</p>
+                            <p>:</p>
                         </div>
+                        <p>  <a href="http://localhost:8000/<?php echo $request->verification; ?>" target="_blank">View</a></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-d">
+                        <div class="block-title">
+                            <p>Name</p>
+                            <p>:</p>
                         </div>
+                        <p><?php echo $request->first_name;?> <?php echo $request->last_name;?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
+                    <div class="block-e">
+                        <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
+                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
+                        </p>
                     </div>
-                    <p>17/09/21</p>
                 </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="new-user-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                        </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Registered Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>User Email</p>
-                        <p>:</p>
-                    </div>
-                    <p>someone@gmail.com</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
+            <?php } ?>
+            
             </div>
         </div>
 
@@ -331,11 +151,9 @@ $userRole = "student";
 
     <!-- FOOTER -->
 
-    <div class="footer-edit">
-        <?php
-        include_once dirname(dirname(__DIR__)) . './components/footer.php';
-        ?>
-    </div>
+    <?php
+    include_once dirname(dirname(__DIR__)) . '/components/footer.php';
+    ?>
 
     <!-- SCRITPT -->
 

@@ -14,7 +14,17 @@ class SiteController extends Controller
 
     public function home()
     {
-        return $this->render('Home');
+        return $this->render('home');
+    }
+
+    public function search()
+    {
+        return $this->render('search');
+    }
+
+    public function browse()
+    {
+        return $this->render('browse');
     }
 
     public function communities()

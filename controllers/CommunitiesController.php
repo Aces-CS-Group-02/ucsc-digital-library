@@ -141,8 +141,6 @@ class CommunitiesController extends Controller
             } else {
                 return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
             }
-
-
             // Get request
         } else {
             if ($communityModel->loadCommunity($data['id'])) {
@@ -184,7 +182,6 @@ class CommunitiesController extends Controller
         }
 
         $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['id']]);
-
 
         $allSubcommunities_ID_List = array();
 

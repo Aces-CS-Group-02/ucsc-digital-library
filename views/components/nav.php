@@ -1,20 +1,34 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+<?php
+
+    use app\core\Application;
+
+    // echo '<pre>';
+    // var_dump(Application::$app->user);
+    // echo '</pre>';
+    $user = Application::$app->user;
+
+    if($user)$isLoggedIn=true;
+
+?>
+
 <div class="nav">
     <div class="nav-wrapper">
         <div class="nav-logo">
             <img id="ucsc-logo" src="/../assets/nav/ucsc-logo-white.png" alt="ucsc-logo">
-            <p id="logo-txt">Digital Library</p>
+            <a href="/" class="nav-link" id="logo-txt">Digital Library</a>
         </div>
         <div class="nav-links">
-            <a class="nav-link" href="#">Browse</a>
+            <a class="nav-link" href="/browse">Browse</a>
             <a class="nav-link" href="#">Help</a>
 
             <?php
 
             if (!$isLoggedIn) {
-                echo '<a id="sign-in-btn" class = "nav-link" href="./login.php">Sign In</a>';
-                echo '<a id="sign-up-btn" class = "nav-link" href="./registration.php">Sign Up</a>';
+                echo '<a id="sign-in-btn" class = "nav-link" href="/login">Sign In</a>';
+                echo '<a id="sign-up-btn" class = "nav-link" href="/register">Sign Up</a>';
             } else {
                 echo '<a id="notification-nav-link" href="#"><i class="fas fa-bell"></i></a>';
                 echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpg" . ');"></div> ';
@@ -66,7 +80,7 @@
                         </div>
                     </a>
                 <?php endif; ?>
-                <a href="#">
+                <a href="/profile">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-user-circle"></i>
                         <p>my profile</p>
@@ -84,7 +98,7 @@
                         <p>Settings</p>
                     </div>
                 </a>
-                <a href="#">
+                <a href="/logout">
                     <div class="dropdown-menu-link-item" id="link-sign-out">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>sign out</p>

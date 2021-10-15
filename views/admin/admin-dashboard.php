@@ -85,7 +85,7 @@ $userRole = "admin";
     <!-- FOOTER -->
 
     <?php
-    include_once dirname(__DIR__) . './components/footer.php';
+    include_once dirname(__DIR__) . '/components/footer.php';
     ?>
 
     <!-- SCRIPT -->

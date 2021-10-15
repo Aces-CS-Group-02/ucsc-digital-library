@@ -404,7 +404,7 @@ $userRole = "student";
     <!-- FOOTER -->
 
     <?php
-    include_once dirname(dirname(__DIR__)) . './components/footer.php';
+    include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/review-user-group.js"></script>

@@ -294,7 +294,7 @@ $userRole = "student";
 
     <div class="footer-edit">
         <?php
-        include_once dirname(dirname(__DIR__)) . './components/footer.php';
+        include_once dirname(dirname(__DIR__)) . '/components/footer.php';
         ?>
     </div>
 
