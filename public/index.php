@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AdministrationController;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\Communities;
@@ -57,6 +58,17 @@ $app->router->post('/communities/update/community', [CommunitiesController::clas
 $app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
 $app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
 $app->router->post('/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
+
+
+
+
+
+$app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
+$app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
+
+$app->router->get('/admin/create-library-information-assistant', [SiteController::class, "createLibraryInformationAssistant"]);
+$app->router->post('/admin/create-library-information-assistant', [AdministrationController::class, "createLibraryInformationAssistant"]);
+
 
 
 
