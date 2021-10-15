@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\exception\NotFoundException;
 use app\core\Request;
 use app\models\Community;
 
@@ -30,6 +31,15 @@ class SiteController extends Controller
     public function createSubCommunity(Request $request)
     {
         $data = $request->getBody();
+        $communityModel = new Community();
+
+        if (!array_key_exists("parent-id", $data)) {
+            throw new NotFoundException();
+        }
+
+        if (!$communityModel->findCommunity($data['parent-id'])) {
+            throw new NotFoundException();
+        }
         return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id']]);
     }
 }
