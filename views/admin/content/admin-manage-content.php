@@ -44,7 +44,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/upload-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\document.svg" alt=" document-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\document.svg" alt=" document-image">
                     </div>
                     <div class="card-content ">Upload Content</div>
                 </a>
@@ -52,7 +52,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/bulk-upload" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\bulk.png" alt=" bulk-upload-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\bulk.png" alt=" bulk-upload-image">
                     </div>
                     <div class="card-content ">Bulk Upload</div>
                 </a>
@@ -61,7 +61,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/publish-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Publish Content</div>
                 </a>
@@ -70,7 +70,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/unpublish-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Unpublish Content</div>
                 </a>
@@ -80,7 +80,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/edit-metadata" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\metadata.png" alt=" content-add/update-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\metadata.png" alt=" content-add/update-image">
                     </div>
                     <div class="card-content ">Add/Update Metadata</div>
                 </a>
@@ -89,7 +89,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/remove-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
                     </div>
                     <div class="card-content ">Delete Content</div>
                 </a>
@@ -107,7 +107,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Create Content Collection</div>
                 </a>
@@ -115,7 +115,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Update Content Collection</div>
                 </a>
@@ -123,7 +123,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
                     </div>
                     <div class="card-content ">Delete Content Collection</div>
                 </a>

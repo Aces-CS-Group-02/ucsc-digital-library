@@ -40,7 +40,7 @@ $userRole = "admin";
                 <a href="#" class="card box-shadow-1">
                     <div class="card-icon">
                         <div style="position: relative;">
-                            <img src="/assets\admin-approvals\checked.svg" alt=" approve-submission-image">
+                            <img class="card-icon-img" src="/assets\admin-approvals\checked.svg" alt=" approve-submission-image">
                         </div>
                     </div>
                     <div class="card-content">Approve Submissions</div>
@@ -50,7 +50,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/approve-content-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-approvals\file_collection.png" alt=" approve-content-category-image">
+                        <img class="card-icon-img" src="/assets\admin-approvals\file_collection.png" alt=" approve-content-category-image">
                     </div>
                     <div class="card-content">Approve Content Collections</div>
                 </a>
@@ -59,7 +59,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/approve-user-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-approvals\team.png" alt=" access-user-group-image">
+                        <img class="card-icon-img" src="/assets\admin-approvals\team.png" alt=" access-user-group-image">
                     </div>
                     <div class="card-content">Approve User Group</div>
                 </a>
@@ -69,7 +69,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="#" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-approvals\key.png" alt=" approve-access-image">
+                        <img class="card-icon-img" src="/assets\admin-approvals\key.png" alt=" approve-access-image">
                     </div>
                     <div class="card-content">Approve Access</div>
                 </a>

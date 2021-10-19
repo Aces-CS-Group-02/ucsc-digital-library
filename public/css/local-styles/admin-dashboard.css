@@ -46,7 +46,7 @@ body {
     background-color: white;
 }
 
-img {
+.card-icon-img {
     width: 60px;
     height: 60px;
 }
