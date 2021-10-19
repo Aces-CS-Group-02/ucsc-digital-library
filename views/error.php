@@ -54,6 +54,7 @@ $userRole = "student";
 
     </div>
 
+    <script src="/javascript/nav.js"></script>
 
 </body>
 
