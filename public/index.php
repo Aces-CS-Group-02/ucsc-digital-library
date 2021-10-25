@@ -34,7 +34,7 @@ $app->router->get('/browse', [SiteController::class, "browse"]);
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
 
-$app->router->post('/logout', [AuthController::class, "logout"]);
+$app->router->get('/logout', [AuthController::class, "logout"]);
 
 $app->router->get('/forgot-password', [AuthController::class, "forgotPassword"]);
 $app->router->post('/forgot-password', [AuthController::class, "forgotPassword"]);
@@ -71,6 +71,16 @@ $app->router->post('/communities/update/community', [CommunitiesController::clas
 $app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
 $app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
 $app->router->post('/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
+
+// Community Collections
+$app->router->get('/admin/manage-community/collections', [CollectionController::class, "manageCollections"]);
+$app->router->get('/admin/create-collection', [CollectionController::class, "createCollection"]);
+$app->router->post('/admin/create-collection', [CollectionController::class, "createCollection"]);
+$app->router->post('/ajax/delete-community-collection', [CollectionController::class, "deleteCollection"]);
+
+
+
+
 
 
 
