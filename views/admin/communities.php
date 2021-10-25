@@ -243,7 +243,7 @@ use app\core\Application;
             }) => {
                 if (!ID_MAP_1.has(currentTarget)) return;
                 const id_manage = ID_MAP_1.get(currentTarget);
-                window.location = `/manage/community?id=${id_manage}`;
+                window.location = `/admin/manage-community?community-id=${id_manage}`;
             }
 
             const handleDelete = ({
@@ -291,7 +291,7 @@ use app\core\Application;
                 // console.log(id_update);
 
                 // AJAX request
-                window.location = `/communities/update/community?id=${id_update}`;
+                window.location = `/admin/edit-community?community-id=${id_update}`;
             }
 
             // ==========================================================
@@ -350,9 +350,9 @@ use app\core\Application;
             createnewcommunityBtn.onclick = function() {
 
                 <?php if (!$params['communityType']) {
-                    echo 'window.location = "/create-sub-community?parent-id=' . $params['parentID'] . '  "';
+                    echo 'window.location = "/admin/create-sub-community?parent-id=' . $params['parentID'] . '  "';
                 } else {
-                    echo "window.location = '/create-top-level-communities'";
+                    echo "window.location = '/admin/create-top-level-community'";
                 } ?>
 
                 // window.location = '/create-top-level-communities';

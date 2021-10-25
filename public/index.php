@@ -60,13 +60,16 @@ $app->router->get('/manage/communities', [SiteController::class, "communities"])
 $app->router->get('/create-top-level-communities', [SiteController::class, "createTopLevelCommunities"]);
 $app->router->post('/create-top-level-communities', [CommunitiesController::class, "createNewCommunity"]);
 
-
+// Communities & Sub communities
+$app->router->get('/admin/manage-communities', [SiteController::class, "communities"]);
+$app->router->get('/admin/create-top-level-community', [SiteController::class, "createTopLevelCommunities"]);
+$app->router->post('/admin/create-top-level-community', [CommunitiesController::class, "createNewCommunity"]);
 $app->router->post('/ajax/delete-top-level-community', [CommunitiesController::class, "deleteCommunity"]);
-
-
-$app->router->get('/communities/update/community', [CommunitiesController::class, "update"]);
-$app->router->post('/communities/update/community', [CommunitiesController::class, "update"]);
-
+$app->router->get('/admin/edit-community', [CommunitiesController::class, "update"]);
+$app->router->post('/admin/edit-community', [CommunitiesController::class, "update"]);
+$app->router->get('/admin/manage-community', [CommunitiesController::class, "manage"]);
+$app->router->get('/admin/create-sub-community', [SiteController::class, "createSubCommunity"]);
+$app->router->post('/admin/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
 
 $app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
 $app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
@@ -77,6 +80,7 @@ $app->router->get('/admin/manage-community/collections', [CollectionController::
 $app->router->get('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/ajax/delete-community-collection', [CollectionController::class, "deleteCollection"]);
+$app->router->get('/admin/manage-community/collections', [CommunitiesController::class, "manageCollections"]);
 
 
 
