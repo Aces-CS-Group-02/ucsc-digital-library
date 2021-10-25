@@ -44,12 +44,12 @@ class Application
     public function run()
     {
         // echo $this->router->resolve();
-            try {
-                echo $this->router->resolve();
-            } catch (Exception $e) {
-                $this->response->setStatusCode($e->getCode());
-                echo $this->router->renderView("error", ['exception' => $e]);
-            }
+        try {
+            echo $this->router->resolve();
+        } catch (Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView("error", ['exception' => $e]);
+        }
     }
 
     public function login(DbModel $user)
@@ -75,6 +75,7 @@ class Application
 
     public static function getUserRole()
     {
+        return self::$app->user->role_id ?? false;
     }
 
     public function logout()
@@ -82,6 +83,4 @@ class Application
         $this->user = null;
         $this->session->remove('user');
     }
-
-    
 }

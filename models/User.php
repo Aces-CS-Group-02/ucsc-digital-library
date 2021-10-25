@@ -45,8 +45,10 @@ class User extends DbModel
     public function upgradeToLIA()
     {
         // Set role_id to Library Information Assistant Role ID here
-        $this->role_id = 3;
-        if ($this->role_id == 3) {
+        $lia_role_id = 2;
+
+        $this->role_id = $lia_role_id;
+        if ($this->role_id == $lia_role_id) {
             return true;
         } else {
             return false;
@@ -56,9 +58,11 @@ class User extends DbModel
 
     public function removeLIA()
     {
-        // Set role_id to Library Information Assistant Role ID here
-        $this->role_id = 0;
-        if ($this->role_id == 0) {
+        // Set back role_id to Academic-non academic staff member's role_id
+        $acc_non_acc_role_id = 3;
+
+        $this->role_id = $acc_non_acc_role_id;
+        if ($this->role_id == $acc_non_acc_role_id) {
             return true;
         } else {
             return false;
@@ -85,5 +89,13 @@ class User extends DbModel
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
+    }
+
+    public function getAllStudents()
+    {
+        $tableName = static::tableName();
+        $statement = self::prepare("SELECT * FROM $tableName WHERE role_id IN(4, 5)");
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }

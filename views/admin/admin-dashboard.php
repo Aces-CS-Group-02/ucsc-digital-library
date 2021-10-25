@@ -34,12 +34,11 @@ $userRole = "admin";
     include_once dirname(__DIR__) . '/components/nav.php';
     ?>
 
+    <div class="admin-dashboard-text">
+        Admin Dashboard
+    </div>
+
     <div class="admin-dashboard-main-content">
-        <div class="admin-dashboard-text">
-            Admin Dashboard
-        </div>
-
-
         <div class="grid-container">
             <div class="card-container">
                 <a href="/admin/dashboard/manage-content" class="card box-shadow-1">

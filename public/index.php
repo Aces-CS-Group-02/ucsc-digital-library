@@ -4,8 +4,8 @@ use app\controllers\AdministrationController;
 use app\controllers\ApproveController;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
+use app\controllers\CollectionController;
 use app\controllers\UserController;
-use app\controllers\Communities;
 use app\controllers\CommunitiesController;
 use app\core\Application;
 use app\core\Database;
@@ -44,8 +44,8 @@ $app->router->get('/register', [AuthController::class, "register"]);
 $app->router->post('/register', [AuthController::class, "register"]);
 // $app->router->get('/registration-request', [AuthController::class, "registerRequest"]);
 $app->router->post('/registration-request', [AuthController::class, "registerRequest"]);
-$app->router->get('/verify-email',[AuthController::class, "verifyEmail"]);
-$app->router->post('/verify-email',[AuthController::class, "verifyEmail"]);
+$app->router->get('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->post('/verify-email', [AuthController::class, "verifyEmail"]);
 
 
 $app->router->get('/contact', [SiteController::class, "contact"]);
@@ -56,9 +56,6 @@ $app->router->get('/profile', [AuthController::class, "profile"]);
 
 
 
-$app->router->get('/manage/communities', [SiteController::class, "communities"]);
-$app->router->get('/create-top-level-communities', [SiteController::class, "createTopLevelCommunities"]);
-$app->router->post('/create-top-level-communities', [CommunitiesController::class, "createNewCommunity"]);
 
 // Communities & Sub communities
 $app->router->get('/admin/manage-communities', [SiteController::class, "communities"]);
@@ -71,43 +68,33 @@ $app->router->get('/admin/manage-community', [CommunitiesController::class, "man
 $app->router->get('/admin/create-sub-community', [SiteController::class, "createSubCommunity"]);
 $app->router->post('/admin/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
 
-$app->router->get('/manage/community', [CommunitiesController::class, "manage"]);
-$app->router->get('/create-sub-community', [SiteController::class, "createSubCommunity"]);
-$app->router->post('/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
 
 // Community Collections
 $app->router->get('/admin/manage-community/collections', [CollectionController::class, "manageCollections"]);
 $app->router->get('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/ajax/delete-community-collection', [CollectionController::class, "deleteCollection"]);
-$app->router->get('/admin/manage-community/collections', [CommunitiesController::class, "manageCollections"]);
-
-
-
-
-
 
 
 //User routes
 $app->router->get('/profile', [UserController::class, "profile"]);
 
 
+// Create, Remove LIA
 $app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
 $app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
-
 $app->router->get('/admin/create-library-information-assistant', [SiteController::class, "createLibraryInformationAssistant"]);
 $app->router->post('/admin/create-library-information-assistant', [AdministrationController::class, "createLibraryInformationAssistant"]);
 
 
-
-
-// Admin Routes
+// Admin Dashboard Routes
 $app->router->get('/admin/dashboard', [AdministrationController::class, "adminDashboard"]);
 $app->router->get('/admin/dashboard/manage-content', [AdministrationController::class, "manageContentDashboard"]);
 $app->router->get('/admin/dashboard/manage-users', [AdministrationController::class, "manageUsersDashboard"]);
 $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController::class, "manageApprovalsDashboard"]);
 
 
+// Admin Dashboard => Manage Content Routes
 $app->router->get('/admin/upload-content', [AdministrationController::class, "uploadContent"]);
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
@@ -116,18 +103,36 @@ $app->router->get('/admin/edit-metadata', [AdministrationController::class, "edi
 $app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
 
 
+// Admin Dashboard => Manage Users Routes
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
-$app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
-$app->router->post('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
-$app->router->post('/admin/create-user-group/review', [AdministrationController::class, "reviewUserGroup"]);
-$app->router->get('/admin/manage-user-groups', [AdministrationController::class, "manageUserGroup"]);
+
+
+// Still Implementing
+// $app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
+// $app->router->post('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
+// $app->router->get('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
+// $app->router->post('/ajax/push-user-to-user-group', [AdministrationController::class, "pushUserToUserGroup"]);
+// $app->router->post('/ajax/push-users-to-user-group', [AdministrationController::class, "pushUsersToUserGroup"]);
+// $app->router->post('/admin/create-user-group/review', [AdministrationController::class, "reviewUserGroup"]);
+// $app->router->get('/admin/manage-user-groups', [AdministrationController::class, "manageUserGroup"]);
+// $app->router->get('/admin/manage-my-user-groups', [AdministrationController::class, "manageMyUserGroups"]);
+// $app->router->get('/admin/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
 
 
 $app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
+
+
+
+
+
+
+
+
+
 
 
 
