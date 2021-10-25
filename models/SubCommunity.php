@@ -52,4 +52,14 @@ class SubCommunity extends DbModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public static function getSubcommunitiesCount($community_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT COUNT(child_community_id) AS count
+                                    FROM $tableName
+                                    WHERE parent_community_id = $community_id");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
 }

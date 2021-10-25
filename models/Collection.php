@@ -77,4 +77,14 @@ class Collection extends DbModel
             echo 'failed-2';
         }
     }
+
+    public static function getCollectionCount($community_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT COUNT(collection_id) AS count
+                                    FROM $tableName
+                                    WHERE community_id = $community_id");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
 }
