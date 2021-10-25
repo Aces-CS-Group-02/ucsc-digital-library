@@ -8,6 +8,7 @@ use app\core\exception\NotFoundException;
 use app\core\Request;
 use app\models\Collection;
 use app\models\Community;
+use app\models\SubCommunity;
 
 class CollectionController extends Controller
 {
@@ -24,7 +25,11 @@ class CollectionController extends Controller
         $collectionModel = new Collection();
         $allCollections = $collectionModel->getAllCollections($data['community-id']);
 
-        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections]);
+
+        $collectionCount = Collection::getCollectionCount($data['community-id']);
+        $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
+
+        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count]);
     }
 
     public function createCollection(Request $request)

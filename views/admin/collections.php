@@ -96,8 +96,8 @@ use app\core\Application;
             <div class="tab-container">
 
                 <div class="tab-btn-container">
-                    <a class="tab-link-btn blured" href="/admin/manage-community?community-id=<?php echo $params['parentID'] ?>">Sub Communities</a>
-                    <a class="tab-link-btn active" href="/admin/manage-community/collections?community-id=<?php echo $params['parentID'] ?>">Collections</a>
+                    <a class="tab-link-btn blured" href="/admin/manage-community?community-id=<?php echo $params['parentID'] ?>">Sub Communities (<?php echo $params['subCommunityCount']; ?>)</a>
+                    <a class="tab-link-btn active" href="/admin/manage-community/collections?community-id=<?php echo $params['parentID'] ?>">Collections (<?php echo $params['collectionCount']; ?>)</a>
                 </div>
 
 

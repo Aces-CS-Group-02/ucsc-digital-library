@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\core\exception\NotFoundException;
+use app\models\Collection;
 use app\models\Community;
 use app\models\SubCommunity;
 use Exception;
@@ -173,7 +174,6 @@ class CommunitiesController extends Controller
     public function manage(Request $request)
     {
         $data = $request->getBody();
-
         $subcommunityModel = new SubCommunity();
         $communityModel = new Community();
 
@@ -182,18 +182,9 @@ class CommunitiesController extends Controller
         }
 
         $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['community-id']]);
-
         $allSubcommunities_ID_List = array();
-
-
         $communityModel->loadCommunity($data['community-id']);
-
-
-
-
-
         $communities = [];
-
 
         if ($allsubcommunities) {
             foreach ($allsubcommunities as $subcommunity) {
@@ -204,7 +195,11 @@ class CommunitiesController extends Controller
         }
 
 
+        $collectionCount = Collection::getCollectionCount($data['community-id']);
+        $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
+
+
         //  IF community type is sub community => value = false. If community is top level value is true
-        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities]);
+        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count]);
     }
 }

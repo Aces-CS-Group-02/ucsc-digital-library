@@ -4,6 +4,8 @@ $userRole = "student";
 
 use app\core\Application;
 
+// var_dump($params);
+
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +56,7 @@ use app\core\Application;
                 echo "<p id='page-header-title'>Top Level Communities</p>";
             } else {
                 echo "<p id='page-header-title'>" . $params['communityname'] ?? "" . "</p>";
-                                                        }
+            }
             ?>
         </div>
 
@@ -99,19 +101,30 @@ use app\core\Application;
             <?php } ?>
 
 
-            <div class="search-N-sort-components-container">
-                <div class="search-component-container">
-                    <form action="">
-                        <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
-                            <button>
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="sort-component-container">
-                    <!-- <form action="">
+            <div class="tab-container">
+                <?php if (!$params['communityType']) { ?>
+                    <div class="tab-btn-container">
+                        <a class="tab-link-btn active" href="/admin/manage-community?community-id=<?php echo $params['parentID'] ?>">Sub Communities (<?php echo $params['subCommunityCount']; ?>)</a>
+                        <a class="tab-link-btn blured" href="/admin/manage-community/collections?community-id=<?php echo $params['parentID'] ?>">Collections (<?php echo $params['collectionCount']; ?>)</a>
+                    </div>
+
+                <?php } ?>
+
+
+
+                <div class="search-N-sort-components-container">
+                    <div class="search-component-container">
+                        <form action="">
+                            <div class="ug-search-input-wrapper">
+                                <input type="text" placeholder="Search user groups">
+                                <button>
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sort-component-container">
+                        <!-- <form action="">
                         <div class="input-group sort-input-edited" id="adjustments">
                             <label class="labelPlace" for="select">Sort By: </label>
                             <select class="custom-select custom-select-edited" id="select">
@@ -122,98 +135,97 @@ use app\core\Application;
                             </select>
                         </div>
                     </form> -->
-                    <div class="create-new-community-btn-container">
+                        <div class="create-new-community-btn-container">
                             <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if (!$params['communityType']) {
-                                                                                                        echo "sub community";
-                                                                                                    } else {
-                                                                                                        echo "top level community";
-                                                                                                    } ?> </button>
+                                                                                                            echo "sub community";
+                                                                                                        } else {
+                                                                                                            echo "top level community";
+                                                                                                        } ?> </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- <div class="create-new-community-btn-container">
+                <!-- <div class="create-new-community-btn-container">
                 <button class="btn action-btn-0-edit" id="create-new-community-btn">Create Top Level Community</button>
             </div> -->
 
+                <!-- Form goes here -->
+                <div class="user-groups-headers-container">
+                    <div class="block-a"> </div>
+                    <div class="block-b">Name</div>
+                    <div class="block-c">Description</div>
+                    <div class="block-d">Action</div>
+                </div>
+
+                <div class="user-group-container">
+
+                    <?php
+
+                    $communities = $params['communities'] ?? "";
+                    $first_record = true;
+
+                    ?>
+
+                    <!-- This is for print top border of the first record at every time -->
+                    <div class="user-group-info"></div>
+
+                    <!-- This loop render all the communities to the page -->
+                    <?php if ($communities) {
+                        foreach ($communities as $community) { ?>
+
+                            <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
+                                <div class="block-a">
+                                    <p>
+                                    <div class="input-group custom-control">
+                                        <div class="checkbox checkbox-edit">
+                                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                                        </div>
+                                    </div>
+                                    </p>
+                                </div>
+                                <div class="block-b">
+                                    <div class="block-title">
+                                        <p>Name</p>
+                                        <p>:</p>
+                                    </div>
+                                    <p><?php echo $community['name'] ?></p>
+                                </div>
+                                <div class="block-c">
+                                    <div class="block-title">
+                                        <p>Description</p>
+                                        <p>:</p>
+                                    </div>
+                                    <p class="line-clamp line-clamp-2-description row-description <?php if ($community['description'] === "") {
+                                                                                                        echo "gray-out";
+                                                                                                    } ?>"><?php
 
 
-            <!-- Form goes here -->
-            <div class="user-groups-headers-container">
-                <div class="block-a"> </div>
-                <div class="block-b">Name</div>
-                <div class="block-c">Description</div>
-                <div class="block-d">Action</div>
-            </div>
+                                                                                                            if ($community['description'] === "") {
+                                                                                                                echo "N/A";
+                                                                                                            } else {
+                                                                                                                echo $community['description'];
+                                                                                                            }
 
-            <div class="user-group-container">
 
-                <?php
-
-                $communities = $params['communities'] ?? "";
-                $first_record = true;
-
-                ?>
-
-                <!-- This is for print top border of the first record at every time -->
-                <div class="user-group-info"></div>
-
-                <!-- This loop render all the communities to the page -->
-                <?php if ($communities) {
-                    foreach ($communities as $community) { ?>
-
-                        <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
-                            <div class="block-a">
-                                <p>
-                                <div class="input-group custom-control">
-                                    <div class="checkbox checkbox-edit">
-                                        <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                                                                                                            ?></p>
+                                </div>
+                                <div class="block-d">
+                                    <div>
+                                        <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
+                                        <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
+                                        <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
                                     </div>
                                 </div>
-                                </p>
                             </div>
-                            <div class="block-b">
-                                <div class="block-title">
-                                    <p>Name</p>
-                                    <p>:</p>
-                                </div>
-                                <p><?php echo $community['name'] ?></p>
-                            </div>
-                            <div class="block-c">
-                                <div class="block-title">
-                                    <p>Description</p>
-                                    <p>:</p>
-                                </div>
-                                <p class="line-clamp line-clamp-2-description row-description <?php if ($community['description'] === "") {
-                                                                                                    echo "gray-out";
-                                                                                                } ?>"><?php
 
+                    <?php }
+                    } ?>
 
-                                                                                                        if ($community['description'] === "") {
-                                                                                                            echo "N/A";
-                                                                                                        } else {
-                                                                                                            echo $community['description'];
-                                                                                                        }
+                    <?php if (empty($communities)) { ?>
+                        <p class="no-records-available">No Records Available :(</p>
+                    <?php } ?>
 
-
-                                                                                                        ?></p>
-                            </div>
-                            <div class="block-d">
-                                <div>
-                                    <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
-                                    <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
-                                    <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-
-                <?php }
-                } ?>
-
-                <?php if (empty($communities)) { ?>
-                    <p class="no-records-available">No Records Available :(</p>
-                <?php } ?>
-
+                </div>
             </div>
         </div>
     </div>
