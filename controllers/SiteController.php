@@ -31,7 +31,7 @@ class SiteController extends Controller
     {
         $community = new Community();
         $allTopCommunities = $community->getAllTopLevelCommunities();
-        return $this->render('admin/communities', ['communityType' => 'Top level communities', 'communities' => $allTopCommunities]);
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities]);
     }
 
     public function createTopLevelCommunities()

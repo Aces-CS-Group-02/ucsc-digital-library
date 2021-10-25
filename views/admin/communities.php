@@ -49,13 +49,13 @@ use app\core\Application;
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Manage <?php if (isset($params['communityType'])) {
-                                                    echo $params['communityType'];
-                                                } ?> <?php if ($params['communityType'] === 'Sub communities') {
-                                                            echo "  >  ";
+            <?php
+            if ($params['communityType']) {
+                echo "<p id='page-header-title'>Top Level Communities</p>";
+            } else {
+                echo "<p id='page-header-title'>" . $params['communityname'] ?? "" . "</p>";
                                                         }
-                                                        echo $params['communityname'] ?? "";
-                                                        ?></p>
+            ?>
         </div>
 
         <div class="wrapper">
@@ -123,7 +123,7 @@ use app\core\Application;
                         </div>
                     </form> -->
                     <div class="create-new-community-btn-container">
-                        <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if ($params['communityType'] === "Sub communities") {
+                            <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if (!$params['communityType']) {
                                                                                                         echo "sub community";
                                                                                                     } else {
                                                                                                         echo "top level community";
@@ -349,7 +349,7 @@ use app\core\Application;
             const createnewcommunityBtn = document.getElementById('create-new-community-btn');
             createnewcommunityBtn.onclick = function() {
 
-                <?php if ($params['communityType'] === "Sub communities") {
+                <?php if (!$params['communityType']) {
                     echo 'window.location = "/create-sub-community?parent-id=' . $params['parentID'] . '  "';
                 } else {
                     echo "window.location = '/create-top-level-communities'";

@@ -203,8 +203,8 @@ class CommunitiesController extends Controller
         }
 
 
+        //  IF community type is sub community => value = false. If community is top level value is true
 
-
-        return $this->render('admin/communities', ['parentID' => $data['id'], 'communityType' => 'Sub communities', 'communityname' => $communityModel->name, 'communities' => $communities]);
+        return $this->render('admin/communities', ['parentID' => $data['id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities]);
     }
 }
