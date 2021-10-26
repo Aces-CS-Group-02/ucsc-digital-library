@@ -4,8 +4,6 @@ $userRole = "student";
 
 use app\core\Application;
 
-// var_dump($params);
-
 ?>
 
 <!DOCTYPE html>
@@ -58,9 +56,41 @@ use app\core\Application;
                 echo "<p id='page-header-title'>" . $params['communityname'] ?? "" . "</p>";
             }
             ?>
+
+            <div class="breadcrum-container">
+                <?php
+
+                if (isset($params['breadcrum-admin-panel'])) {
+                    $special_class = count($params['breadcrum']) === 0 ? 'current-breadcrum-link' : '';
+
+                    foreach ($params['breadcrum-admin-panel'] as $breadcrumLink) {
+                        if (count($params['breadcrum']) === 0) {
+                            echo '<a class="breadcrum-link ' . $special_class . ' " href="' . $breadcrumLink['link'] . '">' . $breadcrumLink['name'] . '</a>';
+                        } else {
+                            echo '<a class="breadcrum-link" href="' . $breadcrumLink['link'] . '">' . $breadcrumLink['name'] . '</a>';
+                            echo '<p class="breadcrum-link-arrow">></p>';
+                        }
+                    }
+                }
+
+                // Breadcrum Paths of Communities & sub communities
+                if (isset($params['breadcrum'])) {
+                    $breadcrumItems = count($params['breadcrum']);
+                    $i = 0;
+                    foreach ($params['breadcrum'] as $breadcrumLink) {
+                        if (++$i === $breadcrumItems) {
+                            echo '<a class="breadcrum-link current-breadcrum-link" href="/admin/manage-community?community-id=' . $breadcrumLink['community_id'] . '">' . $breadcrumLink['name'] . '</a>';
+                        } else {
+                            echo '<a class="breadcrum-link" href="/admin/manage-community?community-id=' . $breadcrumLink['community_id'] . '">' . $breadcrumLink['name'] . '</a>';
+                            echo '<p class="breadcrum-link-arrow">></p>';
+                        }
+                    }
+                }
+                ?>
+            </div>
         </div>
 
-        <div class="wrapper">
+        <div class=" wrapper">
 
             <!-- Flash Message Succss -->
             <?php

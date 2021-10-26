@@ -29,7 +29,14 @@ class CollectionController extends Controller
         $collectionCount = Collection::getCollectionCount($data['community-id']);
         $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
 
-        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count]);
+        $breadcrumAdminPanel = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
+            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        ];
+        $breadcrum = $communityModel->communityBreadcrumGenerate($data['community-id']);
+
+        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum, 'breadcrum-admin-panel' => $breadcrumAdminPanel]);
     }
 
     public function createCollection(Request $request)

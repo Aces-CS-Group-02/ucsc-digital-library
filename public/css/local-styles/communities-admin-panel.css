@@ -69,6 +69,35 @@ body{
     background-color: #dadada;
 }
 
+.breadcrum-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+    margin-top: 10px;
+}
+
+.breadcrum-link{
+    text-decoration: none;
+    color: #8a8a8a;
+    font-style: italic;
+    padding: 4px 0;
+}
+
+.breadcrum-link, .breadcrum-link-arrow{
+    color: #727272;
+
+}
+
+.breadcrum-link-arrow{
+    margin: 0 7px;
+}
+
+.current-breadcrum-link{
+    color: #437ee6;
+}
+
 .user-group-container{
     /* border: 1px solid red; */
     margin-bottom: 100px;

@@ -29,7 +29,24 @@
     align-items: center;
     flex-basis: 100%;
     margin-bottom: 20px;
-    padding: 10px 0px;
+    padding: 10px 0px;   
+}
+
+.breadcrum-list > * {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: rgb(156, 156, 156);
+    font-style: italic;
+}
+
+.breadcrum-list{
+    display: flex;
+    align-items: center;
+}
+
+.breadcum-navigation-seperator{
+    margin: 0 5px;
 }
 
 body {

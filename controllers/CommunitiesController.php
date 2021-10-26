@@ -208,8 +208,15 @@ class CommunitiesController extends Controller
         $collectionCount = Collection::getCollectionCount($data['community-id']);
         $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
 
+        $breadcrumAdminPanel = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
+            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        ];
+
+        $bradcrum = $communityModel->communityBreadcrumGenerate($data['community-id']);
 
         //  IF community type is sub community => value = false. If community is top level value is true
-        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count]);
+        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $bradcrum, 'breadcrum-admin-panel' => $breadcrumAdminPanel]);
     }
 }
