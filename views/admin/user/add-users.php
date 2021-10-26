@@ -1,6 +1,8 @@
 <?php
 $isLoggedIn = true;
 $userRole = "student";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +45,7 @@ $userRole = "student";
     <div id="add-users-main-content">
 
         <div class="page-header-container">
-            <p id="page-header-title">Add Users</p>
+            <p id="page-header-title">Add Users | <?php echo $params['group']->name ?? "" ?></p>
         </div>
 
         <div class="wrapper">
@@ -53,7 +55,8 @@ $userRole = "student";
                 <div class="upper-container">
                     <div class="button-place">
                         <form action="/admin/create-user-group/review" method="POST">
-                            <button class="btn btn-primary mr-1 mb-1" id="btn-edit">Proceed</button>
+
+                            <button class="btn btn-primary mr-1 mb-1" id="btn-edit" disabled>Proceed</button>
                         </form>
                     </div>
                 </div>
@@ -78,7 +81,6 @@ $userRole = "student";
                                     <option value="1">First Name</option>
                                     <option value="2">Last Name</option>
                                     <option value="3">Email</option>
-                                    <option value="4">Registered Date</option>
                                 </select>
                             </div>
                         </form>
@@ -159,7 +161,7 @@ $userRole = "student";
                 <p id="checked-items-container"></p>
                 <p class="space-editor">Selected:</p>
                 <form action="">
-                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
+                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button" id="bulk-add-btn">Add</button>
                 </form>
             </div>
 
@@ -172,232 +174,53 @@ $userRole = "student";
                     <div class="block-b">First Name</div>
                     <div class="block-c">Last Name</div>
                     <div class="block-d">Email</div>
-                    <div class="block-e">Registered Date</div>
                     <div class="block-f">Action</div>
                 </div>
 
-                <div class="add-users-container">
-                    <div class="add-users-info">
-                        <div class="block-a">
-                            <p>
-                            <div class="input-group custom-control">
-                                <div class="checkbox checkbox-edit">
-                                    <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                <?php foreach ($params['users_list'] as $student) { ?>
+                    <div class="add-users-container">
+                        <div class="add-users-info">
+                            <div class="block-a">
+                                <p>
+                                <div class="input-group custom-control">
+                                    <div class="checkbox checkbox-edit">
+                                        <input class="checkbox checkbox-edit" data-id="<?php echo $student->reg_no; ?>" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                                    </div>
                                 </div>
+                                </p>
                             </div>
-                            </p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>First Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $student->first_name ?></p>
                             </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Last Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $student->last_name ?></p>
                             </div>
-                            <p>Phang</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Email</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $student->email ?></p>
                             </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
+
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-add" type="button" data-id="<?php echo $student->reg_no; ?>">Add</button>
+                                </p>
                             </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
-                            </p>
                         </div>
                     </div>
-                    <div class="add-users-info">
-                        <div class="block-a">
-                            <p>
-                            <div class="input-group custom-control">
-                                <div class="checkbox checkbox-edit">
-                                    <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phang</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="add-users-info">
-                        <div class="block-a">
-                            <p>
-                            <div class="input-group custom-control">
-                                <div class="checkbox checkbox-edit">
-                                    <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phang</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="add-users-info">
-                        <div class="block-a">
-                            <p>
-                            <div class="input-group custom-control">
-                                <div class="checkbox checkbox-edit">
-                                    <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phang</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="add-users-info">
-                        <div class="block-a">
-                            <p>
-                            <div class="input-group custom-control">
-                                <div class="checkbox checkbox-edit">
-                                    <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phang</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Add</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
+
+
 
             </div>
 
@@ -410,8 +233,94 @@ $userRole = "student";
     <?php
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
-    <script src="/javascript/nav.js"></script>
+    <script src=" /javascript/nav.js"></script>
     <script src="/javascript/add-users.js"></script>
+
+    <Script>
+        (() => {
+            const deleteBtns = document.querySelectorAll('.btn-add');
+            const checkBoxes = document.querySelectorAll('#check')
+            const bulkAddbtn = document.getElementById('bulk-add-btn');
+            const rows = document.querySelectorAll('.add-users-info');
+
+            const ID_MAP = new WeakMap();
+            const ID_MAP_2 = new WeakMap();
+            let users = [];
+
+            const handleAdd = ({
+                currentTarget
+            }) => {
+                // Exit if there is no ID stored
+                if (!ID_MAP.has(currentTarget)) return;
+
+                // Retrieve and log ID
+                const id = ID_MAP.get(currentTarget);
+                console.log(ID_MAP[id]);
+                console.log(id);
+
+                // AJAX request
+                var http = new XMLHttpRequest();
+                var url = '/ajax/push-user-to-user-group';
+                var params = `usergroup_id=<?php echo $params['group']->group_id ?>&reg_no_list=${id}`;
+                http.open('POST', url, true);
+                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                http.onreadystatechange = function() {
+                    if (http.readyState == 4 && http.status == 200) {
+                        if (this.responseText === 'success') {
+                            console.log(currentTarget.parentElement)
+                        }
+                    }
+                }
+                http.send(params);
+            }
+
+            // ==========================================================
+
+            for (const btn of deleteBtns) {
+                // Skip if it doesn't have an ID
+                if (!btn.dataset.id) continue;
+                // Store and hide `data-id` attribute
+                ID_MAP.set(btn, btn.dataset.id);
+                btn.removeAttribute('data-id');
+                // Add event listener
+                btn.addEventListener('click', handleAdd, false);
+            }
+
+
+            // ==============================================================
+
+            const handleBulkAdd = () => {
+                const users_list = [];
+                for (const check of checkBoxes) {
+                    if (check.checked) {
+                        users_list.push(check.dataset.id);
+                    }
+                }
+                console.log(users_list);
+
+                // AJAX request
+                var http = new XMLHttpRequest();
+                var url = '/ajax/push-users-to-user-group';
+                var params = `usergroup_id=<?php echo $params['group']->group_id ?>&reg_no_list=${users_list}`;
+                http.open('POST', url, true);
+                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                http.onreadystatechange = function() {
+                    if (http.readyState == 4 && http.status == 200) {
+                        console.log("Done");
+                    }
+                }
+                http.send(params);
+            }
+
+            bulkAddbtn.addEventListener('click', handleBulkAdd, false);
+
+
+
+
+
+        })();
+    </Script>
+
 
 </body>
 

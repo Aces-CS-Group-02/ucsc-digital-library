@@ -242,6 +242,7 @@ body {
   flex-direction: column;
   flex-grow: 1;
   max-width: 1000px;
+  margin-bottom: 100px;
 }
 
 .add-users-headers-container {
@@ -284,6 +285,7 @@ body {
   background-color: #31de4b !important;
   border-color: #2ad444 !important;
   margin-right: 0px !important;
+  width: 100px !important;
 }
 
 .block-a {
@@ -330,6 +332,18 @@ body {
   white-space: nowrap;
   flex: 1;
   /* margin-bottom: 2px; */
+}
+
+.waiting-for-response{
+  background-color: rgb(191, 191, 191) !important;
+  border-color: rgb(147, 147, 147) !important;
+
+}
+
+.successfully-added{
+  background-color: red !important;
+  border-color: red !important;
+
 }
 
 @media only screen and (min-width: 900px) {
