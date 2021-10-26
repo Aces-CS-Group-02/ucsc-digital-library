@@ -33,7 +33,9 @@ $userRole = "admin";
     ?>
     <div class="admin-dashboard-main-content">
         <div class="admin-dashboard-text">
-            Manage Content
+            <p id='page-header-title'>Manage Content</p>
+
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
 
 
@@ -98,6 +100,19 @@ $userRole = "admin";
 
         </div>
 
+        <div class="grid-container">
+            <div class="content-dashboard-text ">
+                Collections
+            </div>
+            <div class="card-container">
+                <a href="/admin/manage-communities" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                    </div>
+                    <div class="card-content ">Manage Communities & Collection</div>
+                </a>
+            </div>
+        </div>
 
 
         <div class="grid-container">

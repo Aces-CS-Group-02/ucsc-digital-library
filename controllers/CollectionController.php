@@ -29,14 +29,21 @@ class CollectionController extends Controller
         $collectionCount = Collection::getCollectionCount($data['community-id']);
         $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
 
-        $breadcrumAdminPanel = [
+
+        $breadcrum = [
             ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
             ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
             ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
         ];
-        $breadcrum = $communityModel->communityBreadcrumGenerate($data['community-id']);
+        $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['community-id']);
+        foreach ($breadcrumCommunities as $link) {
+            $breadcrumLinkName =  $link['name'];
+            $breadcrumLink = '/admin/manage-community?community-id=' . $link["community_id"];
+            $val = ['name' => $breadcrumLinkName, 'link' => $breadcrumLink];
+            array_push($breadcrum, $val);
+        }
 
-        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum, 'breadcrum-admin-panel' => $breadcrumAdminPanel]);
+        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum]);
     }
 
     public function createCollection(Request $request)

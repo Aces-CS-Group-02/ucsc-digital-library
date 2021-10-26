@@ -17,7 +17,12 @@ class CommunitiesController extends Controller
     {
         $community = new Community();
         $allTopCommunities = $community->getAllTopLevelCommunities();
-        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities]);
+        $breadcrumAdminPanel = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
+            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        ];
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrumAdminPanel]);
     }
 
     public function createTopLevelCommunities()
@@ -208,15 +213,21 @@ class CommunitiesController extends Controller
         $collectionCount = Collection::getCollectionCount($data['community-id']);
         $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
 
-        $breadcrumAdminPanel = [
+
+        $breadcrum = [
             ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
             ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
             ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
         ];
-
-        $bradcrum = $communityModel->communityBreadcrumGenerate($data['community-id']);
+        $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['community-id']);
+        foreach ($breadcrumCommunities as $link) {
+            $breadcrumLinkName =  $link['name'];
+            $breadcrumLink = '/admin/manage-community?community-id=' . $link["community_id"];
+            $val = ['name' => $breadcrumLinkName, 'link' => $breadcrumLink];
+            array_push($breadcrum, $val);
+        }
 
         //  IF community type is sub community => value = false. If community is top level value is true
-        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $bradcrum, 'breadcrum-admin-panel' => $breadcrumAdminPanel]);
+        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum]);
     }
 }

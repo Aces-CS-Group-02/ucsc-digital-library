@@ -11,10 +11,17 @@
     margin: 0 auto;
     border-bottom: 1px solid rgb(210, 210, 210);
     padding: 15px 0;
+    /* font-size: 1.3rem; */
+    /* font-weight: 700; */
+    /* font-family: "Poppins", sans-serif; */
+    
+}
+
+#page-header-title{
     font-size: 1.3rem;
     font-weight: 700;
     font-family: "Poppins", sans-serif;
-    
+
 }
 
 .admin-dashboard-main-content {
@@ -32,21 +39,33 @@
     padding: 10px 0px;   
 }
 
-.breadcrum-list > * {
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: rgb(156, 156, 156);
-    font-style: italic;
-}
-
-.breadcrum-list{
+.breadcrum-container{
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+    margin-top: 10px;
 }
 
-.breadcum-navigation-seperator{
-    margin: 0 5px;
+.breadcrum-link{
+    text-decoration: none;
+    color: #8a8a8a;
+    font-style: italic;
+    padding: 4px 0;
+}
+
+.breadcrum-link, .breadcrum-link-arrow{
+    color: #727272;
+
+}
+
+.breadcrum-link-arrow{
+    margin: 0 7px;
+}
+
+.current-breadcrum-link{
+    color: #437ee6;
 }
 
 body {

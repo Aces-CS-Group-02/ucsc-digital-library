@@ -118,7 +118,11 @@ class AdministrationController extends Controller
 
     public function manageContentDashboard(Request $request)
     {
-        return $this->render("admin/content/admin-manage-content");
+        $breadcrumAdminPanel = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content']
+        ];
+        return $this->render("admin/content/admin-manage-content", ['breadcrum-admin-panel' => $breadcrumAdminPanel]);
     }
 
     public function manageUsersDashboard(Request $request)
