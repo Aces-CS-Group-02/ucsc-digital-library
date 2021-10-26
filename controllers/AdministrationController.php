@@ -48,29 +48,37 @@ class AdministrationController extends Controller
         $this->registerMiddleware(new StudentsAccessPermissionMiddleware([]));
     }
 
+    public function manageLibraryInformationAssistant(Request $request)
+    {
+        $userModel = new User();
+        $allLIAMembers =  $userModel->findAll(['role_id' => 2]); // Set LIA role_id here
+        $this->render("admin/manage-library-information-assistant", ['allStaffMembers' => $allLIAMembers]);
+    }
+
     public function createLibraryInformationAssistant(Request $request)
     {
-        $data = $request->getBody();
         $userModel = new User();
 
-        $user = $userModel->findOne(['reg_no' => $data['reg_no']]);
-
-        // Set academic/non academic staff member role ID here
-        if ($user && $user->role_id == 3) {
-            $userModel->loadData($user);
-
-
-            $updateRequiredFields = ['role_id'];
-
-            if ($userModel->upgradeToLIA() && $userModel->update($updateRequiredFields)) {
-                Application::$app->session->setFlashMessage('success', 'Created new library information assistant');
-                Application::$app->response->redirect('/admin/manage-library-information-assistant');
-            } else {
-                Application::$app->session->setFlashMessage('error', "Couldn't upgarade to library information assistant ");
-                return $this->render("admin/manage-library-information-assistant");
-            }
+        if ($request->getMethod() === 'GET') {
+            $allStaffMembers =  $userModel->findAll(['role_id' => 3]); // Set Academic-Non academic staff role_id here
+            $this->render("admin/create-library-information-assistant", ['allStaffMembers' => $allStaffMembers]);
         } else {
-            throw new NotFoundException();
+            $data = $request->getBody();
+            $user = $userModel->findOne(['reg_no' => $data['reg_no']]);
+            // Set academic/non academic staff member role ID here
+            if ($user && $user->role_id == 3) {
+                $userModel->loadData($user);
+                $updateRequiredFields = ['role_id'];
+                if ($userModel->upgradeToLIA() && $userModel->update($updateRequiredFields)) {
+                    Application::$app->session->setFlashMessage('success', 'Created new library information assistant');
+                    Application::$app->response->redirect('/admin/manage-library-information-assistant');
+                } else {
+                    Application::$app->session->setFlashMessage('error', "Couldn't upgarade to library information assistant ");
+                    return $this->render("admin/manage-library-information-assistant");
+                }
+            } else {
+                throw new NotFoundException();
+            }
         }
     }
 

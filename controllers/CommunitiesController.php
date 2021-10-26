@@ -13,6 +13,33 @@ use Exception;
 
 class CommunitiesController extends Controller
 {
+    public function communities()
+    {
+        $community = new Community();
+        $allTopCommunities = $community->getAllTopLevelCommunities();
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities]);
+    }
+
+    public function createTopLevelCommunities()
+    {
+        return $this->render('admin/createtoplevelcommunities');
+    }
+
+    public function createSubCommunity(Request $request)
+    {
+        $data = $request->getBody();
+        $communityModel = new Community();
+
+        if (!array_key_exists("parent-id", $data)) {
+            throw new NotFoundException();
+        }
+
+        if (!$communityModel->findCommunity($data['parent-id'])) {
+            throw new NotFoundException();
+        }
+        return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id']]);
+    }
+
     public function createNewCommunity(Request $request)
     {
         $communityModel = new Community();

@@ -58,14 +58,14 @@ $app->router->get('/profile', [AuthController::class, "profile"]);
 
 
 // Communities & Sub communities
-$app->router->get('/admin/manage-communities', [SiteController::class, "communities"]);
-$app->router->get('/admin/create-top-level-community', [SiteController::class, "createTopLevelCommunities"]);
+$app->router->get('/admin/manage-communities', [CommunitiesController::class, "communities"]);
+$app->router->get('/admin/create-top-level-community', [CommunitiesController::class, "createTopLevelCommunities"]);
 $app->router->post('/admin/create-top-level-community', [CommunitiesController::class, "createNewCommunity"]);
 $app->router->post('/ajax/delete-top-level-community', [CommunitiesController::class, "deleteCommunity"]);
 $app->router->get('/admin/edit-community', [CommunitiesController::class, "update"]);
 $app->router->post('/admin/edit-community', [CommunitiesController::class, "update"]);
 $app->router->get('/admin/manage-community', [CommunitiesController::class, "manage"]);
-$app->router->get('/admin/create-sub-community', [SiteController::class, "createSubCommunity"]);
+$app->router->get('/admin/create-sub-community', [CommunitiesController::class, "createSubCommunity"]);
 $app->router->post('/admin/create-sub-community', [CommunitiesController::class, "createNewSubCommunity"]);
 
 
@@ -81,9 +81,9 @@ $app->router->get('/profile', [UserController::class, "profile"]);
 
 
 // Create, Remove LIA
-$app->router->get('/admin/manage-library-information-assistant', [SiteController::class, "manageLibraryInformationAssistant"]);
+$app->router->get('/admin/manage-library-information-assistant', [AdministrationController::class, "manageLibraryInformationAssistant"]);
 $app->router->post('/admin/manage-library-information-assistant', [AdministrationController::class, "removeLibraryInformationAssistant"]);
-$app->router->get('/admin/create-library-information-assistant', [SiteController::class, "createLibraryInformationAssistant"]);
+$app->router->get('/admin/create-library-information-assistant', [AdministrationController::class, "createLibraryInformationAssistant"]);
 $app->router->post('/admin/create-library-information-assistant', [AdministrationController::class, "createLibraryInformationAssistant"]);
 
 
