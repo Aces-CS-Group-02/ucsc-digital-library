@@ -177,6 +177,16 @@ class Community extends DbModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createTopLevelCommunity($data)
+    {
+        $this->loadData($data);
+        $statement_spec = "AND parent_community_id IS NULL";
+        if ($this->validate($statement_spec) && $this->save()) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function createSubCommunity(SubCommunity $subCommunityModel)
     {

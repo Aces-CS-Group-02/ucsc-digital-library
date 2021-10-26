@@ -43,20 +43,12 @@ class CommunitiesController extends Controller
     public function createNewCommunity(Request $request)
     {
         $communityModel = new Community();
-
         if ($request->getMethod() === 'POST') {
-            $communityModel->loadData($request->getBody());
-
-            // Check whether the same name is allocated to any other top level community
-            $statement_spec = "AND parent_community_id IS NULL";
-
-
-            if ($communityModel->validate($statement_spec) && $communityModel->save()) {
+            if ($communityModel->createTopLevelCommunity($request->getBody())) {
                 Application::$app->session->setFlashMessage('success', 'Top level community created');
                 Application::$app->response->redirect('/admin/manage-communities');
                 exit;
             }
-
             return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel]);
         }
     }
@@ -70,14 +62,7 @@ class CommunitiesController extends Controller
 
         if ($request->getMethod() === 'POST') {
             $communityModel->loadData($data);
-
-
-
-            // if ($communityModel->parent_community_id) {
             $statement_spec = "AND parent_community_id = " . $communityModel->parent_community_id;
-            // } else {
-            // $statement_spec = "AND parent_community_id IS NULL";
-            // }
 
             if ($communityModel->validate($statement_spec)) {
                 if ($communityModel->createSubCommunity($subcommunityModel)) {
@@ -183,11 +168,9 @@ class CommunitiesController extends Controller
     public function deleteCommunity(Request $request)
     {
         $data = $request->getBody();
-
         $communityModel = new Community();
 
         if ($data['deleteCommunity']) {
-
             if ($communityModel->deleteCommunity($data['community_id'])) {
                 // Send success as response to AJAX request
                 echo "success";
