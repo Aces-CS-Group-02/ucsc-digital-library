@@ -32,6 +32,48 @@
         <!-- Page content division -->
         <div class="divider-right">
 
+            <!-- Flash Message -->
+            <?php
+
+            use app\core\Application;
+
+            if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+                <div class="alert alert-success" id="flash-msg-alert">
+                    <strong>Success!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+
+
+            <?php } ?>
+
+            <?php
+
+
+            if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+                <div class="alert alert-success" id="flash-msg-alert">
+                    <strong>Success!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+
+
+            <?php } ?>
+
             <div class="upper-border">
                 <p>Not a member?
                     <a href="/register">Register Now</a>
@@ -47,8 +89,12 @@
                 <div class="form-container">
                     <form id="form-features" action="/login" method="POST">
                         <div class="input-group">
-                            <label class="labelPlace" for="email">Email</label>
-                            <input class="form-control" name="email" id="email" type="text" />
+                            <label class="labelPlace <?php if ($params['model']->hasErrors('email')) {
+                                                            echo "danger-text";
+                                                        } ?>" for="email">Email</label>
+                            <input class="form-control <?php if ($params['model']->hasErrors('email')) {
+                                                            echo "danger-border";
+                                                        } ?>" name="email" id="email" type="text" />
                             <?php
                             if ($params['model']->hasErrors('email')) {
                                 foreach ($params['model']->errors['email'] as $error) { ?>
@@ -62,10 +108,14 @@
                         </div>
                         <div class="input-group">
                             <div id="align-vertical">
-                                <label class="labelPlace" for="password">Password</label>
+                                <label class="labelPlace <?php if ($params['model']->hasErrors('password')) {
+                                                                echo "danger-text";
+                                                            } ?>" for="password">Password</label>
                                 <a href="./forgot-password">Forgot Password?</a>
                             </div>
-                            <div class="form-password">
+                            <div class="form-password <?php if ($params['model']->hasErrors('password')) {
+                                                            echo "danger-border";
+                                                        } ?>">
                                 <input class="inputStyle" id="password" name="password" type="password" />
                                 <button id="hide-btn" type="button">
                                     <i class="fas fa-eye-slash"></i>
@@ -109,6 +159,8 @@
 
     <!-- SCRITPT -->
     <script src="./javascript/login.js"></script>
+    <script src="./javascript/alert.js"></script>
+
 </body>
 
 </html>

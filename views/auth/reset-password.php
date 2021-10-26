@@ -12,12 +12,11 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
     <!-- Aces css framework -->
     <link rel="stylesheet" href="./css/aces-css-framework/style.css" />
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="./css/local-styles/login.css">
+    <link rel="stylesheet" href="./css/local-styles/forgot-password.css">
 
     <title>Document</title>
 </head>
@@ -32,42 +31,29 @@
         <!-- Page content division -->
         <div class="divider-right">
 
+            <!-- <div class="upper-border">
+                <p>Not a member?
+                    <a href="/register">Register Now</a>
+                </p>
+            </div> -->
+
             <div class="middle-part-container">
 
                 <div class="logo-heading-container">
                     <img id="logo-img" src="../../assets/login/logo.png" alt="UCSC logo">
-                    <div id="title">Welcome to UCSC <span id="break-title">Digital Library</span></div>
+                    <div id="title">Reset Password</div>
                 </div>
                 <div class="form-container">
-                    <form id="form-features" action="/verify-email" method="POST">
-                        <div class="input-row-group">
-                            <div class="input-group">
-                                <label class="labelPlace" for="Fname">First Name</label>
-                                <input class="form-control" name="first_name" value="<?php echo $params['model']->first_name ?>" id="Fname" type="text" readonly="readonly" />
-                            </div>
-                            <div class="input-group">
-                                <label class="labelPlace" for="Lname">Last Name</label>
-                                <input class="form-control" name="last_name" value="<?php echo $params['model']->last_name ?>" id="Lname" type="text" readonly="readonly" />
-                            </div>
+                    <form id="form-features" action="/reset-password" method="POST">
+                        <div class="input-group" id="adjust-align">
+                            <p>
+                                Enter your new password...
+                            </p>
                         </div>
-                        <div class="input-group">
-                            <label class="labelPlace <?php if ($params['model']->hasErrors('email')) {
-                                                                echo "danger-text";
-                                                            } ?>" for="email">Email</label>
-                            <input class="form-control <?php if ($params['model']->hasErrors('email')) {
-                                                                echo "danger-border";
-                                                            } ?>" name="email" value="<?php echo $params['model']->email ?>" id="email" type="text" readonly="readonly" />
-                            <?php
-                            if ($params['model']->hasErrors('email')) {
-                                foreach ($params['model']->errors['email'] as $error) { ?>
-                                    <div class="validation-error">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                        <p><?php echo $error ?></p>
-                                    </div>
-                            <?php }
-                            };
-                            ?>
-                        </div>
+                        <input type="hidden" name="token" value="<?php echo $params['model']->token?>">
+
+                        <input type="hidden" name="email" value="<?php echo $params['model']->email?>">
+
                         <div class="input-group">
                             <div id="align-vertical">
                                 <label class="labelPlace <?php if ($params['model']->hasErrors('password')) {
@@ -118,9 +104,9 @@
                             };
                             ?>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group" id="adjust-button-align">
                             <button class="btn btn-primary mr-1 mb-1" id="btn-edit" type="submit">
-                                Submit
+                                Send
                             </button>
                         </div>
                     </form>
@@ -130,7 +116,7 @@
 
             <div class="upper-border upper-border-in-bottom">
                 <p>Not a member?
-                    <a href="./registration.php">Register Now</a>
+                    <a href="/register">Register Now</a>
                 </p>
             </div>
 

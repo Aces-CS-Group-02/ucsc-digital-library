@@ -33,7 +33,7 @@
 
             <div class="upper-border">
                 <p>Already a member?
-                    <a href="./login.php">Sign In</a>
+                    <a href="/login">Sign In</a>
                 </p>
             </div>
 
@@ -47,8 +47,12 @@
                     <form id="form-features" action="/registration-request" method="POST" enctype="multipart/form-data">
                         <div class="input-row-group">
                             <div class="input-group">
-                                <label class="labelPlace" for="Fname">First Name</label>
-                                <input class="form-control" name="first_name" id="Fname" type="text" value="<?php echo $params['model'] -> first_name ?>" readonly="readonly" />
+                                <label class="labelPlace <?php if ($params['model']->hasErrors('first_name')) {
+                                                                echo "danger-text";
+                                                            } ?>" for="Fname">First Name</label>
+                                <input class="form-control <?php if ($params['model']->hasErrors('password')) {
+                                                                echo "danger-border";
+                                                            } ?>" name="first_name" id="Fname" type="text" value="<?php echo $params['model']->first_name ?>" readonly="readonly" />
                                 <?php
                                 if ($params['model']->hasErrors('first_name')) {
                                     foreach ($params['model']->errors['first_name'] as $error) { ?>
@@ -61,8 +65,12 @@
                                 ?>
                             </div>
                             <div class="input-group">
-                                <label class="labelPlace" for="Lname">Last Name</label>
-                                <input class="form-control" name="last_name" id="Lname" type="text" value="<?php echo $params['model']->last_name ?>" readonly="readonly" />
+                                <label class="labelPlace <?php if ($params['model']->hasErrors('last_name')) {
+                                                                echo "danger-text";
+                                                            } ?>" for="Lname">Last Name</label>
+                                <input class="form-control <?php if ($params['model']->hasErrors('last_name')) {
+                                                                echo "danger-border";
+                                                            } ?>" name="last_name" id="Lname" type="text" value="<?php echo $params['model']->last_name ?>" readonly="readonly" />
                                 <?php
                                 if ($params['model']->hasErrors('last_name')) {
                                     foreach ($params['model']->errors['last_name'] as $error) { ?>
@@ -76,23 +84,31 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="labelPlace" for="email">Email</label>
-                            <input class="form-control" name="email" id="email" type="text" value="<?php echo $params['model']->email ?>" readonly="readonly"/>
+                            <label class="labelPlace <?php if ($params['model']->hasErrors('email')) {
+                                                            echo "danger-text";
+                                                        } ?>" for="email">Email</label>
+                            <input class="form-control <?php if ($params['model']->hasErrors('email')) {
+                                                            echo "danger-border";
+                                                        } ?>" name="email" id="email" type="text" value="<?php echo $params['model']->email ?>" readonly="readonly" />
                             <?php
-                                if ($params['model']->hasErrors('email')) {
-                                    foreach ($params['model']->errors['email'] as $error) { ?>
-                                        <div class="validation-error">
-                                            <i class="fas fa-exclamation-circle"></i>
-                                            <p><?php echo $error ?></p>
-                                        </div>
-                                <?php }
-                                };
-                                ?>
+                            if ($params['model']->hasErrors('email')) {
+                                foreach ($params['model']->errors['email'] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
                         </div>
                         <div class="input-row-group">
                             <div class="input-group" id="adjustments">
-                                <label class="labelPlace" for="file">Attach NIC image</label>
-                                <div class="custom-file" id="file">
+                                <label class="labelPlace <?php if ($params['model']->hasErrors('verification')) {
+                                                                echo "danger-text";
+                                                            } ?>" for="file">Attach NIC image</label>
+                                <div class="custom-file <?php if ($params['model']->hasErrors('verification')) {
+                                                            echo "danger-border";
+                                                        } ?>" id="file">
                                     <input class="custom-file-input" name="verification" id="customFile" type="file" />
                                     <label class="custom-file-label" for="customFile"> </label>
                                 </div>
@@ -109,18 +125,22 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="labelPlace" for="message">Message</label>
-                            <textarea class="form-control" name="message" id="message"></textarea>
+                            <label class="labelPlace <?php if ($params['model']->hasErrors('message')) {
+                                                            echo "danger-text";
+                                                        } ?>" for="message">Message</label>
+                            <textarea class="form-control <?php if ($params['model']->hasErrors('message')) {
+                                                            echo "danger-text";
+                                                        } ?>" name="message" id="message"></textarea>
                             <?php
-                                if ($params['model']->hasErrors('message')) {
-                                    foreach ($params['model']->errors['message'] as $error) { ?>
-                                        <div class="validation-error">
-                                            <i class="fas fa-exclamation-circle"></i>
-                                            <p><?php echo $error ?></p>
-                                        </div>
-                                <?php }
-                                };
-                                ?>
+                            if ($params['model']->hasErrors('message')) {
+                                foreach ($params['model']->errors['message'] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
                         </div>
 
                         <div class="input-group">

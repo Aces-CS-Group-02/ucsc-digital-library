@@ -12,6 +12,7 @@ abstract class Model
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
     public const RULE_UNIQUE_FROM_PENDING = 'uniquefrompending';
+    public const RULE_EMAIL_EXIST = 'exist';
 
     public array $errors = [];
 
@@ -49,8 +50,8 @@ abstract class Model
             self::RULE_PASS_MAX => "Password cannot contain more than {max} characters",
             self::RULE_MATCH => "This filed must be match with {match}",
             self::RULE_UNIQUE => "Record with this {filed} already exists",
-            self::RULE_UNIQUE_FROM_PENDING => "This {filed} is already exists in pending list"
-
+            self::RULE_UNIQUE_FROM_PENDING => "This {filed} is already exists in pending list",
+            self::RULE_EMAIL_EXIST => "User with the given {field} does not exist"
         ];
     }
 
@@ -102,6 +103,18 @@ abstract class Model
                     $record = $Statement->fetchObject();
                     if ($record) {
                         $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['filed' => $attribute]);
+                    }
+                }
+                if ($ruleName === self::RULE_EMAIL_EXIST && filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    $className = $rule['class'];
+                    $uniqueAttr = $rule['attribute'] ?? $attribute;
+                    $tableName = $className::tableName();
+                    $Statement =  Application::$app->db->pdo->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr $statement_spec");
+                    $Statement->bindValue(":attr", $value);
+                    $Statement->execute();
+                    $record = $Statement->fetchObject();
+                    if (!$record) {
+                        $this->addErrorForRule($attribute, self::RULE_EMAIL_EXIST, ['field' => $attribute]);
                     }
                 }
                 if ($ruleName === self::RULE_UNIQUE_FROM_PENDING) {
