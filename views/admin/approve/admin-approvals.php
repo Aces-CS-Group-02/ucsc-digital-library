@@ -33,7 +33,8 @@ $userRole = "admin";
     ?>
     <div class="admin-dashboard-main-content">
         <div class="admin-dashboard-text">
-            Approvals
+            <p id='page-header-title'>Manage Users</p>
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="grid-container">
             <div class="card-container">

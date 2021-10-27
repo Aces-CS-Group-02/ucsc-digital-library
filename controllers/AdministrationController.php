@@ -118,22 +118,30 @@ class AdministrationController extends Controller
 
     public function manageContentDashboard(Request $request)
     {
-        $breadcrumAdminPanel = [
+        $breadcrum = [
             ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
             ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content']
         ];
-        return $this->render("admin/content/admin-manage-content", ['breadcrum-admin-panel' => $breadcrumAdminPanel]);
+        return $this->render("admin/content/admin-manage-content", ['breadcrum' => $breadcrum]);
     }
 
     public function manageUsersDashboard(Request $request)
     {
-        return $this->render("admin/user/admin-manage-users");
+        $breadcrum = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage users', 'link' => '/admin/dashboard/manage-users']
+        ];
+        return $this->render("admin/user/admin-manage-users", ['breadcrum' => $breadcrum]);
     }
 
 
     public function manageApprovalsDashboard(Request $request)
     {
-        return $this->render("admin/approve/admin-approvals");
+        $breadcrum = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage approvals', 'link' => '/admin/dashboard/manage-approvals']
+        ];
+        return $this->render("admin/approve/admin-approvals", ['breadcrum' => $breadcrum]);
     }
 
     public function bulkUpload(Request $request)
