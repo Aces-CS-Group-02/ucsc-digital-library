@@ -69,7 +69,7 @@ class AdministrationController extends Controller
             if ($user && $user->role_id == 3) {
                 $userModel->loadData($user);
                 $updateRequiredFields = ['role_id'];
-                if ($userModel->upgradeToLIA() && $userModel->update($updateRequiredFields)) {
+                if ($userModel->upgradeToLIA() && $userModel->updateLIA($updateRequiredFields)) {
                     Application::$app->session->setFlashMessage('success', 'Created new library information assistant');
                     Application::$app->response->redirect('/admin/manage-library-information-assistant');
                 } else {
@@ -101,7 +101,7 @@ class AdministrationController extends Controller
 
         $updateRequiredFields = ['role_id'];
 
-        if ($userModel->removeLIA() && $userModel->update($updateRequiredFields)) {
+        if ($userModel->removeLIA() && $userModel->updateLIA($updateRequiredFields)) {
             Application::$app->session->setFlashMessage('success', 'Removed library information assistant');
             Application::$app->response->redirect('/admin/manage-library-information-assistant');
         } else {

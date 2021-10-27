@@ -69,20 +69,20 @@ class User extends DbModel
         }
     }
 
-    // public function update($updateRequiredFileds)
-    // {
-    //     $tableName = static::tableName();
+    public function updateLIA($updateRequiredFileds)
+    {
+        $tableName = static::tableName();
 
-    //     $temp = [];
-    //     foreach ($updateRequiredFileds as $field) {
-    //         array_push($temp, $field . '="' . $this->{$field} . '"');
-    //     }
-    //     $temp = implode(", ", $temp);
+        $temp = [];
+        foreach ($updateRequiredFileds as $field) {
+            array_push($temp, $field . '="' . $this->{$field} . '"');
+        }
+        $temp = implode(", ", $temp);
 
-    //     $statement = self::prepare("UPDATE $tableName SET $temp WHERE reg_no = $this->reg_no");
+        $statement = self::prepare("UPDATE $tableName SET $temp WHERE reg_no = $this->reg_no");
 
-    //     return $statement->execute();
-    // }
+        return $statement->execute();
+    }
 
 
     public function save()
@@ -98,7 +98,7 @@ class User extends DbModel
         $statement->execute();
         return $statement->fetchAll();
     }
-    
+
     public function update()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
