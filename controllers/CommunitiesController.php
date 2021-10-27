@@ -117,7 +117,7 @@ class CommunitiesController extends Controller
             if (!empty($updateRequiredFileds)) {
                 if (in_array("name", $updateRequiredFileds)) {
                     if ($communityModel->validate($statement_spec)) {
-                        if ($communityModel->update($updateRequiredFileds)) {
+                        if ($communityModel->updateCommunity($updateRequiredFileds)) {
                             Application::$app->session->setFlashMessage('success', 'community successfully updated');
                             // return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
                             if ($db_data->parent_community_id) {
@@ -138,7 +138,7 @@ class CommunitiesController extends Controller
                         return $this->render('admin/updatecommunities', ['communityname' => $db_data->name, 'model' => $communityModel]);
                     }
                 } else {
-                    if ($communityModel->update($updateRequiredFileds)) {
+                    if ($communityModel->updateCommunity($updateRequiredFileds)) {
                         Application::$app->session->setFlashMessage('success', 'community successfully updated');
                         // return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
                         if ($db_data->parent_community_id) {

@@ -4,12 +4,14 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\exception\NotFoundException;
 use app\core\Mail;
 use app\core\Request;
 use app\core\Response;
 use app\models\LoginForm;
 use app\models\PendingUser;
 use app\models\RegistrationRequest;
+use app\models\ResetPassword;
 use app\models\User;
 
 class authController extends Controller
@@ -44,10 +46,10 @@ class authController extends Controller
                 $code = substr(md5(mt_rand()), 0, 15);
                 $pendingUser->{"token"} = $code;
 
-                if ($isUcscEmail === 0) {
+                if ($isUcscEmail === 1) {
 
                     $subject = "Verification Email";
-                    $link = "Click <a href='http://localhost:8000/verify-email?email={$email}&token={$code}'>Here</a> to verify.";
+                    $link = "Click <a href='http://localhost:8000/verify-email?email={$email}&token={$code}'>here</a> to verify.";
                     $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
                     $altBody = "this is the alt body";
 
@@ -64,10 +66,7 @@ class authController extends Controller
                 }
             }
 
-            // echo '<pre>';
-            // var_dump($pendingUser);
-            // echo '</pre>';
-            // // exit();
+
 
             return $this->render('auth/registration', ['model' => $pendingUser]);
         }
@@ -85,20 +84,22 @@ class authController extends Controller
 
             // exit();
             $file = $_FILES['verification'];
-            $file['name'] = $registrationRequest->email;
 
-            $path = "data/user/request/" . basename($file['name']);
+            if ($file['name']) {
+                $file['name'] = $registrationRequest->email;
 
-            $registrationRequest->verification = $path;
+                $path = "data/user/request/" . basename($file['name']);
+
+                $registrationRequest->verification = $path;
+            }
+
 
             if ($registrationRequest->validate() && move_uploaded_file($file['tmp_name'], $path) && $registrationRequest->save()) {
 
                 Application::$app->session->setFlashMessage('success', 'Registration request successfully sent');
                 Application::$app->response->redirect('/');
             }
-            // echo '<pre>';
-            // var_dump($registrationRequest);
-            // echo '</pre>';
+
 
 
             return $this->render('auth/registration-request', ['model' => $registrationRequest]);
@@ -112,6 +113,16 @@ class authController extends Controller
             $user = new User();
 
             $user->loadData($request->getBody());
+
+            // echo '<pre>';
+            // var_dump($user);
+            // echo '</pre>';
+
+            $user->role_id = $user->setRoleId();
+
+            // echo '<pre>';
+            // var_dump($user);
+            // echo '</pre>';
 
             if ($user->validate() && $user->save()) {
                 Application::$app->session->setFlashMessage('success', 'Thanks for verifying and registering');
@@ -132,24 +143,104 @@ class authController extends Controller
 
         $user = $pendingUser->findOne($where);
 
+        if (!$user) throw new NotFoundException(); //throw not found exception
 
         return $this->render('auth/verify-email', ['model' => $user]);
     }
 
-    // public function forgotPassword(Request $request)
-    // {
+    public function forgotPassword(Request $request)
+    {
+        $input = new ResetPassword();
+
+        if ($request->isPOST()) {
+
+            $input->loadData($request->getBody());
+
+            $input->password = substr(md5(mt_rand()), 0, 15);
+            $input->confirm_password = $input->password;
+
+            if ($input->validate()) {
+                $email = $input->email;
+                $token = substr(md5(mt_rand()), 0, 15);
+                $subject = "Reset Password";
+                $link = "Click <a href='http://localhost:8000/reset-password?email={$email}&token={$token}'>here</a> to reset your password.";
+                $body    = "<h1>Reset your password</h1><p>{$link}</p>";
+                $altBody = "this is the alt body";
+
+                $input->token = $token;
+
+                $mail = new Mail([$email], $subject, $body, $altBody);
+                $mail->sendMail();
+
+                if ($input->save()) {
+                    Application::$app->session->setFlashMessage('success', 'Password reset link has been sent. Check your emails :)');
+                    Application::$app->response->redirect('/');
+                }
+            }
+
+            return $this->render('auth/forgot-password', ['model' => $input]);
+        }
+
+        return $this->render('auth/forgot-password', ['model' => $input]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+
+        if ($request->isPOST()) {
+            $input = new ResetPassword();
+            $input->loadData($request->getBody());
+
+            if ($input->validate()) {
+                $where = [
+                    "email" => $input->email
+                ];
+
+                $user = new User();
+
+                $user = $user->findOne($where);
+
+                $user->password = $input->password;
+                $user->confirm_password =  $input->confirm_password;
+
+                if ($user->update()) {
+
+                    $resetPasswordRequest =  new ResetPassword();
+
+                    $where = [
+                        "email" => $input->email,
+                        "token" => $input->token
+                    ];
+
+                    //token eka enne na
 
 
-    //     if ($request->isPOST()) {
+                    $resetPasswordRequest = $resetPasswordRequest->findOne($where);
 
-    //         echo '<pre>';
-    //         var_dump($user);
-    //         echo '</pre>';
-    //         exit;
-    //     }
+                    $resetPasswordRequest->delete();
 
-    //     return $this->render('auth/forgot-password', ['model' => $user]);
-    // }
+                    Application::$app->session->setFlashMessage('success', 'Yout password is changed');
+                    Application::$app->response->redirect('/login');
+                }
+            }
+
+            return $this->render('auth/reset-password', ['model' => $input]);
+        }
+
+        $resetPasswordRequest =  new ResetPassword();
+
+        $resetPasswordRequest->loadData($request->getBody());
+
+        $where = [
+            "email" => $resetPasswordRequest->email,
+            "token" => $resetPasswordRequest->token
+        ];
+
+        if (!$resetPasswordRequest->findOne($where)) throw new NotFoundException(); //throw not found exception
+
+        return $this->render('auth/reset-password', ['model' => $resetPasswordRequest]);
+    }
+
 
     public function logout(Request $request)
     {

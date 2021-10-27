@@ -39,13 +39,15 @@ $app->router->get('/logout', [AuthController::class, "logout"]);
 $app->router->get('/forgot-password', [AuthController::class, "forgotPassword"]);
 $app->router->post('/forgot-password', [AuthController::class, "forgotPassword"]);
 
-
+//Authentication routes
 $app->router->get('/register', [AuthController::class, "register"]);
 $app->router->post('/register', [AuthController::class, "register"]);
 // $app->router->get('/registration-request', [AuthController::class, "registerRequest"]);
 $app->router->post('/registration-request', [AuthController::class, "registerRequest"]);
-$app->router->get('/verify-email', [AuthController::class, "verifyEmail"]);
-$app->router->post('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->get('/verify-email',[AuthController::class, "verifyEmail"]);
+$app->router->post('/verify-email',[AuthController::class, "verifyEmail"]);
+$app->router->get('/reset-password',[AuthController::class, "resetPassword"]);
+$app->router->post('/reset-password',[AuthController::class, "resetPassword"]);
 
 
 $app->router->get('/contact', [SiteController::class, "contact"]);

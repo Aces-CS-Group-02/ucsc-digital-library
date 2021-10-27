@@ -31,9 +31,9 @@
         <!-- Page content division -->
         <div class="divider-right">
 
-            <div class="upper-border">  
+            <div class="upper-border">
                 <p>Not a member?
-                    <a href="./registration.php">Register Now</a>
+                    <a href="/register">Register Now</a>
                 </p>
             </div>
 
@@ -52,9 +52,24 @@
                             </p>
                         </div>
                         <div class="input-group">
-                            <label class="labelPlace" for="email">Email</label>
-                            <input class="form-control" name="email" id="email" type="text" />
+                            <label class="labelPlace <?php if ($params['model']->hasErrors('email')) {
+                                                                echo "danger-text";
+                                                            } ?>" for="email">Email</label>
+                            <input class="form-control <?php if ($params['model']->hasErrors('email')) {
+                                                                echo "danger-border";
+                                                            } ?>" name="email" value="<?php echo $params['model']->email; ?>" id="email" type="text" />
+                            <?php
+                            if ($params['model']->hasErrors('email')) {
+                                foreach ($params['model']->errors['email'] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
                         </div>
+
                         <div class="input-group" id="adjust-button-align">
                             <button class="btn btn-primary mr-1 mb-1" id="btn-edit" type="submit">
                                 Send
@@ -67,7 +82,7 @@
 
             <div class="upper-border upper-border-in-bottom">
                 <p>Not a member?
-                    <a href="./registration.php">Register Now</a>
+                    <a href="/register">Register Now</a>
                 </p>
             </div>
 

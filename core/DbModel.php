@@ -18,8 +18,6 @@ abstract class DbModel extends Model
         $attributes = $this->attributes();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
 
-
-
         // $sql = "INSERT INTO " . $tableName . "(" . implode(',', $attributes) . ") VALUES(" . implode(',', $params) . ")";
 
         $statement = self::prepare("INSERT INTO " . $tableName . "(" . implode(',', $attributes) . ") VALUES(" . implode(',', $params) . ")");
@@ -31,12 +29,26 @@ abstract class DbModel extends Model
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
 
-        // echo '<pre>';
-        // var_dump($statement);
-        // echo '</pre>';
+        return $statement->execute();;
+    }
 
-        $statement->execute();
-        return true;
+    public function update()
+    {
+        $tableName =  $this->tableName();
+        $attributes = $this->attributes();
+
+        $updateArray = [];
+        foreach ($attributes as $attr) {
+            array_push($updateArray, $attr . '="' . $this->{$attr} . '"');
+        }
+        $updateArray = implode(", ", $updateArray);
+
+        $primaryKey = $this->primaryKey();
+        $id = $this->$primaryKey;
+
+        $statement = self::prepare("UPDATE $tableName SET $updateArray WHERE $primaryKey = $id");
+
+        return $statement->execute();
     }
 
     public static function findOne($where)
@@ -76,6 +88,17 @@ abstract class DbModel extends Model
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function delete()
+    {
+        $tableName = $this->tableName();
+        $primaryKey = $this->primaryKey();
+
+        $id = $this->$primaryKey;
+
+        $statement = self::prepare("DELETE FROM $tableName WHERE $primaryKey = $id");
+
+        return $statement->execute();
+    }
     public static function prepare($sql)
     {
         return Application::$app->db->pdo->prepare($sql);

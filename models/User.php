@@ -69,7 +69,7 @@ class User extends DbModel
         }
     }
 
-    public function update($updateRequiredFileds)
+    public function updateLIA($updateRequiredFileds)
     {
         $tableName = static::tableName();
 
@@ -97,5 +97,37 @@ class User extends DbModel
         $statement = self::prepare("SELECT * FROM $tableName WHERE role_id IN(4, 5)");
         $statement->execute();
         return $statement->fetchAll();
+    }
+
+    public function update()
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        return parent::update();
+    }
+
+    public function setRoleId()
+    {
+        $email = $this->email;
+        $roleName = "External";
+        $studentEmailPattern = "/(.*)@(stu.ucsc.cmb.lk|stu.ucsc.lk)/";
+        $staffEmailPattern = "/(.*)@(ucsc.cmb.ac.lk)/";
+
+        if(preg_match($studentEmailPattern, $email))
+        {
+            $roleName = "Student";
+        }else if(preg_match($staffEmailPattern, $email))
+        {
+            $roleName = "Staff";
+        }
+        
+        $role = new Role();
+
+        $where = [
+            'name' => $roleName
+        ];
+        
+        $role = $role->findOne($where);
+
+        return $role->role_id;
     }
 }

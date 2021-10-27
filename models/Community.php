@@ -151,7 +151,7 @@ class Community extends DbModel
     }
 
 
-    public function update($updateRequiredFileds)
+    public function updateCommunity($updateRequiredFileds)
     {
         $tableName = static::tableName();
 
