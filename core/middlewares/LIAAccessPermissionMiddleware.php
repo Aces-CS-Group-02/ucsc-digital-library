@@ -6,9 +6,8 @@ use app\core\Application;
 use app\core\exception\ForbiddenException;
 use Exception;
 
-class AuthMiddleware extends BaseMiddleware
+class LIAAccessPermissionMiddleware extends BaseMiddleware
 {
-
     public array $actions = [];
 
     public function __construct(array $actions = [])
@@ -18,9 +17,9 @@ class AuthMiddleware extends BaseMiddleware
 
     public function execute()
     {
-        if (Application::isGuest()) {
+        if ((int)Application::getUserRole() >= 2) {
             if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) {
-                Application::$app->response->redirect('/login');
+                throw new ForbiddenException();
             }
         }
     }

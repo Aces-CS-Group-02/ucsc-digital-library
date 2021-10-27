@@ -45,7 +45,7 @@ $userRole = "admin";
                 <a href="/admin/bulk-register" class="card box-shadow-1">
                     <div class="card-icon">
                         <div style="position: relative;">
-                            <img src="/assets\admin-manage-users\add-user.png" alt=" bulk-register-image">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" bulk-register-image">
                         </div>
                     </div>
                     <div class="card-content ">Bulk Register</div>
@@ -55,7 +55,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/verify-new-users" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\approve-user.png" alt=" approve-user-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\approve-user.png" alt=" approve-user-image">
                     </div>
                     <div class="card-content ">Approve New Users</div>
                 </a>
@@ -64,7 +64,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/users" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\update-user.png" alt=" update-user-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-user-image">
                     </div>
                     <div class="card-content ">Update Users </div>
                 </a>
@@ -74,7 +74,7 @@ $userRole = "admin";
                 <a href="/admin/users" class="card box-shadow-1">
                     <div class="card-icon">
 
-                        <img src="/assets\admin-manage-users\delete-user.png" alt=" delete-user-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-user-image">
                     </div>
                     <div class="card-content ">Delete Users</div>
                 </a>
@@ -90,7 +90,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/create-user-group" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\add-user.png" alt=" create-group-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-group-image">
                     </div>
                     <div class="card-content ">Create User Group</div>
                 </a>
@@ -98,7 +98,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/manage-user-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\update-user.png" alt=" update-groups-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-groups-image">
                     </div>
                     <div class="card-content ">Update User Groups</div>
                 </a>
@@ -106,7 +106,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/manage-user-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\delete-user.png" alt=" delete-group-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-group-image">
                     </div>
                     <div class="card-content ">Delete User Group</div>
                 </a>
@@ -121,7 +121,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/manage-library-information-assistant" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
                     </div>
                     <div class="card-content ">Manage Library Information Assistants</div>
                 </a>

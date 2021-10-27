@@ -34,17 +34,16 @@ $userRole = "admin";
     include_once dirname(__DIR__) . '/components/nav.php';
     ?>
 
+    <div class="admin-dashboard-text">
+        Admin Dashboard
+    </div>
+
     <div class="admin-dashboard-main-content">
-        <div class="admin-dashboard-text">
-            Admin Dashboard
-        </div>
-
-
         <div class="grid-container">
             <div class="card-container">
                 <a href="/admin/dashboard/manage-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-dashboard\briefcase.svg" alt=" briefcase-image">
+                        <img class="card-icon-img" src="/assets\admin-dashboard\briefcase.svg" alt=" briefcase-image">
                     </div>
                     <div class="card-content ">Manage Content</div>
                 </a>
@@ -53,7 +52,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/dashboard/manage-users" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-dashboard\user-settings.png" alt=" user-image">
+                        <img class="card-icon-img" src="/assets\admin-dashboard\user-settings.png" alt=" user-image">
                     </div>
                     <div class="card-content ">Manage Users</div>
                 </a>
@@ -62,7 +61,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/dashboard/view-reports" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-dashboard\graph.png" alt=" graph-image">
+                        <img class="card-icon-img" src="/assets\admin-dashboard\graph.png" alt=" graph-image">
                     </div>
                     <div class="card-content ">View Reports</div>
                 </a>
@@ -72,7 +71,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/dashboard/manage-approvals" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img src="/assets\admin-dashboard\checked.svg" alt=" checked-image">
+                        <img class="card-icon-img" src="/assets\admin-dashboard\checked.svg" alt=" checked-image">
                     </div>
                     <div class="card-content ">Approval</div>
                 </a>

@@ -7,6 +7,6 @@ use Exception;
 class NotFoundException extends Exception
 {
 
-    protected $message = 'Page Not Found';
+    protected $message = 'OOPS... Page not found';
     protected $code = 404;
 }

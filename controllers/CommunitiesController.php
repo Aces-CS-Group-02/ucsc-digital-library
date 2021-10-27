@@ -6,29 +6,54 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\core\exception\NotFoundException;
+use app\models\Collection;
 use app\models\Community;
 use app\models\SubCommunity;
 use Exception;
 
 class CommunitiesController extends Controller
 {
+    public function communities()
+    {
+        $community = new Community();
+        $allTopCommunities = $community->getAllTopLevelCommunities();
+        $breadcrumAdminPanel = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
+            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        ];
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrumAdminPanel]);
+    }
+
+    public function createTopLevelCommunities()
+    {
+        return $this->render('admin/createtoplevelcommunities');
+    }
+
+    public function createSubCommunity(Request $request)
+    {
+        $data = $request->getBody();
+        $communityModel = new Community();
+
+        if (!array_key_exists("parent-id", $data)) {
+            throw new NotFoundException();
+        }
+
+        if (!$communityModel->findCommunity($data['parent-id'])) {
+            throw new NotFoundException();
+        }
+        return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id']]);
+    }
+
     public function createNewCommunity(Request $request)
     {
         $communityModel = new Community();
-
         if ($request->getMethod() === 'POST') {
-            $communityModel->loadData($request->getBody());
-
-            // Check whether the same name is allocated to any other top level community
-            $statement_spec = "AND parent_community_id IS NULL";
-
-
-            if ($communityModel->validate($statement_spec) && $communityModel->save()) {
+            if ($communityModel->createTopLevelCommunity($request->getBody())) {
                 Application::$app->session->setFlashMessage('success', 'Top level community created');
-                Application::$app->response->redirect('/manage/communities');
+                Application::$app->response->redirect('/admin/manage-communities');
                 exit;
             }
-
             return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel]);
         }
     }
@@ -42,22 +67,15 @@ class CommunitiesController extends Controller
 
         if ($request->getMethod() === 'POST') {
             $communityModel->loadData($data);
-
-
-
-            // if ($communityModel->parent_community_id) {
             $statement_spec = "AND parent_community_id = " . $communityModel->parent_community_id;
-            // } else {
-            // $statement_spec = "AND parent_community_id IS NULL";
-            // }
 
             if ($communityModel->validate($statement_spec)) {
                 if ($communityModel->createSubCommunity($subcommunityModel)) {
                     Application::$app->session->setFlashMessage('success', 'Sub community successfully created');
-                    Application::$app->response->redirect('/manage/community?id=' . $communityModel->parent_community_id);
+                    Application::$app->response->redirect('/admin/manage-community?community-id=' . $communityModel->parent_community_id);
                 } else {
                     Application::$app->session->setFlashMessage('error', 'Sub community creation failed');
-                    Application::$app->response->redirect('/manage/community?id=' . $communityModel->parent_community_id);
+                    Application::$app->response->redirect('/admin/manage-community?community-id=' . $communityModel->parent_community_id);
                 }
             } else {
                 return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $communityModel->parent_community_id, 'model' => $communityModel]);
@@ -103,17 +121,17 @@ class CommunitiesController extends Controller
                             Application::$app->session->setFlashMessage('success', 'community successfully updated');
                             // return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
                             if ($db_data->parent_community_id) {
-                                Application::$app->response->redirect('/manage/community?id=' . $db_data->parent_community_id);
+                                Application::$app->response->redirect('/admin/manage-community?community-id=' . $db_data->parent_community_id);
                             } else {
-                                Application::$app->response->redirect('/manage/communities');
+                                Application::$app->response->redirect('/admin/manage-communities');
                             }
                         } else {
                             Application::$app->session->setFlashMessage('error', 'community update error ocured');
                             // return $this->render('admin/updatecommunities', ['communityname' => $db_data->name, 'model' => $communityModel]);
                             if ($db_data->parent_community_id) {
-                                Application::$app->response->redirect('/manage/community?id=' . $db_data->parent_community_id);
+                                Application::$app->response->redirect('/admin/manage-community?community-id=' . $db_data->parent_community_id);
                             } else {
-                                Application::$app->response->redirect('/manage/communities');
+                                Application::$app->response->redirect('/admin/manage-communities');
                             }
                         }
                     } else {
@@ -124,17 +142,17 @@ class CommunitiesController extends Controller
                         Application::$app->session->setFlashMessage('success', 'community successfully updated');
                         // return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
                         if ($db_data->parent_community_id) {
-                            Application::$app->response->redirect('/manage/community?id=' . $db_data->parent_community_id);
+                            Application::$app->response->redirect('/admin/manage-community?community-id=' . $db_data->parent_community_id);
                         } else {
-                            Application::$app->response->redirect('/manage/communities');
+                            Application::$app->response->redirect('/admin/manage-communities');
                         }
                     } else {
                         Application::$app->session->setFlashMessage('error', 'community update error ocured');
                         // return $this->render('admin/updatecommunities', ['communityname' => $db_data->name, 'model' => $communityModel]);
                         if ($db_data->parent_community_id) {
-                            Application::$app->response->redirect('/manage/community?id=' . $db_data->parent_community_id);
+                            Application::$app->response->redirect('/admin/manage-community?community-id=' . $db_data->parent_community_id);
                         } else {
-                            Application::$app->response->redirect('/manage/communities');
+                            Application::$app->response->redirect('/admin/manage-communities');
                         }
                     }
                 }
@@ -143,7 +161,7 @@ class CommunitiesController extends Controller
             }
             // Get request
         } else {
-            if ($communityModel->loadCommunity($data['id'])) {
+            if ($communityModel->loadCommunity($data['community-id'])) {
                 return $this->render('admin/updatecommunities', ['communityname' => $communityModel->name, 'model' => $communityModel]);
             } else {
                 throw new NotFoundException();
@@ -155,11 +173,9 @@ class CommunitiesController extends Controller
     public function deleteCommunity(Request $request)
     {
         $data = $request->getBody();
-
         $communityModel = new Community();
 
         if ($data['deleteCommunity']) {
-
             if ($communityModel->deleteCommunity($data['community_id'])) {
                 // Send success as response to AJAX request
                 echo "success";
@@ -173,26 +189,17 @@ class CommunitiesController extends Controller
     public function manage(Request $request)
     {
         $data = $request->getBody();
-
         $subcommunityModel = new SubCommunity();
         $communityModel = new Community();
 
-        if (!$communityModel->findCommunity($data['id'])) {
+        if (!$communityModel->findCommunity($data['community-id'])) {
             throw new NotFoundException();
         }
 
-        $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['id']]);
-
+        $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['community-id']]);
         $allSubcommunities_ID_List = array();
-
-
-        $communityModel->loadCommunity($data['id']);
-
-
-
-
+        $communityModel->loadCommunity($data['community-id']);
         $communities = [];
-
 
         if ($allsubcommunities) {
             foreach ($allsubcommunities as $subcommunity) {
@@ -203,8 +210,24 @@ class CommunitiesController extends Controller
         }
 
 
+        $collectionCount = Collection::getCollectionCount($data['community-id']);
+        $subCommunityCount = SubCommunity::getSubcommunitiesCount($data['community-id']);
 
 
-        return $this->render('admin/communities', ['parentID' => $data['id'], 'communityType' => 'Sub communities', 'communityname' => $communityModel->name, 'communities' => $communities]);
+        $breadcrum = [
+            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
+            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
+            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        ];
+        $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['community-id']);
+        foreach ($breadcrumCommunities as $link) {
+            $breadcrumLinkName =  $link['name'];
+            $breadcrumLink = '/admin/manage-community?community-id=' . $link["community_id"];
+            $val = ['name' => $breadcrumLinkName, 'link' => $breadcrumLink];
+            array_push($breadcrum, $val);
+        }
+
+        //  IF community type is sub community => value = false. If community is top level value is true
+        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum]);
     }
 }

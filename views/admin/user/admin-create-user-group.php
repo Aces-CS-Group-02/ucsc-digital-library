@@ -36,12 +36,37 @@ $userRole = "admin";
             Create User Groups
         </div>
         <div class="form-container form-container-override">
-            <form class="form-feature" action="/admin/create-user-group/add-users" method="POST">
+            <form class="form-feature" action="" method="POST">
                 <div class="input-container">
+                    <?php
+
+                    $attr_name = 'name';
+                    $errors_on_name = false;
+                    if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
+                        $errors_on_name = true;
+                    }
+
+                    ?>
                     <div class="input-group">
-                        <label class="labelPlace label-place-override" for="title">User Group Name</label>
-                        <input class="form-control form-control-override " id="title" type="text">
+                        <label class="labelPlace label-place-override <?php if ($errors_on_name) {
+                                                                            echo "danger-text";
+                                                                        } ?>" for="title">User Group Name</label>
+                        <input class="form-control form-control-override <?php if ($errors_on_name) {
+                                                                                echo "danger-border";
+                                                                            } ?>" id="title" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>">
+
+                        <?php
+                        if ($errors_on_name) {
+                            foreach ($params['model']->errors[$attr_name] as $error) { ?>
+                                <div class="validation-error">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <p><?php echo $error ?></p>
+                                </div>
+                        <?php }
+                        };
+                        ?>
                     </div>
+
                     <div class="input-group">
                         <button class="btn btn-primary mr-1 mb-1 ">Proceed</button>
                     </div>

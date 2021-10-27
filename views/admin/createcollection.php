@@ -1,6 +1,7 @@
 <?php
 $isLoggedIn = true;
 $userRole = "student";
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +46,7 @@ $userRole = "student";
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Create Community</p>
+            <p id="page-header-title">Create Collection</p>
         </div>
 
         <div class="wrapper">
@@ -110,7 +111,7 @@ $userRole = "student";
                         <div class="input-group">
                             <label class="labelPlace <?php if ($errors_on_name) {
                                                             echo "danger-text";
-                                                        } ?>" for="Name">Community Name</label>
+                                                        } ?>" for="Name">Collection Name</label>
                             <input class="form-control <?php if ($errors_on_name) {
                                                             echo "danger-border";
                                                         } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
@@ -132,19 +133,15 @@ $userRole = "student";
                     <?php } ?>
 
                     <div class="input-group">
-                        <label class="labelPlace" for="description-text-area">Community description</label>
-                        <textarea class="form-control" id="description-text-area" type="text" name="description" value="<?php echo $params['model']->description ?? "" ?>"></textarea>
+                        <label class="labelPlace" for="description-text-area">Collection Description</label>
+                        <textarea class="form-control" id="description-text-area" type="text" name="description"><?php echo $params['model']->description ?? "" ?></textarea>
 
 
                     </div>
 
-                    <button class="btn btn-primary" id="create-community-btn" <?php if (isset($params['parent_community_id'])) {
-                                                                                    echo 'name="parent_community_id"';
-                                                                                } ?> "
-                                                                                
-                                                                                <?php if (isset($params['parent_community_id'])) {
-                                                                                    echo 'value="' . $params['parent_community_id'];
-                                                                                }  ?>">Create</button>
+                    <button class="btn btn-primary" id="create-community-btn" name="community-id" <?php if (isset($params['community-id'])) {
+                                                                                                        echo 'value="' . $params['community-id'];
+                                                                                                    }  ?>">Create</button>
                 </div>
             </form>
 
@@ -158,7 +155,7 @@ $userRole = "student";
     include_once dirname(__DIR__) . '/components/footer.php';
     ?>
 
-    <script src="/javascript/nav.js"></script>
+    <script src=" /javascript/nav.js"></script>
     <script src="/javascript/profile.js"></script>
 
 </body>

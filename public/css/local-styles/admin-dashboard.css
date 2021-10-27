@@ -1,13 +1,24 @@
 .admin-dashboard-text {
-    font-size: 1.8rem;
-    margin: 2rem auto;
-    border-bottom: 2px solid rgb(212, 212, 212);
-    padding: 5px;
-    width: 90%;
+    /* font-size: 1.8rem; */
+    /* margin: 2rem auto; */
+    /* border-bottom: 2px solid rgb(212, 212, 212);
+    padding: 15px 0;
+    width: 90%; */
+
+    max-width: 1400px;
+    width: 96%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(210, 210, 210);
+    padding: 15px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
 }
 
 .admin-dashboard-main-content {
     flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 body {
@@ -46,7 +57,7 @@ body {
     background-color: white;
 }
 
-img {
+.card-icon-img {
     width: 60px;
     height: 60px;
 }

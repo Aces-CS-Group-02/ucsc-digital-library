@@ -49,18 +49,16 @@ use app\core\Application;
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <?php
-            if ($params['communityType']) {
-                echo "<p id='page-header-title'>Top Level Communities</p>";
-            } else {
-                echo "<p id='page-header-title'>" . $params['communityname'] ?? "" . "</p>";
-            }
-            ?>
-
-            <?php include_once dirname(__DIR__) . '/components/breadcrum.php' ?>
+            <p id="page-header-title">Manage <?php if (isset($params['communityType'])) {
+                                                    echo $params['communityType'];
+                                                } ?> <?php if ($params['communityType'] === 'Sub communities') {
+                                                            echo "  >  ";
+                                                        }
+                                                        echo $params['communityname'] ?? "";
+                                                        ?></p>
         </div>
 
-        <div class=" wrapper">
+        <div class="wrapper">
 
             <!-- Flash Message Succss -->
             <?php
@@ -101,30 +99,19 @@ use app\core\Application;
             <?php } ?>
 
 
-            <div class="tab-container">
-                <?php if (!$params['communityType']) { ?>
-                    <div class="tab-btn-container">
-                        <a class="tab-link-btn active" href="/admin/manage-community?community-id=<?php echo $params['parentID'] ?>">Sub Communities (<?php echo $params['subCommunityCount']; ?>)</a>
-                        <a class="tab-link-btn blured" href="/admin/manage-community/collections?community-id=<?php echo $params['parentID'] ?>">Collections (<?php echo $params['collectionCount']; ?>)</a>
-                    </div>
-
-                <?php } ?>
-
-
-
-                <div class="search-N-sort-components-container">
-                    <div class="search-component-container">
-                        <form action="">
-                            <div class="ug-search-input-wrapper">
-                                <input type="text" placeholder="Search user groups">
-                                <button>
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="sort-component-container">
-                        <!-- <form action="">
+            <div class="search-N-sort-components-container">
+                <div class="search-component-container">
+                    <form action="">
+                        <div class="ug-search-input-wrapper">
+                            <input type="text" placeholder="Search user groups">
+                            <button>
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="sort-component-container">
+                    <!-- <form action="">
                         <div class="input-group sort-input-edited" id="adjustments">
                             <label class="labelPlace" for="select">Sort By: </label>
                             <select class="custom-select custom-select-edited" id="select">
@@ -135,97 +122,98 @@ use app\core\Application;
                             </select>
                         </div>
                     </form> -->
-                        <div class="create-new-community-btn-container">
-                            <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if (!$params['communityType']) {
-                                                                                                            echo "sub community";
-                                                                                                        } else {
-                                                                                                            echo "top level community";
-                                                                                                        } ?> </button>
-                        </div>
+                    <div class="create-new-community-btn-container">
+                        <button class="btn action-btn-0-edit" id="create-new-community-btn">Create <?php if ($params['communityType'] === "Sub communities") {
+                                                                                                        echo "sub community";
+                                                                                                    } else {
+                                                                                                        echo "top level community";
+                                                                                                    } ?> </button>
                     </div>
                 </div>
+            </div>
 
-                <!-- <div class="create-new-community-btn-container">
+            <!-- <div class="create-new-community-btn-container">
                 <button class="btn action-btn-0-edit" id="create-new-community-btn">Create Top Level Community</button>
             </div> -->
 
-                <!-- Form goes here -->
-                <div class="user-groups-headers-container">
-                    <div class="block-a"> </div>
-                    <div class="block-b">Name</div>
-                    <div class="block-c">Description</div>
-                    <div class="block-d">Action</div>
-                </div>
 
-                <div class="user-group-container">
 
-                    <?php
+            <!-- Form goes here -->
+            <div class="user-groups-headers-container">
+                <div class="block-a"> </div>
+                <div class="block-b">Name</div>
+                <div class="block-c">Description</div>
+                <div class="block-d">Action</div>
+            </div>
 
-                    $communities = $params['communities'] ?? "";
-                    $first_record = true;
+            <div class="user-group-container">
 
-                    ?>
+                <?php
 
-                    <!-- This is for print top border of the first record at every time -->
-                    <div class="user-group-info"></div>
+                $communities = $params['communities'] ?? "";
+                $first_record = true;
 
-                    <!-- This loop render all the communities to the page -->
-                    <?php if ($communities) {
-                        foreach ($communities as $community) { ?>
+                ?>
 
-                            <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
-                                <div class="block-a">
-                                    <p>
-                                    <div class="input-group custom-control">
-                                        <div class="checkbox checkbox-edit">
-                                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                                        </div>
+                <!-- This is for print top border of the first record at every time -->
+                <div class="user-group-info"></div>
+
+                <!-- This loop render all the communities to the page -->
+                <?php if ($communities) {
+                    foreach ($communities as $community) { ?>
+
+                        <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
+                            <div class="block-a">
+                                <p>
+                                <div class="input-group custom-control">
+                                    <div class="checkbox checkbox-edit">
+                                        <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
                                     </div>
-                                    </p>
                                 </div>
-                                <div class="block-b">
-                                    <div class="block-title">
-                                        <p>Name</p>
-                                        <p>:</p>
-                                    </div>
-                                    <p><?php echo $community['name'] ?></p>
+                                </p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Name</p>
+                                    <p>:</p>
                                 </div>
-                                <div class="block-c">
-                                    <div class="block-title">
-                                        <p>Description</p>
-                                        <p>:</p>
-                                    </div>
-                                    <p class="line-clamp line-clamp-2-description row-description <?php if ($community['description'] === "") {
-                                                                                                        echo "gray-out";
-                                                                                                    } ?>"><?php
-
-
-                                                                                                            if ($community['description'] === "") {
-                                                                                                                echo "N/A";
-                                                                                                            } else {
-                                                                                                                echo $community['description'];
-                                                                                                            }
-
-
-                                                                                                            ?></p>
+                                <p><?php echo $community['name'] ?></p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Description</p>
+                                    <p>:</p>
                                 </div>
-                                <div class="block-d">
-                                    <div>
-                                        <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
-                                        <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
-                                        <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
-                                    </div>
+                                <p class="line-clamp line-clamp-2-description row-description <?php if ($community['description'] === "") {
+                                                                                                    echo "gray-out";
+                                                                                                } ?>"><?php
+
+
+                                                                                                        if ($community['description'] === "") {
+                                                                                                            echo "N/A";
+                                                                                                        } else {
+                                                                                                            echo $community['description'];
+                                                                                                        }
+
+
+                                                                                                        ?></p>
+                            </div>
+                            <div class="block-d">
+                                <div>
+                                    <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
+                                    <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
+                                    <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
                                 </div>
                             </div>
+                        </div>
 
-                    <?php }
-                    } ?>
+                <?php }
+                } ?>
 
-                    <?php if (empty($communities)) { ?>
-                        <p class="no-records-available">No Records Available :(</p>
-                    <?php } ?>
+                <?php if (empty($communities)) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } ?>
 
-                </div>
             </div>
         </div>
     </div>
@@ -255,7 +243,7 @@ use app\core\Application;
             }) => {
                 if (!ID_MAP_1.has(currentTarget)) return;
                 const id_manage = ID_MAP_1.get(currentTarget);
-                window.location = `/admin/manage-community?community-id=${id_manage}`;
+                window.location = `/manage/community?id=${id_manage}`;
             }
 
             const handleDelete = ({
@@ -303,7 +291,7 @@ use app\core\Application;
                 // console.log(id_update);
 
                 // AJAX request
-                window.location = `/admin/edit-community?community-id=${id_update}`;
+                window.location = `/communities/update/community?id=${id_update}`;
             }
 
             // ==========================================================
@@ -361,10 +349,10 @@ use app\core\Application;
             const createnewcommunityBtn = document.getElementById('create-new-community-btn');
             createnewcommunityBtn.onclick = function() {
 
-                <?php if (!$params['communityType']) {
-                    echo 'window.location = "/admin/create-sub-community?parent-id=' . $params['parentID'] . '  "';
+                <?php if ($params['communityType'] === "Sub communities") {
+                    echo 'window.location = "/create-sub-community?parent-id=' . $params['parentID'] . '  "';
                 } else {
-                    echo "window.location = '/admin/create-top-level-community'";
+                    echo "window.location = '/create-top-level-communities'";
                 } ?>
 
                 // window.location = '/create-top-level-communities';

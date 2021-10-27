@@ -1,9 +1,27 @@
 .admin-dashboard-text {
-    font-size: 1.8rem;
+    /* font-size: 1.8rem;
     margin: 2rem auto;
     border-bottom: 2px solid rgb(212, 212, 212);
     padding: 5px;
-    width: 90%;
+    width: 90%; */
+
+
+    max-width: 1400px;
+    width: 96%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(210, 210, 210);
+    padding: 15px 0;
+    /* font-size: 1.3rem; */
+    /* font-weight: 700; */
+    /* font-family: "Poppins", sans-serif; */
+    
+}
+
+#page-header-title{
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+
 }
 
 .admin-dashboard-main-content {
@@ -18,7 +36,36 @@
     align-items: center;
     flex-basis: 100%;
     margin-bottom: 20px;
-    padding: 10px 0px;
+    padding: 10px 0px;   
+}
+
+.breadcrum-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* border: 1px solid red; */
+    margin-top: 10px;
+}
+
+.breadcrum-link{
+    text-decoration: none;
+    color: #8a8a8a;
+    font-style: italic;
+    padding: 4px 0;
+}
+
+.breadcrum-link, .breadcrum-link-arrow{
+    color: #727272;
+
+}
+
+.breadcrum-link-arrow{
+    margin: 0 7px;
+}
+
+.current-breadcrum-link{
+    color: #437ee6;
 }
 
 body {
@@ -57,7 +104,7 @@ body {
     background-color: white;
 }
 
-img {
+.card-icon-img{
     width: 60px;
     height: 60px;
 }

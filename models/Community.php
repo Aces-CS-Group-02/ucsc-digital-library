@@ -177,6 +177,16 @@ class Community extends DbModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createTopLevelCommunity($data)
+    {
+        $this->loadData($data);
+        $statement_spec = "AND parent_community_id IS NULL";
+        if ($this->validate($statement_spec) && $this->save()) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function createSubCommunity(SubCommunity $subCommunityModel)
     {
@@ -205,5 +215,25 @@ class Community extends DbModel
         }
 
         return true;
+    }
+
+    public function communityBreadcrumGenerate($community_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT T2.community_id, T2.name
+                                    FROM (
+                                            SELECT
+                                            @r AS _id,
+                                            (SELECT @r := parent_community_id FROM $tableName WHERE community_id = _id) AS parent_community_id,
+                                            @l := @l + 1 AS lvl
+                                    FROM
+                                            (SELECT @r := $community_id, @l := 0) vars,
+                                            $tableName m
+                                    WHERE @r <> 0) T1
+                                    JOIN community T2
+                                    ON T1._id = T2.community_id
+                                    ORDER BY T1.lvl DESC");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
