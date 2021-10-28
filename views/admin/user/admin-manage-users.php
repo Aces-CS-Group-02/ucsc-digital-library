@@ -1,4 +1,7 @@
 <?php
+
+use app\core\Application;
+
 $isLoggedIn = true;
 $userRole = "admin";
 ?>
@@ -38,55 +41,59 @@ $userRole = "admin";
         </div>
 
 
-        <div class="grid-container">
-            <div class="content-dashboard-text">
-                User
-            </div>
-            <div class="card-container">
-                <a href="/admin/bulk-register" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <div style="position: relative;">
-                            <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" bulk-register-image">
+        <?php if (Application::$app->getUserRole() <= 2) { ?>
+            <div class="grid-container">
+                <div class="content-dashboard-text">
+                    User
+                </div>
+
+                <div class="card-container">
+                    <a href="/admin/bulk-register" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <div style="position: relative;">
+                                <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" bulk-register-image">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-content ">Bulk Register</div>
-                </a>
+                        <div class="card-content ">Bulk Register</div>
+                    </a>
 
+                </div>
+
+                <div class="card-container">
+                    <a href="/admin/verify-new-users" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\approve-user.png" alt=" approve-user-image">
+                        </div>
+                        <div class="card-content ">Approve New Users</div>
+                    </a>
+
+                </div>
+                <div class="card-container">
+                    <a href="/admin/users" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-user-image">
+                        </div>
+                        <div class="card-content ">Update Users </div>
+                    </a>
+
+                </div>
+                <div class="card-container">
+                    <a href="/admin/users" class="card box-shadow-1">
+                        <div class="card-icon">
+
+                            <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-user-image">
+                        </div>
+                        <div class="card-content ">Delete Users</div>
+                    </a>
+
+                </div>
             </div>
-            <div class="card-container">
-                <a href="/admin/verify-new-users" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\approve-user.png" alt=" approve-user-image">
-                    </div>
-                    <div class="card-content ">Approve New Users</div>
-                </a>
-
-            </div>
-            <div class="card-container">
-                <a href="/admin/users" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-user-image">
-                    </div>
-                    <div class="card-content ">Update Users </div>
-                </a>
-
-            </div>
-            <div class="card-container">
-                <a href="/admin/users" class="card box-shadow-1">
-                    <div class="card-icon">
-
-                        <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-user-image">
-                    </div>
-                    <div class="card-content ">Delete Users</div>
-                </a>
-
-            </div>
-        </div>
+        <?php } ?>
 
 
         <div class="grid-container">
             <div class="content-dashboard-text">
-                Collections
+                User Groups
             </div>
             <div class="card-container">
                 <a href="/admin/create-user-group" class="card box-shadow-1">
@@ -114,20 +121,22 @@ $userRole = "admin";
             </div>
         </div>
 
+        <?php if (Application::$app->getUserRole() <= 2) { ?>
+            <div class="grid-container">
+                <div class="content-dashboard-text">
+                    Manage Library Information Assistant(LIA) Accounts
+                </div>
+                <div class="card-container">
+                    <a href="/admin/manage-library-information-assistant" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
+                        </div>
+                        <div class="card-content ">Manage Library Information Assistants</div>
+                    </a>
+                </div>
+            </div>
+        <?php } ?>
 
-        <div class="grid-container">
-            <div class="content-dashboard-text">
-                Manage Library Information Assistant(LIA) Accounts
-            </div>
-            <div class="card-container">
-                <a href="/admin/manage-library-information-assistant" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
-                    </div>
-                    <div class="card-content ">Manage Library Information Assistants</div>
-                </a>
-            </div>
-        </div>
     </div>
 
 

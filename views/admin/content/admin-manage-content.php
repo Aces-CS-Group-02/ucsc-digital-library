@@ -1,4 +1,7 @@
 <?php
+
+use app\core\Application;
+
 $isLoggedIn = true;
 $userRole = "admin";
 ?>
@@ -100,20 +103,23 @@ $userRole = "admin";
 
         </div>
 
-        <div class="grid-container">
-            <div class="content-dashboard-text ">
-                Collections
-            </div>
-            <div class="card-container">
-                <a href="/admin/manage-communities" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
-                    </div>
-                    <div class="card-content ">Manage Communities & Collection</div>
-                </a>
-            </div>
-        </div>
+        <?php if (Application::$app->getUserRole() <= 2) { ?>
 
+            <div class="grid-container">
+                <div class="content-dashboard-text ">
+                    Communities & Collections
+                </div>
+                <div class="card-container">
+                    <a href="/admin/manage-communities" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        </div>
+                        <div class="card-content ">Manage Communities & Collection</div>
+                    </a>
+                </div>
+            </div>
+
+        <?php } ?>
 
         <div class="grid-container">
             <div class="content-dashboard-text ">
