@@ -2,7 +2,35 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
+}
+
+.breadcrum-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+}
+
+.breadcrum-link{
+  text-decoration: none;
+  color: #8a8a8a;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.breadcrum-link, .breadcrum-link-arrow{
+  color: #727272;
+
+}
+
+.breadcrum-link-arrow{
+  margin: 0 7px;
+}
+
+.current-breadcrum-link{
+  color: #437ee6;
 }
 
 #bulk-register-main-content {
@@ -11,10 +39,10 @@ body {
 
 .page-header-container {
   max-width: 1400px;
-  width: 96%;
-  margin: 0 auto;
-  border-bottom: 1px solid rgb(131, 131, 131);
-  padding: 15px 0;
+    width: 96%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(210, 210, 210);
+    padding: 15px 0;
 }
 
 #page-header-title {

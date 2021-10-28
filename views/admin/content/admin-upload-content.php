@@ -33,7 +33,8 @@ $userRole = "admin";
     ?>
     <div class="admin-dashboard-main-content">
         <div class="admin-dashboard-text">
-            Upload Content
+            <p id="page-header-title">Upload content</p>
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="form-container">
             <form id="form-features">

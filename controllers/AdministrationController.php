@@ -52,7 +52,13 @@ class AdministrationController extends Controller
     {
         $userModel = new User();
         $allLIAMembers =  $userModel->findAll(['role_id' => 2]); // Set LIA role_id here
-        $this->render("admin/manage-library-information-assistant", ['allStaffMembers' => $allLIAMembers]);
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_MANAGE_LIA
+        ];
+        $this->render("admin/manage-library-information-assistant", ['allStaffMembers' => $allLIAMembers, 'breadcrum' => $breadcrum]);
     }
 
     public function createLibraryInformationAssistant(Request $request)
@@ -61,7 +67,15 @@ class AdministrationController extends Controller
 
         if ($request->getMethod() === 'GET') {
             $allStaffMembers =  $userModel->findAll(['role_id' => 3]); // Set Academic-Non academic staff role_id here
-            $this->render("admin/create-library-information-assistant", ['allStaffMembers' => $allStaffMembers]);
+
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_USERS,
+                self::BREADCRUM_MANAGE_LIA,
+                self::BREADCRUM_CREATE_LIA
+
+            ];
+            $this->render("admin/create-library-information-assistant", ['allStaffMembers' => $allStaffMembers, 'breadcrum' => $breadcrum]);
         } else {
             $data = $request->getBody();
             $user = $userModel->findOne(['reg_no' => $data['reg_no']]);
@@ -74,7 +88,12 @@ class AdministrationController extends Controller
                     Application::$app->response->redirect('/admin/manage-library-information-assistant');
                 } else {
                     Application::$app->session->setFlashMessage('error', "Couldn't upgarade to library information assistant ");
-                    return $this->render("admin/manage-library-information-assistant");
+                    $breadcrum = [
+                        self::BREADCRUM_DASHBOARD,
+                        self::BREADCRUM_MANAGE_USERS,
+                        self::BREADCRUM_APPROVE_NEW_USERS
+                    ];
+                    return $this->render("admin/manage-library-information-assistant", ['breadcrum' => $breadcrum]);
                 }
             } else {
                 throw new NotFoundException();
@@ -119,8 +138,8 @@ class AdministrationController extends Controller
     public function manageContentDashboard(Request $request)
     {
         $breadcrum = [
-            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
-            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content']
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT
         ];
         return $this->render("admin/content/admin-manage-content", ['breadcrum' => $breadcrum]);
     }
@@ -128,8 +147,8 @@ class AdministrationController extends Controller
     public function manageUsersDashboard(Request $request)
     {
         $breadcrum = [
-            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
-            ['name' => 'Manage users', 'link' => '/admin/dashboard/manage-users']
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS
         ];
         return $this->render("admin/user/admin-manage-users", ['breadcrum' => $breadcrum]);
     }
@@ -138,30 +157,50 @@ class AdministrationController extends Controller
     public function manageApprovalsDashboard(Request $request)
     {
         $breadcrum = [
-            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
-            ['name' => 'Manage approvals', 'link' => '/admin/dashboard/manage-approvals']
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS
         ];
         return $this->render("admin/approve/admin-approvals", ['breadcrum' => $breadcrum]);
     }
 
     public function bulkUpload(Request $request)
     {
-        return $this->render("admin/content/bulk-upload");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_BULK_UPLOAD
+        ];
+        return $this->render("admin/content/bulk-upload", ['breadcrum' => $breadcrum]);
     }
 
     public function uploadContent(Request $request)
     {
-        return $this->render("admin/content/admin-upload-content");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_UPLOAD_CONTENT
+        ];
+        return $this->render("admin/content/admin-upload-content", ['breadcrum' => $breadcrum]);
     }
 
     public function publishContent(Request $request)
     {
-        return $this->render("admin/content/publish-content");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_PUBLISH_CONTENT
+        ];
+        return $this->render("admin/content/publish-content", ['breadcrum' => $breadcrum]);
     }
 
     public function unpublishContent(Request $request)
     {
-        return $this->render("admin/content/unpublish-content");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_PUBLISH_CONTENT
+        ];
+        return $this->render("admin/content/unpublish-content", ['breadcrum' => $breadcrum]);
     }
 
     public function editMetadata(Request $request)
@@ -171,24 +210,44 @@ class AdministrationController extends Controller
 
     public function removeContent(Request $request)
     {
-        return $this->render("admin/content/delete-content");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_REMOVE_CONTENT
+        ];
+        return $this->render("admin/content/delete-content", ['breadcrum' => $breadcrum]);
     }
 
 
     public function bulkRegister(Request $request)
     {
         if ($request->getMethod() === 'GET') {
-            return $this->render("admin/user/admin-bulk-registering");
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_USERS,
+                self::BREADCRUM_BULK_REGISTER
+            ];
+            return $this->render("admin/user/admin-bulk-registering", ['breadcrum' => $breadcrum]);
         }
 
         if ($request->getMethod() === 'POST') {
-            return $this->render("admin/user/bulk-register");
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_USERS,
+                self::BREADCRUM_BULK_REGISTER
+            ];
+            return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum]);
         }
     }
 
     public function manageUsers(Request $request)
     {
-        return $this->render("admin/user/users-view-update-delete");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_UPDATE_USERS
+        ];
+        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum]);
     }
 
     public function createUserGroup(Request $request)

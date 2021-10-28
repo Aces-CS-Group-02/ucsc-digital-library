@@ -26,6 +26,11 @@ class ApproveController extends Controller
 
         $allRequests = $registrationRequest->getAll();
 
-        return $this->render('admin/user/verify-new-users', ['model' => $allRequests]);
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_APPROVE_NEW_USERS
+        ];
+        return $this->render('admin/user/verify-new-users', ['model' => $allRequests, 'breadcrum' => $breadcrum]);
     }
 }

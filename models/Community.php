@@ -80,7 +80,7 @@ class Community extends DbModel
     public function loadCommunity($data)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT community_id, name, description FROM $tableName WHERE community_id = $data");
+        $statement = self::prepare("SELECT community_id, name, description, parent_community_id FROM $tableName WHERE community_id = $data");
         $statement->execute();
         $result = $statement->fetchObject();
 
@@ -89,6 +89,7 @@ class Community extends DbModel
             $this->community_id = $result->community_id;
             $this->name = $result->name;
             $this->description = $result->description;
+            $this->parent_community_id = $result->parent_community_id;
             return true;
         } else {
             return false;

@@ -23,17 +23,25 @@ class CommunitiesController extends Controller
         $pageCount = $community->getPageCount($limit);
         $allTopCommunities = $community->getAllTopLevelCommunities($start, $limit);
 
-        $breadcrumAdminPanel = [
-            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
-            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
-            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS
         ];
-        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrumAdminPanel, 'pageCount' => $pageCount, 'currentPage' => $page]);
+
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrum, 'pageCount' => $pageCount, 'currentPage' => $page]);
     }
 
     public function createTopLevelCommunities()
     {
-        return $this->render('admin/createtoplevelcommunities');
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS,
+            self::BREADCRUM_CREATE_TOP_LEVEL_COMMUNITY
+        ];
+
+        return $this->render('admin/createtoplevelcommunities', ['breadcrum' => $breadcrum]);
     }
 
     public function createSubCommunity(Request $request)
@@ -48,7 +56,23 @@ class CommunitiesController extends Controller
         if (!$communityModel->findCommunity($data['parent-id'])) {
             throw new NotFoundException();
         }
-        return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id']]);
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS
+        ];
+
+        $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['parent-id']);
+        foreach ($breadcrumCommunities as $link) {
+            $breadcrumLinkName =  $link['name'];
+            $breadcrumLink = '/admin/manage-community?community-id=' . $link["community_id"];
+            $val = ['name' => $breadcrumLinkName, 'link' => $breadcrumLink];
+            array_push($breadcrum, $val);
+        }
+        array_push($breadcrum, self::BREADCRUM_CREATE_SUB_COMMUNITY);
+
+        return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $data['parent-id'], 'breadcrum' => $breadcrum]);
     }
 
     public function createNewCommunity(Request $request)
@@ -60,7 +84,14 @@ class CommunitiesController extends Controller
                 Application::$app->response->redirect('/admin/manage-communities');
                 exit;
             }
-            return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel]);
+
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS,
+                self::BREADCRUM_CREATE_TOP_LEVEL_COMMUNITY
+            ];
+            return $this->render('admin/createtoplevelcommunities', ['model' => $communityModel, 'breadcrum' => $breadcrum]);
         }
     }
 
@@ -84,7 +115,22 @@ class CommunitiesController extends Controller
                     Application::$app->response->redirect('/admin/manage-community?community-id=' . $communityModel->parent_community_id);
                 }
             } else {
-                return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $communityModel->parent_community_id, 'model' => $communityModel]);
+
+                $breadcrum = [
+                    self::BREADCRUM_DASHBOARD,
+                    self::BREADCRUM_MANAGE_CONTENT,
+                    self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS
+                ];
+                $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['parent_community_id']);
+                foreach ($breadcrumCommunities as $link) {
+                    $breadcrumLinkName =  $link['name'];
+                    $breadcrumLink = '/admin/manage-community?community-id=' . $link["community_id"];
+                    $val = ['name' => $breadcrumLinkName, 'link' => $breadcrumLink];
+                    array_push($breadcrum, $val);
+                }
+                array_push($breadcrum, self::BREADCRUM_CREATE_SUB_COMMUNITY);
+
+                return $this->render('admin/createtoplevelcommunities', ['parent_community_id' => $communityModel->parent_community_id, 'model' => $communityModel, 'breadcrum' => $breadcrum]);
             }
         }
     }
@@ -118,7 +164,6 @@ class CommunitiesController extends Controller
                 // If parent community ID is null then it is a top level community. So check within top level communities level
                 $statement_spec = "AND parent_community_id IS NULL";
             }
-
 
             if (!empty($updateRequiredFileds)) {
                 if (in_array("name", $updateRequiredFileds)) {

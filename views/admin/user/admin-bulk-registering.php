@@ -33,7 +33,9 @@ $userRole = "admin";
     ?>
     <div class="admin-dashboard-main-content">
         <div class="admin-dashboard-text">
-            Bulk Registering
+            <p id='page-header-title'>Bulk Register</p>
+
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="form-container form-container-override">
             <form class="form-feature" action="" method="POST">

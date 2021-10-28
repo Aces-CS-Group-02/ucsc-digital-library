@@ -47,6 +47,7 @@ $userRole = "student";
     <div id="update-user-main-content">
         <div class="page-header-container">
             <p id="page-header-title">Create Collection</p>
+            <?php include_once dirname(__DIR__) . '/components/breadcrum.php'; ?>
         </div>
 
         <div class="wrapper">
