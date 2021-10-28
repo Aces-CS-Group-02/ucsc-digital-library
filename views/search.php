@@ -47,7 +47,7 @@ $userRole = "student";
                 <div class="left-panel-card-title">
                     <h5>Title</h5>
                 </div>
-                <div class="left-panel-card-item">
+                <!-- <div class="left-panel-card-item">
                     item
                 </div>
                 <div class="left-panel-card-item">
@@ -58,13 +58,13 @@ $userRole = "student";
                 </div>
                 <div class="left-panel-card-footer">
                     footer
-                </div>
+                </div> -->
             </div>
             <div class="left-panel-card box-shadow-1">
                 <div class="left-panel-card-title">
-                    <h5>Title</h5>
+                    <h5>Creator</h5>
                 </div>
-                <div class="left-panel-card-item">
+                <!-- <div class="left-panel-card-item">
                     <a href="">item</a>
                 </div>
                 <div class="left-panel-card-item">
@@ -75,13 +75,13 @@ $userRole = "student";
                 </div>
                 <div class="left-panel-card-footer">
                     footer
-                </div>
+                </div> -->
             </div>
             <div class="left-panel-card box-shadow-1">
                 <div class="left-panel-card-title">
-                    <h5>Title</h5>
+                    <h5>Subject</h5>
                 </div>
-                <div class="left-panel-card-item">
+                <!-- <div class="left-panel-card-item">
                     item
                 </div>
                 <div class="left-panel-card-item">
@@ -92,7 +92,7 @@ $userRole = "student";
                 </div>
                 <div class="left-panel-card-footer">
                     footer
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="search-result-container">

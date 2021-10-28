@@ -107,7 +107,7 @@ $userRole = "student";
           <input id="main-searchbox-input" type="text" />
           <div class="search-N-advanced-search-btn-container">
             <button id="main-search-btn" onclick="document.location='/search'">Search</button>
-            <a id="main-advanced-search-btn" href="#">Advanced Search</a>
+            <a href="/advanced-search">Advanced Search</a>
           </div>
         </div>
 

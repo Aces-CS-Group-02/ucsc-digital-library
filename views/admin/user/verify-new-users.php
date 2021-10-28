@@ -50,7 +50,7 @@ $userRole = "student";
             <div class="search-component-container">
                 <form action="">
                     <div class="ug-search-input-wrapper">
-                        <input type="text" placeholder="Search user groups">
+                        <input type="text" placeholder="Search new users">
                         <button>
                             <i class="fas fa-search"></i>
                         </button>
@@ -138,7 +138,7 @@ $userRole = "student";
                     <div class="block-e">
                         <p>
                             <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                            <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="approve(<?php echo $request->request_id; ?>)" type="button">Approve</button>
                             <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
                         </p>
                     </div>
@@ -160,6 +160,28 @@ $userRole = "student";
 
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/verify-new-users.js"></script>
+
+    <script>
+        function approve(request_id) {
+            var form = document.createElement('form');
+            var element = document.createElement("input"); 
+
+            form.method = "POST";
+            form.action = "/admin/verify-new-users";
+
+            element.value = request_id;
+            element.name = "request_id";
+            element.type = "hidden";
+            form.appendChild(element);
+
+            // form.setAttribute('method', 'post');
+            // form.setAttribute('action', '/admin/verify-new-users?'+request_id);
+            form.style.display = 'hidden';
+            document.body.appendChild(form)
+            console.log(form);
+            form.submit();
+        }
+    </script>
 
 </body>
 

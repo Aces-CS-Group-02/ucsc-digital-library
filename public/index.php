@@ -30,6 +30,7 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [SiteController::class, "home"]);
 $app->router->get('/search', [SiteController::class, "search"]);
 $app->router->get('/browse', [SiteController::class, "browse"]);
+$app->router->get('/advanced-search', [SiteController::class, "advancedSearch"]);
 
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
@@ -53,12 +54,6 @@ $app->router->post('/reset-password',[AuthController::class, "resetPassword"]);
 $app->router->get('/contact', [SiteController::class, "contact"]);
 $app->router->post('/contact', [SiteController::class, "handleContact"]);
 
-$app->router->get('/profile', [AuthController::class, "profile"]);
-
-
-
-
-
 // Communities & Sub communities
 $app->router->get('/admin/manage-communities', [CommunitiesController::class, "communities"]);
 $app->router->get('/admin/create-top-level-community', [CommunitiesController::class, "createTopLevelCommunities"]);
@@ -80,6 +75,7 @@ $app->router->post('/ajax/delete-community-collection', [CollectionController::c
 
 //User routes
 $app->router->get('/profile', [UserController::class, "profile"]);
+$app->router->get('/profile/edit', [UserController::class, "editProfile"]);
 
 
 // Create, Remove LIA
@@ -109,6 +105,7 @@ $app->router->get('/admin/remove-content', [AdministrationController::class, "re
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+$app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 
 
@@ -165,9 +162,6 @@ $app->router->get('/admin/approve-user-groups', [AdministrationController::class
 
 
 // $app->router->post('/manage/community', [CommunitiesController::class, "update"]);
-
-
-
 
 
 // $app->router->post('/communities', [CommunitiesController::class, "createNewCommunity"]);
