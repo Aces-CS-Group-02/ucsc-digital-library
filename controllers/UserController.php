@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\models\Community;
+use app\models\Role;
 
 class UserController extends Controller
 {

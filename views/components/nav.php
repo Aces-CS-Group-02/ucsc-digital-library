@@ -87,8 +87,7 @@ if ($user) $isLoggedIn = true;
                                 $userName = Application::$app->getUserDisplayName();
                                 echo $userName['firstname'] . " " . $userName['lastname']; ?></p>
 
-
-            <p id="user-role">Administrator</p>
+            <p id="user-role"><?php echo Application::$app->getUserRoleName()->name; ?></p>
             <div class="line-break"></div>
 
 

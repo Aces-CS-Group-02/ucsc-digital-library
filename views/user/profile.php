@@ -1,3 +1,10 @@
+<?php
+$isLoggedIn = true;
+
+
+use app\core\Application;
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +27,7 @@
 
     <!-- Local Styles -->
     <link rel="stylesheet" href="./css/local-styles/profile.css">
-    
+
 
 
     <title>Document</title>
@@ -49,14 +56,21 @@
 
 
             <div class="user-info-and-btns-container">
+                <?php
+
+                $userName = Application::$app->getUserDisplayName();
+                $userEmail = Application::$app->getUserEmail();
+                $userRole = Application::$app->getUserRoleName();
+
+                ?>
                 <div class="user-info">
                     <div class="user-name-and-user-role">
-                        <p id="user-name-id">R.A.N.S. Ranasinghe</p>
+                        <p id="user-name-id"><?php echo $userName['firstname'].' '.$userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id">Admin</p>
+                        <p id="user-role-id"><?php echo $userRole->name; ?></p>
                     </div>
 
-                    <p>2019csxxx@stu.ucsc.lk</p>
+                    <p><?php echo $userEmail['email'] ?></p>
                 </div>
 
                 <div class="user-profile-settings-btn-container">
