@@ -13,16 +13,22 @@ use Exception;
 
 class CommunitiesController extends Controller
 {
-    public function communities()
+    public function communities(Request $request)
     {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
         $community = new Community();
-        $allTopCommunities = $community->getAllTopLevelCommunities();
+        $pageCount = $community->getPageCount($limit);
+        $allTopCommunities = $community->getAllTopLevelCommunities($start, $limit);
+
         $breadcrumAdminPanel = [
             ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
             ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
             ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
         ];
-        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrumAdminPanel]);
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrumAdminPanel, 'pageCount' => $pageCount, 'currentPage' => $page]);
     }
 
     public function createTopLevelCommunities()

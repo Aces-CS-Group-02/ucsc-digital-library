@@ -95,8 +95,44 @@ body{
 }
 
 .current-breadcrum-link{
-    color: #437ee6;
+    color: #4285f4;
 }
+
+/* Paginate */
+
+.paginate-controller-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    margin-top: 10vh;
+}
+
+.paginate-btn-next-prev, .paginate-btn{
+    list-style: none;
+    margin: 0 7px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.paginate-btn-next-prev > a, .paginate-btn> a{
+    text-decoration: none;
+    color: #4285f4;
+}
+
+.paginate-current-page > a{
+    color: gray;
+    font-weight: 500;
+}
+
+
+
+/* Paginate */
+
 
 .user-group-container{
     /* border: 1px solid red; */

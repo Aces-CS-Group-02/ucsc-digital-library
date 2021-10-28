@@ -225,6 +225,16 @@ use app\core\Application;
                         <p class="no-records-available">No Records Available :(</p>
                     <?php } ?>
 
+
+                    <?php
+
+                    if (isset($params['pageCount'])) {
+                        include_once dirname(__DIR__) . '/components/paginate.php';
+                    }
+                    ?>
+
+
+
                 </div>
             </div>
         </div>

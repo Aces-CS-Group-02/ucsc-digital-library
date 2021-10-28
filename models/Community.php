@@ -38,10 +38,10 @@ class Community extends DbModel
     }
 
 
-    public function getAllTopLevelCommunities()
+    public function getAllTopLevelCommunities($start, $limit)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL");
+        $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL LIMIT $start, $limit");
         $statement->execute();
         return $statement->fetchAll();
     }
@@ -235,5 +235,13 @@ class Community extends DbModel
                                     ORDER BY T1.lvl DESC");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPageCount($limit)
+    {
+        $tableName = static::tableName();
+        $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL");
+        $statement->execute();
+        return ceil($statement->rowCount() / $limit);
     }
 }
