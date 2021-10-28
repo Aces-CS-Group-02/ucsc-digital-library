@@ -98,7 +98,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/create-user-group" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-group-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user-group.png" alt=" create-group-image">
                     </div>
                     <div class="card-content ">Create User Group</div>
                 </a>
