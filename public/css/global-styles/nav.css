@@ -103,6 +103,43 @@
   cursor: pointer;
 }
 
+/* =========================<Search> *====================================== */
+
+.nav-bar-search-input-wrapper{
+  display: flex;
+  align-items: center;
+  height: 26px !important;
+  background-color: white;
+  border-radius: 13px;
+}
+
+.nav-bar-search-input-wrapper > input{
+  border: none;
+  outline: none;
+  height: 100% !important;
+  padding: 0 10px;
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+}
+
+#nav-search-btn{
+  border: 1px solid white;
+  outline: none;
+  height: 100% !important;
+  padding: 5px;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(168, 168, 168);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+#nav-search-btn:hover{
+  color: white;
+  background-color: rgb(148, 148, 148);
+}
 /*========================== <Burger Menu> ======================================*/
 
 .burger-menu {

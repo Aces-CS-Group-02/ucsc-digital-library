@@ -3,14 +3,14 @@
 
 <?php
 
-    use app\core\Application;
+use app\core\Application;
 
-    // echo '<pre>';
-    // var_dump(Application::$app->user);
-    // echo '</pre>';
-    $user = Application::$app->user;
+// echo '<pre>';
+// var_dump(Application::$app->user);
+// echo '</pre>';
+$user = Application::$app->user;
 
-    if($user)$isLoggedIn=true;
+if ($user) $isLoggedIn = true;
 
 ?>
 
@@ -20,9 +20,24 @@
             <img id="ucsc-logo" src="/../assets/nav/ucsc-logo-white.png" alt="ucsc-logo">
             <a href="/" class="nav-link" id="logo-txt">Digital Library</a>
         </div>
+
+
+
         <div class="nav-links">
+
+            <div class="nav-bar-search-component-container">
+                <form action="">
+                    <div class="nav-bar-search-input-wrapper">
+                        <input type="text" placeholder="Search">
+                        <button id="nav-search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+
             <a class="nav-link" href="/browse">Browse</a>
             <a class="nav-link" href="#">Help</a>
+
 
             <?php
 
@@ -66,14 +81,24 @@
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
             <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpg');"></div>
-            <p id="user-name">Jane Doe</p>
+
+
+            <p id="user-name"><?php
+                                $userName = Application::$app->getUserDisplayName();
+                                echo $userName['firstname'] . " " . $userName['lastname']; ?></p>
+
+
             <p id="user-role">Administrator</p>
             <div class="line-break"></div>
 
 
             <div class="dropdown-menu-links-container">
-                <?php if ($userRole == 'admin' || $userRole == 'al' || $userRole == 'lia') : ?>
-                    <a href="#">
+                <?php
+
+                $currentUser_role_id = Application::$app->getUserRole();
+
+                if ($currentUser_role_id <= 3) : ?>
+                    <a href="/admin/dashboard">
                         <div class="dropdown-menu-link-item">
                             <i class="fas fa-user-shield"></i>
                             <p>administration</p>
@@ -90,12 +115,6 @@
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-sliders-h"></i>
                         <p>my collections</p>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="dropdown-menu-link-item">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Settings</p>
                     </div>
                 </a>
                 <a href="/logout">

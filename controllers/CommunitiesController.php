@@ -17,7 +17,7 @@ class CommunitiesController extends Controller
     {
         $data = $request->getBody();
         $page = isset($data['page']) ? $data['page'] : 1;
-        $limit = 10;
+        $limit = 5;
         $start = ($page - 1) * $limit;
         $community = new Community();
         $pageCount = $community->getPageCount($limit);
