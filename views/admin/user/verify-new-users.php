@@ -41,6 +41,7 @@ $userRole = "student";
 
     <div class="page-header-container">
         <p id="page-header-title">Verify New Users</p>
+        <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
     </div>
 
     <div class="second-border">
@@ -125,14 +126,14 @@ $userRole = "student";
                             <p>Verification</p>
                             <p>:</p>
                         </div>
-                        <p>  <a href="http://localhost:8000/<?php echo $request->verification; ?>" target="_blank">View</a></p>
+                        <p> <a href="http://localhost:8000/<?php echo $request->verification; ?>" target="_blank">View</a></p>
                     </div>
                     <div class="block-d">
                         <div class="block-title">
                             <p>Name</p>
                             <p>:</p>
                         </div>
-                        <p><?php echo $request->first_name;?> <?php echo $request->last_name;?></p>
+                        <p><?php echo $request->first_name; ?> <?php echo $request->last_name; ?></p>
                     </div>
                     <div class="block-e">
                         <p>
@@ -143,9 +144,9 @@ $userRole = "student";
                     </div>
                 </div>
             <?php } ?>
-            
-            </div>
+
         </div>
+    </div>
 
     </div>
 

@@ -43,6 +43,7 @@ $userRole = "student";
     <div id="delete-content-main-content">
         <div class="page-header-container">
             <p id="page-header-title">Delete Content</p>
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="wrapper">
             <div class="search-N-sort-components-container">

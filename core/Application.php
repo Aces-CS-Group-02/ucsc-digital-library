@@ -69,7 +69,7 @@ class Application
     public static function getUserDisplayName()
     {
         if (self::$app->user) {
-            return ['firstname' => self::$app->user->firstname, 'lastname' => self::$app->user->lastname];
+            return ['firstname' => self::$app->user->first_name, 'lastname' => self::$app->user->last_name];
         }
     }
 

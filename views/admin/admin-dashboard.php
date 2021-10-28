@@ -1,4 +1,7 @@
 <?php
+
+use app\core\Application;
+
 $isLoggedIn = true;
 $userRole = "admin";
 ?>
@@ -58,25 +61,30 @@ $userRole = "admin";
                 </a>
 
             </div>
-            <div class="card-container">
-                <a href="/admin/dashboard/view-reports" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-dashboard\graph.png" alt=" graph-image">
-                    </div>
-                    <div class="card-content ">View Reports</div>
-                </a>
 
-            </div>
+            <!-- Set LIA role id here as condition -->
+            <?php if (Application::$app->getUserRole() <= 2) { ?>
+                <div class="card-container">
+                    <a href="/admin/dashboard/view-reports" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-dashboard\graph.png" alt=" graph-image">
+                        </div>
+                        <div class="card-content ">View Reports</div>
+                    </a>
 
-            <div class="card-container">
-                <a href="/admin/dashboard/manage-approvals" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-dashboard\checked.svg" alt=" checked-image">
-                    </div>
-                    <div class="card-content ">Approval</div>
-                </a>
+                </div>
 
-            </div>
+
+                <div class="card-container">
+                    <a href="/admin/dashboard/manage-approvals" class="card box-shadow-1">
+                        <div class="card-icon">
+                            <img class="card-icon-img" src="/assets\admin-dashboard\checked.svg" alt=" checked-image">
+                        </div>
+                        <div class="card-content ">Approval</div>
+                    </a>
+
+                </div>
+            <?php } ?>
 
         </div>
     </div>
