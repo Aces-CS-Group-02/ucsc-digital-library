@@ -87,7 +87,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\metadata.png" alt=" content-add/update-image">
                     </div>
-                    <div class="card-content ">Add/Update Metadata</div>
+                    <div class="card-content ">Manage contents</div>
                 </a>
 
             </div>
@@ -96,7 +96,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
                     </div>
-                    <div class="card-content ">Delete Content</div>
+                    <div class="card-content ">My submissions</div>
                 </a>
             </div>
 
@@ -123,14 +123,14 @@ $userRole = "admin";
 
         <div class="grid-container">
             <div class="content-dashboard-text ">
-                Collections
+                Custom Collections
             </div>
             <div class="card-container">
                 <a href="" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">Create Content Collection</div>
+                    <div class="card-content ">Manage custom collection</div>
                 </a>
             </div>
             <div class="card-container">
@@ -138,15 +138,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">Update Content Collection</div>
-                </a>
-            </div>
-            <div class="card-container">
-                <a href="" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
-                    </div>
-                    <div class="card-content ">Delete Content Collection</div>
+                    <div class="card-content ">My custom collections</div>
                 </a>
             </div>
         </div>
