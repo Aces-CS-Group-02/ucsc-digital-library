@@ -121,7 +121,7 @@ $userRole = "admin";
             </div>
         </div>
 
-        <?php if (Application::$app->getUserRole() <= 2) { ?>
+        <?php if (Application::$app->getUserRole() < 2) { ?>
             <div class="grid-container">
                 <div class="content-dashboard-text">
                     Manage Library Information Assistant(LIA) Accounts

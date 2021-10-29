@@ -26,6 +26,7 @@ class AdministrationController extends Controller
 
         $this->registerMiddleware(new LIAAccessPermissionMiddleware(
             [
+                'manageLibraryInformationAssistant',
                 'createLibraryInformationAssistant',
                 'removeLibraryInformationAssistant'
             ]
