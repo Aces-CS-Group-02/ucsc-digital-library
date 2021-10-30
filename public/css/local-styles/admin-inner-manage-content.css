@@ -4,7 +4,7 @@ body {
     flex-direction: column;
 }
 
-#unpublish-content-main-content {
+#publish-content-main-content {
     flex-grow: 1;
 }
 
@@ -215,7 +215,7 @@ body {
     max-width: 1000px;
 }
 
-.unpublish-contents-headers-container {
+.publish-contents-headers-container {
     width: 100%;
     display: flex;
     font-weight: 500;
@@ -227,11 +227,11 @@ body {
     /* background-color: #a09191 !important; */
 }
 
-.unpublish-content-container {
+.publish-content-container {
     width: 100%;
 }
 
-.unpublish-content-info {
+.publish-content-info {
     width: 100%;
     height: fit-content;
     height: -webkit-fit-content;
@@ -244,8 +244,8 @@ body {
 }
 
 .btn-edit {
-    background-color: #ff635b !important;
-    border-color: #ed534b !important;
+    background-color: #31de4b !important;
+    border-color: #2ad444 !important;
 }
 
 .btn1-edit {
@@ -271,14 +271,19 @@ body {
 }
 
 .block-e {
-    flex-basis: 250px;
+    flex-basis: 120px;
+}
+
+.block-f {
+    flex-basis: 290px;
 }
 
 .block-a,
 .block-b,
 .block-c,
 .block-d,
-.block-e {
+.block-e,
+.block-f {
     text-align: left !important;
     vertical-align: middle !important;
     height: 100%;
@@ -304,17 +309,17 @@ body {
 
 @media only screen and (max-width: 690px) {
     /* Table content */
-    .block-e {
+    .block-f {
         padding-top: 10px;
     }
 }
 
 @media only screen and (max-width: 900px) {
     /* Table content */
-    .unpublish-contents-headers-container {
+    .publish-contents-headers-container {
         display: none;
     }
-    .unpublish-content-info {
+    .publish-content-info {
         display: flex;
         flex-direction: column;
     }
@@ -322,7 +327,8 @@ body {
     .block-b,
     .block-c,
     .block-d,
-    .block-e {
+    .block-e,
+    .block-f {
         width: 100%;
         /* background-color: #9ec2f3; */
         flex-basis: 0;
@@ -332,15 +338,22 @@ body {
         display: flex;
         align-items: flex-start;
     }
-    .block-e {
+    .block-f {
         /* padding-top: 10px; */
         text-align: right !important;
     }
+    /* .block-a,
+  .block-b,
+  .block-c,
+  .block-d {
+    padding: 0 10px;
+  } */
     .block-a>p,
     .block-b>p,
     .block-c>p,
     .block-d>p,
-    .block-e>p {
+    .block-e>p,
+    .block-f>p {
         flex: 4;
     }
     .block-title {

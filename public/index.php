@@ -8,6 +8,7 @@ use app\controllers\CollectionController;
 use app\controllers\UserController;
 use app\controllers\CommunitiesController;
 use app\controllers\ContentController;
+use app\controllers\DummyController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -137,7 +138,7 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 $app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
 
-
+$app->router->get('/test',[DummyController::class, "test"]);
 
 
 

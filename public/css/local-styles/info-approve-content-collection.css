@@ -101,10 +101,9 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-
-/* .info-items-container {
-    background-color: #d3d3d3;
-} */
+.info-items-container {
+    /* background-color: #d3d3d3; */
+}
 
 .info-item-container>* {
     font-family: "Poppins", sans-serif;
