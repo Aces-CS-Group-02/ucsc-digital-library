@@ -23,7 +23,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="/css/local-styles/publish-content.css">
+    <link rel="stylesheet" href="/css/local-styles/admin-my-submission.css">
 
 
 
@@ -43,7 +43,7 @@ $userRole = "student";
 
     <div id="publish-content-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Publish Content</p>
+            <p id="page-header-title">My Submission</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="wrapper">
@@ -68,6 +68,8 @@ $userRole = "student";
                                 <option value="2">Creator</option>
                                 <option value="3">Type</option>
                                 <option value="4">Date</option>
+                                <option value="5">Status</option>
+
                             </select>
                         </div>
                     </form>
@@ -152,7 +154,8 @@ $userRole = "student";
                     <div class="block-b">Creator</div>
                     <div class="block-c">Type</div>
                     <div class="block-d">Date</div>
-                    <div class="block-e">Action</div>
+                    <div class="block-e">Status</div>
+                    <div class="block-f">Action</div>
 
                 </div>
 
@@ -187,9 +190,17 @@ $userRole = "student";
                             <p>17/90/21</p>
                         </div>
                         <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-success">Approved</span></p>
+                        </div>
+                        <div class="block-f">
                             <p>
                                 <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
                             </p>
                         </div>
                     </div>
@@ -223,9 +234,17 @@ $userRole = "student";
                             <p>17/90/21</p>
                         </div>
                         <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-secondary">Draft</span></p>
+                        </div>
+                        <div class="block-f">
                             <p>
                                 <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
                             </p>
                         </div>
                     </div>
@@ -259,9 +278,17 @@ $userRole = "student";
                             <p>17/90/21</p>
                         </div>
                         <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-warning">Pending</span></p>
+                        </div>
+                        <div class="block-f">
                             <p>
                                 <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
                             </p>
                         </div>
                     </div>
@@ -295,9 +322,17 @@ $userRole = "student";
                             <p>17/90/21</p>
                         </div>
                         <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-danger">Rejected</span></p>
+                        </div>
+                        <div class="block-f">
                             <p>
                                 <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
                             </p>
                         </div>
                     </div>
@@ -331,9 +366,17 @@ $userRole = "student";
                             <p>17/90/21</p>
                         </div>
                         <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-warning">Pending</span></p>
+                        </div>
+                        <div class="block-f">
                             <p>
                                 <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
                             </p>
                         </div>
                     </div>

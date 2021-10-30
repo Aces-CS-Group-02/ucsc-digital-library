@@ -189,6 +189,43 @@ $userRole = "student";
                         </div>
                         <div class="block-e">
                             <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Fundamentals of Javascript</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Phu Phung</p>
+                        </div>
+                        <div class="block-c">
+                            <div class="block-title">
+                                <p>Type</p>
+                                <p>:</p>
+                            </div>
+                            <p>18/19 CS SCS2201 DSA</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>17/90/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
                             </p>
                         </div>
@@ -224,6 +261,7 @@ $userRole = "student";
                         </div>
                         <div class="block-e">
                             <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
                             </p>
                         </div>
@@ -259,6 +297,7 @@ $userRole = "student";
                         </div>
                         <div class="block-e">
                             <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
                             </p>
                         </div>
@@ -294,41 +333,7 @@ $userRole = "student";
                         </div>
                         <div class="block-e">
                             <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
                             </p>
                         </div>
