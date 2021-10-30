@@ -7,8 +7,12 @@ use app\controllers\AuthController;
 use app\controllers\CollectionController;
 use app\controllers\UserController;
 use app\controllers\CommunitiesController;
+<<<<<<< HEAD
 use app\controllers\ContentController;
 use app\controllers\DummyController;
+=======
+use app\controllers\UsergroupController;
+>>>>>>> a88a13b (feature group commit before rebase)
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -47,10 +51,10 @@ $app->router->get('/register', [AuthController::class, "register"]);
 $app->router->post('/register', [AuthController::class, "register"]);
 // $app->router->get('/registration-request', [AuthController::class, "registerRequest"]);
 $app->router->post('/registration-request', [AuthController::class, "registerRequest"]);
-$app->router->get('/verify-email',[AuthController::class, "verifyEmail"]);
-$app->router->post('/verify-email',[AuthController::class, "verifyEmail"]);
-$app->router->get('/reset-password',[AuthController::class, "resetPassword"]);
-$app->router->post('/reset-password',[AuthController::class, "resetPassword"]);
+$app->router->get('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->post('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->get('/reset-password', [AuthController::class, "resetPassword"]);
+$app->router->post('/reset-password', [AuthController::class, "resetPassword"]);
 
 
 $app->router->get('/contact', [SiteController::class, "contact"]);
@@ -124,7 +128,12 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 
 
 // Still Implementing
-// $app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
+$app->router->get('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
+$app->router->post('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
+$app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
+
+
+
 // $app->router->post('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
 // $app->router->get('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
 // $app->router->post('/ajax/push-user-to-user-group', [AdministrationController::class, "pushUserToUserGroup"]);

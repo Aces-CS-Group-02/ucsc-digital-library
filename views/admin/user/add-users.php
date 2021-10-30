@@ -45,7 +45,7 @@ $userRole = "student";
     <div id="add-users-main-content">
 
         <div class="page-header-container">
-            <p id="page-header-title">Add Users | <?php echo $params['group']->name ?? "" ?></p>
+            <p id="page-header-title"><?php echo $params['group']->name ?? "" ?></p>
         </div>
 
         <div class="wrapper">

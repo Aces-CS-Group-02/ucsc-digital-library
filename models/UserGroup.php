@@ -6,14 +6,11 @@ use app\core\Application;
 use app\core\DbModel;
 use PDO;
 
-class UserGroup extends DbModel
+class Usergroup extends DbModel
 {
     public int $group_id;
     public string $name = '';
     public int $creator_reg_no;
-    public $approved_person_reg_no;
-    public int $creator_type;
-    public bool $completed_status = false;
 
     public static function tableName(): string
     {
@@ -22,7 +19,7 @@ class UserGroup extends DbModel
 
     public function attributes(): array
     {
-        return ['name', 'creator_reg_no', 'creator_type', 'completed_status'];
+        return ['name', 'creator_reg_no'];
     }
 
     public static function primaryKey(): string
@@ -41,15 +38,11 @@ class UserGroup extends DbModel
 
     public function createUserGroup($data)
     {
-        $statement_spec = 'AND creator_type = 1';
-        $this->creator_type = 1;
         $this->loadData($data);
         $this->creator_reg_no = Application::$app->user->reg_no;
-
-        if ($this->validate($statement_spec)) {
-            if (Application::getUserRole() <= 2) {
-                if ($this->save()) return Application::$app->db->pdo->lastInsertId();
-            }
+        if ($this->validate()) {
+            if ($this->save()) return Application::$app->db->pdo->lastInsertId();
+            return true;
         }
         return false;
     }
