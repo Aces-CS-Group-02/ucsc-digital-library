@@ -3,14 +3,14 @@
 
 <?php
 
-    use app\core\Application;
+use app\core\Application;
 
-    // echo '<pre>';
-    // var_dump(Application::$app->user);
-    // echo '</pre>';
-    $user = Application::$app->user;
+// echo '<pre>';
+// var_dump(Application::$app->user);
+// echo '</pre>';
+$user = Application::$app->user;
 
-    if($user)$isLoggedIn=true;
+if ($user) $isLoggedIn = true;
 
 ?>
 
@@ -66,14 +66,18 @@
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
             <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpg');"></div>
-            <p id="user-name">Jane Doe</p>
+            <p id="user-name"><?php
+                                $userName = Application::$app->getUserDisplayName();
+                                echo $userName['firstname'] . " " . $userName['lastname']; ?></p>
             <p id="user-role"><?php echo Application::$app->getUserRoleName()->name; ?></p>
             <div class="line-break"></div>
 
 
             <div class="dropdown-menu-links-container">
-                <?php if ($userRole == 'admin' || $userRole == 'al' || $userRole == 'lia') : ?>
-                    <a href="#">
+                <?php
+                $currentUser_role_id = Application::$app->getUserRole();
+                if ($currentUser_role_id <= 3) : ?>
+                    <a href="/admin/dashboard">
                         <div class="dropdown-menu-link-item">
                             <i class="fas fa-user-shield"></i>
                             <p>Administration</p>
