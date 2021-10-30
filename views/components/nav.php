@@ -87,7 +87,7 @@ if ($user) $isLoggedIn = true;
                                 $userName = Application::$app->getUserDisplayName();
                                 echo $userName['firstname'] . " " . $userName['lastname']; ?></p>
 
-            <p id="user-role"><?php echo Application::$app->getUserRoleName()->name; ?></p>
+            <p id="user-role"><?php echo Application::$app->getUserRoleName(); ?></p>
             <div class="line-break"></div>
 
 
@@ -110,7 +110,7 @@ if ($user) $isLoggedIn = true;
                         <p>My Profile</p>
                     </div>
                 </a>
-                <a href="#">
+                <a href="profile/my-collections">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-sliders-h"></i>
                         <p>My Collections</p>
@@ -119,7 +119,7 @@ if ($user) $isLoggedIn = true;
                 <a href="/logout">
                     <div class="dropdown-menu-link-item" id="link-sign-out">
                         <i class="fas fa-sign-out-alt"></i>
-                        <p>Sign out</p>
+                        <p>Sign Out</p>
                     </div>
                 </a>
             </div>

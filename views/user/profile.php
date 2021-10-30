@@ -30,7 +30,7 @@ use app\core\Application;
 
 
 
-    <title>Document</title>
+    <title>My Profile</title>
 </head>
 
 <body>
@@ -65,7 +65,7 @@ use app\core\Application;
                 ?>
                 <div class="user-info">
                     <div class="user-name-and-user-role">
-                        <p id="user-name-id"><?php echo $userName['firstname'].' '.$userName['lastname'] ?></p>
+                        <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
                         <p id="user-role-id"><?php echo $userRole->name; ?></p>
                     </div>
@@ -107,50 +107,105 @@ use app\core\Application;
     <!-- Section A -->
 
     <div class="profile-section-a wrapper">
+
+        <!-- Flash Message Success -->
+        <?php
+
+        if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+
+
+        <?php } ?>
+
+
+
+
+        <!-- Flash Message Error -->
+        <?php
+        if (Application::$app->session->getFlashMessage('error')) { ?>
+            <div class="alert alert-warning" id="flash-msg-alert">
+                <strong>Error!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+        <?php } ?>
+
         <div class="section-header">
-            <p class="section-header-title">Collections</p>
-            <a class="section-header-view-all" href="#">View All</a>
+            <p class="section-header-title">My Collections</p>
+            <a class="section-header-view-all" href="profile/my-collections">View All</a>
         </div>
         <div class="profile-grid">
+            <?php
+
+            $collections = $params['collections'] ?? "";
+            // $first_record = true;
+            // if ($collections) {
+            //     foreach ($collections as $collection) {
+            //         echo $collection['user_collection_id'];
+            //     }
+            // }
+            // echo '<pre>';
+            // var_dump($collections);
+            // echo '</pre>';
+
+            ?>
+
+            <!-- This is the default user collection -->
             <div class="profile-gird-container">
-                <div class="profile-grid-item  box-shadow-2">
-                    <div class="profile-grid-item-icon-section">
-                        <i class="fas fa-book-reader"></i>
+                <a href="/profile/manage-collection-view" class="edit-link">
+                    <div class="profile-grid-item  box-shadow-2">
+                        <div class="profile-grid-item-icon-section">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div class="profile-grid-item-title-section">
+                            <p>Favourites</p>
+                        </div>
                     </div>
-                    <div class="profile-grid-item-title-section">
-                        <p>Favourites</p>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container">
-                <div class="profile-grid-item  box-shadow-2">
-                    <div class="profile-grid-item-icon-section">
-                        <i class="fas fa-book-reader"></i>
-                    </div>
-                    <div class="profile-grid-item-title-section">
-                        <p>PHP</p>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container">
-                <div class="profile-grid-item  box-shadow-2">
-                    <div class="profile-grid-item-icon-section">
-                        <i class="fas fa-book-reader"></i>
-                    </div>
-                    <div class="profile-grid-item-title-section">
-                        <p>DSA</p>
-                    </div>
-                </div>
+                </a>
             </div>
 
+            <!-- This loop renders the other created user collections to the page -->
+            <?php if ($collections) {
+                foreach ($collections as $collection) { ?>
+                    <div class="profile-gird-container">
+                        <a href="/profile/manage-collection" class="edit-link">
+                            <div class="profile-grid-item  box-shadow-2">
+                                <div class="profile-grid-item-icon-section">
+                                    <i class="fas fa-book-reader"></i>
+                                </div>
+                                <div class="profile-grid-item-title-section">
+                                    <p><?php echo $collection['name'] ?></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+            <?php }
+            } ?>
 
 
             <div class="profile-gird-container">
-                <div class="profile-grid-item  box-shadow-2">
-                    <div class="profile-grid-item-icon-section" id="create-new-collection">
-                        <i class="fas fa-plus"></i>
+                <a href="/profile/create-user-collection" class="edit-link">
+                    <div class="profile-grid-item  box-shadow-2">
+                        <div class="profile-grid-item-icon-section" id="create-new-collection">
+                            <i class="fas fa-plus"></i>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -232,7 +287,7 @@ use app\core\Application;
 
     <div class="profile-section-a wrapper">
         <div class="section-header">
-            <p class="section-header-title">Recent Readings</p>
+            <p class="section-header-title">Bookmarked Contents</p>
             <a class="section-header-view-all" href="#">View All</a>
         </div>
 
@@ -307,7 +362,7 @@ use app\core\Application;
     ?>
 
     <script src="./javascript/nav.js"></script>
-    <script src="./javascript/profile.js"></script>
+    <script src="./javascript/alert.js"></script>
 </body>
 
 </html>
