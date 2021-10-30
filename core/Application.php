@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\models\Role;
 use Exception;
 
 class Application
@@ -18,6 +19,7 @@ class Application
     public Database $db;
     public ?DbModel $user;
     public ?Controller $controller = null;
+    public Role $roleModel;
 
     public function __construct($rootPath, array $config)
     {
@@ -28,6 +30,7 @@ class Application
         $this->response = new Response();
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
+        $this->roleModel = new Role();
 
         $this->db = new Database($config['db']);
 
@@ -71,6 +74,18 @@ class Application
         if (self::$app->user) {
             return ['firstname' => self::$app->user->first_name, 'lastname' => self::$app->user->last_name];
         }
+    }
+
+    public static function getUserEmail()
+    {
+        if (self::$app->user) {
+            return ['email' => self::$app->user->email];
+        }
+    }
+
+    public function getUserRoleName()
+    {
+        return $this->roleModel->findOne(['role_id' => self::getUserRole()])->name ?? false;
     }
 
     public static function getUserRole()

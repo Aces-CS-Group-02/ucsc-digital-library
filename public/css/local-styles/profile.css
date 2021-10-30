@@ -242,6 +242,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.edit-link{
+    text-decoration: none;
+    color: black;
+}
 /* >>>>>>>>>>>>>>>>>>>>>>> Section - A >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 
 
