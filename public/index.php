@@ -76,16 +76,13 @@ $app->router->post('/ajax/delete-community-collection', [CollectionController::c
 
 //User routes
 $app->router->get('/profile', [UserController::class, "profile"]);
-<<<<<<< HEAD
 $app->router->get('/profile/edit', [UserController::class, "editProfile"]);
-=======
 $app->router->get('/profile/create-user-collection', [UserController::class, "userCollection"]);
 $app->router->post('/profile/create-user-collection', [UserController::class, "createNewUserCollection"]);
 $app->router->get('/profile/my-collections', [UserController::class, "userCollections"]);
 // $app->router->post('/profile/my-collections', [UserController::class, "userCollections"]);
 $app->router->get('/profile/manage-collection-view', [UserController::class, "manageCollectionTest"]);
 $app->router->get('/profile/manage-collection', [UserController::class, "manageCollection"]);
->>>>>>> Noranga wana mage commit eka
 
 
 // Create, Remove LIA
