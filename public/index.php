@@ -7,6 +7,7 @@ use app\controllers\AuthController;
 use app\controllers\CollectionController;
 use app\controllers\UserController;
 use app\controllers\CommunitiesController;
+use app\controllers\ContentController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -93,7 +94,12 @@ $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController
 
 
 // Admin Dashboard => Manage Content Routes
-$app->router->get('/admin/upload-content', [AdministrationController::class, "uploadContent"]);
+$app->router->get('/admin/upload-content', [ContentController::class, "selectCollection"]);
+$app->router->get('/admin/insert-metadata', [ContentController::class, "insertMetadata"]);
+$app->router->get('/admin/insert-keyword-abstract', [ContentController::class, "insertKeywordAbstract"]);
+$app->router->get('/admin/submit-content', [ContentController::class, "submitContent"]);
+$app->router->get('/admin/verify-submission', [ContentController::class, "verifySubmission"]);
+
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
