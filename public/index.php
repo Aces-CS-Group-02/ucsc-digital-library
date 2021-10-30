@@ -112,6 +112,7 @@ $app->router->get('/admin/bulk-register', [AdministrationController::class, "bul
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+$app->router->post('/admin/reject-new-user',[ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 
 

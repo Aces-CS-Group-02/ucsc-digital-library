@@ -45,7 +45,47 @@ $userRole = "student";
     </div>
 
     <div class="second-border">
+        <!-- Flash Message -->
+        <?php
 
+        use app\core\Application;
+
+        if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+
+
+        <?php } ?>
+
+        <?php
+
+
+        if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+
+
+        <?php } ?>
         <div class="search-N-sort-components-container">
             <div class="search-component-container">
                 <form action="">
@@ -139,10 +179,14 @@ $userRole = "student";
                         <p>
                             <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                             <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="approve(<?php echo $request->request_id; ?>)" type="button">Approve</button>
-                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
+                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="reject(<?php echo $request->request_id; ?>)" type="button">Reject</button>
                         </p>
                     </div>
                 </div>
+            <?php } ?>
+
+            <?php if (empty($communities)) { ?>
+                <p class="no-records-available">No Records Available :(</p>
             <?php } ?>
 
         </div>
@@ -160,11 +204,13 @@ $userRole = "student";
 
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/verify-new-users.js"></script>
+    <script src="/javascript/alert.js"></script>
+
 
     <script>
         function approve(request_id) {
             var form = document.createElement('form');
-            var element = document.createElement("input"); 
+            var element = document.createElement("input");
 
             form.method = "POST";
             form.action = "/admin/verify-new-users";
@@ -178,8 +224,30 @@ $userRole = "student";
             // form.setAttribute('action', '/admin/verify-new-users?'+request_id);
             form.style.display = 'hidden';
             document.body.appendChild(form)
-            console.log(form);
+            // console.log(form);
             form.submit();
+        }
+
+        function reject(request_id) {
+            var form = document.createElement('form');
+            var element = document.createElement("input");
+
+            form.method = "POST";
+            form.action = "/admin/reject-new-user";
+
+            element.value = request_id;
+            element.name = "request_id";
+            element.type = "hidden";
+            form.appendChild(element);
+
+            // form.setAttribute('method', 'post');
+            // form.setAttribute('action', '/admin/verify-new-users?'+request_id);
+            form.style.display = 'hidden';
+            document.body.appendChild(form)
+            // console.log(form);
+            if (confirm("Are you sure ?")) {
+                form.submit();
+            }
         }
     </script>
 
