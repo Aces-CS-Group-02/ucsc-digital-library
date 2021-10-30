@@ -47,7 +47,7 @@ $userRole = "student";
                 <div class="left-panel-card-title">
                     <h5>Browse menu</h5>
                 </div>
-                <div class="left-panel-card-item">
+                <!-- <div class="left-panel-card-item">
                     Community 1
                 </div>
                 <div class="left-panel-card-item">
@@ -58,7 +58,7 @@ $userRole = "student";
                 </div>
                 <div class="left-panel-card-footer">
                     Community 4
-                </div>
+                </div> -->
             </div>
             
         </div>

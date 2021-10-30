@@ -37,4 +37,9 @@ class SiteController extends Controller
     {
         return $this->render('browse');
     }
+
+    public function advancedSearch()
+    {
+        return $this->render('advanced-search');
+    }
 }

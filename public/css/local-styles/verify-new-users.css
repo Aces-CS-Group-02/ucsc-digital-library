@@ -5,12 +5,20 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.wrapper {
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
 .page-header-container {
   max-width: 1400px;
   width: 96%;
   margin: 0 auto;
   border-bottom: 1px solid rgb(210, 210, 210);
   padding: 15px 0;
+  margin-bottom: 10px;
 }
 
 #page-header-title {
@@ -250,6 +258,17 @@ body {
   white-space: nowrap;
   flex: 1;
   /* margin-bottom: 2px; */
+}
+
+
+.no-records-available{
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(172, 172, 172);
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 60px;
 }
 
 @media only screen and (min-width: 900px) {

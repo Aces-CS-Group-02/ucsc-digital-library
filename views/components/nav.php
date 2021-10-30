@@ -101,26 +101,26 @@ if ($user) $isLoggedIn = true;
                     <a href="/admin/dashboard">
                         <div class="dropdown-menu-link-item">
                             <i class="fas fa-user-shield"></i>
-                            <p>administration</p>
+                            <p>Administration</p>
                         </div>
                     </a>
                 <?php endif; ?>
                 <a href="/profile">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-user-circle"></i>
-                        <p>my profile</p>
+                        <p>My Profile</p>
                     </div>
                 </a>
                 <a href="#">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-sliders-h"></i>
-                        <p>my collections</p>
+                        <p>My Collections</p>
                     </div>
                 </a>
                 <a href="/logout">
                     <div class="dropdown-menu-link-item" id="link-sign-out">
                         <i class="fas fa-sign-out-alt"></i>
-                        <p>sign out</p>
+                        <p>Sign out</p>
                     </div>
                 </a>
             </div>

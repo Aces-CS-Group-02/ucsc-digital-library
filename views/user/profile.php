@@ -62,13 +62,13 @@
                 <div class="user-profile-settings-btn-container">
 
                     <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/edit-profile.php">
+                        <a class="user-profile-settings-btn" href="/profile/edit">
                             <i class="fas fa-edit"></i>
                             <p>Edit Profile</p>
                         </a>
                     </div>
 
-                    <div class="each-btn-container">
+                    <!-- <div class="each-btn-container">
                         <a class="user-profile-settings-btn" href="/user-activity-log.php">
                             <i class="fas fa-clipboard-list"></i>
                             <p>Activity Log</p>
@@ -80,7 +80,7 @@
                             <i class="fas fa-users"></i>
                             <p>User Groups</p>
                         </a>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

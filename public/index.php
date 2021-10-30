@@ -7,6 +7,7 @@ use app\controllers\AuthController;
 use app\controllers\CollectionController;
 use app\controllers\UserController;
 use app\controllers\CommunitiesController;
+use app\controllers\ContentController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -30,6 +31,7 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [SiteController::class, "home"]);
 $app->router->get('/search', [SiteController::class, "search"]);
 $app->router->get('/browse', [SiteController::class, "browse"]);
+$app->router->get('/advanced-search', [SiteController::class, "advancedSearch"]);
 
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
@@ -53,12 +55,6 @@ $app->router->post('/reset-password',[AuthController::class, "resetPassword"]);
 $app->router->get('/contact', [SiteController::class, "contact"]);
 $app->router->post('/contact', [SiteController::class, "handleContact"]);
 
-$app->router->get('/profile', [AuthController::class, "profile"]);
-
-
-
-
-
 // Communities & Sub communities
 $app->router->get('/admin/manage-communities', [CommunitiesController::class, "communities"]);
 $app->router->get('/admin/create-top-level-community', [CommunitiesController::class, "createTopLevelCommunities"]);
@@ -80,6 +76,7 @@ $app->router->post('/ajax/delete-community-collection', [CollectionController::c
 
 //User routes
 $app->router->get('/profile', [UserController::class, "profile"]);
+$app->router->get('/profile/edit', [UserController::class, "editProfile"]);
 
 
 // Create, Remove LIA
@@ -97,7 +94,12 @@ $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController
 
 
 // Admin Dashboard => Manage Content Routes
-$app->router->get('/admin/upload-content', [AdministrationController::class, "uploadContent"]);
+$app->router->get('/admin/upload-content', [ContentController::class, "selectCollection"]);
+$app->router->get('/admin/insert-metadata', [ContentController::class, "insertMetadata"]);
+$app->router->get('/admin/insert-keyword-abstract', [ContentController::class, "insertKeywordAbstract"]);
+$app->router->get('/admin/submit-content', [ContentController::class, "submitContent"]);
+$app->router->get('/admin/verify-submission', [ContentController::class, "verifySubmission"]);
+
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
@@ -109,6 +111,8 @@ $app->router->get('/admin/remove-content', [AdministrationController::class, "re
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+$app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+$app->router->post('/admin/reject-new-user',[ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 
 
@@ -165,9 +169,6 @@ $app->router->get('/admin/approve-user-groups', [AdministrationController::class
 
 
 // $app->router->post('/manage/community', [CommunitiesController::class, "update"]);
-
-
-
 
 
 // $app->router->post('/communities', [CommunitiesController::class, "createNewCommunity"]);
