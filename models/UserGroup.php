@@ -72,7 +72,7 @@ class Usergroup extends DbModel
         $statement = self::prepare("SELECT * FROM user t1
                                     LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
                                     ON t2.user_reg_no = t1.reg_no
-                                    WHERE t2.user_reg_no IS NULL");
+                                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
@@ -105,5 +105,22 @@ class Usergroup extends DbModel
 
         if ($usergroupUserModel->addUsers($group_id, $users_list_validated)) return true;
         return false;
+    }
+
+    public function getAllUsersInUserGroup($group_id)
+    {
+        $userModel = new User();
+        $usergroupUserModel = new UsergroupUser();
+
+        $tableName_1 = $userModel::tableName();
+        $tableName_2 = $usergroupUserModel::tableName();
+
+        $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+                                    FROM $tableName_2 t1
+                                    JOIN $tableName_1 t2
+                                    ON t2.reg_no = t1.user_reg_no
+                                    WHERE group_id = $group_id");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 }

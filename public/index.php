@@ -129,11 +129,18 @@ $app->router->get('/admin/create-user-group', [UsergroupController::class, "crea
 $app->router->post('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
 $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 
+$app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
+// $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
+$app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
+
+
+
+
+
 
 
 // $app->router->post('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
 // $app->router->get('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
-// $app->router->post('/ajax/push-user-to-user-group', [AdministrationController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [AdministrationController::class, "pushUsersToUserGroup"]);
 // $app->router->post('/admin/create-user-group/review', [AdministrationController::class, "reviewUserGroup"]);
 // $app->router->get('/admin/manage-user-groups', [AdministrationController::class, "manageUserGroup"]);
