@@ -7,12 +7,9 @@ use app\controllers\AuthController;
 use app\controllers\CollectionController;
 use app\controllers\UserController;
 use app\controllers\CommunitiesController;
-<<<<<<< HEAD
 use app\controllers\ContentController;
 use app\controllers\DummyController;
-=======
 use app\controllers\UsergroupController;
->>>>>>> a88a13b (feature group commit before rebase)
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -123,7 +120,7 @@ $app->router->get('/admin/bulk-register', [AdministrationController::class, "bul
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
-$app->router->post('/admin/reject-new-user',[ApproveController::class, "rejectNewUser"]);
+$app->router->post('/admin/reject-new-user', [ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 
 
@@ -147,7 +144,7 @@ $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 $app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
 
-$app->router->get('/test',[DummyController::class, "test"]);
+$app->router->get('/test', [DummyController::class, "test"]);
 
 
 
