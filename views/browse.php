@@ -60,7 +60,21 @@ $userRole = "student";
                     Community 4
                 </div> -->
             </div>
-            
+            <!-- <a href="/suggest-content" style="text-decoration: none;">
+                <div class="left-panel-card box-shadow-1">
+                    <div class="left-panel-card-title">
+                        <h5>Suggest New Content</h5>
+                    </div>
+                </div>
+            </a> -->
+            <div class="left-panel-card">
+                <!-- <div class="left-panel-card-title"> -->
+                <a href="/suggest-content" class="edit-link">
+                    Suggest New Content
+                </a>
+                <!-- </div> -->
+            </div>
+
         </div>
         <div class="search-result-container">
             <div class="open-side-menu">
@@ -187,7 +201,7 @@ $userRole = "student";
 
     <!-- FOOTER -->
 
-    <?php include_once __DIR__ . '/components/footer.php'; ?> 
+    <?php include_once __DIR__ . '/components/footer.php'; ?>
 
     <!-- SCRITP -->
 

@@ -80,7 +80,7 @@ $userRole = "admin";
                         <div class="card-icon">
                             <img class="card-icon-img" src="/assets\admin-dashboard\checked.svg" alt=" checked-image">
                         </div>
-                        <div class="card-content ">Approval</div>
+                        <div class="card-content ">Approvals</div>
                     </a>
 
                 </div>

@@ -43,15 +43,34 @@ class UserController extends Controller
     {
         $userCollectionModel = new UserCollection();
         $data = $request->getBody();
+        $data_keys = array_keys($data);
 
+        if(!in_array('collection-id',$data_keys)){
+            throw new NotFoundException();
+        }
         // if (!$userCollectionModel->findUserCollection($data['user_collection_id'])) {
         //     throw new NotFoundException();
         // }
 
-        // $userCollection = $userCollectionModel->findUserCollection($data['user_collection_id']);
+        $userCollection = $userCollectionModel->findOne(['user_collection_id' => $data['collection-id']]);
+        if($userCollection){
+            // var_dump($userCollection);
+            return $this->render('user/user-collection',['model' => $userCollection]);
+        }
+        throw new NotFoundException();
+
         // var_dump($data);
         // exit;
-        return $this->render('user/user-collection');
+    }
+
+    public function pdfViewer()
+    {
+        return $this->render('pdf-viewer');
+    }
+
+    public function suggestContent()
+    {
+        return $this->render('suggest-content');
     }
 
     public function createNewUserCollection(Request $request)

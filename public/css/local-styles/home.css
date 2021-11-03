@@ -453,6 +453,13 @@
   transform: scale(1.2);
 } */
 
+.edit-link{
+  margin-top: 10px;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
 .line-clamp {
   display: block;
   display: -webkit-box;

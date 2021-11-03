@@ -1,5 +1,6 @@
 body {
   height: 100vh;
+  font-family: "Poppins", sans-serif;
 }
 
 .pdf-viewer-page-main-container {
@@ -192,4 +193,60 @@ body {
     width: 100%;
     left: -100%;
   }
+}
+
+/*================================================================*/
+
+.top-bar {
+  /* background: #333; */
+  /* background: white; */
+  /* background: rgb(119, 119, 119); */
+  background: transparent;
+  /* max-width: fit-content; */
+  /* color: rgb(119, 119, 119); */
+  /* border: 1px dotted black; */
+  /* color: #fff; */
+  /* padding: 10px; */
+  /* position: sticky; */
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 60px;
+  /* background-color: rgba(0,0,0,0.5); */
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.btn {
+  /* background: coral; */
+  color: rgb(119, 119, 119);
+  /* color: #fff; */
+  border: none;
+  outline: none;
+  cursor: pointer;
+  /* padding: 0.7rem 2rem; */
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.page-info {
+  margin-left: 1rem;
+}
+
+.error {
+  background: orangered;
+  color: #fff;
+  padding: 1rem;
+}
+
+.canvas-edit {
+  display: flex;
+  margin: 0 auto !important;
+  overflow: hidden;
+  min-height: 100vh;
 }

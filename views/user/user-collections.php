@@ -67,7 +67,7 @@ use app\core\Application;
                     <div class="user-name-and-user-role">
                         <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole->name; ?></p>
+                        <p id="user-role-id"><?php echo $userRole; ?></p>
                     </div>
 
                     <p><?php echo $userEmail['email'] ?></p>
@@ -138,7 +138,7 @@ use app\core\Application;
             <?php if ($allCollections) {
                 foreach ($allCollections as $collection) { ?>
                     <div class="profile-gird-container">
-                        <a href="/profile/manage-collection" class="edit-link">
+                        <a href="/profile/manage-collection?collection-id=<?php echo $collection['user_collection_id'] ?>" class="edit-link">
                             <div class="profile-grid-item  box-shadow-2">
                                 <div class="profile-grid-item-icon-section">
                                     <i class="fas fa-book-reader"></i>

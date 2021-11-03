@@ -67,7 +67,7 @@ use app\core\Application;
                     <div class="user-name-and-user-role">
                         <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole->name; ?></p>
+                        <p id="user-role-id"><?php echo $userRole; ?></p>
                     </div>
 
                     <p><?php echo $userEmail['email'] ?></p>
@@ -111,9 +111,9 @@ use app\core\Application;
             <p class="section-header-title">Favourites</p>
         </div>
         <div class="button-place">
-            <a href="/profile/create-user-collection">
+            <!-- <a href="/profile/create-user-collection">
                 <button class="btn btn-primary mr-1 mb-1">Create New Collection</button>
-            </a>
+            </a> -->
             <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
             <button class="btn btn-danger mr-1 mb-1 btn2-edit edit" type="button">Delete</button>
         </div>

@@ -70,11 +70,11 @@ class UserCollection extends DbModel
         return $this->findAll(['reg_no' => $this->reg_no]) ?? false;
     }
 
-    public function findUserCollection($data)
-    {
-        $tableName = static::tableName();
-        $statement = self::prepare("SELECT * FROM $tableName WHERE user_collection_id = $data");
-        $statement->execute();
-        return $statement->fetchAll();
-    }
+    // public function findUserCollection($data)
+    // {
+    //     $tableName = static::tableName();
+    //     $statement = self::prepare("SELECT * FROM $tableName WHERE user_collection_id = $data");
+    //     $statement->execute();
+    //     return $statement->fetchAll();
+    // }
 }

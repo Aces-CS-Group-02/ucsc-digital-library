@@ -67,7 +67,7 @@ use app\core\Application;
                     <div class="user-name-and-user-role">
                         <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole->name; ?></p>
+                        <p id="user-role-id"><?php echo $userRole; ?></p>
                     </div>
 
                     <p><?php echo $userEmail['email'] ?></p>
@@ -184,7 +184,7 @@ use app\core\Application;
             <?php if ($collections) {
                 foreach ($collections as $collection) { ?>
                     <div class="profile-gird-container">
-                        <a href="/profile/manage-collection" class="edit-link">
+                        <a href="/profile/manage-collection?collection-id=<?php echo $collection['user_collection_id'] ?>" class="edit-link" data-id="<?php echo $collection['user_collection_id'] ?>">
                             <div class="profile-grid-item  box-shadow-2">
                                 <div class="profile-grid-item-icon-section">
                                     <i class="fas fa-book-reader"></i>
@@ -220,16 +220,18 @@ use app\core\Application;
 
         <div class="profile-grid">
             <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card ">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learning PHP, MySQL & Javascript</p>
+                <a href="/profile/pdf-viewer" class="edit-link">
+                    <div class="profile-grid-item box-shadow-2">
+                        <div class="content-card ">
+                            <div class="content-card-img">
+                                <img src="/assets/profile/book-cover.jpg" alt="">
+                            </div>
+                            <div class="content-card-bottom">
+                                <p class="content-card-bottom-title line-clamp line-clamp-2-description">A Christmas Carol</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="profile-gird-container profile-section-b">
                 <div class="profile-grid-item box-shadow-2">

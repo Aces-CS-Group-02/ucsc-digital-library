@@ -40,7 +40,7 @@ $userRole = "student";
     <!-- VERIFY NEW USERS PAGE -->
 
     <div class="page-header-container">
-        <p id="page-header-title">Verify New Users</p>
+        <p id="page-header-title">Approve New Users</p>
         <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
     </div>
 
