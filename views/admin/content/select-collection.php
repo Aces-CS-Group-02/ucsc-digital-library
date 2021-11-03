@@ -95,11 +95,11 @@ $userRole = "student";
             <?php } ?>
 
             <div class="btn-row">
-                <button class="btn btn-primary mr-1" type="button">Step 1</button>
-                <button class="btn btn-light mr-1" type="button">Step 2</button>
-                <button class="btn btn-light mr-1" type="button">Step 3</button>
-                <button class="btn btn-light mr-1" type="button">Step 4</button>
-                <button class="btn btn-light mr-1" type="button">Step 5</button>
+                <a href="/admin/upload-content" class="btn btn-primary mr-1 step-next-btn" >Step 1</a>
+                <a href="/admin/insert-metadata" class="btn btn-light mr-1 step-next-btn">Step 2</a>
+                <a href="/admin/insert-keyword-abstract" class="btn btn-light mr-1 step-next-btn">Step 3</a>
+                <a href="/admin/submit-content" class="btn btn-light mr-1 step-next-btn">Step 4</a>
+                <a href="/admin/verify-submission" class="btn btn-light mr-1 step-next-btn">Step 5</a>
             </div>
 
 
@@ -123,7 +123,7 @@ $userRole = "student";
                     </div>
 
                     <div class="btn-row content-align-right">
-                        <button class="btn btn-primary mr-1" type="button">Next</button>
+                        <a href="/admin/insert-metadata" class="btn btn-primary mr-1 step-next-btn">Next</a>
                     </div>
                 </div>
             </form>

@@ -11,6 +11,8 @@ class DummyController extends Controller
         return $this->render('admin/content/admin-bulk-upload');
     }
 }
+//views\admin\user\admin-report-dashboard.php
+// admin/user/admin-report-dashboard
 //  admin/content/admin-inner-manage-content
 //  admin/content/admin-bulk-upload
 //  admin/content/admin-my-submission
