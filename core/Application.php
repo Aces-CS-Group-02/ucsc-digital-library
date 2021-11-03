@@ -42,6 +42,16 @@ class Application
         } else {
             $this->user = null;
         }
+
+        /* 
+        -------------------------------------------------------------------------
+        \ Remove session when uri changes                                       \
+        \ Here we remove session data we kept for some specifc pages            \ 
+        -------------------------------------------------------------------------
+        */
+        if (strtolower($this->request->getPath()) !== '/admin/add-users' && $this->request->getMethod() !== 'POST') {
+            Application::$app->session->remove('usergroup_bulk_selection_list');
+        }
     }
 
     public function run()

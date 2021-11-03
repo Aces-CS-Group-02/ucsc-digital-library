@@ -6,14 +6,12 @@ use app\core\Application;
 use app\core\DbModel;
 use PDO;
 
-class UserGroup extends DbModel
+class Usergroup extends DbModel
 {
     public int $group_id;
     public string $name = '';
+    public string $description = '';
     public int $creator_reg_no;
-    public $approved_person_reg_no;
-    public int $creator_type;
-    public bool $completed_status = false;
 
     public static function tableName(): string
     {
@@ -22,7 +20,7 @@ class UserGroup extends DbModel
 
     public function attributes(): array
     {
-        return ['name', 'creator_reg_no', 'creator_type', 'completed_status'];
+        return ['name', 'description', 'creator_reg_no'];
     }
 
     public static function primaryKey(): string
@@ -41,15 +39,11 @@ class UserGroup extends DbModel
 
     public function createUserGroup($data)
     {
-        $statement_spec = 'AND creator_type = 1';
-        $this->creator_type = 1;
         $this->loadData($data);
         $this->creator_reg_no = Application::$app->user->reg_no;
-
-        if ($this->validate($statement_spec)) {
-            if (Application::getUserRole() <= 2) {
-                if ($this->save()) return Application::$app->db->pdo->lastInsertId();
-            }
+        if ($this->validate()) {
+            if ($this->save()) return Application::$app->db->pdo->lastInsertId();
+            return true;
         }
         return false;
     }
@@ -79,7 +73,7 @@ class UserGroup extends DbModel
         $statement = self::prepare("SELECT * FROM user t1
                                     LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
                                     ON t2.user_reg_no = t1.reg_no
-                                    WHERE t2.user_reg_no IS NULL");
+                                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
@@ -112,5 +106,22 @@ class UserGroup extends DbModel
 
         if ($usergroupUserModel->addUsers($group_id, $users_list_validated)) return true;
         return false;
+    }
+
+    public function getAllUsersInUserGroup($group_id)
+    {
+        $userModel = new User();
+        $usergroupUserModel = new UsergroupUser();
+
+        $tableName_1 = $userModel::tableName();
+        $tableName_2 = $usergroupUserModel::tableName();
+
+        $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+                                    FROM $tableName_2 t1
+                                    JOIN $tableName_1 t2
+                                    ON t2.reg_no = t1.user_reg_no
+                                    WHERE group_id = $group_id");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 }

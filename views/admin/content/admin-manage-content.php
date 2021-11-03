@@ -83,20 +83,20 @@ $userRole = "admin";
             </div>
 
             <div class="card-container">
-                <a href="/admin/edit-metadata" class="card box-shadow-1">
+                <a href="/admin/manage-content" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\metadata.png" alt=" content-add/update-image">
                     </div>
-                    <div class="card-content ">Manage contents</div>
+                    <div class="card-content ">Manage Content</div>
                 </a>
 
             </div>
             <div class="card-container">
-                <a href="/admin/remove-content" class="card box-shadow-1">
+                <a href="/admin/my-submissions" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
                     </div>
-                    <div class="card-content ">My submissions</div>
+                    <div class="card-content ">My Submissions</div>
                 </a>
             </div>
 
@@ -123,14 +123,14 @@ $userRole = "admin";
 
         <div class="grid-container">
             <div class="content-dashboard-text ">
-                Custom Collections
+                Content Collections
             </div>
             <div class="card-container">
                 <a href="" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">Manage custom collection</div>
+                    <div class="card-content ">Manage Content Collections</div>
                 </a>
             </div>
             <div class="card-container">
@@ -138,7 +138,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">My custom collections</div>
+                    <div class="card-content ">My Content Collections</div>
                 </a>
             </div>
         </div>

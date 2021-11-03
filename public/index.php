@@ -9,6 +9,7 @@ use app\controllers\UserController;
 use app\controllers\CommunitiesController;
 use app\controllers\ContentController;
 use app\controllers\DummyController;
+use app\controllers\UsergroupController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -47,10 +48,10 @@ $app->router->get('/register', [AuthController::class, "register"]);
 $app->router->post('/register', [AuthController::class, "register"]);
 // $app->router->get('/registration-request', [AuthController::class, "registerRequest"]);
 $app->router->post('/registration-request', [AuthController::class, "registerRequest"]);
-$app->router->get('/verify-email',[AuthController::class, "verifyEmail"]);
-$app->router->post('/verify-email',[AuthController::class, "verifyEmail"]);
-$app->router->get('/reset-password',[AuthController::class, "resetPassword"]);
-$app->router->post('/reset-password',[AuthController::class, "resetPassword"]);
+$app->router->get('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->post('/verify-email', [AuthController::class, "verifyEmail"]);
+$app->router->get('/reset-password', [AuthController::class, "resetPassword"]);
+$app->router->post('/reset-password', [AuthController::class, "resetPassword"]);
 
 
 $app->router->get('/contact', [SiteController::class, "contact"]);
@@ -106,6 +107,11 @@ $app->router->get('/admin/insert-metadata', [ContentController::class, "insertMe
 $app->router->get('/admin/insert-keyword-abstract', [ContentController::class, "insertKeywordAbstract"]);
 $app->router->get('/admin/submit-content', [ContentController::class, "submitContent"]);
 $app->router->get('/admin/verify-submission', [ContentController::class, "verifySubmission"]);
+$app->router->get('/admin/my-submissions', [ContentController::class, "mySubmissions"]);
+$app->router->get('/admin/manage-content', [ContentController::class, "manageContent"]);
+
+
+
 
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
@@ -119,15 +125,51 @@ $app->router->get('/admin/bulk-register', [AdministrationController::class, "bul
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
-$app->router->post('/admin/reject-new-user',[ApproveController::class, "rejectNewUser"]);
+$app->router->post('/admin/reject-new-user', [ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
 
 
 // Still Implementing
-// $app->router->get('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
+$app->router->get('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
+$app->router->post('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
+$app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
+
+$app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
+// $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
+$app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
+$app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
+
+
+$app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
+
+
+
+
+
+
+
+
+
+// User groups
+$app->router->get('/admin/create-custom-user-group', [UsergroupController::class, "createCustomUserGroup"]);
+$app->router->post('/admin/create-custom-user-group', [UsergroupController::class, "createCustomUserGroup"]);
+$app->router->get('/admin/custom-usergroup/add-users', [UsergroupController::class, "addUsersToCustomUserGroup"]);
+$app->router->post('/push-user-to-custom-user-group', [UsergroupController::class, "pushUserToCustomUserGroup"]);
+$app->router->get('/admin/manage-custom-usergroup', [UsergroupController::class, "manageCustomUserGroup"]);
+$app->router->post('/admin/custom-usergroup/request-approval', [UsergroupController::class, "requestApprovalForCustomUserGroup"]);
+
+$app->router->get('/admin/my-usergroups', [UsergroupController::class, "manageMyUsergroups"]);
+
+
+
+
+
+
+
+
+
 // $app->router->post('/admin/create-user-group', [AdministrationController::class, "createUserGroup"]);
 // $app->router->get('/admin/create-user-group/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
-// $app->router->post('/ajax/push-user-to-user-group', [AdministrationController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [AdministrationController::class, "pushUsersToUserGroup"]);
 // $app->router->post('/admin/create-user-group/review', [AdministrationController::class, "reviewUserGroup"]);
 // $app->router->get('/admin/manage-user-groups', [AdministrationController::class, "manageUserGroup"]);
@@ -138,7 +180,7 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 $app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
 
-$app->router->get('/test',[DummyController::class, "test"]);
+$app->router->get('/test', [DummyController::class, "test"]);
 
 
 
