@@ -10,6 +10,7 @@ class Usergroup extends DbModel
 {
     public int $group_id;
     public string $name = '';
+    public string $description = '';
     public int $creator_reg_no;
 
     public static function tableName(): string
@@ -19,7 +20,7 @@ class Usergroup extends DbModel
 
     public function attributes(): array
     {
-        return ['name', 'creator_reg_no'];
+        return ['name', 'description', 'creator_reg_no'];
     }
 
     public static function primaryKey(): string

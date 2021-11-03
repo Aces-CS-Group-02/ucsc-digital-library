@@ -27,7 +27,6 @@ class ContentController extends Controller
         ];
 
         return $this->render("admin/content/insert-metadata", ['breadcrum' => $breadcrum]);
-
     }
 
     public function insertKeywordAbstract(Request $request)
@@ -39,7 +38,6 @@ class ContentController extends Controller
         ];
 
         return $this->render("admin/content/insert-keyword-abstract", ['breadcrum' => $breadcrum]);
-
     }
 
     public function submitContent(Request $request)
@@ -51,7 +49,6 @@ class ContentController extends Controller
         ];
 
         return $this->render("admin/content/submit-content", ['breadcrum' => $breadcrum]);
-
     }
 
     public function verifySubmission(Request $request)
@@ -63,6 +60,15 @@ class ContentController extends Controller
         ];
 
         return $this->render("admin/content/verify-submission", ['breadcrum' => $breadcrum]);
+    }
 
+    public function mySubmissions(Request $request)
+    {
+        return $this->render("admin/content/admin-my-submission");
+    }
+
+    public function manageContent()
+    {
+        return $this->render("admin/content/admin-inner-manage-content");
     }
 }

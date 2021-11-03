@@ -107,6 +107,11 @@ $app->router->get('/admin/insert-metadata', [ContentController::class, "insertMe
 $app->router->get('/admin/insert-keyword-abstract', [ContentController::class, "insertKeywordAbstract"]);
 $app->router->get('/admin/submit-content', [ContentController::class, "submitContent"]);
 $app->router->get('/admin/verify-submission', [ContentController::class, "verifySubmission"]);
+$app->router->get('/admin/my-submissions', [ContentController::class, "mySubmissions"]);
+$app->router->get('/admin/manage-content', [ContentController::class, "manageContent"]);
+
+
+
 
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
@@ -132,6 +137,30 @@ $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
 $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
+$app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
+
+
+$app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
+
+
+
+
+
+
+
+
+
+// User groups
+$app->router->get('/admin/create-custom-user-group', [UsergroupController::class, "createCustomUserGroup"]);
+$app->router->post('/admin/create-custom-user-group', [UsergroupController::class, "createCustomUserGroup"]);
+$app->router->get('/admin/custom-usergroup/add-users', [UsergroupController::class, "addUsersToCustomUserGroup"]);
+$app->router->post('/push-user-to-custom-user-group', [UsergroupController::class, "pushUserToCustomUserGroup"]);
+$app->router->get('/admin/manage-custom-usergroup', [UsergroupController::class, "manageCustomUserGroup"]);
+$app->router->post('/admin/custom-usergroup/request-approval', [UsergroupController::class, "requestApprovalForCustomUserGroup"]);
+
+$app->router->get('/admin/my-usergroups', [UsergroupController::class, "manageMyUsergroups"]);
+
+
 
 
 

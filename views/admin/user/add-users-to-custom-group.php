@@ -84,8 +84,8 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn blured" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
-                <a class="tab-link-btn active" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage</a>
+                <a class="tab-link-btn active" href="/admin/custom-usergroup/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
+                <a class="tab-link-btn blured" href="/admin/manage-custom-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage</a>
             </div>
 
             <div class="second-border">
@@ -249,10 +249,10 @@ $userRole = "student";
                             </div>
 
                             <div class="block-f">
-                                <form action="/usergroup/remove-user" method="POST">
+                                <form action="/push-user-to-custom-user-group" method="POST">
                                     <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
                                     <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
-                                    <button class="btn btn-add">Remove</button>
+                                    <button class="btn btn-add">Add</button>
                                 </form>
                             </div>
                         </div>

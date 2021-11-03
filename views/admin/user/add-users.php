@@ -5,6 +5,10 @@ use app\core\Application;
 $isLoggedIn = true;
 $userRole = "student";
 
+// echo '<pre>';
+// var_dump($_SESSION);
+// echo '</pre>';
+
 
 ?>
 
@@ -197,9 +201,9 @@ $userRole = "student";
             <div class="bulk-select-place" id="buttonDiv">
                 <p id="checked-items-container"></p>
                 <p class="space-editor">Selected:</p>
-                <form action="/push-user-to-user-group" method="POST">
-                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" name='user_reg_no' value="<?php echo $params['group']->group_id ?>">Add User</button>
-                </form>
+                <!-- <form action="/push-user-to-user-group" method="POST"> -->
+                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="submit" form="main-form">Add User</button>
+                <!-- </form> -->
             </div>
 
             <!-- ADD USERS INFORMATION -->
@@ -214,6 +218,9 @@ $userRole = "student";
                     <div class="block-f">Action</div>
                 </div>
 
+                <!-- <form action="/push-user-to-user-group" method="POST" id='main-form'> -->
+                <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
+
                 <?php foreach ($params['users_list'] as $student) { ?>
                     <div class="add-users-container">
                         <div class="add-users-info">
@@ -221,7 +228,13 @@ $userRole = "student";
                                 <p>
                                 <div class="input-group custom-control">
                                     <div class="checkbox checkbox-edit">
-                                        <input class="checkbox checkbox-edit" data-id="<?php echo $student->reg_no; ?>" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                                        <input class="checkbox checkbox-edit bulk-select-checkbox" type="checkbox" id="check" onclick="DivShowHide(this)" name='bulkselect[]' value="<?php echo $student->reg_no; ?>" data-id="<?php echo $student->reg_no; ?>" <?php
+
+                                                                                                                                                                                                                                                                if (is_array($params['current_selected_users']) && in_array($student->reg_no, $params['current_selected_users'])) {
+                                                                                                                                                                                                                                                                    echo 'checked';
+                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                ?> />
                                     </div>
                                 </div>
                                 </p>
@@ -249,16 +262,12 @@ $userRole = "student";
                             </div>
 
                             <div class="block-f">
-                                <form action="/push-user-to-user-group" method="POST">
-                                    <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
-                                    <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
-                                    <button class="btn btn-add">Add</button>
-                                </form>
+                                <button class="btn btn-add" type="submit" name="user_reg_no" value="<?php echo $student->reg_no; ?>" data-id="<?php echo $student->reg_no; ?>">Add</button>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
-
+                <!-- </form> -->
 
 
             </div>
@@ -278,7 +287,28 @@ $userRole = "student";
     <Script>
         (() => {
 
+            const checkboxes = document.querySelectorAll('.bulk-select-checkbox');
 
+            const bulkSelect = ({
+                currentTarget
+            }) => {
+                const user_reg_no = currentTarget.dataset.id;
+                const selectRequest = new XMLHttpRequest();
+                let params = [];
+                if (currentTarget.checked) {
+                    params = `select-action=true&user_reg_no=${user_reg_no}`;
+                } else {
+                    params = `select-action=false&user_reg_no=${user_reg_no}`;
+                }
+                selectRequest.open('POST', '/ajax/usergroup/bulk-select');
+                selectRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                selectRequest.send(params);
+            }
+
+
+            for (checkbox of checkboxes) {
+                checkbox.addEventListener('click', bulkSelect, false);
+            }
 
         })();
     </Script>

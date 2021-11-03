@@ -84,19 +84,19 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn blured" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
-                <a class="tab-link-btn active" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage</a>
+                <a class="tab-link-btn blured" href="/admin/custom-usergroup/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
+                <a class="tab-link-btn active" href="/admin/manage-custom-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage</a>
             </div>
 
             <div class="second-border">
 
-                <!-- <div class="upper-container">
+                <div class="upper-container">
                     <div class="button-place">
-                        <form action="/admin/create-user-group/review" method="POST">
-                            <button class="btn btn-primary mr-1 mb-1" id="btn-edit" disabled>Proceed</button>
+                        <form action="/admin/custom-usergroup/request-approval" method="POST">
+                            <button class="btn btn-primary mr-1 mb-1" id="btn-edit" name='custom_usergroup_id' value="<?php echo $params['group']->group_id ?>">Request Approval</button>
                         </form>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="search-N-sort-components-container">
                     <div class="search-component-container">
@@ -249,11 +249,11 @@ $userRole = "student";
                             </div>
 
                             <div class="block-f">
-                                <form action="/usergroup/remove-user" method="POST">
-                                    <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
-                                    <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
-                                    <button class="btn btn-add">Remove</button>
-                                </form>
+                                <!-- <form action="/push-user-to-user-group" method="POST"> -->
+                                <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
+                                <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
+                                <button class="btn btn-add">Remove</button>
+                                <!-- </form> -->
                             </div>
                         </div>
                     </div>
