@@ -67,15 +67,36 @@ class Usergroup extends DbModel
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getAllUsersNotInThisGroup($group_id)
-    {
 
-        $statement = self::prepare("SELECT * FROM user t1
-                                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
-                                    ON t2.user_reg_no = t1.reg_no
-                                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+    /*-------------------------------------------------------------------------------------------
+    \ This getAllUsersNotInThisGroup function takes group_id,getRecordsCount, start and limit. 
+    \ 
+    \ If we specify getRecordsCount true then it doesn't care about rest parameters and it 
+    \ returns row count
+    \
+    \ If we specify getRecordsCount false then returns All fetched data. Here we can specify 
+    \ start position and limit                           
+    ---------------------------------------------------------------------------------------------*/
+    public function getAllUsersNotInThisGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    {
+        $sql = "SELECT * FROM user t1
+                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+                    ON t2.user_reg_no = t1.reg_no
+                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
+                    first_name LIKE '%$search_params%'
+                    OR last_name LIKE '%$search_params%'
+                    OR email LIKE '%$search_params%'";
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 
     public function pushUserToUserGroup($group_id, $reg_no)

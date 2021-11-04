@@ -11,6 +11,7 @@ use app\models\PendingUsergroupUser;
 use app\models\User;
 use app\models\Usergroup;
 use app\models\UsergroupUser;
+use stdClass;
 
 class UsergroupController extends Controller
 {
@@ -39,15 +40,31 @@ class UsergroupController extends Controller
         $data_keys = array_keys($data);
         if (!in_array('usergroup-id', $data_keys)) throw new NotFoundException();
 
+        $Search_params = $data['q'] ?? '';
+
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
 
         $usergroupModel = new Usergroup();
         $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
 
         if ($user_group) {
-            $users_list = $usergroupModel->getAllUsersNotInThisGroup($data['usergroup-id']);
+            $row_count = $usergroupModel->getAllUsersNotInThisGroup(
+                $data['usergroup-id'],
+                $Search_params,
+                true // Fetch row count
+            );
+            $pageCount = ceil($row_count / $limit);
+            $users_list = $usergroupModel->getAllUsersNotInThisGroup(
+                $data['usergroup-id'],
+                $Search_params,
+                false, // Fetch Data
+                $start,
+                $limit
+            );
             $current_Selected_Users = Application::$app->session->get('usergroup_bulk_selection_list');
-
-            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'current_selected_users' => $current_Selected_Users]);
+            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'current_selected_users' => $current_Selected_Users, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params]);
         } else {
             throw new NotFoundException();
         }
@@ -71,7 +88,14 @@ class UsergroupController extends Controller
             if ($userModel->findOne(['reg_no' => $user_reg_no]) && !in_array($user_reg_no, $current_Selected_Users)) {
                 array_push($current_Selected_Users, $user_reg_no);
                 Application::$app->session->set('usergroup_bulk_selection_list', $current_Selected_Users);
-                echo 'success';
+                // echo 'success' . count($current_Selected_Users);
+                // echo '[{status:"success", count:"' . count($current_Selected_Users) . '"}]';
+
+                $responseObj = new stdClass();
+                $responseObj->status = "success";
+                $responseObj->count = count($current_Selected_Users);
+                $myJSON = json_encode($responseObj);
+                echo $myJSON;
                 exit;
             }
         } else { // Deselect request
@@ -79,7 +103,11 @@ class UsergroupController extends Controller
                 $pos = array_search($user_reg_no, $current_Selected_Users);
                 unset($current_Selected_Users[$pos]);
                 Application::$app->session->set('usergroup_bulk_selection_list', $current_Selected_Users);
-                echo 'success';
+                $responseObj = new stdClass();
+                $responseObj->status = "success";
+                $responseObj->count = count($current_Selected_Users);
+                $myJSON = json_encode($responseObj);
+                echo $myJSON;
                 exit;
             }
         }

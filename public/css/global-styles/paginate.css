@@ -1,0 +1,54 @@
+/*----------------------------------------------
+\   Paginate Controller
+------------------------------------------------*/
+.paginate-controller-container{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.paginate-controller-container > li > a{
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 2px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.paginate-controller-container > li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2px;
+}
+
+.paginate-controller-container > li > a:hover{
+    background-color: #EDEDEE;
+}
+
+.paginate-current-page > a{
+    background-color: #DC4345;
+}
+
+.paginate-current-page > a:hover{
+    background-color: #d13a3c !important;
+}
+
+.paginate-current-page > a{
+    color: white !important;
+}
+
+@media only screen and (max-width: 484px){
+    .paginate-controller-container > li > a{
+      font-weight: 600;
+      font-size: 0.7rem !important;
+    }
+  }
