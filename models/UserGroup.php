@@ -80,12 +80,12 @@ class Usergroup extends DbModel
     public function getAllUsersNotInThisGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
     {
         $sql = "SELECT * FROM user t1
-                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
-                    ON t2.user_reg_no = t1.reg_no
-                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
-                    first_name LIKE '%$search_params%'
-                    OR last_name LIKE '%$search_params%'
-                    OR email LIKE '%$search_params%'";
+                LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+                ON t2.user_reg_no = t1.reg_no
+                WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
+                (first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%'
+                OR email LIKE '%$search_params%')";
 
         if ($getRecordsCount) {
             $statement = self::prepare($sql);
@@ -104,6 +104,7 @@ class Usergroup extends DbModel
         $userModel = new User();
         // If group not exist return false
         if (!$this->findOne(['group_id' => $group_id])) return false;
+
         //  If user id not exist return false
         if (!$userModel->findOne(['reg_no' => $reg_no])) return false;
 
