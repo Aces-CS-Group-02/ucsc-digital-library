@@ -90,14 +90,13 @@ $userRole = "student";
 
             <?php } ?>
 
-            
-            <div class="btn-row">
-            <button class="btn btn-info mr-1" type="button">Step 1</button>
-            <button class="btn btn-info mr-1" type="button">Step 2</button>
-            <button class="btn btn-info mr-1" type="button">Step 3</button>
-            <button class="btn btn-info mr-1" type="button">Step 4</button>
-            <button class="btn btn-primary mr-1" type="button">Step 5</button>
 
+            <div class="btn-row">
+                <a href="/admin/upload-content" class="btn btn-info mr-1 step-next-btn">Step 1</a>
+                <a href="/admin/insert-metadata" class="btn btn-info mr-1 step-next-btn">Step 2</a>
+                <a href="/admin/insert-keyword-abstract" class="btn btn-info mr-1 step-next-btn">Step 3</a>
+                <a href="/admin/submit-content" class="btn btn-info mr-1 step-next-btn">Step 4</a>
+                <a href="/admin/verify-submission" class="btn btn-primary mr-1 step-next-btn">Step 5</a>
 
             </div>
 
@@ -115,7 +114,7 @@ $userRole = "student";
                                 Selected collection appear here
                             </div>
                             <div class="input-row content-align-right">
-                            <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -166,7 +165,7 @@ $userRole = "student";
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
-                            <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -194,7 +193,7 @@ $userRole = "student";
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
-                            <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -213,7 +212,7 @@ $userRole = "student";
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
-                            <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -221,7 +220,7 @@ $userRole = "student";
                     <div class="btn-row content-align-right">
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
                         <button class="btn btn-warning mr-1" type="button">Cancel/Save</button>
-                        <button class="btn btn-secondary mr-1" type="button">Back</button>
+                        <a href="/admin/submit-content" class="btn btn-secondary mr-1 step-next-btn">Back</a>
                         <button class="btn btn-primary mr-1" type="button">Finish</button>
                     </div>
                 </div>
