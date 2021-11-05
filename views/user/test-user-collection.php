@@ -76,7 +76,7 @@ use app\core\Application;
                 <div class="user-profile-settings-btn-container">
 
                     <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/edit-profile.php">
+                        <a class="user-profile-settings-btn" href="/profile/edit">
                             <i class="fas fa-edit"></i>
                             <p>Edit Profile</p>
                         </a>
@@ -122,23 +122,36 @@ use app\core\Application;
             <div class="profile-gird-container profile-section-b">
                 <div class="profile-grid-item box-shadow-2">
                     <div class="content-card">
+                        <!-- <div class="content-card-top">
+                            <i class="fas fa-trash"></i>
+                        </div> -->
                         <div class="content-card-img">
                             <img src="https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg" alt="">
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">React coockbook</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
             <div class="profile-gird-container profile-section-b">
                 <div class="profile-grid-item box-shadow-2">
                     <div class="content-card">
+                        <!-- <div class="content-card-top">
+                            <i class="fas fa-trash"></i>
+                        </div> -->
                         <div class="content-card-img">
                             <img src="https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg" alt="">
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Modern C++ programming cookbook</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +164,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Begining c++ game programming</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,6 +179,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learning PHP, MySQL & Javascript</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,6 +194,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learn Java in one day</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,6 +209,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Java coding problems</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -199,6 +224,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learning web design</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,6 +239,9 @@ use app\core\Application;
                         </div>
                         <div class="content-card-bottom">
                             <p class="content-card-bottom-title line-clamp line-clamp-2-description">Modern CSS</p>
+                            <div class="content-card-icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

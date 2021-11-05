@@ -27,7 +27,7 @@ $userRole = "student";
     <link rel="stylesheet" href="./css/local-styles/home.css">
 
 
-    <title>Document</title>
+    <title>Search Content</title>
 </head>
 
 <body>
@@ -38,10 +38,13 @@ $userRole = "student";
     <?php include_once __DIR__ . '/components/nav.php'; ?>
 
     <!-- SEARCH CONTENT -->
+    <div class="heading-container">
+        Search
+    </div>
     <div class="main-container">
-        <div class="heading-container">
-            <h2>Search</h2>
-        </div>
+        <!-- <div class="heading-container">
+            Search
+        </div> -->
         <div class="left-panel-container">
             <div class="left-panel-card box-shadow-1">
                 <div class="left-panel-card-title">
@@ -220,7 +223,7 @@ $userRole = "student";
 
     <!-- FOOTER -->
 
-    <?php include_once __DIR__ . '/components/footer.php'; ?> 
+    <?php include_once __DIR__ . '/components/footer.php'; ?>
 
     <!-- SCRITP -->
 

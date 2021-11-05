@@ -234,16 +234,18 @@ use app\core\Application;
                 </a>
             </div>
             <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/81yh-4QQC8L._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learn Java in one day</p>
+                <a href="/profile/video-player" class="edit-link">
+                    <div class="profile-grid-item box-shadow-2">
+                        <div class="content-card">
+                            <div class="content-card-img">
+                                <img src="/assets/profile/video.png" alt="">
+                            </div>
+                            <div class="content-card-bottom">
+                                <p class="content-card-bottom-title line-clamp line-clamp-2-description">Big Buck Bunny</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="profile-gird-container profile-section-b">
                 <div class="profile-grid-item box-shadow-2">

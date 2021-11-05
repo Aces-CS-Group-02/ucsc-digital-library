@@ -76,7 +76,7 @@ use app\core\Application;
                 <div class="user-profile-settings-btn-container">
 
                     <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/edit-profile.php">
+                        <a class="user-profile-settings-btn" href="/profile/edit">
                             <i class="fas fa-edit"></i>
                             <p>Edit Profile</p>
                         </a>
