@@ -2,7 +2,7 @@ body {
   min-height: 100vh !important;
   display: flex;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
 }
 
 #add-users-main-content {
@@ -13,7 +13,7 @@ body {
   max-width: 1400px;
   width: 96%;
   margin: 0 auto;
-  border-bottom: 1px solid rgb(131, 131, 131);
+  border-bottom: 1px solid rgb(210, 210, 210);
   padding: 15px 0;
 }
 
@@ -68,6 +68,35 @@ body {
 
 .tab-link-btn.blured:hover{
   background-color: #dadada;
+}
+
+.breadcrum-container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+}
+
+.breadcrum-link{
+  text-decoration: none;
+  color: #8a8a8a;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.breadcrum-link, .breadcrum-link-arrow{
+  color: #727272;
+
+}
+
+.breadcrum-link-arrow{
+  margin: 0 7px;
+}
+
+.current-breadcrum-link{
+  color: #4285f4;
 }
 
 .upper-container {
@@ -289,8 +318,8 @@ body {
   border-bottom: 1px solid rgb(201, 201, 201);
   padding-top: 20px;
   padding-bottom: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 10px 0;
+  /* padding-right: 10px; */
   /* background-color: #a09191 !important; */
 }
 
@@ -306,7 +335,7 @@ body {
   display: flex;
   align-items: flex-start;
   border-bottom: 1px solid rgb(201, 201, 201);
-  padding: 10px;
+  padding: 10px 0;
   /* background-color: #f1c3c3 !important; */
 }
 
@@ -347,6 +376,8 @@ body {
 
 .block-f {
   flex-basis: 150px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .block-a,
@@ -382,6 +413,18 @@ body {
   border-color: red !important;
 
 }
+
+.no-records-available{
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(172, 172, 172);
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
+
 
 @media only screen and (min-width: 900px) {
   .block-title {
@@ -466,3 +509,5 @@ body {
     justify-content: space-between;
   }
 }
+
+

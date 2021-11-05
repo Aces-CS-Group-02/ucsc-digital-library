@@ -55,13 +55,15 @@ $userRole = "student";
                         </div>
                     </div>
                     <div class="input-group">
-                        <button class="btn btn-primary mr-1 mb-1 " type="button">Proceed</button>
+
+                        <a href="/admin/bulk-upload/review" class="btn btn-primary mr-1 mb-1 " type="submit" style="text-decoration: none;">Proceed</a>
+
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <!-- FOOTER -->
 
     <?php

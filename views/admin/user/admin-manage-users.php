@@ -73,17 +73,7 @@ $userRole = "admin";
                         <div class="card-icon">
                             <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-user-image">
                         </div>
-                        <div class="card-content ">Update Users </div>
-                    </a>
-
-                </div>
-                <div class="card-container">
-                    <a href="/admin/users" class="card box-shadow-1">
-                        <div class="card-icon">
-
-                            <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-user-image">
-                        </div>
-                        <div class="card-content ">Delete Users</div>
+                        <div class="card-content ">Manage Users </div>
                     </a>
 
                 </div>
@@ -95,28 +85,21 @@ $userRole = "admin";
             <div class="content-dashboard-text">
                 User Groups
             </div>
+
             <div class="card-container">
-                <a href="/admin/create-user-group" class="card box-shadow-1">
+                <a href="/admin/manage-usergroups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user-group.png" alt=" create-group-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\manage-user-groups.png" alt=" create-group-image">
                     </div>
-                    <div class="card-content ">Create User Group</div>
+                    <div class="card-content ">Manage User Groups</div>
                 </a>
             </div>
             <div class="card-container">
                 <a href="/admin/manage-user-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-groups-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\my-user-groups.png" alt=" update-groups-image">
                     </div>
-                    <div class="card-content ">Update User Groups</div>
-                </a>
-            </div>
-            <div class="card-container">
-                <a href="/admin/manage-user-groups" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\delete-user.png" alt=" delete-group-image">
-                    </div>
-                    <div class="card-content ">Delete User Group</div>
+                    <div class="card-content ">My User Groups</div>
                 </a>
             </div>
         </div>
@@ -129,7 +112,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="/admin/manage-library-information-assistant" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\manage-lia.png" alt=" create-LIA-image">
                         </div>
                         <div class="card-content ">Manage Library Information Assistants</div>
                     </a>

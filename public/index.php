@@ -114,6 +114,7 @@ $app->router->get('/admin/manage-content', [ContentController::class, "manageCon
 
 
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
+$app->router->get('/admin/bulk-upload/review', [AdministrationController::class, "bulkUploadReview"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
 $app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
@@ -133,14 +134,20 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 $app->router->get('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
 $app->router->post('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
 $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
+$app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 
-$app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
+
+
+// $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
 $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
 $app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
 
 
-$app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
+
+$app->router->get('/admin/manage-usergroups', [UsergroupController::class, "manageAllUserGroups"]);
+
+// $app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
 
 
 

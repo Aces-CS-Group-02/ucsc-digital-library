@@ -43,6 +43,29 @@ class Controller
     public const BREADCRUM_EDIT_TOP_LEVEL_COMMUNITY = ['name' => 'Edit top level community', 'link' => ''];
 
 
+    public const BREADCRUM_ADD_USERGROUP_USERS = ['name' => 'Add users', 'link' => ''];
+    public const BREADCRUM_MANAGE_USERGROUP_USERS = ['name' => 'Manage users', 'link' => ''];
+    public const BREADCRUM_MANAGE_USERGROUPS = ['name' => 'Manage usergroups', 'link' => '/admin/manage-usergroups'];
+
+
+    public const BREADCRUM_BULK_UPLOAD_REVIEW = ['name' => 'Review', 'link' => '/admin/bulk-upload/review'];
+    public const BREADCRUM_MANAGE_CONTENTS = ['name' => 'Manage contents', 'link' => '/admin/manage-content'];
+    public const BREADCRUM_MY_SUBMISSIONS = ['name' => 'My submissions', 'link' => '/admin/my-submissions'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

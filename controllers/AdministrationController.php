@@ -171,6 +171,17 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_BULK_UPLOAD
         ];
+        return $this->render("admin/content/admin-bulk-upload", ['breadcrum' => $breadcrum]);
+    }
+
+    public function bulkUploadReview(Request $request)
+    {
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_BULK_UPLOAD,
+            self::BREADCRUM_BULK_UPLOAD_REVIEW
+        ];
         return $this->render("admin/content/bulk-upload", ['breadcrum' => $breadcrum]);
     }
 

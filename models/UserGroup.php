@@ -67,15 +67,36 @@ class Usergroup extends DbModel
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getAllUsersNotInThisGroup($group_id)
-    {
 
-        $statement = self::prepare("SELECT * FROM user t1
-                                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
-                                    ON t2.user_reg_no = t1.reg_no
-                                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+    /*-------------------------------------------------------------------------------------------
+    \ This getAllUsersNotInThisGroup function takes group_id,getRecordsCount, start and limit. 
+    \ 
+    \ If we specify getRecordsCount true then it doesn't care about rest parameters and it 
+    \ returns row count
+    \
+    \ If we specify getRecordsCount false then returns All fetched data. Here we can specify 
+    \ start position and limit                           
+    ---------------------------------------------------------------------------------------------*/
+    public function getAllUsersNotInThisGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    {
+        $sql = "SELECT * FROM user t1
+                LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+                ON t2.user_reg_no = t1.reg_no
+                WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
+                (first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%'
+                OR email LIKE '%$search_params%')";
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 
     public function pushUserToUserGroup($group_id, $reg_no)
@@ -83,6 +104,7 @@ class Usergroup extends DbModel
         $userModel = new User();
         // If group not exist return false
         if (!$this->findOne(['group_id' => $group_id])) return false;
+
         //  If user id not exist return false
         if (!$userModel->findOne(['reg_no' => $reg_no])) return false;
 
@@ -104,11 +126,32 @@ class Usergroup extends DbModel
             if ($userModel->findOne(['reg_no' => $user]) && !$usergroupUserModel->findOne(['group_id' => $group_id, 'user_reg_no' => $user])) array_push($users_list_validated, $user);
         }
 
+        // var_dump($users_list_validated);
+
         if ($usergroupUserModel->addUsers($group_id, $users_list_validated)) return true;
         return false;
     }
 
-    public function getAllUsersInUserGroup($group_id)
+    // public function getAllUsersInUserGroup($group_id)
+    // {
+    //     $userModel = new User();
+    //     $usergroupUserModel = new UsergroupUser();
+
+    //     $tableName_1 = $userModel::tableName();
+    //     $tableName_2 = $usergroupUserModel::tableName();
+
+    //     $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+    //                                 FROM $tableName_2 t1
+    //                                 JOIN $tableName_1 t2
+    //                                 ON t2.reg_no = t1.user_reg_no
+    //                                 WHERE group_id = $group_id");
+    //     $statement->execute();
+    //     return $statement->fetchAll(PDO::FETCH_OBJ);
+    // }
+
+
+
+    public function getAllUsersInUserGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
     {
         $userModel = new User();
         $usergroupUserModel = new UsergroupUser();
@@ -116,12 +159,48 @@ class Usergroup extends DbModel
         $tableName_1 = $userModel::tableName();
         $tableName_2 = $usergroupUserModel::tableName();
 
-        $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
-                                    FROM $tableName_2 t1
-                                    JOIN $tableName_1 t2
-                                    ON t2.reg_no = t1.user_reg_no
-                                    WHERE group_id = $group_id");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+        $sql = "SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+                FROM $tableName_2 t1
+                JOIN $tableName_1 t2
+                ON t2.reg_no = t1.user_reg_no
+                WHERE group_id = $group_id AND
+                (first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%'
+                OR email LIKE '%$search_params%')";
+
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
+    }
+
+    public function getAllUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    {
+        $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
+                usergroup t1 LEFT JOIN user t2
+                ON t1.creator_reg_no = t2.reg_no
+                WHERE
+                (name LIKE '%$search_params%'
+                OR description LIKE '%$search_params%'
+                OR first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%')";
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 }
