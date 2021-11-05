@@ -185,7 +185,7 @@ $userRole = "student";
                 </div>
             <?php } ?>
 
-            <?php if (empty($communities)) { ?>
+            <?php if (empty($params['model'])) { ?>
                 <p class="no-records-available">No Records Available :(</p>
             <?php } ?>
 
