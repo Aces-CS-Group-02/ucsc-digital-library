@@ -85,18 +85,11 @@ $userRole = "admin";
             <div class="content-dashboard-text">
                 User Groups
             </div>
-            <div class="card-container">
-                <a href="/admin/create-user-group" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user-group.png" alt=" create-group-image">
-                    </div>
-                    <div class="card-content ">Create User Group</div>
-                </a>
-            </div>
+
             <div class="card-container">
                 <a href="/admin/manage-usergroups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\add-user-group.png" alt=" create-group-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\manage-user-groups.png" alt=" create-group-image">
                     </div>
                     <div class="card-content ">Manage User Groups</div>
                 </a>
@@ -104,7 +97,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/manage-user-groups" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-users\update-user.png" alt=" update-groups-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-users\my-user-groups.png" alt=" update-groups-image">
                     </div>
                     <div class="card-content ">My User Groups</div>
                 </a>
@@ -119,7 +112,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="/admin/manage-library-information-assistant" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-users\add-user.png" alt=" create-LIA-image">
+                            <img class="card-icon-img" src="/assets\admin-manage-users\manage-lia.png" alt=" create-LIA-image">
                         </div>
                         <div class="card-content ">Manage Library Information Assistants</div>
                     </a>

@@ -66,7 +66,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/publish-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\publish-content.png" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Publish Content</div>
                 </a>
@@ -75,7 +75,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/unpublish-content" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\unpublish-content.png" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Unpublish Content</div>
                 </a>
@@ -94,7 +94,7 @@ $userRole = "admin";
             <div class="card-container">
                 <a href="/admin/my-submissions" class="card box-shadow-1">
                     <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-manage-content\content-deletion.png" alt=" content-delete-image">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\my-submissions.png" alt=" content-delete-image">
                     </div>
                     <div class="card-content ">My Submissions</div>
                 </a>
@@ -112,7 +112,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="/admin/manage-communities" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                            <img class="card-icon-img" src="/assets\admin-manage-content\manage-communities.png" alt=" cloud-image">
                         </div>
                         <div class="card-content ">Manage Communities & Collection</div>
                     </a>
