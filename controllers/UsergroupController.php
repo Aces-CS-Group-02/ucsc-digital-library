@@ -17,6 +17,12 @@ class UsergroupController extends Controller
 {
     public function createUserGroup(Request $request)
     {
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_CREATE_USER_GROUPS
+        ];
+
         if ($request->getMethod() === 'POST') {
             $data = $request->getBody();
             $data_keys = array_keys($data);
@@ -29,9 +35,9 @@ class UsergroupController extends Controller
                 Application::$app->response->redirect('/admin/add-users?usergroup-id=' . $last_inserted_id);
                 exit;
             }
-            return $this->render("/admin/user/admin-create-user-group", ['model' => $usergroupModel]);
+            return $this->render("/admin/user/admin-create-user-group", ['model' => $usergroupModel, 'breadcrum' => $breadcrum]);
         }
-        return $this->render("/admin/user/admin-create-user-group");
+        return $this->render("/admin/user/admin-create-user-group", ['breadcrum' => $breadcrum]);
     }
 
     public function addUsers(Request $request)
@@ -43,6 +49,7 @@ class UsergroupController extends Controller
         $Search_params = $data['q'] ?? '';
 
         $page = isset($data['page']) ? $data['page'] : 1;
+
         $limit = 10;
         $start = ($page - 1) * $limit;
 
@@ -56,6 +63,19 @@ class UsergroupController extends Controller
                 true // Fetch row count
             );
             $pageCount = ceil($row_count / $limit);
+
+            $paginateController = new PaginatePathController();
+
+            if (($page > $pageCount)) {
+                if ($pageCount) {
+                    $path = $paginateController->getNewPath($pageCount);
+                    Application::$app->response->redirect($path);
+                    exit;
+                }
+            }
+
+            $paginateController->validatePage($page, $pageCount);
+
             $users_list = $usergroupModel->getAllUsersNotInThisGroup(
                 $data['usergroup-id'],
                 $Search_params,
@@ -63,56 +83,18 @@ class UsergroupController extends Controller
                 $start,
                 $limit
             );
-            $current_Selected_Users = Application::$app->session->get('usergroup_bulk_selection_list');
-            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'current_selected_users' => $current_Selected_Users, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params]);
+
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_USERS,
+                self::BREADCRUM_CREATE_USER_GROUPS,
+                self::BREADCRUM_ADD_USERGROUP_USERS
+            ];
+
+            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
         } else {
             throw new NotFoundException();
         }
-    }
-
-    public function BulkSelectAndBulkRemoveUser(Request $request)
-    {
-        $data = $request->getBody();
-        $userModel = new User();
-
-        $user_reg_no = $data['user_reg_no'];
-        $current_Selected_Users = Application::$app->session->get('usergroup_bulk_selection_list');
-
-
-        if (!$current_Selected_Users) {
-            Application::$app->session->set('usergroup_bulk_selection_list', []);
-            $current_Selected_Users = [];
-        }
-
-        if ($data['select-action'] === 'true') { // Select request
-            if ($userModel->findOne(['reg_no' => $user_reg_no]) && !in_array($user_reg_no, $current_Selected_Users)) {
-                array_push($current_Selected_Users, $user_reg_no);
-                Application::$app->session->set('usergroup_bulk_selection_list', $current_Selected_Users);
-                // echo 'success' . count($current_Selected_Users);
-                // echo '[{status:"success", count:"' . count($current_Selected_Users) . '"}]';
-
-                $responseObj = new stdClass();
-                $responseObj->status = "success";
-                $responseObj->count = count($current_Selected_Users);
-                $myJSON = json_encode($responseObj);
-                echo $myJSON;
-                exit;
-            }
-        } else { // Deselect request
-            if (in_array($user_reg_no, $current_Selected_Users)) {
-                $pos = array_search($user_reg_no, $current_Selected_Users);
-                unset($current_Selected_Users[$pos]);
-                Application::$app->session->set('usergroup_bulk_selection_list', $current_Selected_Users);
-                $responseObj = new stdClass();
-                $responseObj->status = "success";
-                $responseObj->count = count($current_Selected_Users);
-                $myJSON = json_encode($responseObj);
-                echo $myJSON;
-                exit;
-            }
-        }
-        echo 'failed';
-        exit;
     }
 
     public function removeUser(Request $request)
@@ -127,19 +109,25 @@ class UsergroupController extends Controller
     public function pushUserToUserGroup(Request $request)
     {
         $data = $request->getBody();
+        $userGroupModel = new UserGroup();
 
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
+        if (isset($data['bulk_select_users_list'])) {
+            $arr = explode(',', $data['bulk_select_users_list']);
+            if ($userGroupModel->pushUsersToUserGroup($data['usergroup_id'], $arr)) {
+                Application::$app->session->setFlashMessage('success', 'Users added successfully');
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Something went wrong');
+            }
+        } else {
+            if ($userGroupModel->pushUserToUserGroup($data['usergroup_id'], $data['user_reg_no'])) {
+                Application::$app->session->setFlashMessage('success', 'User added successfully');
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Something went wrong');
+            }
+        }
 
-        // $userGroupModel = new UserGroup();
-        // if ($userGroupModel->pushUserToUserGroup($data['usergroup_id'], $data['user_reg_no'])) {
-        //     Application::$app->session->setFlashMessage('success', 'User added successfully');
-        //     Application::$app->response->redirect('/admin/add-users?usergroup-id=' . $data['usergroup_id']);
-        // } else {
-        //     Application::$app->session->setFlashMessage('error', 'Something went wrong');
-        //     Application::$app->response->redirect('/admin/add-users?usergroup-id=' . $data['usergroup_id']);
-        // }
+        $current_path = $_SERVER['REQUEST_URI'] ?? "/";
+        Application::$app->response->redirect($current_path);
     }
 
 
@@ -162,14 +150,54 @@ class UsergroupController extends Controller
     {
         $data = $request->getBody();
 
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
         $usergroupModel = new Usergroup();
         $usergroupUserModel = new UsergroupUser();
 
         $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
+        if (!$user_group) throw new NotFoundException();
 
-        $all_users = $usergroupModel->getAllUsersInUserGroup($data['usergroup-id']);
 
-        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $all_users]);
+        $row_count = $usergroupModel->getAllUsersInUserGroup(
+            $data['usergroup-id'],
+            $Search_params,
+            true // Fetch row count
+        );
+        $pageCount = ceil($row_count / $limit);
+
+        $paginateController = new PaginatePathController();
+
+        if (($page > $pageCount)) {
+            if ($pageCount) {
+                $path = $paginateController->getNewPath($pageCount);
+                Application::$app->response->redirect($path);
+                exit;
+            }
+        }
+
+        $paginateController->validatePage($page, $pageCount);
+
+        $users_list = $usergroupModel->getAllUsersInUserGroup(
+            $data['usergroup-id'],
+            $Search_params,
+            false, // Fetch Data
+            $start,
+            $limit
+        );
+
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_CREATE_USER_GROUPS,
+            self::BREADCRUM_MANAGE_USERGROUP_USERS
+        ];
+
+        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
 
 

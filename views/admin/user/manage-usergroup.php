@@ -21,6 +21,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -49,6 +50,8 @@ $userRole = "student";
 
         <div class="page-header-container">
             <p id="page-header-title"><?php echo $params['group']->name ?? "" ?></p>
+            <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
+
         </div>
 
         <div class="wrapper">
@@ -100,9 +103,10 @@ $userRole = "student";
 
                 <div class="search-N-sort-components-container">
                     <div class="search-component-container">
-                        <form action="">
+                        <form action="" method="GET">
                             <div class="ug-search-input-wrapper">
-                                <input type="text" placeholder="Search user groups">
+                                <input type="text" hidden name='usergroup-id' value="<?php echo $params['group']->group_id ?>">
+                                <input type="text" placeholder="Search users" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                                 <button>
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -252,7 +256,7 @@ $userRole = "student";
                                 <form action="/usergroup/remove-user" method="POST">
                                     <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
                                     <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
-                                    <button class="btn btn-add">Remove</button>
+                                    <button class="btn btn-add btn-danger">Remove</button>
                                 </form>
                             </div>
                         </div>
@@ -260,6 +264,16 @@ $userRole = "student";
                 <?php } ?>
 
 
+                <?php if (empty($params['users_list'])) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } ?>
+
+                <?php
+
+                if (!empty($params['users_list']) && isset($params['pageCount'])) {
+                    include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+                }
+                ?>
 
             </div>
 

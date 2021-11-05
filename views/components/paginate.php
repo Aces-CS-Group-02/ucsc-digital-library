@@ -28,6 +28,11 @@
     };
 
 
+    if ($currentPage > $pageCount) {
+        $currentPage = $pageCount;
+    }
+
+
 
 
     /*---------------------------------------------------------

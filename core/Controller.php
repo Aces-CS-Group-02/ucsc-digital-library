@@ -43,6 +43,12 @@ class Controller
     public const BREADCRUM_EDIT_TOP_LEVEL_COMMUNITY = ['name' => 'Edit top level community', 'link' => ''];
 
 
+    public const BREADCRUM_ADD_USERGROUP_USERS = ['name' => 'Add users', 'link' => ''];
+    public const BREADCRUM_MANAGE_USERGROUP_USERS = ['name' => 'Manage users', 'link' => ''];
+
+
+
+
 
 
 

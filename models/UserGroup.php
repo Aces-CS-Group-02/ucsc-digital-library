@@ -126,11 +126,32 @@ class Usergroup extends DbModel
             if ($userModel->findOne(['reg_no' => $user]) && !$usergroupUserModel->findOne(['group_id' => $group_id, 'user_reg_no' => $user])) array_push($users_list_validated, $user);
         }
 
+        // var_dump($users_list_validated);
+
         if ($usergroupUserModel->addUsers($group_id, $users_list_validated)) return true;
         return false;
     }
 
-    public function getAllUsersInUserGroup($group_id)
+    // public function getAllUsersInUserGroup($group_id)
+    // {
+    //     $userModel = new User();
+    //     $usergroupUserModel = new UsergroupUser();
+
+    //     $tableName_1 = $userModel::tableName();
+    //     $tableName_2 = $usergroupUserModel::tableName();
+
+    //     $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+    //                                 FROM $tableName_2 t1
+    //                                 JOIN $tableName_1 t2
+    //                                 ON t2.reg_no = t1.user_reg_no
+    //                                 WHERE group_id = $group_id");
+    //     $statement->execute();
+    //     return $statement->fetchAll(PDO::FETCH_OBJ);
+    // }
+
+
+
+    public function getAllUsersInUserGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
     {
         $userModel = new User();
         $usergroupUserModel = new UsergroupUser();
@@ -138,12 +159,25 @@ class Usergroup extends DbModel
         $tableName_1 = $userModel::tableName();
         $tableName_2 = $usergroupUserModel::tableName();
 
-        $statement = self::prepare("SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
-                                    FROM $tableName_2 t1
-                                    JOIN $tableName_1 t2
-                                    ON t2.reg_no = t1.user_reg_no
-                                    WHERE group_id = $group_id");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+        $sql = "SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+                FROM $tableName_2 t1
+                JOIN $tableName_1 t2
+                ON t2.reg_no = t1.user_reg_no
+                WHERE group_id = $group_id AND
+                (first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%'
+                OR email LIKE '%$search_params%')";
+
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 }

@@ -133,14 +133,17 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 $app->router->get('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
 $app->router->post('/admin/create-user-group', [UsergroupController::class, "createUserGroup"]);
 $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
+$app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 
-$app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
+
+
+// $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
 $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
 $app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
 
 
-$app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
+// $app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
 
 
 
