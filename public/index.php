@@ -114,6 +114,7 @@ $app->router->get('/admin/manage-content', [ContentController::class, "manageCon
 
 
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
+$app->router->get('/admin/bulk-upload/review', [AdministrationController::class, "bulkUploadReview"]);
 $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
 $app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
