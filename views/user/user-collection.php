@@ -67,7 +67,7 @@ use app\core\Application;
                     <div class="user-name-and-user-role">
                         <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole->name; ?></p>
+                        <p id="user-role-id"><?php echo $userRole; ?></p>
                     </div>
 
                     <p><?php echo $userEmail['email'] ?></p>
@@ -76,7 +76,7 @@ use app\core\Application;
                 <div class="user-profile-settings-btn-container">
 
                     <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/edit-profile.php">
+                        <a class="user-profile-settings-btn" href="/profile/edit">
                             <i class="fas fa-edit"></i>
                             <p>Edit Profile</p>
                         </a>
@@ -108,23 +108,32 @@ use app\core\Application;
 
     <div class="profile-section-a wrapper">
         <?php
-            // $name = $params['collectionName'];
-            // echo $name;
+        $collectionModel = $params['model'];
+        // echo $name;
         ?>
         <div class="section-header">
-            <p class="section-header-title">Favourites</p>
+            <p class="section-header-title"><?php echo $collectionModel->name ?></p>
         </div>
         <div class="button-place">
-            <a href="/profile/create-user-collection">
+            <!-- <a href="/profile/create-user-collection">
                 <button class="btn btn-primary mr-1 mb-1">Create New Collection</button>
-            </a>
+            </a> -->
             <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
             <button class="btn btn-danger mr-1 mb-1 btn2-edit edit" type="button">Delete</button>
         </div>
 
         <div class="profile-grid">
 
-            <div class="profile-gird-container profile-section-b">
+            <?php
+            $collectionContent = $params['content'] ?? "";
+            // echo $collectionContent;
+            // var_dump($collectionContent);
+            ?>
+
+            <?php if (empty($collectionContent)) { ?>
+                <p class="no-records-available">No Records Available :(</p>
+            <?php } ?>
+            <!-- <div class="profile-gird-container profile-section-b">
                 <div class="profile-grid-item box-shadow-2">
                     <div class="content-card">
                         <div class="content-card-img">
@@ -135,7 +144,7 @@ use app\core\Application;
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

@@ -1,6 +1,7 @@
 <?php
 $isLoggedIn = false;
-$userRole = "student";
+
+use app\core\Application;
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ $userRole = "student";
     <link rel="stylesheet" href="./css/local-styles/home.css">
 
 
-    <title>Document</title>
+    <title>Browse Content</title>
 </head>
 
 <body>
@@ -38,10 +39,13 @@ $userRole = "student";
     <?php include_once __DIR__ . '/components/nav.php'; ?>
 
     <!-- SEARCH CONTENT -->
+    <div class="heading-container">
+        Browse
+    </div>
     <div class="main-container">
-        <div class="heading-container">
-            <h2>Browse</h2>
-        </div>
+        <!-- <div class="heading-container">
+            Browse
+        </div> -->
         <div class="left-panel-container">
             <div class="left-panel-card box-shadow-1">
                 <div class="left-panel-card-title">
@@ -60,9 +64,61 @@ $userRole = "student";
                     Community 4
                 </div> -->
             </div>
-            
+            <!-- <a href="/suggest-content" style="text-decoration: none;">
+                <div class="left-panel-card box-shadow-1">
+                    <div class="left-panel-card-title">
+                        <h5>Suggest New Content</h5>
+                    </div>
+                </div>
+            </a> -->
+            <div class="left-panel-card">
+                <!-- <div class="left-panel-card-title"> -->
+                <a href="/suggest-content" class="edit-link">
+                    Suggest New Content
+                </a>
+                <!-- </div> -->
+            </div>
+
         </div>
         <div class="search-result-container">
+
+            <!-- Flash Message Success -->
+            <?php
+
+            if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+                <div class="alert alert-success" id="flash-msg-alert">
+                    <strong>Success!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+
+
+            <?php } ?>
+
+
+            <!-- Flash Message Error -->
+            <?php
+            if (Application::$app->session->getFlashMessage('error')) { ?>
+                <div class="alert alert-warning" id="flash-msg-alert">
+                    <strong>Error!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+            <?php } ?>
+
+
             <div class="open-side-menu">
                 <button class="btn btn-light mr-1 mb-1" type="button">Show Menu</button>
             </div>
@@ -187,12 +243,13 @@ $userRole = "student";
 
     <!-- FOOTER -->
 
-    <?php include_once __DIR__ . '/components/footer.php'; ?> 
+    <?php include_once __DIR__ . '/components/footer.php'; ?>
 
-    <!-- SCRITP -->
+    <!-- SCRITPT -->
 
     <script src="./javascript/nav.js"></script>
-    <script src="./javascript/home.js"></script>
+    <script src="./javascript/alert.js"></script>
+
 </body>
 
 </html>

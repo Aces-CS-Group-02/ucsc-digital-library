@@ -62,7 +62,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-approvals\team.png" alt=" access-user-group-image">
                     </div>
-                    <div class="card-content">Approve User Group</div>
+                    <div class="card-content">Approve User Groups</div>
                 </a>
 
             </div>

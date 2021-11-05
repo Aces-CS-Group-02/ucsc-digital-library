@@ -7,9 +7,11 @@ use app\core\Controller;
 use app\core\exception\NotFoundException;
 use app\core\Request;
 use app\models\Community;
+use app\models\ContentSuggestion;
 use app\models\Role;
 use app\models\User;
 use app\models\UserCollection;
+use app\models\UserCollectionContent;
 
 class UserController extends Controller
 {
@@ -43,15 +45,42 @@ class UserController extends Controller
     {
         $userCollectionModel = new UserCollection();
         $data = $request->getBody();
+        $data_keys = array_keys($data);
 
+        if(!in_array('collection-id',$data_keys)){
+            throw new NotFoundException();
+        }
         // if (!$userCollectionModel->findUserCollection($data['user_collection_id'])) {
         //     throw new NotFoundException();
         // }
+        $userCollectionID = $data['collection-id'];
+        $userCollectionContentModel = new UserCollectionContent();
+        $collectionContent = $userCollectionContentModel->getCollectionContent($userCollectionID);
 
-        // $userCollection = $userCollectionModel->findUserCollection($data['user_collection_id']);
+        $userCollection = $userCollectionModel->findOne(['user_collection_id' => $data['collection-id']]);
+        if($userCollection){
+            // var_dump($userCollection);
+            return $this->render('user/user-collection',['model' => $userCollection, 'content' => $collectionContent]);
+        }
+        throw new NotFoundException();
+
         // var_dump($data);
         // exit;
-        return $this->render('user/user-collection');
+    }
+
+    public function pdfViewer()
+    {
+        return $this->render('pdf-viewer');
+    }
+
+    public function videoPlayer()
+    {
+        return $this->render('video-player');
+    }
+
+    public function suggestContent()
+    {
+        return $this->render('/user/suggest-content');
     }
 
     public function createNewUserCollection(Request $request)
@@ -69,6 +98,20 @@ class UserController extends Controller
                 exit;
             }
             return $this->render('/user/create-user-collection', ['model' => $userCollectionModel]);
+        }
+    }
+
+    public function createContentSuggestion(Request $request)
+    {
+        $contentSuggestionModel = new ContentSuggestion();
+
+        if($request->getMethod() === 'POST'){
+            if ($contentSuggestionModel->createContentSuggestion($request->getBody())){
+                Application::$app->session->setFlashMessage('success','New content suggestion added');
+                Application::$app->response->redirect('/browse');
+                exit;
+            }
+            return $this->render('/user/suggest-content', ['model' => $contentSuggestionModel]);
         }
     }
 

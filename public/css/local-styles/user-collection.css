@@ -229,6 +229,16 @@
   padding-right: 0 !important;
 }
 
+.no-records-available{
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(172, 172, 172);
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+
 .profile-section-b{
   height: 240px !important; 
   /* Change this height to change the height of the card */

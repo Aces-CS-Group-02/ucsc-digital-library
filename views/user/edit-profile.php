@@ -1,6 +1,7 @@
 <?php
 $isLoggedIn = true;
-$userRole = "student";
+
+use app\core\Application;
 ?>
 
 <!DOCTYPE html>
@@ -53,14 +54,22 @@ $userRole = "student";
 
 
             <div class="user-info-and-btns-container">
+                <?php
+
+                $userName = Application::$app->getUserDisplayName();
+                $userEmail = Application::$app->getUserEmail();
+                $userRole = Application::$app->getUserRoleName();
+
+                ?>
+
                 <div class="user-info">
                     <div class="user-name-and-user-role">
-                        <p id="user-name-id">R.A.N.S. Ranasinghe</p>
+                        <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
                         <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id">Admin</p>
+                        <p id="user-role-id"><?php echo $userRole; ?></p>
                     </div>
 
-                    <p>2019csxxx@stu.ucsc.lk</p>
+                    <p><?php echo $userEmail['email'] ?></p>
                 </div>
 
                 <!-- <div class="user-profile-settings-btn-container">
@@ -103,15 +112,15 @@ $userRole = "student";
                     <div class="edit-profile-form-side-a">
                         <div class="input-group edit-profile-form-input-group">
                             <label class="labelPlace" for="">First Name</label>
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="R.A.N.S" />
+                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="<?php echo $userName['firstname'] ?>" />
                         </div>
                         <div class="input-group edit-profile-form-input-group">
                             <label class="labelPlace" for="">Last Name</label>
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="Ranasinghe" />
+                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="<?php echo $userName['lastname'] ?>" />
                         </div>
                         <div class="input-group edit-profile-form-input-group">
                             <label class="labelPlace" for="">Email</label>
-                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="2019csxxx@stu.ucsc.lk" />
+                            <input class="form-control" id="name" type="text" placeholder="Enter your name" value="<?php echo $userEmail['email'] ?>" />
                         </div>
                     </div>
                     <div class="edit-profile-form-side-b">
