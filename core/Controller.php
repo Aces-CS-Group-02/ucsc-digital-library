@@ -45,6 +45,10 @@ class Controller
 
     public const BREADCRUM_ADD_USERGROUP_USERS = ['name' => 'Add users', 'link' => ''];
     public const BREADCRUM_MANAGE_USERGROUP_USERS = ['name' => 'Manage users', 'link' => ''];
+    public const BREADCRUM_MANAGE_USERGROUPS = ['name' => 'Manage usergroups', 'link' => '/admin/manage-usergroups'];
+
+
+
 
 
 

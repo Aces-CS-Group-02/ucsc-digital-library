@@ -143,6 +143,9 @@ $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manag
 $app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
 
 
+
+$app->router->get('/admin/manage-usergroups', [UsergroupController::class, "manageAllUserGroups"]);
+
 // $app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
 
 

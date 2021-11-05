@@ -87,9 +87,14 @@ class UsergroupController extends Controller
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_USERS,
-                self::BREADCRUM_CREATE_USER_GROUPS,
-                self::BREADCRUM_ADD_USERGROUP_USERS
+                self::BREADCRUM_MANAGE_USERGROUPS
             ];
+
+            array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->group_id"]);
+
+            array_push($breadcrum, self::BREADCRUM_ADD_USERGROUP_USERS);
+
+
 
             $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
         } else {
@@ -130,20 +135,6 @@ class UsergroupController extends Controller
         Application::$app->response->redirect($current_path);
     }
 
-
-    public function pushUsersToUserGroup(Request $request)
-    {
-        $data = $request->getBody();
-        $users_list = explode(",", $data['reg_no_list']);
-        $userGroupModel = new UserGroup();
-        if ($userGroupModel->pushUsersToUserGroup($data['usergroup_id'], $users_list)) {
-            echo 'success';
-            exit;
-        }
-
-        echo 'failed';
-        exit;
-    }
 
 
     public function manageUserGroup(Request $request)
@@ -193,12 +184,66 @@ class UsergroupController extends Controller
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_USERS,
-            self::BREADCRUM_CREATE_USER_GROUPS,
-            self::BREADCRUM_MANAGE_USERGROUP_USERS
+            self::BREADCRUM_MANAGE_USERGROUPS
         ];
+
+        array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->group_id"]);
 
         $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
+
+
+    public function manageAllUserGroups(Request $request)
+    {
+
+        $data = $request->getBody();
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $usergroupModel = new UserGroup();
+
+        $row_count = $usergroupModel->getAllUsergroups(
+            $Search_params,
+            true // Fetch row count
+        );
+        $pageCount = ceil($row_count / $limit);
+        $paginateController = new PaginatePathController();
+        if (($page > $pageCount)) {
+            if ($pageCount) {
+                $path = $paginateController->getNewPath($pageCount);
+                Application::$app->response->redirect($path);
+                exit;
+            }
+        }
+        $paginateController->validatePage($page, $pageCount);
+
+        $usergroups = $usergroupModel->getAllUsergroups(
+            $Search_params,
+            false, // Fetch Data
+            $start,
+            $limit
+        );
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_MANAGE_USERGROUPS
+        ];
+
+        $this->render('admin/user/manage-all-user-groups', ['usergroups' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     public function createCustomUserGroup(Request $request)
