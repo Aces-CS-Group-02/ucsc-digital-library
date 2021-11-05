@@ -110,7 +110,7 @@ if ($user) $isLoggedIn = true;
                         <p>My Profile</p>
                     </div>
                 </a>
-                <a href="profile/my-collections">
+                <a href="/profile/my-collections">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-sliders-h"></i>
                         <p>My Collections</p>

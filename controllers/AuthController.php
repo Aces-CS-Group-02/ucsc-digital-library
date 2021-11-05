@@ -41,7 +41,7 @@ class authController extends Controller
             if ($pendingUser->validate()) {
                 $email = $pendingUser->{"email"};
 
-                $ucscEmailPattern = "/(.*)@(ucsc.cmb.ac.lk|stu.ucsc.cmb.lk|stu.ucsc.lk)/";
+                $ucscEmailPattern = "/(.*)@(ucsc.cmb.ac.lk|stu.ucsc.cmb.ac.lk|stu.ucsc.lk)/";
                 $isUcscEmail = preg_match($ucscEmailPattern, $email);
                 $code = substr(md5(mt_rand()), 0, 15);
                 $pendingUser->{"token"} = $code;
@@ -58,8 +58,9 @@ class authController extends Controller
                     $mail->sendMail();
 
                     if ($pendingUser->save()) {
-                        Application::$app->session->setFlashMessage('success', 'Thanks for registering, verification email sent, check your inbox :)');
-                        Application::$app->response->redirect('/');
+                        Application::$app->session->setFlashMessage('success', 'Thanks for registering, verification email sent, check your emails :)');
+                        // Application::$app->response->redirect('/');
+                        return $this->render('auth/registration-successful');
                     }
                 } else {
                     return $this->render('auth/registration-request', ['model' => $pendingUser]);
@@ -125,7 +126,7 @@ class authController extends Controller
             // echo '</pre>';
 
             if ($user->validate() && $user->save()) {
-                Application::$app->session->setFlashMessage('success', 'Thanks for verifying and registering');
+                Application::$app->session->setFlashMessage('success', 'Thank you for registering');
                 Application::$app->response->redirect('/login');
             }
 
