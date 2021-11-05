@@ -50,7 +50,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\document.svg" alt=" document-image">
+                            <img class="card-icon-img" src="\assets\admin-reports-dashboard\users.png" alt=" document-image">
                         </div>
                         <div class="card-content ">Users' Login Report</div>
                     </a>
@@ -58,7 +58,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\bulk.png" alt=" bulk-upload-image">
+                            <img class="card-icon-img" src="\assets\admin-reports-dashboard\system.png" alt=" bulk-upload-image">
                         </div>
                         <div class="card-content ">System Log Report</div>
                     </a>
@@ -67,7 +67,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                            <img class="card-icon-img" src="\assets\admin-reports-dashboard\subscription-1.png" alt=" cloud-image">
                         </div>
                         <div class="card-content ">Subscription Report</div>
                     </a>
@@ -76,7 +76,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\cloud.svg" alt=" cloud-image">
+                            <img class="card-icon-img" src="\assets\admin-reports-dashboard\citation-1.png" alt=" cloud-image">
                         </div>
                         <div class="card-content ">Citation History Report</div>
                     </a>
@@ -86,7 +86,7 @@ $userRole = "admin";
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\metadata.png" alt=" content-add/update-image">
+                            <img class="card-icon-img" src="\assets\admin-reports-dashboard\suggestion-1.png" alt=" content-add/update-image">
                         </div>
                         <div class="card-content ">Suggested Content Report</div>
                     </a>
