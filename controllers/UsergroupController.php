@@ -9,7 +9,7 @@ use app\core\Request;
 use app\models\PendingUserGroup;
 use app\models\PendingUsergroupUser;
 use app\models\User;
-use app\models\Usergroup;
+use app\models\UserGroup;
 use app\models\UsergroupUser;
 use stdClass;
 
