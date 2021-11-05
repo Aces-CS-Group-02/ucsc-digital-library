@@ -45,7 +45,7 @@ class ApproveController extends Controller
                 $pendingUser->email = $registrationRequest->email;
                 $pendingUser->token = $code;
 
-                //$registrationRequest->delete();
+                $registrationRequest->delete();
 
                 $subject = "Verification Email";
                 $link = "Click <a href='http://localhost:8000/verify-email?email={$registrationRequest->email}&token={$code}'>here</a> to verify.";
