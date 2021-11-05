@@ -64,11 +64,21 @@ class ContentController extends Controller
 
     public function mySubmissions(Request $request)
     {
-        return $this->render("admin/content/admin-my-submission");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MY_SUBMISSIONS
+        ];
+        return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum]);
     }
 
     public function manageContent()
     {
-        return $this->render("admin/content/admin-inner-manage-content");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_CONTENTS
+        ];
+        return $this->render("admin/content/admin-inner-manage-content", ['breadcrum' => $breadcrum]);
     }
 }
