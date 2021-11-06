@@ -170,7 +170,7 @@ $userRole = "student";
                         <div class="input-column-2">
                             <select class="custom-select custom-select-override">
                                 <option value="1">English</option>
-                                <option value="2">Sinhale</option>
+                                <option value="2">Sinhala</option>
                                 <option value="3">Tamil</option>
                             </select>
                         </div>
@@ -178,7 +178,7 @@ $userRole = "student";
 
                     <div class="btn-row content-align-right">
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
-                        <button class="btn btn-warning mr-1" type="button">Cancel/Save</button>
+                        <button class="btn btn-warning mr-1" type="button">Save & Cancel</button>
                         <a href="/admin/upload-content" class="btn btn-secondary mr-1 step-next-btn">Back</a>
                         <a href="/admin/insert-keyword-abstract" class="btn btn-primary mr-1 step-next-btn">Next</a>
                     </div>
