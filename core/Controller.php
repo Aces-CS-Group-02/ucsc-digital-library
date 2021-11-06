@@ -36,6 +36,7 @@ class Controller
     public const BREADCRUM_UPLOAD_CONTENT = ['name' => 'Upload content', 'link' => '/admin/upload-content'];
     public const BREADCRUM_BULK_UPLOAD = ['name' => 'Bulk upload', 'link' => '/admin/bulk-upload'];
     public const BREADCRUM_PUBLISH_CONTENT = ['name' => 'Publish content', 'link' => '/admin/publish-content'];
+    public const BREADCRUM_UNPUBLISH_CONTENT = ['name' => 'Unpublish content', 'link' => '/admin/unpublish-content'];
     public const BREADCRUM_REMOVE_CONTENT = ['name' => 'Delete content', 'link' => '/admin/remove-content'];
     public const BREADCRUM_CREATE_SUB_COMMUNITY = ['name' => 'Create sub community', 'link' => ''];
     public const BREADCRUM_CREATE_COLLECTION = ['name' => 'Create collection', 'link' => ''];

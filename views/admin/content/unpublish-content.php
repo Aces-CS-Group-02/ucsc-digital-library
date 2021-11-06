@@ -53,7 +53,7 @@ $userRole = "student";
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
+                            <input type="text" placeholder="Search content">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -152,7 +152,6 @@ $userRole = "student";
                 <div class="unpublish-contents-headers-container">
                     <div class="block-a">Title</div>
                     <div class="block-b">Creator</div>
-                    <div class="block-c">Type</div>
                     <div class="block-d">Date</div>
                     <div class="block-e">Action</div>
                 </div>
@@ -164,182 +163,254 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Software Enginnering at Google</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
+                            <p>Titus Winters</p>
                         </div>
                         <div class="block-d">
                             <div class="block-title">
                                 <p>Date</p>
                                 <p>:</p>
                             </div>
-                            <p>17/90/21</p>
+                            <p>17/08/21</p>
                         </div>
                         <div class="block-e">
                             <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Fundamentals of Javascript</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
                             </p>
                         </div>
                     </div>
                 </div>
 
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Software Architecture in Practice</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Len Bass</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>10/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Clean Architecture</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Robert C martin</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>17/11/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Beginning Angular with typescript</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>greg Lim</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>17/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Programming PHP</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Kevin Tatroe</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>16/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>learning Angular</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Pablo Deelemen</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>16/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Modern C++ Programming Cookbook</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Marius Bancila</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>02/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="unpublish-content-container">
+                    <div class="unpublish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Beginning C++ Game programming</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>John Horton</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>16/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

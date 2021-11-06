@@ -210,7 +210,7 @@ class AdministrationController extends Controller
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
-            self::BREADCRUM_PUBLISH_CONTENT
+            self::BREADCRUM_UNPUBLISH_CONTENT
         ];
         return $this->render("admin/content/unpublish-content", ['breadcrum' => $breadcrum]);
     }
