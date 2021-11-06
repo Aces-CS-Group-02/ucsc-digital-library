@@ -28,9 +28,14 @@ class UsergroupController extends Controller
             $data_keys = array_keys($data);
             if (!in_array('name', $data_keys)) throw new NotFoundException();
 
-            $usergroupModel = new Usergroup();
+            if (Application::getUserRole() <= 2) {
+                $usergroupModel = new Usergroup();
+            } else if (Application::getUserRole() === 3) {
+                $usergroupModel = new PendingUserGroup();
+            }
 
             $last_inserted_id = $usergroupModel->createUsergroup($data);
+
             if ($last_inserted_id) {
                 Application::$app->response->redirect('/admin/add-users?usergroup-id=' . $last_inserted_id);
                 exit;
@@ -53,7 +58,12 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        $usergroupModel = new Usergroup();
+        if (Application::getUserRole() <= 2) {
+            $usergroupModel = new Usergroup();
+        } else if (Application::getUserRole() === 3) {
+            $usergroupModel = new PendingUserGroup();
+        }
+
         $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
 
         if ($user_group) {
@@ -114,7 +124,12 @@ class UsergroupController extends Controller
     public function pushUserToUserGroup(Request $request)
     {
         $data = $request->getBody();
-        $userGroupModel = new UserGroup();
+
+        if (Application::getUserRole() <= 2) {
+            $userGroupModel = new Usergroup();
+        } else if (Application::getUserRole() === 3) {
+            $userGroupModel = new PendingUserGroup();
+        }
 
         if (isset($data['bulk_select_users_list'])) {
             $arr = explode(',', $data['bulk_select_users_list']);
@@ -146,8 +161,17 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        $usergroupModel = new Usergroup();
+        // $usergroupModel = new Usergroup();
         $usergroupUserModel = new UsergroupUser();
+
+
+        if (Application::getUserRole() <= 2) {
+            $usergroupModel = new Usergroup();
+            $show_request_approval_btn = false;
+        } else if (Application::getUserRole() === 3) {
+            $usergroupModel = new PendingUserGroup();
+            $show_request_approval_btn = true;
+        }
 
         $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
         if (!$user_group) throw new NotFoundException();
@@ -189,7 +213,7 @@ class UsergroupController extends Controller
 
         array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->group_id"]);
 
-        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'show_request_approval_btn' => $show_request_approval_btn]);
     }
 
 
@@ -232,102 +256,91 @@ class UsergroupController extends Controller
             self::BREADCRUM_MANAGE_USERGROUPS
         ];
 
-        $this->render('admin/user/manage-all-user-groups', ['usergroups' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+
+        if (Application::getUserRole() <= 2) {
+            $is_library_staff_member = true;
+        } else if (Application::getUserRole() === 3) {
+            $is_library_staff_member = false;
+        }
+
+        $this->render('admin/user/manage-all-user-groups', ['usergroups' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'is_library_staff_member' => $is_library_staff_member]);
     }
 
 
 
 
 
-
-
-
-
-
-
-
-    public function createCustomUserGroup(Request $request)
+    public function getAllLiveUsergroups(Request $request)
     {
-        if ($request->getMethod() === 'POST') {
-            $data = $request->getBody();
-            $data_keys = array_keys($data);
-            if (!in_array('name', $data_keys)) throw new NotFoundException();
+        $data = $request->getBody();
 
-            $usergroupModel = new PendingUserGroup();
-            $last_inserted_id = $usergroupModel->createCustomUsergroup($data);
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
 
-            if ($last_inserted_id) {
-                Application::$app->response->redirect('/admin/custom-usergroup/add-users?usergroup-id=' . $last_inserted_id);
+        $usergroupModel = new UserGroup();
+
+        $row_count = $usergroupModel->getAllLiveUsergroups(
+            $Search_params,
+            true // Fetch row count
+        );
+        $pageCount = ceil($row_count / $limit);
+        $paginateController = new PaginatePathController();
+        if (($page > $pageCount)) {
+            if ($pageCount) {
+                $path = $paginateController->getNewPath($pageCount);
+                Application::$app->response->redirect($path);
                 exit;
             }
-            return $this->render("/admin/user/admin-create-user-group", ['model' => $usergroupModel]);
         }
-        return $this->render("/admin/user/admin-create-user-group");
+        $paginateController->validatePage($page, $pageCount);
+
+        $usergroups = $usergroupModel->getAllLiveUsergroups(
+            $Search_params,
+            false, // Fetch Data
+            $start,
+            $limit
+        );
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_VIEW_ALL_USER_GROUPS
+        ];
+
+
+        $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
 
-    public function addUsersToCustomUserGroup(Request $request)
-    {
-        $data = $request->getBody();
-        $data_keys = array_keys($data);
-        if (!in_array('usergroup-id', $data_keys)) throw new NotFoundException();
-
-        $usergroupModel = new PendingUserGroup();
-        $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
-
-        if ($user_group) {
-            $users_list = $usergroupModel->getAllUsersNotInThisGroup($data['usergroup-id']);
-            $this->render('admin/user/add-users-to-custom-group', ['group' => $user_group, 'users_list' => $users_list]);
-            exit;
-        }
-        throw new NotFoundException();
 
 
-        // } else {
-        // throw new NotFoundException();
-        // }
-    }
 
-    public function pushUserToCustomUserGroup(Request $request)
-    {
-        $data = $request->getBody();
-        $userGroupModel = new PendingUserGroup();
-        if ($userGroupModel->pushUserToUserGroup($data['usergroup_id'], $data['user_reg_no'])) {
-            Application::$app->session->setFlashMessage('success', 'User added successfully');
-            Application::$app->response->redirect('/admin/custom-usergroup/add-users?usergroup-id=' . $data['usergroup_id']);
-        } else {
-            Application::$app->session->setFlashMessage('error', 'Something went wrong');
-            Application::$app->response->redirect('/admin/custom-usergroup/add-users?usergroup-id=' . $data['usergroup_id']);
-        }
-    }
 
-    public function manageCustomUserGroup(Request $request)
-    {
-        $data = $request->getBody();
 
-        $usergroupModel = new PendingUserGroup();
-        $usergroupUserModel = new PendingUsergroupUser();
 
-        $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
 
-        $all_users = $usergroupModel->getAllUsersInUserGroup($data['usergroup-id']);
 
-        $this->render("admin/user/manage-custom-usergroup", ['group' => $user_group, 'users_list' => $all_users]);
-    }
 
-    public function requestApprovalForCustomUserGroup(Request $request)
-    {
-        $data = $request->getBody();
-        $usergroupModel = new PendingUserGroup();
-        if ($usergroupModel->requestApproval($data['custom_usergroup_id'])) {
-            Application::$app->session->setFlashMessage('success', 'Submitted to aprrove');
-        } else {
-            Application::$app->session->setFlashMessage('error', 'Something went wrong');
-        }
-        Application::$app->response->redirect('/admin/my-usergroups');
-    }
 
-    public function manageMyUsergroups(Request $request)
-    {
-        $this->render('admin/user/my-user-groups');
-    }
+
+
+
+
+    // public function requestApprovalForCustomUserGroup(Request $request)
+    // {
+    //     $data = $request->getBody();
+    //     $usergroupModel = new PendingUserGroup();
+    //     if ($usergroupModel->requestApproval($data['custom_usergroup_id'])) {
+    //         Application::$app->session->setFlashMessage('success', 'Submitted to aprrove');
+    //     } else {
+    //         Application::$app->session->setFlashMessage('error', 'Something went wrong');
+    //     }
+    //     Application::$app->response->redirect('/admin/my-usergroups');
+    // }
+
+    // public function manageMyUsergroups(Request $request)
+    // {
+    //     $this->render('admin/user/my-user-groups');
+    // }
 }

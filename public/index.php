@@ -169,7 +169,9 @@ $app->router->post('/push-user-to-custom-user-group', [UsergroupController::clas
 $app->router->get('/admin/manage-custom-usergroup', [UsergroupController::class, "manageCustomUserGroup"]);
 $app->router->post('/admin/custom-usergroup/request-approval', [UsergroupController::class, "requestApprovalForCustomUserGroup"]);
 
+
 $app->router->get('/admin/my-usergroups', [UsergroupController::class, "manageMyUsergroups"]);
+$app->router->get('/admin/user-groups', [UsergroupController::class, "getAllLiveUsergroups"]);
 
 
 
