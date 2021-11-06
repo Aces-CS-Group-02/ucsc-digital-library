@@ -8,9 +8,10 @@ class DummyController extends Controller
 {
     public function test()
     {
-        return $this->render('admin/content/admin-my-submission');
+        return $this->render('admin/content/academic-manage-content-collection');
     }
 }
+//admin/content/academic-manage-content-collection
 //views\admin\user\admin-report-dashboard.php
 // admin/reports/admin-report-dashboard
 //  admin/content/admin-inner-manage-content
