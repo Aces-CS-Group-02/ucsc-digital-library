@@ -228,22 +228,29 @@ body {
 }
 
 .block-c {
-  flex: 1.5;
-}
-
-.block-d {
   flex: 1;
 }
 
+.block-f {
+  flex-basis: 160px;
+  /* text-align: center !important;
+  justify-content: center !important; */
+}
+
+.block-d {
+  flex-basis: 70px;
+}
+
 .block-e {
-  flex-basis: 300px;
+  flex-basis: 280px;
 }
 
 .block-a,
 .block-b,
 .block-c,
 .block-d,
-.block-e {
+.block-e,
+.block-f {
   text-align: left !important;
   vertical-align: middle !important;
   height: 100%;
@@ -274,6 +281,10 @@ body {
 @media only screen and (min-width: 900px) {
   .block-title {
     display: none;
+  }
+
+  .block-f{
+    margin-right: 10px;
   }
 }
 
@@ -314,7 +325,8 @@ body {
   .block-b,
   .block-c,
   .block-d,
-  .block-e {
+  .block-e,
+  .block-f {
     width: 100%;
     /* background-color: #9ec2f3; */
     flex-basis: 0;
@@ -332,7 +344,8 @@ body {
 
   .block-b,
   .block-c,
-  .block-d {
+  .block-d,
+  .block-f {
     padding: 0 10px;
   }
 
@@ -340,7 +353,8 @@ body {
   .block-b > p,
   .block-c > p,
   .block-d > p,
-  .block-e > p {
+  .block-e > p,
+  .block-f > p {
     flex: 4;
   }
 

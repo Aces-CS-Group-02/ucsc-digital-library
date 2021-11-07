@@ -29,7 +29,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Create Collection</title>
 </head>
 
 <body>

@@ -26,7 +26,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/local-styles/verify-new-users.css">
 
 
-    <title>Document</title>
+    <title>Approve New Users</title>
 </head>
 
 <body>
@@ -127,8 +127,9 @@ $userRole = "student";
             <div class="block-a"> </div>
             <div class="block-b">Registered Date</div>
             <div class="block-c">User Email</div>
-            <div class="block-d">Verification</div>
-            <div class="block-d">Name</div>
+            <div class="block-d">NIC</div>
+            <div class="block-f">Message</div>
+            <div class="block-b">Name</div>
             <div class="block-e">Action</div>
         </div>
 
@@ -163,12 +164,24 @@ $userRole = "student";
                     </div>
                     <div class="block-d">
                         <div class="block-title">
-                            <p>Verification</p>
+                            <p>NIC</p>
                             <p>:</p>
                         </div>
                         <p> <a href="http://localhost:8000/<?php echo $request->verification; ?>" target="_blank">View</a></p>
                     </div>
-                    <div class="block-d">
+                    <div class="block-f">
+                        <div class="block-title">
+                            <p>Message</p>
+                            <p>:</p>
+                        </div>
+                        <p class="line-clamp line-clamp-1-description"><?php
+                            if ($request->message === "") {
+                                echo "N/A";
+                            } else {
+                                echo $request->message;
+                            }  ?></p>
+                    </div>
+                    <div class="block-b">
                         <div class="block-title">
                             <p>Name</p>
                             <p>:</p>

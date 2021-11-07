@@ -28,7 +28,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Create User Group</title>
 </head>
 
 <body>

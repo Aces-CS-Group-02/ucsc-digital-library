@@ -54,12 +54,12 @@ body {
 
 
 .upper-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
   /* background-color: antiquewhite; */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 900px;
+  margin: 20px auto;
   /* border: 1px solid #a1a1a1; */
 }
 
@@ -93,7 +93,8 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  max-width: 1000px;
+  width: 900px;
+  max-width: 1440px;
 }
 
 .bulk-upload-headers-container {
@@ -139,7 +140,8 @@ body {
 }
 
 .block-c {
-  flex-basis: 150px;
+  flex-basis: 260px;
+  /* border: 1px dotted black; */
 }
 
 .block-a,
@@ -189,7 +191,7 @@ body {
 
   .content-container,
   .upper-container {
-    padding: 0 150px;
+    /* padding: 0 150px; */
   }
 }
 

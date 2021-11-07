@@ -26,7 +26,7 @@ $userRole = "student";
   <link rel="stylesheet" href="./css/local-styles/home.css">
 
 
-  <title>Document</title>
+  <title>Home</title>
 </head>
 
 <body>

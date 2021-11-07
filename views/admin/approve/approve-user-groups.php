@@ -26,7 +26,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/local-styles/approve-user-groups.css">
 
 
-    <title>Document</title>
+    <title>Approve User Groups</title>
 </head>
 
 <body>
@@ -107,21 +107,60 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>25/04/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
                         <p>Name</p>
                         <p>:</p>
                     </div>
-                    <p>18/19 CS SCS2201 DSA</p>
+                    <p>Students</p>
                 </div>
                 <div class="block-d">
                     <div class="block-title">
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Janet Gilder</p>
+                </div>
+                <div class="block-e">
+                    <p>
+                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
+                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
+                    </p>
+                </div>
+            </div>
+            <div class="user-group-info">
+                <div class="block-a">
+                    <p>
+                    <div class="input-group custom-control">
+                        <div class="checkbox checkbox-edit">
+                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                        </div>
+                    </div>
+                    </p>
+                </div>
+                <div class="block-b">
+                    <div class="block-title">
+                        <p>Created Date</p>
+                        <p>:</p>
+                    </div>
+                    <p>02/05/21</p>
+                </div>
+                <div class="block-c">
+                    <div class="block-title">
+                        <p>Name</p>
+                        <p>:</p>
+                    </div>
+                    <p>New Course Students</p>
+                </div>
+                <div class="block-d">
+                    <div class="block-title">
+                        <p>Creator</p>
+                        <p>:</p>
+                    </div>
+                    <p>Aurora Young</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -153,14 +192,14 @@ $userRole = "student";
                         <p>Name</p>
                         <p>:</p>
                     </div>
-                    <p>18/19 CS SCS2201 DSA</p>
+                    <p>External</p>
                 </div>
                 <div class="block-d">
                     <div class="block-title">
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Nemo Fernando</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -185,21 +224,21 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>14/06/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
                         <p>Name</p>
                         <p>:</p>
                     </div>
-                    <p>18/19 CS SCS2201 DSA</p>
+                    <p>Class</p>
                 </div>
                 <div class="block-d">
                     <div class="block-title">
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Alvin Soyza</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -224,21 +263,21 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>15/11/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
                         <p>Name</p>
                         <p>:</p>
                     </div>
-                    <p>18/19 CS SCS2201 DSA</p>
+                    <p>Fellowship</p>
                 </div>
                 <div class="block-d">
                     <div class="block-title">
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Denise Dare</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -263,60 +302,21 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>16/04/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
                         <p>Name</p>
                         <p>:</p>
                     </div>
-                    <p>18/19 CS SCS2201 DSA</p>
+                    <p>Followers</p>
                 </div>
                 <div class="block-d">
                     <div class="block-title">
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                        </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>18/19 CS SCS2201 DSA</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Phu M. Phang</p>
+                    <p>Veno Silva</p>
                 </div>
                 <div class="block-e">
                     <p>

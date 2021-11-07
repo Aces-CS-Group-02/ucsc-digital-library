@@ -30,7 +30,7 @@ use app\core\Application;
 
 
 
-    <title>Create Library Information Assistant</title>
+    <title>Manage User Groups</title>
 </head>
 
 <body>

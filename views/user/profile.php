@@ -237,8 +237,8 @@ use app\core\Application;
                 <a href="/profile/video-player" class="edit-link">
                     <div class="profile-grid-item box-shadow-2">
                         <div class="content-card">
-                            <div class="content-card-img">
-                                <img src="/assets/profile/video.png" alt="">
+                            <div class="content-card-img edit-content-card-img">
+                                <img src="/assets/profile/video.svg" alt="">
                             </div>
                             <div class="content-card-bottom">
                                 <p class="content-card-bottom-title line-clamp line-clamp-2-description">Big Buck Bunny</p>

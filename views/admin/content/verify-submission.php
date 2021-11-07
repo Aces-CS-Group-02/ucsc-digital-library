@@ -24,7 +24,7 @@ $userRole = "student";
 
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/verify-submission.css">
-    <title>Document</title>
+    <title>Upload Content</title>
 </head>
 
 <body>

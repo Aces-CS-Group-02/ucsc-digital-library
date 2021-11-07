@@ -28,7 +28,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Create Community</title>
 </head>
 
 <body>

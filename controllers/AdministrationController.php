@@ -358,4 +358,14 @@ class AdministrationController extends Controller
     {
         return $this->render("admin/content/view-all-content-collections");
     }
+    
+    public function approveSubmissions(Request $request)
+    {
+        return $this->render("admin/approve/admin-approve-submission");
+    }
+
+    public function viewReports(Request $request)
+    {
+        return $this->render("admin/reports/admin-report-dashboard");
+    }
 }

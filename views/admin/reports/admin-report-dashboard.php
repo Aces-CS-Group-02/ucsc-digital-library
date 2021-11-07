@@ -26,7 +26,7 @@ $userRole = "admin";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/admin-report-dashboard.css">
 
-    <title>Document</title>
+    <title>Reports</title>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ $userRole = "admin";
 
         <div class="grid-container">
             <div class="content-dashboard-text ">
-                Reports
+                All Reports
             </div>
             
                 <div class="card-container">

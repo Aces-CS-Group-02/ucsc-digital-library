@@ -26,7 +26,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/local-styles/bulk-register.css">
 
 
-    <title>Document</title>
+    <title>Bulk Registration</title>
 </head>
 
 <body>
@@ -107,21 +107,21 @@ $userRole = "student";
                                 <p>First Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu</p>
+                            <p>Dilini</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Last Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phang</p>
+                            <p>Silva</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Email</p>
                                 <p>:</p>
                             </div>
-                            <p>phuphang@stu.ucsc.lk</p>
+                            <p>2019cs642@stu.ucsc.lk</p>
                         </div>
                         <div class="block-d">
                             <p>
@@ -135,21 +135,21 @@ $userRole = "student";
                                 <p>First Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu</p>
+                            <p>Shaine</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Last Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phang</p>
+                            <p>Perera</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Email</p>
                                 <p>:</p>
                             </div>
-                            <p>phuphang@stu.ucsc.lk</p>
+                            <p>2019is213@stu.ucsc.lk</p>
                         </div>
                         <div class="block-d">
                             <p>
@@ -163,21 +163,21 @@ $userRole = "student";
                                 <p>First Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu</p>
+                            <p>Denise</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Last Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phang</p>
+                            <p>Thomas</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Email</p>
                                 <p>:</p>
                             </div>
-                            <p>phuphang@stu.ucsc.lk</p>
+                            <p>2019cs257@stu.ucsc.lk</p>
                         </div>
                         <div class="block-d">
                             <p>
@@ -191,21 +191,21 @@ $userRole = "student";
                                 <p>First Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu</p>
+                            <p>Avin</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Last Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phang</p>
+                            <p>Soyza</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Email</p>
                                 <p>:</p>
                             </div>
-                            <p>phuphang@stu.ucsc.lk</p>
+                            <p>2019cs283@stu.ucsc.lk</p>
                         </div>
                         <div class="block-d">
                             <p>
@@ -219,21 +219,21 @@ $userRole = "student";
                                 <p>First Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu</p>
+                            <p>Nemo</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Last Name</p>
                                 <p>:</p>
                             </div>
-                            <p>Phang</p>
+                            <p>Fernando</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Email</p>
                                 <p>:</p>
                             </div>
-                            <p>phuphang@stu.ucsc.lk</p>
+                            <p>2022is563@stu.ucsc.lk</p>
                         </div>
                         <div class="block-d">
                             <p>

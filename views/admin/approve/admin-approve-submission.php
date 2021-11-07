@@ -27,7 +27,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Approve Submissions</title>
 </head>
 
 <body>

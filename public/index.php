@@ -193,8 +193,11 @@ $app->router->get('/admin/user-groups', [UsergroupController::class, "getAllLive
 // $app->router->get('/admin/add-users', [AdministrationController::class, "addUsersToUserGroup"]);
 
 
-$app->router->get('/admin/approve-content-groups', [AdministrationController::class, "approveContentGroup"]);
+$app->router->get('/admin/approve-content-collections', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [AdministrationController::class, "approveUserGroup"]);
+$app->router->get('/admin/approve-submissions', [AdministrationController::class, "approveSubmissions"]);
+
+$app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
 
 $app->router->get('/test', [DummyController::class, "test"]);
 

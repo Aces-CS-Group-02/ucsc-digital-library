@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./css/local-styles/advanced-search.css">
 
 
-    <title>Document</title>
+    <title>Advanced Search</title>
 </head>
 
 <body>

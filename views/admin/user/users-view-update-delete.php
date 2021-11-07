@@ -30,7 +30,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Manage Users</title>
 </head>
 
 <body>

@@ -26,7 +26,7 @@ $userRole = "admin";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/admin-manage-content.css">
 
-    <title>Document</title>
+    <title>Content Management</title>
 </head>
 
 <body>

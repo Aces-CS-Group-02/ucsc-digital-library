@@ -1,6 +1,7 @@
 <?php
 $isLoggedIn = true;
-$userRole = "student";
+
+use app\core\Application;
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>My Submissions</title>
 </head>
 
 <body>
@@ -43,7 +44,7 @@ $userRole = "student";
 
     <div id="publish-content-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">My Submission</p>
+            <p id="page-header-title">My Submissions</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="wrapper">
@@ -159,228 +160,459 @@ $userRole = "student";
 
                 </div>
 
-                <div class="publish-content-container">
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
+                <?php if (Application::$app->getUserRole() <= 2) { ?>
+
+                    <div class="publish-content-container">
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Software Engineering at Google</p>
                             </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Hyrum Wright</p>
                             </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Software Engineering</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>17/09/21</p>
                             </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-success">Published</span></p>
                             </div>
-                            <p><span class="badge badge-soft-success">Approved</span></p>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
                         </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Introuction to Java</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Y. Daniel Liang</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Programming</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>25/02/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-secondary">Draft</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Learning Web Design</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Jennifer N. Robbins</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Wed Development</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>30/02/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-secondary">Draft</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Data Structures</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Aurora Young</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>18/19 CS SCS2201 DSA</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>17/90/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-success">Published</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Java Coding Problems</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Anghel Leonard</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Programming</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>14/08/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-success">Published</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
+
+                <?php } ?>
+
+                <?php if (Application::$app->getUserRole() === 3) { ?>
+
+                    <div class="publish-content-container">
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Software Engineering at Google</p>
                             </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Hyrum Wright</p>
                             </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Software Engineering</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>17/09/21</p>
                             </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-success">Approved</span></p>
                             </div>
-                            <p><span class="badge badge-soft-secondary">Draft</span></p>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
                         </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Introuction to Java</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Y. Daniel Liang</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Programming</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>25/02/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-secondary">Draft</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Learning Web Design</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Jennifer N. Robbins</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Wed Development</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>30/02/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-warning">Pending</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Data Structures</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Aurora Young</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>18/19 CS SCS2201 DSA</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>17/90/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-secondary">Draft</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Java Coding Problems</p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Anghel Leonard</p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p>Programming</p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p>14/08/21</p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-danger">Rejected</span></p>
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-warning">Pending</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-danger">Rejected</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-warning">Pending</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
+                <?php } ?>
 
             </div>
 
