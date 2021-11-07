@@ -30,7 +30,7 @@ use app\core\Application;
 
 
 
-    <title>Manage content collections</title>
+    <title>Content collections</title>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ use app\core\Application;
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Manage Content Collections</p>
+            <p id="page-header-title">Content Collections</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
 
 

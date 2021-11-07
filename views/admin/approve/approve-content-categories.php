@@ -1,6 +1,9 @@
 <?php
 $isLoggedIn = true;
 $userRole = "student";
+
+// var_dump($params['breadcrum']);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +44,7 @@ $userRole = "student";
 
     <div class="page-header-container">
         <p id="page-header-title">Approve Content Collections</p>
+        <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
     </div>
 
     <div class="second-border">
