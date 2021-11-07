@@ -27,11 +27,13 @@ body {
 
 .input-column-1 {
     /* flex-grow: 1; */
-    flex-basis: 150px;
+    flex-basis: 150px !important;
+    width: 150px !important;
 }
 
 .input-column-2 {
     flex-grow: 5;
+    width: 500px;
 }
 
 .input-column-3 {

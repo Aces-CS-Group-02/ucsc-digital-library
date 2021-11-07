@@ -113,7 +113,7 @@ $userRole = "student";
                         </div>
                         <div class="input-column-2">
                             <select class="custom-select custom-select-override">
-                                <option value="0">Select the community collection</option>
+                                <option value="0"></option>
                                 <option value="1">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science in Computer Science (BSc in CS) > 2018</option>
                                 <option value="2">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science in Computer Science (BSc in CS) > 2019</option>
                                 <option value="3">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science Honors in Software Engineering (BSc Hons in SE) > 2018</option>
