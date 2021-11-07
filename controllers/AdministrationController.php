@@ -353,4 +353,9 @@ class AdministrationController extends Controller
     {
         return $this->render("admin/content/admin-create-content-collections");
     }
+
+    public function contentCollections(Request $request)
+    {
+        return $this->render("admin/content/view-all-content-collections");
+    }
 }

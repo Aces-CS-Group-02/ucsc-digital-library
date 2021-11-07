@@ -145,7 +145,7 @@ $userRole = "admin";
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\my-collections.png" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">My Content Collections</div>
+                    <div class="card-content ">Content Collections</div>
                 </a>
             </div>
         </div>
