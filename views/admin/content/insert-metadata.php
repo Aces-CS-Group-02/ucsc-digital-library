@@ -148,19 +148,6 @@ $userRole = "student";
                         </div>
                     </div>
 
-                    <div class="input-row">
-                        <div class="input-column-1">
-                            <label class="labelPlace" for="">Type</label>
-
-                        </div>
-                        <div class="input-column-2">
-                            <select class="custom-select custom-select-override">
-                                <option value="1">Type 1</option>
-                                <option value="2">Type 2</option>
-                                <option value="3">Type 3</option>
-                            </select>
-                        </div>
-                    </div>
 
                     <div class="input-row">
                         <div class="input-column-1">
@@ -178,7 +165,7 @@ $userRole = "student";
 
                     <div class="btn-row content-align-right">
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
-                        <button class="btn btn-warning mr-1" type="button">Save & Cancel</button>
+                        <button class="btn btn-warning mr-1" type="button">Draft</button>
                         <a href="/admin/upload-content" class="btn btn-secondary mr-1 step-next-btn">Back</a>
                         <a href="/admin/insert-keyword-abstract" class="btn btn-primary mr-1 step-next-btn">Next</a>
                     </div>

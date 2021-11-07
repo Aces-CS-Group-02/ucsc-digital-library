@@ -27,11 +27,13 @@ body {
 
 .input-column-1 {
     /* flex-grow: 1; */
-    flex-basis: 150px;
+    flex-basis: 150px !important;
+    width: 150px !important;
 }
 
 .input-column-2 {
     flex-grow: 5;
+    width: 500px;
 }
 
 .input-column-3 {
@@ -145,6 +147,10 @@ body {
     height: 150px;
     min-height: 150px;
     max-height: 500px;
+}
+
+.step-next-btn {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 500px) {
