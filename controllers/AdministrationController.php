@@ -343,4 +343,14 @@ class AdministrationController extends Controller
     {
         return $this->render("admin/approve/approve-user-groups");
     }
+
+    public function manageContentCollections(Request $request)
+    {
+        return $this->render("admin/content/academic-manage-content-collection");
+    }
+
+    public function createContentCollection(Request $request)
+    {
+        return $this->render("admin/content/admin-create-content-collections");
+    }
 }

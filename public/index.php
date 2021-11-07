@@ -123,6 +123,9 @@ $app->router->get('/admin/publish-content', [AdministrationController::class, "p
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
 $app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
 $app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
+$app->router->get('/admin/manage-content-collections', [AdministrationController::class, "manageContentCollections"]);
+// $app->router->get('/admin/content-collections', [AdministrationController::class, "contentCollections"]);
+$app->router->get('/admin/admin-create-content-collection', [AdministrationController::class, "createContentCollection"]);
 
 
 // Admin Dashboard => Manage Users Routes
