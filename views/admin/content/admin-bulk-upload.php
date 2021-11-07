@@ -48,7 +48,7 @@ $userRole = "student";
             <form class="form-feature">
                 <div class="input-container">
                     <div class="input-group">
-                        <label class="labelPlace" for="">Upload the xls files</label>
+                        <label class="labelPlace" for="">Upload files</label>
                         <div class="custom-file custom-file-override">
                             <input class="custom-file-input" id="customFile" type="file" />
                             <label class="custom-file-label" for="customFile"> </label>
