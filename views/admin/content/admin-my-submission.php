@@ -51,7 +51,7 @@ $userRole = "student";
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
+                            <input type="text" placeholder="Search ">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>

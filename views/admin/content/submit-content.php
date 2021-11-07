@@ -125,7 +125,7 @@ $userRole = "student";
 
                     <div class="btn-row content-align-right">
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
-                        <button class="btn btn-warning mr-1" type="button">Save & Cancel</button>
+                        <button class="btn btn-warning mr-1" type="button">Draft</button>
                         <a href="/admin/insert-keyword-abstract" class="btn btn-secondary mr-1 step-next-btn">Back</a>
                         <a href="/admin/verify-submission" class="btn btn-primary mr-1 step-next-btn">Next</a>
                     </div>

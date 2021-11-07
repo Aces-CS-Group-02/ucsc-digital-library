@@ -92,7 +92,7 @@ use app\core\Application;
                 <div class="search-component-container">
                     <form action="" method="GET">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search users" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
+                            <input type="text" placeholder="Search" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
