@@ -124,7 +124,7 @@ use app\core\Application;
                 <div class="block-a"> </div>
                 <div class="block-b">Name</div>
                 <div class="block-b">Description</div>
-                <div class="block-c">Creator</div>
+                <div class="block-c">Status</div>
                 <div class="block-d">Action</div>
             </div>
 
@@ -133,45 +133,42 @@ use app\core\Application;
                 <?php
                 $obj1 = new stdClass;
                 $obj1->group_id = 100;
-                $obj1->name = 'Test1';
+                $obj1->name = 'SCS2112 Automata Theory';
                 $obj1->description = '';
 
-                $obj1->first_name = 'Sadali';
-                $obj1->last_name = 'Ranasinghe';
+                $obj1->status = 'live';
 
                 $usergroups = [$obj1];
 
                 $obj2 = new stdClass;
                 $obj2->group_id = 101;
-                $obj2->name = 'Test2';
+                $obj2->name = 'SCS2112 Automata Theory';
                 $obj2->description = '';
 
-                $obj2->first_name = 'Ramza';
-                $obj2->last_name = 'Mohideen';
+                $obj2->status = 'draft';
+
 
                 $usergroups = [$obj2];
 
                 $obj3 = new stdClass;
                 $obj3->group_id = 102;
-                $obj3->name = 'Test3';
+                $obj3->name = 'Professional Development';
                 $obj3->description = '';
 
-                $obj3->first_name = 'Kasun';
-                $obj3->last_name = 'Jalitha';
+                $obj3->status = 'pending';
 
                 $usergroups = [$obj3];
 
                 $obj4 = new stdClass;
                 $obj4->group_id = 103;
-                $obj4->name = 'Test4';
+                $obj4->name = 'Programming Language Concepts';
                 $obj4->description = '';
 
-                $obj4->first_name = 'Ashan';
-                $obj4->last_name = 'Hansaka';
+                $obj4->status = 'live';
 
-                $usergroups = [$obj1,$obj2,$obj3,$obj4];
-                
-                
+                $usergroups = [$obj1, $obj2, $obj3, $obj4];
+
+
 
 
                 ?>
@@ -198,6 +195,7 @@ use app\core\Application;
                                     <p>Name</p>
                                     <p>:</p>
                                 </div>
+                               
                                 <p><?php echo $usergroup->name ?></p>
                             </div>
                             <div class="block-b">
@@ -224,7 +222,10 @@ use app\core\Application;
                                     <p>Creator</p>
                                     <p>:</p>
                                 </div>
-                                <p><?php echo $usergroup->first_name . ' ' . $usergroup->last_name ?></p>
+                                <p><span class="badge badge-soft-<?php if ($usergroup->status == 'live') echo "success";
+                                                                    else if ($usergroup->status == 'pending') echo "warning";
+                                                                    else if ($usergroup->status == 'draft') echo "secondary";
+                                                                    ?>"><?php echo $usergroup->status; ?></span></p>
                             </div>
                             <div class="block-d">
                                 <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->group_id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
