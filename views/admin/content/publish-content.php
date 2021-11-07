@@ -51,7 +51,7 @@ $userRole = "student";
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
+                            <input type="text" placeholder="Search content">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -150,7 +150,6 @@ $userRole = "student";
                 <div class="publish-contents-headers-container">
                     <div class="block-a">Title</div>
                     <div class="block-b">Creator</div>
-                    <div class="block-c">Type</div>
                     <div class="block-d">Date</div>
                     <div class="block-e">Action</div>
 
@@ -163,21 +162,75 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Learning PHP, MySQL & JavaScript</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
+                            <p>Robin Nixon</p>
                         </div>
-                        <div class="block-c">
+                        <div class="block-d">
                             <div class="block-title">
-                                <p>Type</p>
+                                <p>Date</p>
                                 <p>:</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
+                            <p>17/06/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Learn JAVA in one day and LEARN IT WELL</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Jamie Chan</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>20/10/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Java Coading Problems</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Angel Leonard</p>
                         </div>
                         <div class="block-d">
                             <div class="block-title">
@@ -193,7 +246,97 @@ $userRole = "student";
                             </p>
                         </div>
                     </div>
+
                     <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Learning Web Design</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Jennifer Niederst Robbins</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>10/01/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Modern CSS</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Joe Attrid</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>17/04/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>React Cookbook</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>David Grifth</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>17/09/21</p>
+                        </div>
+                        <div class="block-e">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <div class="publish-content-info">
                         <div class="block-a">
                             <div class="block-title">
                                 <p>Title</p>
@@ -336,7 +479,7 @@ $userRole = "student";
                                 <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>

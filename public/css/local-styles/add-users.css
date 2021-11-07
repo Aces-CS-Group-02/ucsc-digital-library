@@ -156,6 +156,13 @@ body {
   justify-content: flex-end;
 }
 
+.create-new-community-btn-container{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 40px;
+}
+
 .ug-search-input-wrapper > input,
 .ug-search-input-wrapper > button {
   height: 1.4rem;

@@ -92,8 +92,9 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn active" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
                 <a class="tab-link-btn blured" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage Users</a>
+                <a class="tab-link-btn active" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
+
             </div>
 
             <div class="second-border">

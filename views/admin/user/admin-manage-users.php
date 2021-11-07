@@ -95,11 +95,11 @@ $userRole = "admin";
                 </a>
             </div>
             <div class="card-container">
-                <a href="/admin/manage-user-groups" class="card box-shadow-1">
+                <a href="/admin/user-groups" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-users\my-user-groups.png" alt=" update-groups-image">
                     </div>
-                    <div class="card-content ">My User Groups</div>
+                    <div class="card-content ">User Groups</div>
                 </a>
             </div>
         </div>

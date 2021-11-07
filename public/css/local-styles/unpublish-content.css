@@ -12,7 +12,7 @@ body {
     max-width: 1400px;
     width: 96%;
     margin: 0 auto;
-    border-bottom: 1px solid rgb(131, 131, 131);
+    border-bottom: 1px solid rgb(210, 210, 210);
     padding: 15px 0;
 }
 
@@ -239,7 +239,7 @@ body {
     display: flex;
     align-items: flex-start;
     border-bottom: 1px solid rgb(201, 201, 201);
-    padding: 10px;
+    padding: 10px 0;
     /* background-color: #f1c3c3 !important; */
 }
 
@@ -271,7 +271,9 @@ body {
 }
 
 .block-e {
-    flex-basis: 250px;
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 230px;
 }
 
 .block-a,

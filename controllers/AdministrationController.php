@@ -210,7 +210,7 @@ class AdministrationController extends Controller
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
-            self::BREADCRUM_PUBLISH_CONTENT
+            self::BREADCRUM_UNPUBLISH_CONTENT
         ];
         return $this->render("admin/content/unpublish-content", ['breadcrum' => $breadcrum]);
     }
@@ -262,35 +262,7 @@ class AdministrationController extends Controller
         return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum]);
     }
 
-    public function createUserGroup(Request $request)
-    {
-        if ($request->getMethod() === 'POST') {
 
-            $data = $request->getBody();
-
-            if (Application::getUserRole() <= 2) {
-                $userGroupModel = new UserGroup();
-                $last_id = $userGroupModel->createUserGroup($data);
-                if ($last_id) {
-                    echo $last_id;
-                    Application::$app->response->redirect('/admin/add-users?usergroup-id=' . $last_id);
-                } else {
-                    return $this->render("admin/user/admin-create-user-group", ['model' => $userGroupModel]);
-                }
-            } else if (Application::getUserRole() === 3) {
-                $pendingUserGroupModel = new PendingUserGroup();
-                if ($pendingUserGroupModel->createPendingUserGroup($data)) {
-                    Application::$app->response->redirect('/admin/manage-my-user-groups');
-                } else {
-                    return $this->render("admin/user/admin-create-user-group", ['model' => $pendingUserGroupModel]);
-                }
-            } else {
-                throw new ForbiddenException();
-            }
-        } else {
-            return $this->render("admin/user/admin-create-user-group");
-        }
-    }
 
     public function manageMyUserGroups(Request $request)
     {

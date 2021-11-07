@@ -25,12 +25,12 @@ use app\core\Application;
     <link rel="stylesheet" href="/css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="/css/local-styles/manage-all-user-groups.css">
+    <link rel="stylesheet" href="/css/local-styles/view-all-content-collections.css">
 
 
 
 
-    <title>Create Library Information Assistant</title>
+    <title>Manage content collections</title>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ use app\core\Application;
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Manage User Groups</p>
+            <p id="page-header-title">Manage Content Collections</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
 
 
@@ -114,7 +114,7 @@ use app\core\Application;
             </div>
 
             <div class="create-new-community-btn-container">
-                <button class="btn btn-primary" id="create-new-community-btn">Create new user group</button>
+                <!-- <button class="btn btn-primary" id="create-new-community-btn">Create new user group</button> -->
             </div>
 
             <!-- Form goes here -->
@@ -122,14 +122,7 @@ use app\core\Application;
                 <div class="block-a"> </div>
                 <div class="block-b">Name</div>
                 <div class="block-b">Description</div>
-
-                <?php if ($params['is_library_staff_member']) { ?>
-                    <div class="block-c">Creator</div>
-                <?php } ?>
-                <?php if (!$params['is_library_staff_member']) { ?>
-                    <div class="block-c">Status</div>
-                <?php } ?>
-
+                <div class="block-c">Creator</div>
                 <div class="block-d">Action</div>
             </div>
 
@@ -137,7 +130,34 @@ use app\core\Application;
 
                 <?php
 
-                $usergroups = $params['usergroups'] ?? "";
+                $obj1 = new stdClass;
+                $obj1->name = 'SCS2112 Automata Theory';
+                $obj1->description = '';
+                $obj1->first_name = 'Ramza';
+                $obj1->last_name = 'Mohideen';
+
+                $obj2 = new stdClass;
+                $obj2->name = 'Computer Networks';
+                $obj2->description = '';
+                $obj2->first_name = 'Ashan';
+                $obj2->last_name = 'Hansaka';
+
+                $obj3 = new stdClass;
+                $obj3->name = 'Professional Development';
+                $obj3->description = '';
+                $obj3->first_name = 'Prasad';
+                $obj3->last_name = 'Wickramasinghe';
+
+                $obj4 = new stdClass;
+                $obj4->name = 'Programming Language Concepts';
+                $obj4->description = '';
+                $obj4->first_name = 'Fathima';
+                $obj4->last_name = 'Mohideen';
+
+                $temp_arr = [$obj1, $obj2, $obj3, $obj4];
+
+
+                $usergroups = $temp_arr;
 
 
                 ?>
@@ -190,29 +210,12 @@ use app\core\Application;
 
 
                                 <div class="block-title">
-                                    <?php if ($params['is_library_staff_member']) {
-                                        echo 'Creator';
-                                    } else {
-                                        echo 'Status';
-                                    } ?>
-                                    <p></p>
+                                    <p>Creator</p>
                                     <p>:</p>
                                 </div>
 
-                                <?php if ($params['is_library_staff_member']) { ?>
-                                    <p><?php echo $usergroup->first_name . ' ' . $usergroup->last_name ?></p>
-                                <?php } ?>
-                                <?php if (!$params['is_library_staff_member']) { ?>
-                                    <?php
-                                    if ($usergroup->completed_status === 'live') {
-                                        echo '<p class="badge badge-soft-success">' . $usergroup->completed_status . '</p>';
-                                    } else if (!$usergroup->completed_status) {
-                                        echo '<p class="badge badge-soft-secondary">' . 'Draft' . '</p>';
-                                    } else if ($usergroup->completed_status) {
-                                        echo '<p class="badge badge-soft-warning">' . 'Pending' . '</p>';
-                                    }
-                                    ?>
-                                <?php } ?>
+                                <p><?php echo $usergroup->first_name . ' ' . $usergroup->last_name ?></p>
+
 
 
 
@@ -222,13 +225,7 @@ use app\core\Application;
 
 
                             <div class="block-d">
-                                <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->group_id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
-
-                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->group_id > 1)) { ?>
-                                    <form action="" method="POST">
-                                        <button class="btn btn-add btn-danger btn2-edit ml-2" type="submit" name="group_id" value="<?php echo $usergroup->group_id; ?>" data-id="<?php echo $usergroup->group_id; ?>">Remove</button>
-                                    </form>
-                                <?php } ?>
+                                <a href="#" class="btn btn-add btn-danger btn-edit-user-group">View</a>
                             </div>
                         </div>
 
@@ -260,27 +257,6 @@ use app\core\Application;
 
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/profile.js"></script>
-
-    <Script>
-        (() => {
-
-            const createnewcommunityBtn = document.getElementById('create-new-community-btn');
-            createnewcommunityBtn.onclick = function() {
-                window.location = '/admin/create-user-group';
-            }
-
-            const flashMessage = document.getElementById('flash-msg-alert');
-            const flashMessageAlertDeteteBtn = document.getElementById('flash-msg-remove');
-
-
-            if (flashMessageAlertDeteteBtn) {
-                flashMessageAlertDeteteBtn.onclick = function() {
-                    flashMessage.remove();
-                }
-            }
-
-        })();
-    </Script>
 </body>
 
 </html>

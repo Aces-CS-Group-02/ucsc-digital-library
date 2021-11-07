@@ -183,6 +183,55 @@ class Usergroup extends DbModel
 
     public function getAllUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
     {
+
+        $creator = Application::$app->user->reg_no;
+
+
+        // $inject = '';
+        // if (Application::getUserRole() === 3) $inject = "t1.creator_reg_no = $creator AND";
+
+
+        if (Application::getUserRole() <= 2) {
+            $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
+                usergroup t1 LEFT JOIN user t2
+                ON t1.creator_reg_no = t2.reg_no
+                WHERE
+                (name LIKE '%$search_params%'
+                OR description LIKE '%$search_params%'
+                OR first_name LIKE '%$search_params%'
+                OR last_name LIKE '%$search_params%')";
+        }
+
+        if (Application::getUserRole() === 3) {
+            $sql = "SELECT group_id, name, description, creator_reg_no, created_date, 'live' as completed_status FROM
+                    usergroup
+                    WHERE creator_reg_no = $creator AND
+                    (name LIKE '%$search_params%'
+                    OR description LIKE '%$search_params%')
+                    UNION
+                    SELECT group_id, name, description, creator_reg_no, created_date, completed_status FROM 
+                    pending_usergroup
+                    WHERE creator_reg_no = $creator AND
+                    (name LIKE '%$search_params%'
+                    OR description LIKE '%$search_params%')
+                    ORDER BY name";
+        }
+
+        if ($getRecordsCount) {
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->rowCount();
+        } else {
+            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+            $statement = self::prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
+    }
+
+
+    public function getAllLiveUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    {
         $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
                 usergroup t1 LEFT JOIN user t2
                 ON t1.creator_reg_no = t2.reg_no
