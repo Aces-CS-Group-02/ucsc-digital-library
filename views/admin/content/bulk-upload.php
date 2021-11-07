@@ -27,7 +27,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Bulk Upload</title>
 </head>
 
 <body>
@@ -86,7 +86,7 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Test.pdf</p>
+                            <p>Mico architecture.pdf</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title special">
@@ -103,6 +103,7 @@ $userRole = "student";
                         </div>
                         <div class="block-c">
                             <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
                             </p>
                         </div>
@@ -113,7 +114,7 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Test.pdf</p>
+                            <p>Concepts-of-programming-languages.pdf</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title special">
@@ -130,6 +131,7 @@ $userRole = "student";
                         </div>
                         <div class="block-c">
                             <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
                             </p>
                         </div>
@@ -140,7 +142,7 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Test.pdf</p>
+                            <p>Linear_Algebra.pdf</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title special">
@@ -157,6 +159,7 @@ $userRole = "student";
                         </div>
                         <div class="block-c">
                             <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
                             </p>
                         </div>
@@ -167,7 +170,7 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Test.pdf</p>
+                            <p>Java ii.pdf</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title special">
@@ -184,6 +187,7 @@ $userRole = "student";
                         </div>
                         <div class="block-c">
                             <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
                             </p>
                         </div>
@@ -194,7 +198,7 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Test.pdf</p>
+                            <p>Graph Theory Approach to Transportation Systems Design and Optimization.pdf</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title special">
@@ -211,6 +215,63 @@ $userRole = "student";
                         </div>
                         <div class="block-c">
                             <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bulk-upload-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Learn-javascript-visually.pdf</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title special">
+                                <p>Change Title</p>
+                                <p>:</p>
+                            </div>
+                            <div class="input-edit">
+                                <form action="">
+                                    <div class="input-group input-group-edit">
+                                        <input class="form-control form-control-edit" id="Title" type="text" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="block-c">
+                            <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bulk-upload-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Professional_ JavaScript for Web Developers.pdf</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title special">
+                                <p>Change Title</p>
+                                <p>:</p>
+                            </div>
+                            <div class="input-edit">
+                                <form action="">
+                                    <div class="input-group input-group-edit">
+                                        <input class="form-control form-control-edit" id="Title" type="text" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="block-c">
+                            <p>
+                                <button class="btn btn-success mr-1 mb-1" type="button">Add Metadata</button>
                                 <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Discard</button>
                             </p>
                         </div>

@@ -28,7 +28,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Upload Content</title>
 </head>
 
 <body>

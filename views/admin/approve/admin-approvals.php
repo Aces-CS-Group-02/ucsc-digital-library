@@ -23,7 +23,7 @@ $userRole = "admin";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/admin-approvals.css">
 
-    <title>Document</title>
+    <title>Approvals</title>
 </head>
 
 <body>
@@ -38,7 +38,7 @@ $userRole = "admin";
         </div>
         <div class="grid-container">
             <div class="card-container">
-                <a href="#" class="card box-shadow-1">
+                <a href="/admin/approve-submissions" class="card box-shadow-1">
                     <div class="card-icon">
                         <div style="position: relative;">
                             <img class="card-icon-img" src="/assets\admin-approvals\checked.svg" alt=" approve-submission-image">
@@ -49,7 +49,7 @@ $userRole = "admin";
 
             </div>
             <div class="card-container">
-                <a href="/admin/approve-content-groups" class="card box-shadow-1">
+                <a href="/admin/approve-content-collections" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-approvals\file_collection.png" alt=" approve-content-category-image">
                     </div>

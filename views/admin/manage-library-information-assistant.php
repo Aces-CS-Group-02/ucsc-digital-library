@@ -31,7 +31,7 @@ use app\core\Application;
 
 
 
-    <title>Create Library Information Assistant</title>
+    <title>Manage Library Information Assistants</title>
 </head>
 
 <body>

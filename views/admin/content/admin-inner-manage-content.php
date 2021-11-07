@@ -27,7 +27,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Manage Content</title>
 </head>
 
 <body>
@@ -164,14 +164,58 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Java Coding Problems</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
+                            <p>Anghel Leonard</p>
+                        </div>
+                        <div class="block-c">
+                            <div class="block-title">
+                                <p>Type</p>
+                                <p>:</p>
+                            </div>
+                            <p>Programming</p>
+                        </div>
+                        <div class="block-d">
+                            <div class="block-title">
+                                <p>Date</p>
+                                <p>:</p>
+                            </div>
+                            <p>14/08/21</p>
+                        </div>
+                        <div class="block-e">
+                            <div class="block-title">
+                                <p>Status</p>
+                                <p>:</p>
+                            </div>
+                            <p><span class="badge badge-soft-success">Published</span></p>
+                        </div>
+                        <div class="block-f">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="publish-content-info">
+                        <div class="block-a">
+                            <div class="block-title">
+                                <p>Title</p>
+                                <p>:</p>
+                            </div>
+                            <p>Data Structures</p>
+                        </div>
+                        <div class="block-b">
+                            <div class="block-title">
+                                <p>Creator</p>
+                                <p>:</p>
+                            </div>
+                            <p>Aurora Young</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
@@ -208,72 +252,28 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Learning Web Design</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
+                            <p>Jennifer N. Robbins</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Type</p>
                                 <p>:</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
+                            <p>Wed Development</p>
                         </div>
                         <div class="block-d">
                             <div class="block-title">
                                 <p>Date</p>
                                 <p>:</p>
                             </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-success">Published</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
+                            <p>30/02/21</p>
                         </div>
                         <div class="block-e">
                             <div class="block-title">
@@ -296,21 +296,21 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Software Engineering at Google</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
+                            <p>Hyrum Wright</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Type</p>
                                 <p>:</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
+                            <p>Software Engineering</p>
                         </div>
                         <div class="block-d">
                             <div class="block-title">
@@ -340,28 +340,28 @@ $userRole = "student";
                                 <p>Title</p>
                                 <p>:</p>
                             </div>
-                            <p>Software Engineering</p>
+                            <p>Introuction to Java</p>
                         </div>
                         <div class="block-b">
                             <div class="block-title">
                                 <p>Creator</p>
                                 <p>:</p>
                             </div>
-                            <p>Phu Phung</p>
+                            <p>Y. Daniel Liang</p>
                         </div>
                         <div class="block-c">
                             <div class="block-title">
                                 <p>Type</p>
                                 <p>:</p>
                             </div>
-                            <p>18/19 CS SCS2201 DSA</p>
+                            <p>Programming</p>
                         </div>
                         <div class="block-d">
                             <div class="block-title">
                                 <p>Date</p>
                                 <p>:</p>
                             </div>
-                            <p>17/90/21</p>
+                            <p>25/02/21</p>
                         </div>
                         <div class="block-e">
                             <div class="block-title">

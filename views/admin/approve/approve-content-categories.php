@@ -26,7 +26,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/local-styles/approve-content-categories.css">
 
 
-    <title>Document</title>
+    <title>Approve Content Collections</title>
 </head>
 
 <body>
@@ -40,7 +40,7 @@ $userRole = "student";
     <!-- APPROVE CONTENT CATEGORIES PAGE -->
 
     <div class="page-header-container">
-        <p id="page-header-title">Approve Content Categories</p>
+        <p id="page-header-title">Approve Content Collections</p>
     </div>
 
     <div class="second-border">
@@ -106,7 +106,7 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>25/03/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
@@ -120,7 +120,7 @@ $userRole = "student";
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Aurora Young</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -145,7 +145,7 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>23/04/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
@@ -159,7 +159,7 @@ $userRole = "student";
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Alvin Soyza</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -184,7 +184,7 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>05/08/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
@@ -198,7 +198,7 @@ $userRole = "student";
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Denise Perera</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -223,7 +223,7 @@ $userRole = "student";
                         <p>Created Date</p>
                         <p>:</p>
                     </div>
-                    <p>17/09/21</p>
+                    <p>30/02/21</p>
                 </div>
                 <div class="block-c">
                     <div class="block-title">
@@ -237,7 +237,7 @@ $userRole = "student";
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Nemo Fernando</p>
                 </div>
                 <div class="block-e">
                     <p>
@@ -276,7 +276,7 @@ $userRole = "student";
                         <p>Creator</p>
                         <p>:</p>
                     </div>
-                    <p>Phu M. Phang</p>
+                    <p>Janet Gilder</p>
                 </div>
                 <div class="block-e">
                     <p>

@@ -45,12 +45,12 @@ abstract class Model
     {
         return [
             self::RULE_REQUIRED => "This field is required",
-            self::RULE_EMAIL => "This filed must be a valid email",
+            self::RULE_EMAIL => "This must be a valid email",
             self::RULE_PASS_MIN => "Password must contain at least {min} characters",
             self::RULE_PASS_MAX => "Password cannot contain more than {max} characters",
-            self::RULE_MATCH => "This filed must be match with {match}",
+            self::RULE_MATCH => "This field must match with {match}",
             self::RULE_UNIQUE => "Record with this {filed} already exists",
-            self::RULE_UNIQUE_FROM_PENDING => "This {filed} is already exists in pending list",
+            self::RULE_UNIQUE_FROM_PENDING => "This {filed} already exists in pending list",
             self::RULE_EMAIL_EXIST => "User with the given {field} does not exist"
         ];
     }

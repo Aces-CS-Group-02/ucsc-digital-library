@@ -27,7 +27,7 @@ $userRole = "student";
 
 
 
-    <title>Document</title>
+    <title>Unpublish Content</title>
 </head>
 
 <body>

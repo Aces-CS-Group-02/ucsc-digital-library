@@ -23,7 +23,7 @@ $userRole = "admin";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/admin-create-user-group.css">
 
-    <title>Document</title>
+    <title>Bulk Registration</title>
 </head>
 
 <body>

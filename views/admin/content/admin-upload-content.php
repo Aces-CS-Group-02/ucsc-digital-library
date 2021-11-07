@@ -23,7 +23,7 @@ $userRole = "admin";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/admin-upload-content.css">
 
-    <title>Document</title>
+    <title>Upload Content</title>
 </head>
 
 <body>
