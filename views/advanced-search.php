@@ -1,8 +1,3 @@
-<?php
-$isLoggedIn = true;
-$userRole = "student";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,8 +41,11 @@ $userRole = "student";
                         <label class="labelPlace label-override add-margin" for="">Search items from :</label>
                         <select class="custom-select custom-select-override add-margin change-height">
                             <option value="1">Anywhere</option>
-                            <option value="2">Community 1</option>
-                            <option value="3">Community 2</option>
+                            <option value="2">E-Books</option>
+                            <option value="3">Institutional Publications</option>
+                            <option value="4">Journals and Magazines</option>
+                            <option value="5">Past Papers</option>
+                            <option value="6">Newsletters</option>
                         </select>
                     </div>
                     <hr>

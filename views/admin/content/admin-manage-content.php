@@ -133,7 +133,7 @@ $userRole = "admin";
                 Content Collections
             </div>
             <div class="card-container">
-                <a href="" class="card box-shadow-1">
+                <a href="/admin/manage-content-collections" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\manage-collections.png" alt=" cloud-image">
                     </div>
@@ -141,11 +141,11 @@ $userRole = "admin";
                 </a>
             </div>
             <div class="card-container">
-                <a href="" class="card box-shadow-1">
+                <a href="/admin/content-collections" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\my-collections.png" alt=" cloud-image">
                     </div>
-                    <div class="card-content ">My Content Collections</div>
+                    <div class="card-content ">Content Collections</div>
                 </a>
             </div>
         </div>

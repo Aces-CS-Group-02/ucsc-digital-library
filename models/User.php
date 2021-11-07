@@ -108,16 +108,16 @@ class User extends DbModel
     public function setRoleId()
     {
         $email = $this->email;
-        $roleName = "External";
-        $studentEmailPattern = "/(.*)@(stu.ucsc.cmb.lk|stu.ucsc.lk)/";
+        $roleName = "External User";
+        $studentEmailPattern = "/(.*)@(stu.ucsc.cmb.ac.lk|stu.ucsc.lk)/";
         $staffEmailPattern = "/(.*)@(ucsc.cmb.ac.lk)/";
 
         if(preg_match($studentEmailPattern, $email))
         {
-            $roleName = "Student";
+            $roleName = "UCSC Student";
         }else if(preg_match($staffEmailPattern, $email))
         {
-            $roleName = "Staff";
+            $roleName = "UCSC Staff";
         }
         
         $role = new Role();

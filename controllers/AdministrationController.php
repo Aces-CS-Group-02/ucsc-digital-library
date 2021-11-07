@@ -259,7 +259,16 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_USERS,
             self::BREADCRUM_UPDATE_USERS
         ];
-        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum]);
+
+        $users = new User();
+
+        $users = $users->getAll();
+
+        // echo '<pre>';
+        // var_dump($users);
+        // echo '</pre>';
+
+        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum , 'users' => $users]);
     }
 
 
@@ -333,5 +342,20 @@ class AdministrationController extends Controller
     public function approveUserGroup(Request $request)
     {
         return $this->render("admin/approve/approve-user-groups");
+    }
+
+    public function manageContentCollections(Request $request)
+    {
+        return $this->render("admin/content/academic-manage-content-collection");
+    }
+
+    public function createContentCollection(Request $request)
+    {
+        return $this->render("admin/content/admin-create-content-collections");
+    }
+
+    public function contentCollections(Request $request)
+    {
+        return $this->render("admin/content/view-all-content-collections");
     }
 }

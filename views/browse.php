@@ -73,9 +73,9 @@ use app\core\Application;
             </a> -->
             <div class="left-panel-card">
                 <!-- <div class="left-panel-card-title"> -->
-                <a href="/suggest-content" class="edit-link">
+                <!-- <a href="/suggest-content" class="edit-link">
                     Suggest New Content
-                </a>
+                </a> -->
                 <!-- </div> -->
             </div>
 
