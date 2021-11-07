@@ -259,7 +259,16 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_USERS,
             self::BREADCRUM_UPDATE_USERS
         ];
-        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum]);
+
+        $users = new User();
+
+        $users = $users->getAll();
+
+        // echo '<pre>';
+        // var_dump($users);
+        // echo '</pre>';
+
+        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum , 'users' => $users]);
     }
 
 

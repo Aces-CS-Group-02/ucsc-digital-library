@@ -46,7 +46,7 @@ if ($user) $isLoggedIn = true;
                 echo '<a id="sign-up-btn" class = "nav-link" href="/register">Sign Up</a>';
             } else {
                 echo '<a id="notification-nav-link" href="#"><i class="fas fa-bell"></i></a>';
-                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpg" . ');"></div> ';
+                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpeg" . ');"></div> ';
             }
 
             ?>
@@ -63,7 +63,7 @@ if ($user) $isLoggedIn = true;
                 echo '<a id="user-nav-link" href="./login.php"><i class="fas fa-user"></i></a>';
             } else {
 
-                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpg" . ');"></div> ';
+                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpeg" . ');"></div> ';
             }
 
             ?>
@@ -80,7 +80,7 @@ if ($user) $isLoggedIn = true;
     <?php if ($isLoggedIn) : ?>
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
-            <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpg');"></div>
+            <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpeg');"></div>
 
 
             <p id="user-name"><?php

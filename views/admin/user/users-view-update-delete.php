@@ -1,4 +1,7 @@
 <?php
+
+use app\core\Application;
+
 $isLoggedIn = true;
 $userRole = "student";
 ?>
@@ -149,192 +152,56 @@ $userRole = "student";
                 <div class="users-ud-headers-container">
                     <div class="block-a">First Name</div>
                     <div class="block-b">Last Name</div>
-                    <div class="block-c">User Email</div>
-                    <div class="block-d">Registered Date</div>
+                    <div class="block-c">Email</div>
+                    <div class="block-d">Role</div>
                     <div class="block-e">Action</div>
                 </div>
 
                 <div class="users-ud-container">
-                    <div class="users-ud-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
+                    <?php foreach ($params['users'] as $user) { ?>
+                        <div class="users-ud-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>First Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $user->first_name; ?></p>
                             </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Last Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $user->last_name; ?></p>
                             </div>
-                            <p>Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>User Email</p>
-                                <p>:</p>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Email</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $user->email; ?></p>
                             </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Role</p>
+                                    <p>:</p>
+                                </div>
+                                <p><span class="badge badge-soft-<?php if ($user->role_id == 1) echo "danger";
+                                                                    else if ($user->role_id == 2) echo "warning";
+                                                                    else if ($user->role_id == 3) echo "primary";
+                                                                    else if ($user->role_id == 4) echo "success";
+                                                                    else echo "secondary";
+                                                                    ?>"><?php echo Application::$app->getUserRoleNameByID($user->role_id); ?></span></p>
                             </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="users-ud-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
+                            <div class="block-e">
+                                <p>
+                                    <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
+                                </p>
                             </div>
-                            <p>Phu</p>
                         </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>User Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="users-ud-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>User Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="users-ud-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>User Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="users-ud-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>User Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>someone@gmail.com</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Registered Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
+                    <?php } ?>
+                    
                 </div>
 
             </div>

@@ -98,6 +98,11 @@ class Application
         return $this->roleModel->findOne(['role_id' => self::getUserRole()])->name ?? false;
     }
 
+    public function getUserRoleNameByID($id)
+    {
+        return $this->roleModel->findOne(['role_id' => $id])->name ?? false;
+    }
+
     public static function getUserRole()
     {
         return self::$app->user->role_id ?? false;

@@ -50,7 +50,7 @@ use app\core\Application;
 
     <div class="profile-user-info wrapper">
         <div class="user-info-container">
-            <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpg);">
+            <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpeg);">
 
             </div>
 

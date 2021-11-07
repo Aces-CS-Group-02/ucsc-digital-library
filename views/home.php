@@ -136,14 +136,16 @@ $userRole = "student";
 
 
       <div class="contents-grid">
+
+        <?php foreach($params['communities'] as $community) { ?>
         <div class="content-item-container">
 
 
           <div class="content-item">
             <div class="content-item-pattern"></div>
             <div class="content-item-text">
-              <p class="content-item-title">Thesis and Dissertations</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
+              <p class="content-item-title"><?php echo $community["name"]; ?></p>
+              <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community["description"]; ?></p>
               <div class="content-item-view-more">
                 <a class="content-item-view-more-link" href="#">
                   <p>View more</p>
@@ -152,98 +154,8 @@ $userRole = "student";
               </div>
             </div>
           </div>
-
-
-
         </div>
-
-
-
-        <div class="content-item-container">
-
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title">Bachelor of Computer Science (BCS)</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="content-item-container">
-
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title">Bachelor of ICT / IS (BICT / BIS)</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="content-item-container">
-
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title">Bachelor of Information Technology (BIT)</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="content-item-container">
-
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title">Computer Science Masters</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="content-item-container">
-
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title">Information Security Masters</p>
-              <p class="content-item-description line-clamp line-clamp-x-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore, dolor rem excepturi sapiente eius obcaecati commodi saepe aliquid natus.</p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        <?php } ?>
       </div>
 
       <div class="view-all-communities-container-bottom">
@@ -273,7 +185,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Learning PHP, MySQL & JavaScript</p>
                 </div>
               </div>
             </div>
@@ -281,7 +193,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81yh-4QQC8L._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Learn Java in one dayand LEARN IT WELL</p>
                 </div>
               </div>
             </div>
@@ -289,7 +201,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/810p+IMoNbL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Java Coding Problems</p>
                 </div>
               </div>
             </div>
@@ -297,7 +209,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/A1O2e-E1WkL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Learning Web Design</p>
                 </div>
               </div>
             </div>
@@ -306,7 +218,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/61wEatFvokL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Modern CSS</p>
                 </div>
               </div>
             </div>
@@ -315,7 +227,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> React Cookbook</p>
                 </div>
               </div>
             </div>
@@ -324,7 +236,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Modern C++ Programming Cookbook</p>
                 </div>
               </div>
             </div>
@@ -333,7 +245,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91crsfALwBL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Beginnnig C++ Game Programming</p>
                 </div>
               </div>
             </div>
@@ -365,7 +277,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81bSa9px6qL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Software Engineering at Google</p>
                 </div>
               </div>
             </div>
@@ -373,7 +285,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/51NyB8d0+3L._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Software Architecture in Practice</p>
                 </div>
               </div>
             </div>
@@ -381,7 +293,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/619ht2WrGTL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Clean Architecture</p>
                 </div>
               </div>
             </div>
@@ -389,7 +301,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/616GVtyR77L._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Beginning Angular with TypeScript</p>
                 </div>
               </div>
             </div>
@@ -398,7 +310,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81WXhXr2MrL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Learning Angular</p>
                 </div>
               </div>
             </div>
@@ -407,7 +319,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91aTXNEtdjL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Programming PHP</p>
                 </div>
               </div>
             </div>
@@ -416,7 +328,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/71aDnbDuSWL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Angular</p>
                 </div>
               </div>
             </div>
@@ -425,7 +337,7 @@ $userRole = "student";
               <div class="book-card box-shadow-2">
                 <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
                 <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Lorem, ipsum dolor sit amet consectetur</p>
+                  <p class="line-clamp line-clamp-2-description"> Learning PHP, MySQL & JavaScript</p>
                 </div>
               </div>
             </div>
