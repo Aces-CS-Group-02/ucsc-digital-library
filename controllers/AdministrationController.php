@@ -336,7 +336,13 @@ class AdministrationController extends Controller
 
     public function approveContentGroup(Request $request)
     {
-        return $this->render("admin/approve/approve-content-categories");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_APPROVE_CONTENT_COLLECTIONS
+        ];
+
+        return $this->render("admin/approve/approve-content-categories",['breadcrum'=>$breadcrum]);
     }
 
     public function approveUserGroup(Request $request)
@@ -346,17 +352,32 @@ class AdministrationController extends Controller
 
     public function manageContentCollections(Request $request)
     {
-        return $this->render("admin/content/academic-manage-content-collection");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_CONTENT_COLLECTIONS
+        ];
+        return $this->render("admin/content/academic-manage-content-collection",['breadcrum'=>$breadcrum]);
     }
 
     public function createContentCollection(Request $request)
     {
-        return $this->render("admin/content/admin-create-content-collections");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_CREATE_CONTENT_COLLECTION
+        ];
+        return $this->render("admin/content/admin-create-content-collections",['breadcrum'=>$breadcrum]);
     }
 
     public function contentCollections(Request $request)
     {
-        return $this->render("admin/content/view-all-content-collections");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_CONTENT_COLLECTIONS
+        ];
+        return $this->render("admin/content/view-all-content-collections",['breadcrum'=>$breadcrum]);
     }
     
     public function approveSubmissions(Request $request)

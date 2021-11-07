@@ -55,7 +55,11 @@ class Controller
     public const BREADCRUM_VIEW_ALL_USER_GROUPS = ['name' => 'View all usergroups', 'link' => '/admin/user-groups'];
 
 
+    public const BREADCRUM_MANAGE_CONTENT_COLLECTIONS = ['name' => 'Manage content collections', 'link' => '/admin/manage-content-collections'];
+    public const BREADCRUM_CREATE_CONTENT_COLLECTION = ['name' => 'Create content collection', 'link' => '/admin/admin-create-content-collection'];
+    public const BREADCRUM_CONTENT_COLLECTIONS = ['name' => 'Content collections', 'link' => '/admin/content-collections'];
 
+    public const BREADCRUM_APPROVE_CONTENT_COLLECTIONS = ['name' => 'Approve content collections', 'link' => '/admin/approve-content-collections'];
 
 
 
