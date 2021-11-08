@@ -108,39 +108,11 @@ $userRole = "student";
             </div>
             <div class="search-card box-shadow-1">
                 <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/51q-bXjgtvL._SY300_.jpg" alt="" />
-                </div>
-                <div class="search-card-details">
-                    <div class="search-card-title">
-                        <h5>Title</h5>
-                    </div>
-                    <div class="search-card-views">
-                        <h6>1.5K views . 200 Cited</h6>
-                    </div>
-                    <div class="search-card-creator">
-                        <h6>Phu H. Phung </h6>
-                    </div>
-                    <div>
-                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
-                    </div>
-                    <div class="icon-bar">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-download"></i>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-quote-right"></i>
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="search-card box-shadow-1">
-                <div class="search-card-img">
                     <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
                 </div>
                 <div class="search-card-details">
                     <div class="search-card-title">
-                        <h5>Title</h5>
+                        <h5>Learning PHP, MySQL & JavaScript</h5>
                     </div>
                     <div class="search-card-views">
                         <h6>1.5K views . 200 Cited</h6>
@@ -164,11 +136,38 @@ $userRole = "student";
 
             <div class="search-card box-shadow-1">
                 <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/51q-bXjgtvL._SY300_.jpg" alt="" />
+                    <img src="https://m.media-amazon.com/images/I/810p+IMoNbL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
                 </div>
                 <div class="search-card-details">
                     <div class="search-card-title">
-                        <h5>Title</h5>
+                        <h5>Java Coding Problems</h5>
+                    </div>
+                    <div class="search-card-views">
+                        <h6>1.5K views . 200 Cited</h6>
+                    </div>
+                    <div class="search-card-creator">
+                        <h6>Phu H. Phung </h6>
+                    </div>
+                    <div>
+                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
+                    </div>
+                    <div class="icon-bar">
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-download"></i>
+                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-quote-right"></i>
+                        <i class="fas fa-share"></i>
+                    </div>
+                </div>
+
+            </div>
+            <div class="search-card box-shadow-1">
+                <div class="search-card-img">
+                    <img src="https://m.media-amazon.com/images/I/91crsfALwBL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                </div>
+                <div class="search-card-details">
+                    <div class="search-card-title">
+                        <h5>Beginnnig C++ Game Programming</h5>
                     </div>
                     <div class="search-card-views">
                         <h6>1.5K views . 200 Cited</h6>
@@ -192,11 +191,11 @@ $userRole = "student";
 
             <div class="search-card box-shadow-1">
                 <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                    <img src="https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
                 </div>
                 <div class="search-card-details">
                     <div class="search-card-title">
-                        <h5>Title</h5>
+                        <h5>Modern C++ Programming Cookbook</h5>
                     </div>
                     <div class="search-card-views">
                         <h6>1.5K views . 200 Cited</h6>

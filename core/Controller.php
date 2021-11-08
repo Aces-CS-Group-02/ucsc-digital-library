@@ -62,12 +62,11 @@ class Controller
     public const BREADCRUM_APPROVE_CONTENT_COLLECTIONS = ['name' => 'Approve content collections', 'link' => '/admin/approve-content-collections'];
 
 
+    public const BREADCRUM_VIEW_REPORTS = ['name' => 'View reports', 'link' => '/admin/dashboard/view-reports'];
 
+    public const BREADCRUM_APPROVE_SUBMISSIONS = ['name' => 'Approve submissions', 'link' => '/admin/approve-submissions'];
 
-
-
-
-
+    public const BREADCRUM_APPROVE_USER_GROUPS = ['name' => 'Approve user groups', 'link' => '/admin/approve-user-groups'];
 
 
 
