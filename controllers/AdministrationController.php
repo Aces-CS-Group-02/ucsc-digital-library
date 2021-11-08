@@ -338,7 +338,7 @@ class AdministrationController extends Controller
     {
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_MANAGE_APPROVALS,
             self::BREADCRUM_APPROVE_CONTENT_COLLECTIONS
         ];
 
@@ -347,7 +347,13 @@ class AdministrationController extends Controller
 
     public function approveUserGroup(Request $request)
     {
-        return $this->render("admin/approve/approve-user-groups");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_USER_GROUPS
+        ];
+
+        return $this->render("admin/approve/approve-user-groups",['breadcrum'=>$breadcrum]);
     }
 
     public function manageContentCollections(Request $request)
@@ -382,11 +388,21 @@ class AdministrationController extends Controller
     
     public function approveSubmissions(Request $request)
     {
-        return $this->render("admin/approve/admin-approve-submission");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_SUBMISSIONS
+        ];
+        return $this->render("admin/approve/admin-approve-submission",['breadcrum'=>$breadcrum]);
     }
 
     public function viewReports(Request $request)
     {
-        return $this->render("admin/reports/admin-report-dashboard");
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_VIEW_REPORTS
+        ];
+        return $this->render("admin/reports/admin-report-dashboard",['breadcrum'=>$breadcrum]);
     }
 }
