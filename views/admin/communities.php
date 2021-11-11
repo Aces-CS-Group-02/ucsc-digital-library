@@ -1,9 +1,6 @@
 <?php
-$isLoggedIn = true;
-$userRole = "student";
 
 use app\core\Application;
-
 ?>
 
 <!DOCTYPE html>
