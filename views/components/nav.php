@@ -5,12 +5,7 @@
 
 use app\core\Application;
 
-// echo '<pre>';
-// var_dump(Application::$app->user);
-// echo '</pre>';
 $user = Application::$app->user;
-
-if ($user) $isLoggedIn = true;
 
 ?>
 
@@ -21,10 +16,7 @@ if ($user) $isLoggedIn = true;
             <a href="/" class="nav-link" id="logo-txt">Digital Library</a>
         </div>
 
-
-
         <div class="nav-links">
-
             <div class="nav-bar-search-component-container">
                 <form action="">
                     <div class="nav-bar-search-input-wrapper">
@@ -33,15 +25,13 @@ if ($user) $isLoggedIn = true;
                     </div>
                 </form>
             </div>
-
-
             <a class="nav-link" href="/browse">Browse</a>
             <a class="nav-link" href="#">Help</a>
 
 
             <?php
 
-            if (!$isLoggedIn) {
+            if (!$user) {
                 echo '<a id="sign-in-btn" class = "nav-link" href="/login">Sign In</a>';
                 echo '<a id="sign-up-btn" class = "nav-link" href="/register">Sign Up</a>';
             } else {
@@ -59,10 +49,9 @@ if ($user) $isLoggedIn = true;
 
             <?php
 
-            if (!$isLoggedIn) {
+            if (!$user) {
                 echo '<a id="user-nav-link" href="./login.php"><i class="fas fa-user"></i></a>';
             } else {
-
                 echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpeg" . ');"></div> ';
             }
 
@@ -77,20 +66,16 @@ if ($user) $isLoggedIn = true;
 
     </div>
 
-    <?php if ($isLoggedIn) : ?>
+    <?php if ($user) : ?>
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
             <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpeg');"></div>
-
-
             <p id="user-name"><?php
                                 $userName = Application::$app->getUserDisplayName();
                                 echo $userName['firstname'] . " " . $userName['lastname']; ?></p>
 
             <p id="user-role"><?php echo Application::$app->getUserRoleName(); ?></p>
             <div class="line-break"></div>
-
-
             <div class="dropdown-menu-links-container">
                 <?php
 
