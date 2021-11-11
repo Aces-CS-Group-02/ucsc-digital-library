@@ -266,9 +266,9 @@ class CommunitiesController extends Controller
 
 
         $breadcrum = [
-            ['name' => 'Dashboard', 'link' => '/admin/dashboard'],
-            ['name' => 'Manage Content', 'link' => '/admin/dashboard/manage-content'],
-            ['name' => "Communities & Collections", 'link' => '/admin/manage-communities']
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS
         ];
         $breadcrumCommunities = $communityModel->communityBreadcrumGenerate($data['community-id']);
         foreach ($breadcrumCommunities as $link) {
