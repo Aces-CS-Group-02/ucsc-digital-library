@@ -155,7 +155,7 @@ use app\core\Application;
                 $obj3->name = 'Professional Development';
                 $obj3->description = '';
 
-                $obj3->status = 'pending';
+                $obj3->status = 'draft';
 
                 $usergroups = [$obj3];
 
@@ -195,7 +195,7 @@ use app\core\Application;
                                     <p>Name</p>
                                     <p>:</p>
                                 </div>
-                               
+
                                 <p><?php echo $usergroup->name ?></p>
                             </div>
                             <div class="block-b">
