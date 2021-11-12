@@ -131,7 +131,10 @@ $userRole = "student";
 
                 <?php if ($params['show_request_approval_btn']) { ?>
                     <div class="create-new-community-btn-container">
-                        <button class="btn btn-primary" id="create-new-community-btn">Request approval</button>
+                        <form action="" method='POST' id='request-approval-form'>
+                            <input type="text" id='request-approval-data-field' hidden name='group_id' value='<?php echo $params['group']->group_id ?>'>
+                        </form>
+                        <button class="btn btn-primary" id="request-approval-btn" data-groupid='<?php echo $params['group']->group_id ?>'>Request approval</button>
                     </div>
                 <?php } ?>
 
@@ -298,9 +301,25 @@ $userRole = "student";
 
     <Script>
         (() => {
+            const dataObj = new Map();
+            const requestApprovalBtn = document.getElementById('request-approval-btn');
+            const requstApprovalForm = document.getElementById('request-approval-form');
+            const requestApprovalDataField = document.getElementById('request-approval-data-field');
 
+            dataObj.set(requestApprovalBtn, requestApprovalBtn.dataset.groupid);
+            dataObj.set(requestApprovalDataField, requestApprovalDataField.name);
 
+            const requestApproval = function() {
+                requestApprovalBtn.dataset.groupid = dataObj.get(requestApprovalBtn);
+                requestApprovalDataField.name = dataObj.get(requestApprovalDataField);
+                requestApprovalDataField.value = dataObj.get(requestApprovalBtn);
 
+                if (confirm('Are youre sure? Once you made the request you will not able to edit this group until it get approved. But you can remove it anytime.')) {
+                    requstApprovalForm.submit();
+                }
+
+            }
+            requestApprovalBtn.addEventListener('click', requestApproval, false);
         })();
     </Script>
 

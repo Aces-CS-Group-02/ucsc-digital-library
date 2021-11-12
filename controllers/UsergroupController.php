@@ -11,6 +11,7 @@ use app\models\PendingUsergroupUser;
 use app\models\User;
 use app\models\UserGroup;
 use app\models\UsergroupUser;
+use PDO;
 use stdClass;
 
 class UsergroupController extends Controller
@@ -161,20 +162,20 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        // $usergroupModel = new Usergroup();
-        $usergroupUserModel = new UsergroupUser();
-
 
         if (Application::getUserRole() <= 2) {
             $usergroupModel = new Usergroup();
-            $show_request_approval_btn = false;
         } else if (Application::getUserRole() === 3) {
             $usergroupModel = new PendingUserGroup();
-            $show_request_approval_btn = true;
         }
+
 
         $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
         if (!$user_group) throw new NotFoundException();
+
+
+        $show_request_approval_btn = false;
+        if (Application::getUserRole() === 3 && !$user_group->completed_status) $show_request_approval_btn = true;
 
 
         $row_count = $usergroupModel->getAllUsersInUserGroup(
@@ -313,6 +314,18 @@ class UsergroupController extends Controller
         $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
 
+
+    public function requestApproval(Request $request)
+    {
+        $data  = $request->getBody();
+        $pendingUsergroupModel = new PendingUserGroup();
+        if ($pendingUsergroupModel->requestApproval($data['group_id'])) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong.');
+        }
+        Application::$app->response->redirect('/admin/manage-usergroups');
+    }
 
 
 

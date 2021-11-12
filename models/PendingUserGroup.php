@@ -170,4 +170,18 @@ class PendingUserGroup extends DbModel
             return $statement->fetchAll(PDO::FETCH_OBJ);
         }
     }
+
+
+    public function requestApproval($group_id)
+    {
+        $usergroup = $this->findOne(['group_id' => $group_id]);
+        $tableName = self::tableName();
+        if ($usergroup && !$usergroup->completed_status && $usergroup->creator_reg_no == Application::$app->user->reg_no) {
+            $sql = "UPDATE $tableName SET `completed_status`=1 WHERE group_id = $group_id";
+            $statement = self::prepare($sql);
+            return $statement->execute();
+        } else {
+            return false;
+        }
+    }
 }

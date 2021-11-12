@@ -148,6 +148,7 @@ $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToU
 // $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
 $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
+$app->router->post('/admin/manage-usergroup', [UsergroupController::class, "requestApproval"]);
 $app->router->post('/usergroup/remove-user', [UsergroupController::class, "removeUser"]);
 
 
