@@ -136,6 +136,10 @@ $userRole = "student";
         <div class="new-user-container">
 
             <?php foreach ($params['model'] as $request) { ?>
+                <?php $id = $request->request_id;
+                $fName = $request->first_name;
+                $lName = $request->last_name; ?>
+
                 <div class="new-user-info">
                     <div class="block-a">
                         <p>
@@ -174,12 +178,14 @@ $userRole = "student";
                             <p>Message</p>
                             <p>:</p>
                         </div>
-                        <p class="line-clamp line-clamp-1-description"><?php
-                            if ($request->message === "") {
-                                echo "N/A";
-                            } else {
-                                echo $request->message;
-                            }  ?></p>
+                        <p class="line-clamp line-clamp-1-description <?php if ($request->message === "") {
+                                                                            echo "gray-out";
+                                                                        } ?>"><?php
+                                                                                if ($request->message === "") {
+                                                                                    echo "N/A";
+                                                                                } else {
+                                                                                    echo $request->message;
+                                                                                }  ?></p>
                     </div>
                     <div class="block-b">
                         <div class="block-title">
@@ -191,9 +197,33 @@ $userRole = "student";
                     <div class="block-e">
                         <p>
                             <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="approve(<?php echo $request->request_id; ?>)" type="button">Approve</button>
-                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="reject(<?php echo $request->request_id; ?>)" type="button">Reject</button>
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Approve</button>
+                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Reject</button>
                         </p>
+                        <!-- Modal to enter a message when approving or rejecting -->
+                        <div id="myModal" class="modal">
+
+                            <div class="modal-content">
+                                <form id="modal-form" action="" method="POST">
+                                    <div class="modal-top-section modal-title">
+                                        <div class="title-section">
+                                            <p id="mtitle"></p>
+                                            <div id="break-modal-title"><p id="FName"></p><p id="LName"></p></div>
+                                        </div>
+                                        <div class="close">
+                                            <span class="edit-close">&times;</span>
+                                        </div>
+                                    </div>
+                                    <div class="input-group edit-input-group">
+                                        <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                                    </div>
+                                    <div class="modal-bottom-section">
+                                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="idOut" type="submit">Okay</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             <?php } ?>
@@ -218,51 +248,6 @@ $userRole = "student";
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/verify-new-users.js"></script>
     <script src="/javascript/alert.js"></script>
-
-
-    <script>
-        function approve(request_id) {
-            var form = document.createElement('form');
-            var element = document.createElement("input");
-
-            form.method = "POST";
-            form.action = "/admin/verify-new-users";
-
-            element.value = request_id;
-            element.name = "request_id";
-            element.type = "hidden";
-            form.appendChild(element);
-
-            // form.setAttribute('method', 'post');
-            // form.setAttribute('action', '/admin/verify-new-users?'+request_id);
-            form.style.display = 'hidden';
-            document.body.appendChild(form)
-            // console.log(form);
-            form.submit();
-        }
-
-        function reject(request_id) {
-            var form = document.createElement('form');
-            var element = document.createElement("input");
-
-            form.method = "POST";
-            form.action = "/admin/reject-new-user";
-
-            element.value = request_id;
-            element.name = "request_id";
-            element.type = "hidden";
-            form.appendChild(element);
-
-            // form.setAttribute('method', 'post');
-            // form.setAttribute('action', '/admin/verify-new-users?'+request_id);
-            form.style.display = 'hidden';
-            document.body.appendChild(form)
-            // console.log(form);
-            if (confirm("Are you sure ?")) {
-                form.submit();
-            }
-        }
-    </script>
 
 </body>
 

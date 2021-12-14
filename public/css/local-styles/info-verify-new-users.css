@@ -96,6 +96,10 @@ body {
     margin-bottom: 6vh;
 }
 
+.gray-out{
+    color: rgb(172, 172, 172);
+}
+
 .content-path {
     color: white;
     font-family: "Poppins", sans-serif;

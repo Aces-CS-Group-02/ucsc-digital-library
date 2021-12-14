@@ -8,9 +8,9 @@ use PDO;
 
 class UserCollection extends DbModel
 {
-    public int $reg_no;
-    public int $user_collection_id;
-    public string $name;
+    public int $reg_no = 0;
+    public int $user_collection_id = 0;
+    public string $name = '';
 
     public static function tableName(): string
     {
