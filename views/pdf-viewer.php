@@ -32,7 +32,7 @@ $userRole = "student";
 
     <!-- NAVIGATION BAR -->
 
-  <?php include_once __DIR__ . '/components/nav.php'; ?> 
+    <?php include_once __DIR__ . '/components/nav.php'; ?>
 
     <div class="pdf-viewer-page-main-container">
         <div class="pdf-viewer-side-bar">
@@ -43,31 +43,46 @@ $userRole = "student";
             <div class="side-bar-block-s">
                 <i class="fas fa-bookmark"></i>
             </div>
-            <div class="side-bar-block-s">
+            <div id="add-notes-btn" class="side-bar-block-s add-notes-btn">
                 <i class="fas fa-notes-medical"></i>
             </div>
             <div class="side-bar-block-s">
                 <i class="fas fa-folder-plus"></i>
             </div>
         </div>
-        <div class="pdf-viewer-container">
-            <!-- <p>Here</p> -->
+        <div class="pdf-viewer-container" id="scroll-div">
             <!-- CONTENT CONTAINER -->
 
             <div class="top-bar">
-                <button class="btn" id="prev-page">
-                    <i class="fas fa-arrow-alt-circle-left"></i> <!-- Prev Page -->
-                </button>
-                <button class="btn" id="next-page">
-                    <!-- Next Page --> <i class="fas fa-arrow-alt-circle-right"></i>
-                </button>
                 <span class="page-info">
                     Page <span id="page-num"></span> of <span id="page-count"></span>
                 </span>
             </div>
 
-            <canvas class="canvas-edit" id="pdf-render"></canvas>
+            <div class="canvas-container" id="pdf-render"></div>
         </div>
+
+        <!-- ADD NOTES MODAL  -->
+
+        <div id="notesModal" class="modal">
+            <div class="modal-content">
+                <form id="notes-modal-form" action="" method="POST">
+                    <div class="notes-modal-top-section notes-modal-title">
+                        <div class="notes-title-section">Notes</div>
+                        <div class="close-note">
+                            <span class="edit-close-note">&times;</span>
+                        </div>
+                    </div>
+                    <div class="input-group edit-notes-input-group">
+                        <input type="textarea" class="form-control edit-notes-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                    </div>
+                    <div class="notes-modal-bottom-section">
+                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Okay</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <div class="pdf-viewer-overlay"></div>
@@ -110,7 +125,7 @@ $userRole = "student";
                 <div class="side-bar-section-top">
                     <i class="fas fa-notes-medical"></i>
                     <p>Add Notes</p>
-                    <button id="add-bookmark-btn"><i class="fas fa-plus"></i></button>
+                    <button id="add-notes-btn" class="add-notes-btn"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="side-bar-section-expand-collaps no-content">
                 </div>

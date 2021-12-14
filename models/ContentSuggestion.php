@@ -6,12 +6,12 @@ use app\core\Application;
 use app\core\DbModel;
 
 class ContentSuggestion extends DbModel{
-    public int $reg_no;
-    public int $content_request_id;
-    public string $title;
-    public string $creator;
-    public string $isbn;
-    public string $information;
+    public int $reg_no = 0;
+    public int $content_request_id = 0;
+    public string $title = '';
+    public string $creator = '';
+    public string $isbn = '';
+    public string $information = '';
 
     public static function tableName(): string
     {

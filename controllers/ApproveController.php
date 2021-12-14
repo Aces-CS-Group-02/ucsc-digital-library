@@ -11,6 +11,7 @@ use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\Request;
 use app\models\PendingUser;
 use app\models\RegistrationRequest;
+use app\models\UserApproval;
 
 class ApproveController extends Controller
 {
@@ -39,23 +40,42 @@ class ApproveController extends Controller
 
                 $pendingUser = new PendingUser();
                 $code = substr(md5(mt_rand()), 0, 15);
+                $reason = $requestData["reason"];
 
                 $pendingUser->first_name = $registrationRequest->first_name;
                 $pendingUser->last_name = $registrationRequest->last_name;
                 $pendingUser->email = $registrationRequest->email;
                 $pendingUser->token = $code;
 
+                $userApproval = new UserApproval();
+
+                $userApproval->email = $registrationRequest->email;
+                $userApproval->is_approved = true;
+                $userApproval->reason = $reason;
+
+                // var_dump($userApproval);
+                // if($reason){
+                //     echo "reason exists";
+                // }
+
                 $registrationRequest->delete();
 
                 $subject = "Verification Email";
                 $link = "Click <a href='http://localhost:8000/verify-email?email={$registrationRequest->email}&token={$code}'>here</a> to verify.";
-                $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
+                if ($reason) {
+                    $body = "<h3>Thank you for registering to the UCSC Digital Library! Your registration has been approved with the following reason(s).
+                                Pleasy verify your email.</h3><p>{$reason}</p><p>{$link}</p>";
+                } else {
+                    $body = "<h3>Thank you for registering to the UCSC Digital Library! Your registration has been approved.
+                                Pleasy verify your email.</h3><p>{$link}</p>";
+                }
                 $altBody = "this is the alt body";
 
                 $mail = new Mail([$pendingUser->email], $subject, $body, $altBody);
                 $mail->sendMail();
+                // exit;
 
-                if ($pendingUser->save()) {
+                if ($pendingUser->save() && $userApproval->save()) {
                     Application::$app->session->setFlashMessage('success', 'Selected user is successfully approved');
                     Application::$app->response->redirect('/admin/verify-new-users');
                 }
@@ -87,21 +107,34 @@ class ApproveController extends Controller
             ];
 
             $registrationRequest = $registrationRequest->findOne($where);
+            $reason = $requestData["reason"];
 
-            echo '<pre>';
-            var_dump($registrationRequest);
-            echo '</pre>';
+            $userApproval = new UserApproval();
+
+            $userApproval->email = $registrationRequest->email;
+            $userApproval->is_approved = false;
+            $userApproval->reason = $reason;
+
+            // echo '<pre>';
+            // var_dump($registrationRequest);
+            // echo '</pre>';
             // exit;
 
             if ($registrationRequest) {
                 $subject = "Registration request is rejected";
                 // $link = "Click <a href='http://localhost:8000/verify-email?email={$registrationRequest->email}&token={$code}'>here</a> to verify.";
-                $body    = "<p>Your registration request is rejected by the administarion.</p>";
+                if ($reason) {
+                    $body = "<h3>We are sorry to inform that your registration request has been rejected by the administarion due to the following
+                                reason(s).</h3><p>{$reason}</p>";
+                } else {
+                    $body = "<h3>We are sorry to inform that your registration request has been rejected by the administarion.</h3>";
+                }
                 $altBody = "this is the alt body";
 
                 $mail = new Mail([$registrationRequest->email], $subject, $body, $altBody);
+                $mail->sendMail();
 
-                if ($registrationRequest->delete()) {
+                if ($registrationRequest->delete() && $userApproval->save()) {
                     Application::$app->session->setFlashMessage('success', 'Selected user is successfully rejected');
                     Application::$app->response->redirect('/admin/verify-new-users');
                 } else {
