@@ -252,4 +252,32 @@ class Usergroup extends DbModel
             return $statement->fetchAll(PDO::FETCH_OBJ);
         }
     }
+
+    public function removeGroup($group_id)
+    {
+        $tableName = self::tableName();
+        $primaryKey = self::primaryKey();
+
+        $user = Application::$app->user->reg_no;
+
+
+        $statement = self::prepare("SELECT * FROM pending_usergroup WHERE $primaryKey = $group_id");
+        $statement->execute();
+        $group = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        var_dump($group);
+
+        if (!$group) return false;
+        // if (Application::getUserRole() >= 3 && $user != $group->creator_reg_no) return false;
+
+
+
+
+        if (Application::getUserRole() <= 2) {
+            if ($this->findOne(['group_id' => $group_id])) {
+                $statement = self::prepare("DELETE FROM pending_usergroup WHERE $primaryKey = $group_id");
+                return $statement->execute();
+            }
+        }
+    }
 }

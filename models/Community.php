@@ -212,6 +212,7 @@ class Community extends DbModel
             $statement2->execute();
             Application::$app->db->pdo->commit();
         } catch (Exception $e) {
+            Application::$app->db->pdo->rollBack();
             return false;
         }
 

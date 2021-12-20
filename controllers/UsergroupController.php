@@ -116,9 +116,16 @@ class UsergroupController extends Controller
     public function removeUser(Request $request)
     {
         $data = $request->getBody();
-        var_dump($data);
+        // Validate request params
+        $req_arr_keys = array_keys($data);
+        if (!in_array('usergroup_id', $req_arr_keys) || !in_array('user_reg_no', $req_arr_keys)) throw new NotFoundException();
+
         $usergroupUserModel = new UsergroupUser();
-        // $usergroupUserModel->removeUser($data['usergroup_id'], $data['user_reg_no']);
+
+        if ($usergroupUserModel->removeUser($data['usergroup_id'], $data['user_reg_no'])) {
+            $usergroup = $data['usergroup_id'];
+            Application::$app->response->redirect("/admin/manage-usergroup?usergroup-id=$usergroup");
+        }
     }
 
 
@@ -327,6 +334,16 @@ class UsergroupController extends Controller
         Application::$app->response->redirect('/admin/manage-usergroups');
     }
 
+    public function removeGroup(Request $request)
+    {
+        $data = $request->getBody();
+        $usergroupModel = new UserGroup();
+        if ($usergroupModel->removeGroup($data['group_id'])) {
+            echo "Done";
+        } else {
+            echo "Nope";
+        }
+    }
 
 
 
