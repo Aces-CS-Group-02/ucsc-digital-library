@@ -15,6 +15,8 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
+
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -89,246 +91,73 @@ $userRole = "student";
             <div class="block-a"> </div>
             <div class="block-b">Created Date</div>
             <div class="block-c">Name</div>
+            <div class="block-c">Description</div>
             <div class="block-d">Creator</div>
             <div class="block-e">Action</div>
         </div>
 
         <div class="user-group-container">
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+            <?php foreach ($params['requests'] as $req) { ?>
+                <div class="user-group-info">
+                    <div class="block-a">
+                        <p>
+                        <div class="input-group custom-control">
+                            <div class="checkbox checkbox-edit">
+                                <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                            </div>
                         </div>
+                        </p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>25/04/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Students</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Janet Gilder</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-b">
+                        <div class="block-title">
+                            <p>Created Date</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->date ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>02/05/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>New Course Students</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Aurora Young</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-c">
+                        <div class="block-title">
+                            <p>Name</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->name ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>External</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Nemo Fernando</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-c">
+                        <div class="block-title">
+                            <p>Name</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->description ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>14/06/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Class</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Alvin Soyza</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-d">
+                        <div class="block-title">
+                            <p>Creator</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->first_name ?> <?= $req->last_name ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
+                    <div class="block-e">
+                        <a href="/admin/review-user-group?id=<?= $req->group_id ?>">
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit">View</button>
+                        </a>
+                        <form action="/admin/approve-ug-request" method="POST">
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" type="submit" name="group-id" value="<?= $req->group_id ?>">Approve</button>
+                        </form>
+                        <form action="" method="POST">
+                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="submit" name="group-id" value="<?= $req->group_id ?>">Reject</button>
+                        </form>
                     </div>
-                    <p>15/11/21</p>
                 </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Fellowship</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Denise Dare</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                        </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>16/04/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Followers</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Veno Silva</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
+            <?php } ?>
         </div>
+
+
+        <?php
+
+        if (!empty($params['requests']) && isset($params['pageCount'])) {
+            include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+        }
+        ?>
 
     </div>
 

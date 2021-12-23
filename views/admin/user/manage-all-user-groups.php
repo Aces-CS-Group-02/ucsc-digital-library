@@ -205,7 +205,7 @@ use app\core\Application;
                                 <?php } ?>
 
 
-
+                                <!-- /admin/remove-user-group -->
 
                             </div>
                             <div class="block-d">
@@ -215,7 +215,13 @@ use app\core\Application;
 
                                 <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->group_id > 1)) { ?>
                                     <form action="/admin/remove-user-group" method="POST" id='remove-ug-form'>
-                                        <input type="text" class='usergroup-remove-dataField' hidden name='group_id' value="<?php echo $usergroup->group_id; ?>">
+                                        <input type="hidden" class='usergroup-remove-dataField' name='group_id' value="<?php echo $usergroup->group_id; ?>">
+
+                                        <input type="hidden" name='group_type' value="<?php if ($usergroup->completed_status === 'live') {
+                                                                                            echo 'live';
+                                                                                        } else {
+                                                                                            echo 'pending';
+                                                                                        } ?>" />
                                     </form>
                                     <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $usergroup->group_id; ?>">Remove</button>
                                 <?php } ?>
@@ -275,11 +281,13 @@ use app\core\Application;
             for (let dataFiled of ugRemoveDataField) {
                 dataObj_dataFields.set(dataFiled.value, dataFiled);
             }
+            Object.freeze(dataObj_dataFields);
 
             for (const btn of removeUsergroupBtns) {
                 dataObj.set(btn, btn.dataset.groupid);
                 btn.addEventListener('click', removeUG, false);
             }
+            Object.freeze(dataObj);
 
 
 

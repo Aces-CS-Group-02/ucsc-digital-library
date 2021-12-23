@@ -5,6 +5,7 @@ namespace app\models;
 use app\core\Application;
 use app\core\DbModel;
 use app\core\Request;
+use Exception;
 use PDO;
 
 class PendingUserGroup extends DbModel
@@ -182,6 +183,113 @@ class PendingUserGroup extends DbModel
             return $statement->execute();
         } else {
             return false;
+        }
+    }
+
+
+    public function removeGroup($group_id)
+    {
+        $tableName = self::tableName();
+        $primaryKey = self::primaryKey();
+
+        $user = Application::$app->user->reg_no;
+
+        $group = $this->findOne(['group_id' => $group_id]);
+
+        if (!$group) return false;
+        if ($user != $group->creator_reg_no) return false;
+
+        $statement = self::prepare("DELETE FROM $tableName WHERE $primaryKey = $group_id");
+        return $statement->execute();
+    }
+
+
+    public function getAllRequests($start, $limit)
+    {
+        $tableName1 = self::tableName();
+        $tableName2 = User::tableName();
+        $statement =
+            "SELECT g.group_id, DATE(g.created_date)as date, g.name, g.description, u.first_name, u.last_name 
+            FROM $tableName1 g
+            JOIN $tableName2 u ON g.creator_reg_no = u.reg_no";
+        // $statement->execute();
+        // return $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+
+        return $this->paginate($statement, $start, $limit);
+    }
+
+    public function approve($group_id)
+    {
+
+        $usergroup_table = Usergroup::tableName();
+        $pendingug_table = self::tableName();
+        $pendingug_user_table = PendingUsergroupUser::tableName();
+        $usergroup_user_table = UsergroupUser::tableName();
+
+        $primaryKey = self::primaryKey();
+        $statement = self::prepare("SELECT * FROM $pendingug_table WHERE $primaryKey = $group_id");
+        $statement->execute();
+        $group = $statement->fetch(PDO::FETCH_OBJ);
+        if (!$group) return false;
+
+        $ugModel = new Usergroup();
+
+        $ugModel->name = $group->name;
+        $ugModel->description = $group->description;
+        $ugModel->creator_reg_no = $group->creator_reg_no;
+
+        if (!$ugModel->validate()) return false;
+
+        // var_dump($ugModel);
+
+
+        // Get all pending users from pending usergroup users table
+        $statement = PendingUsergroupUser::prepare("SELECT user_reg_no FROM $pendingug_user_table WHERE group_id = $group_id");
+        $statement->execute();
+        $pending_users = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $users_list = array();
+        foreach ($pending_users as $pu) {
+            array_push($users_list, $pu->user_reg_no);
+        }
+
+
+
+        // Remove group from pending table
+        $statement2 = self::prepare("DELETE FROM $pendingug_table WHERE $primaryKey = $group_id");
+
+        // Remove all users from pending usergroup users table
+        $statement3 = self::prepare("DELETE FROM $pendingug_user_table WHERE group_id = $group_id");
+
+        $ug_user_model = new UsergroupUser();
+
+
+        try {
+            Application::$app->db->pdo->beginTransaction();
+            echo 'Transaction started... ';
+
+            $ugModel->save();
+            echo 'Inserted into usergroup table ';
+
+
+            $statement2->execute();
+            echo 'Remove from pending ug table  ';
+
+
+            $statement3->execute();
+            echo 'Removed users  ';
+
+            $ug_user_model->addUsers($group_id, $users_list);
+            echo "👉 ";
+            echo 'Inserted users  ';
+
+            Application::$app->db->pdo->commit();
+        } catch (Exception $e) {
+
+            Application::$app->db->pdo->rollBack();
+            echo 'Rolling back  ';
         }
     }
 }

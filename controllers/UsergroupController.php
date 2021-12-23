@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\DbModel;
 use app\core\exception\NotFoundException;
 use app\core\Request;
 use app\models\PendingUserGroup;
@@ -337,12 +338,57 @@ class UsergroupController extends Controller
     public function removeGroup(Request $request)
     {
         $data = $request->getBody();
-        $usergroupModel = new UserGroup();
-        if ($usergroupModel->removeGroup($data['group_id'])) {
-            echo "Done";
-        } else {
-            echo "Nope";
+
+        var_dump($data);
+
+        if ($data['group_type'] === 'pending') {
+            $usergroupModel = new PendingUserGroup();
+            echo 'deleting from pending';
+        } else if ($data['group_type'] === 'live') {
+            $usergroupModel = new UserGroup();
+            echo 'deleting from ug';
         }
+
+        $res = $usergroupModel->removeGroup($data['group_id']);
+
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Request made successfull.');
+        }
+
+        Application::$app->response->redirect('/admin/manage-usergroups');
+    }
+
+
+    public function approveUserGroup(Request $request)
+    {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit  = 5;
+        $start = ($page - 1) * $limit;
+
+
+        $pendingugModel = new PendingUserGroup();
+        $result = $pendingugModel->getAllRequests($start, $limit);
+        if (!$result) throw new NotFoundException;
+        if ($page > $result->pageCount || $page <= 0) throw new NotFoundException();
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_USER_GROUPS
+        ];
+
+        return $this->render("admin/approve/approve-user-groups", ['breadcrum' => $breadcrum, 'requests' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page]);
+    }
+
+    public function approveUGRequest(Request $request)
+    {
+        $data = $request->getBody();
+
+        $pendingugModel = new PendingUserGroup();
+        $pendingugModel->approve($data['group-id']);
     }
 
 

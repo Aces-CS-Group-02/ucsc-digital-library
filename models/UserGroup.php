@@ -192,7 +192,7 @@ class Usergroup extends DbModel
 
 
         if (Application::getUserRole() <= 2) {
-            $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
+            $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name, 'live' as completed_status FROM 
                 usergroup t1 LEFT JOIN user t2
                 ON t1.creator_reg_no = t2.reg_no
                 WHERE
@@ -260,24 +260,12 @@ class Usergroup extends DbModel
 
         $user = Application::$app->user->reg_no;
 
-
-        $statement = self::prepare("SELECT * FROM pending_usergroup WHERE $primaryKey = $group_id");
-        $statement->execute();
-        $group = $statement->fetchAll(PDO::FETCH_OBJ);
-
-        var_dump($group);
+        $group = $this->findOne(['group_id' => $group_id]);
 
         if (!$group) return false;
-        // if (Application::getUserRole() >= 3 && $user != $group->creator_reg_no) return false;
+        if (Application::getUserRole() >= 3 && $user != $group->creator_reg_no) return false;
 
-
-
-
-        if (Application::getUserRole() <= 2) {
-            if ($this->findOne(['group_id' => $group_id])) {
-                $statement = self::prepare("DELETE FROM pending_usergroup WHERE $primaryKey = $group_id");
-                return $statement->execute();
-            }
-        }
+        $statement = self::prepare("DELETE FROM $tableName WHERE $primaryKey = $group_id");
+        return $statement->execute();
     }
 }
