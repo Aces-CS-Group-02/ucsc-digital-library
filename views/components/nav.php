@@ -7,6 +7,12 @@ use app\core\Application;
 
 $user = Application::$app->user;
 
+if ($user) {
+    $notifications = Application::getNotifications();
+} else {
+    $notifications = false;
+}
+
 ?>
 
 <div class="nav">
@@ -29,17 +35,56 @@ $user = Application::$app->user;
             <a class="nav-link" href="#">Help</a>
 
 
-            <?php
+            <?php if (!$user) { ?>
+                <a id="sign-in-btn" class="nav-link" href="/login">Sign In</a>
+                <a id="sign-up-btn" class="nav-link" href="/register">Sign Up</a>
+            <?php } else { ?>
+                <button id="notification-nav-link" href="#">
+                    <i class="fas fa-bell"></i>
+                    <?php if ($notifications->newNotificationsCount > 0) { ?>
+                        <span class="notifications-count-label"><?= $notifications->newNotificationsCount ?></span>
+                    <?php } ?>
+                </button>
+                <div id='notifications-panel'>
+                    <?php if ($notifications->newNotificationsCount > 0) { ?>
+                        <?php foreach ($notifications->newNotifications as $notification) { ?>
+                            <div class="notification-container">
+                                <div class="notification-msg-container">
+                                    <div class="new-notification-indicator"></div>
+                                    <p class="notification-msg"><?= $notification->msg ?></p>
+                                </div>
+                                <div class="notification-msg-date-time-container">
+                                    <p class='notification-date'><?= $notification->date ?></p>
+                                    <div>|</div>
+                                    <p class="notification-time"><?= $notification->time ?></p>
+                                </div>
+                            </div>
+                        <?php } ?>
 
-            if (!$user) {
-                echo '<a id="sign-in-btn" class = "nav-link" href="/login">Sign In</a>';
-                echo '<a id="sign-up-btn" class = "nav-link" href="/register">Sign Up</a>';
-            } else {
-                echo '<a id="notification-nav-link" href="#"><i class="fas fa-bell"></i></a>';
-                echo '<div class="user-profile-circle" style="background-image: url(' . "/assets/nav/profile.jpeg" . ');"></div> ';
-            }
+                    <?php } ?>
 
-            ?>
+                    <?php if ($notifications->oldNotificationsCount > 0) { ?>
+                        <?php foreach ($notifications->oldNotifications as $notification) { ?>
+                            <div class="notification-container">
+                                <div class="notification-msg-container">
+                                    <div class="old-notification-indicator"></div>
+                                    <p class="notification-msg"><?= $notification->msg ?></p>
+                                </div>
+                                <div class="notification-msg-date-time-container">
+                                    <p class='notification-date'><?= $notification->date ?></p>
+                                    <div>|</div>
+                                    <p class="notification-time"><?= $notification->time ?></p>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+
+
+
+
+                </div>
+                <div class="user-profile-circle" style="background-image: url('/assets/nav/profile.jpeg');"></div>
+            <?php } ?>
 
         </div>
 
@@ -69,7 +114,7 @@ $user = Application::$app->user;
     <?php if ($user) : ?>
         <!-- <div class="overlay"></div> -->
         <div class="profile-dropdown-menu">
-            <div class="user-profile-circle-dropdown-menu" style="background-image: url('/assets/nav/profile.jpeg');"></div>
+            <div class="user-profile-circle-dropdown-menu" style="background-image: url(' /assets/nav/profile.jpeg');"></div>
             <p id="user-name"><?php
                                 $userName = Application::$app->getUserDisplayName();
                                 echo $userName['firstname'] . " " . $userName['lastname']; ?></p>

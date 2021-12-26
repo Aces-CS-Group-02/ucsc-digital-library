@@ -92,8 +92,8 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn blured" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage Users</a>
-                <a class="tab-link-btn active" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
+                <a class="tab-link-btn blured" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->id ?>">Manage Users</a>
+                <a class="tab-link-btn active" href="/admin/add-users?usergroup-id=<?php echo $params['group']->id ?>">Add Users</a>
 
             </div>
 
@@ -111,7 +111,7 @@ $userRole = "student";
                     <div class="search-component-container">
                         <form action="" method="GET">
                             <div class="ug-search-input-wrapper">
-                                <input type="text" hidden name='usergroup-id' value="<?php echo $params['group']->group_id ?>">
+                                <input type="text" hidden name='usergroup-id' value="<?php echo $params['group']->id ?>">
                                 <input type="text" placeholder="Search users" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                                 <button>
                                     <i class="fas fa-search"></i>
@@ -208,7 +208,7 @@ $userRole = "student";
                 <p id="checked-items-container"></p>
                 <p class="space-editor">Selected:</p>
                 <form action="" method="POST">
-                    <input hidden type="text" name='usergroup_id' value="<?php echo $params['group']->group_id ?>">
+                    <input hidden type="text" name='usergroup_id' value="<?php echo $params['group']->id ?>">
                     <input type="text" id='bulk-upload-hidden-input' hidden name='bulk_select_users_list'>
                     <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="submit">Add all</button>
                 </form>
@@ -227,7 +227,7 @@ $userRole = "student";
                 </div>
 
                 <!-- <form action="/push-user-to-user-group" method="POST" id='main-form'> -->
-                <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
+                <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->id ?>">
 
                 <?php foreach ($params['users_list'] as $student) { ?>
                     <div class="add-users-container">
@@ -265,7 +265,7 @@ $userRole = "student";
 
                             <div class="block-f">
                                 <form action="" method="POST">
-                                    <input type="text" name='usergroup_id' value="<?php echo $params['group']->group_id ?>" hidden />
+                                    <input type="text" name='usergroup_id' value="<?php echo $params['group']->id ?>" hidden />
                                     <button class="btn btn-add btn-danger btn2-edit" type="submit" name="user_reg_no" value="<?php echo $student->reg_no; ?>" data-id="<?php echo $student->reg_no; ?>">Add</button>
                                 </form>
                             </div>

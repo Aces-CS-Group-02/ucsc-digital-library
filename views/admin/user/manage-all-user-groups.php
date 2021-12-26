@@ -194,11 +194,11 @@ use app\core\Application;
                                 <?php } ?>
                                 <?php if (!$params['is_library_staff_member']) { ?>
                                     <?php
-                                    if ($usergroup->completed_status === 'live') {
-                                        echo '<p class="badge badge-soft-success">' . $usergroup->completed_status . '</p>';
-                                    } else if (!$usergroup->completed_status) {
+                                    if ($usergroup->status == 1) {
+                                        echo '<p class="badge badge-soft-success">' . 'Live' . '</p>';
+                                    } else if ($usergroup->status == 3) {
                                         echo '<p class="badge badge-soft-secondary">' . 'Draft' . '</p>';
-                                    } else if ($usergroup->completed_status) {
+                                    } else if ($usergroup->status == 2) {
                                         echo '<p class="badge badge-soft-warning">' . 'Pending' . '</p>';
                                     }
                                     ?>
@@ -209,21 +209,15 @@ use app\core\Application;
 
                             </div>
                             <div class="block-d">
-                                <?php if ($params['is_library_staff_member'] || !$params['is_library_staff_member'] && !$usergroup->completed_status) { ?>
-                                    <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->group_id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
+                                <?php if (Application::$app->user->reg_no == $usergroup->creator) { ?>
+                                    <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
                                 <?php } ?>
 
-                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->group_id > 1)) { ?>
+                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->id > 1)) { ?>
                                     <form action="/admin/remove-user-group" method="POST" id='remove-ug-form'>
-                                        <input type="hidden" class='usergroup-remove-dataField' name='group_id' value="<?php echo $usergroup->group_id; ?>">
-
-                                        <input type="hidden" name='group_type' value="<?php if ($usergroup->completed_status === 'live') {
-                                                                                            echo 'live';
-                                                                                        } else {
-                                                                                            echo 'pending';
-                                                                                        } ?>" />
+                                        <input type="hidden" class='usergroup-remove-dataField' name='group_id' value="<?php echo $usergroup->id; ?>">
                                     </form>
-                                    <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $usergroup->group_id; ?>">Remove</button>
+                                    <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $usergroup->id; ?>">Remove</button>
                                 <?php } ?>
                             </div>
                         </div>

@@ -148,7 +148,7 @@ $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToU
 // $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
 // $app->router->post('/ajax/push-users-to-user-group', [UsergroupController::class, "pushUsersToUserGroup"]);
 $app->router->get('/admin/manage-usergroup', [UsergroupController::class, "manageUserGroup"]);
-$app->router->post('/admin/manage-usergroup', [UsergroupController::class, "requestApproval"]);
+// $app->router->post('/admin/manage-usergroup', [UsergroupController::class, "requestApproval"]);
 $app->router->post('/admin/remove-user-group', [UsergroupController::class, "removeGroup"]);
 
 
@@ -158,6 +158,10 @@ $app->router->post('/usergroup/remove-user', [UsergroupController::class, "remov
 
 
 $app->router->get('/admin/manage-usergroups', [UsergroupController::class, "manageAllUserGroups"]);
+
+$app->router->post('/admin/request-ug-approval', [UsergroupController::class, "requestApproval"]);
+
+
 
 // $app->router->post('/ajax/usergroup/bulk-select', [UsergroupController::class, "BulkSelectAndBulkRemoveUser"]);
 
@@ -203,7 +207,17 @@ $app->router->get('/admin/approve-user-groups', [UsergroupController::class, "ap
 $app->router->get('/admin/approve-submissions', [AdministrationController::class, "approveSubmissions"]);
 
 
+$app->router->post('/admin/reject-user-group', [UsergroupController::class, "rejectUserGroup"]);
+
+
+
+
+
 $app->router->post('/admin/approve-ug-request', [UsergroupController::class, "approveUGRequest"]);
+$app->router->get('/ajax/open-notifications', [SiteController::class, "openNotification"]);
+
+
+
 
 
 
