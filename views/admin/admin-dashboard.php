@@ -2,8 +2,6 @@
 
 use app\core\Application;
 
-$isLoggedIn = true;
-$userRole = "admin";
 ?>
 
 <!DOCTYPE html>

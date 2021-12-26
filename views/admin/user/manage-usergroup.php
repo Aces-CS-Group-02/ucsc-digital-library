@@ -87,8 +87,8 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn active" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->group_id ?>">Manage Users</a>
-                <a class="tab-link-btn blured" href="/admin/add-users?usergroup-id=<?php echo $params['group']->group_id ?>">Add Users</a>
+                <a class="tab-link-btn active" href="/admin/manage-usergroup?usergroup-id=<?php echo $params['group']->id ?>">Manage Users</a>
+                <a class="tab-link-btn blured" href="/admin/add-users?usergroup-id=<?php echo $params['group']->id ?>">Add Users</a>
 
             </div>
 
@@ -106,7 +106,7 @@ $userRole = "student";
                     <div class="search-component-container">
                         <form action="" method="GET">
                             <div class="ug-search-input-wrapper">
-                                <input type="text" hidden name='usergroup-id' value="<?php echo $params['group']->group_id ?>">
+                                <input type="text" hidden name='usergroup-id' value="<?php echo $params['group']->id ?>">
                                 <input type="text" placeholder="Search users" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                                 <button>
                                     <i class="fas fa-search"></i>
@@ -131,7 +131,10 @@ $userRole = "student";
 
                 <?php if ($params['show_request_approval_btn']) { ?>
                     <div class="create-new-community-btn-container">
-                        <button class="btn btn-primary" id="create-new-community-btn">Request approval</button>
+                        <form action="/admin/request-ug-approval" method='POST' id='request-approval-form'>
+                            <input type="text" id='request-approval-data-field' hidden name='group_id' value='<?php echo $params['group']->id ?>'>
+                        </form>
+                        <button class="btn btn-primary" id="request-approval-btn" data-groupid='<?php echo $params['group']->id ?>'>Request approval</button>
                     </div>
                 <?php } ?>
 
@@ -209,7 +212,7 @@ $userRole = "student";
                 <p id="checked-items-container"></p>
                 <p class="space-editor">Selected:</p>
                 <form action="/push-user-to-user-group" method="POST">
-                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" name='user_reg_no' value="<?php echo $params['group']->group_id ?>">Add User</button>
+                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" name='user_reg_no' value="<?php echo $params['group']->id ?>">Add User</button>
                 </form>
             </div>
 
@@ -261,7 +264,7 @@ $userRole = "student";
 
                             <div class="block-f">
                                 <form action="/usergroup/remove-user" method="POST">
-                                    <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->group_id ?>">
+                                    <input type="hidden" name="usergroup_id" value="<?php echo $params['group']->id ?>">
                                     <input type="hidden" name="user_reg_no" value="<?php echo $student->reg_no; ?>">
                                     <button class="btn btn-add btn-danger">Remove</button>
                                 </form>
@@ -298,9 +301,25 @@ $userRole = "student";
 
     <Script>
         (() => {
+            const dataObj = new Map();
+            const requestApprovalBtn = document.getElementById('request-approval-btn');
+            const requstApprovalForm = document.getElementById('request-approval-form');
+            const requestApprovalDataField = document.getElementById('request-approval-data-field');
 
+            dataObj.set(requestApprovalBtn, requestApprovalBtn.dataset.groupid);
+            dataObj.set(requestApprovalDataField, requestApprovalDataField.name);
 
+            const requestApproval = function() {
+                requestApprovalBtn.dataset.groupid = dataObj.get(requestApprovalBtn);
+                requestApprovalDataField.name = dataObj.get(requestApprovalDataField);
+                requestApprovalDataField.value = dataObj.get(requestApprovalBtn);
 
+                if (confirm('Are youre sure? Once you made the request you will not able to edit this group until it get approved. But you can remove it anytime.')) {
+                    requstApprovalForm.submit();
+                }
+
+            }
+            requestApprovalBtn.addEventListener('click', requestApproval, false);
         })();
     </Script>
 

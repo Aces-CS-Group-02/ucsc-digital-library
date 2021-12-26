@@ -41,9 +41,13 @@ class Community extends DbModel
     public function getAllTopLevelCommunities($start, $limit)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL LIMIT $start, $limit");
-        $statement->execute();
-        return $statement->fetchAll();
+        // $statement = self::prepare("SELECT * FROM $tableName WHERE parent_community_id IS NULL LIMIT $start, $limit");
+        // $statement->execute();
+        // return $statement->fetchAll();
+
+
+        $sql = "SELECT * FROM $tableName WHERE parent_community_id IS NULL";
+        return $this->paginate($sql, $start, $limit);
     }
 
     public function createNewTopLevelCommunity($data)
@@ -212,6 +216,7 @@ class Community extends DbModel
             $statement2->execute();
             Application::$app->db->pdo->commit();
         } catch (Exception $e) {
+            Application::$app->db->pdo->rollBack();
             return false;
         }
 

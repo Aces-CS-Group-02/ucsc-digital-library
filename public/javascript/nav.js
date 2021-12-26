@@ -80,4 +80,48 @@ document.addEventListener("click", function (e) {
       isProfileMenuOpen = false;
     }
   }
+
+  if (
+    !notificationPanel.contains(e.target) &&
+    !notificationBtn.contains(e.target)
+  ) {
+    if (notificationPanel.style.display == "block") {
+      console.log(notificationPanel.style.display);
+      notificationPanel.style.display = "none";
+    }
+  }
+});
+
+const notificationPanel = document.getElementById("notifications-panel");
+const notificationBtn = document.getElementById("notification-nav-link");
+
+notificationBtn.addEventListener("click", () => {
+  if (notificationPanel.style.display == "block") {
+    console.log(notificationPanel.style.display);
+    notificationPanel.style.display = "none";
+  } else {
+    notificationPanel.style.display = "block";
+  }
+
+  const req = new XMLHttpRequest();
+  req.open("GET", "/ajax/open-notifications");
+  // req.onreadystatechange = () => {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     if (this.responseText === "success") {
+  //       document.querySelector(".notifications-count-label").style.display =
+  //         "none";
+  //     }
+  //   }
+  // };
+  req.onload = () => {
+    if (req.status == 200) {
+      console.log(req.responseText);
+      if (req.responseText === "viewed") {
+        document.querySelector(".notifications-count-label").style.display =
+          "none";
+      }
+    }
+  };
+  req.setRequestHeader("Content-Type", "application/json");
+  req.send();
 });

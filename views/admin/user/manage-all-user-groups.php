@@ -53,11 +53,7 @@ use app\core\Application;
         <div class="wrapper">
 
             <!-- Flash Message Succss -->
-            <?php
-
-            if (Application::$app->session->getFlashMessage('success')) { ?>
-
-
+            <?php if (Application::$app->session->getFlashMessage('success')) { ?>
                 <div class="alert alert-success" id="flash-msg-alert">
                     <strong>Success!</strong>
 
@@ -73,8 +69,7 @@ use app\core\Application;
             <?php } ?>
 
             <!-- Flash Message Error -->
-            <?php
-            if (Application::$app->session->getFlashMessage('error')) { ?>
+            <?php if (Application::$app->session->getFlashMessage('error')) { ?>
                 <div class="alert alert-warning" id="flash-msg-alert">
                     <strong>Error!</strong>
 
@@ -113,8 +108,8 @@ use app\core\Application;
                 </div>
             </div>
 
-            <div class="create-new-community-btn-container">
-                <button class="btn btn-primary" id="create-new-community-btn">Create new user group</button>
+            <div class="create-new-usergroup-btn-container">
+                <button class="btn btn-primary" id="create-new-usergroup-btn">Create new user group</button>
             </div>
 
             <!-- Form goes here -->
@@ -135,19 +130,14 @@ use app\core\Application;
 
             <div class="user-group-container">
 
-                <?php
-
-                $usergroups = $params['usergroups'] ?? "";
-
-
-                ?>
+                <?php $usergroups = $params['usergroups'] ?? ""; ?>
 
                 <!-- This is for print top border of the first record at every time -->
                 <div class="user-group-info"></div>
 
                 <!-- This loop render all the communities to the page -->
-                <?php if ($usergroups) {
-                    foreach ($usergroups as $usergroup) { ?>
+                <?php if ($usergroups) { ?>
+                    <?php foreach ($usergroups as $usergroup) { ?>
 
                         <div class="user-group-info ">
                             <div class="block-a">
@@ -204,36 +194,36 @@ use app\core\Application;
                                 <?php } ?>
                                 <?php if (!$params['is_library_staff_member']) { ?>
                                     <?php
-                                    if ($usergroup->completed_status === 'live') {
-                                        echo '<p class="badge badge-soft-success">' . $usergroup->completed_status . '</p>';
-                                    } else if (!$usergroup->completed_status) {
+                                    if ($usergroup->status == 1) {
+                                        echo '<p class="badge badge-soft-success">' . 'Live' . '</p>';
+                                    } else if ($usergroup->status == 3) {
                                         echo '<p class="badge badge-soft-secondary">' . 'Draft' . '</p>';
-                                    } else if ($usergroup->completed_status) {
+                                    } else if ($usergroup->status == 2) {
                                         echo '<p class="badge badge-soft-warning">' . 'Pending' . '</p>';
                                     }
                                     ?>
                                 <?php } ?>
 
 
-
+                                <!-- /admin/remove-user-group -->
 
                             </div>
-
-
-
                             <div class="block-d">
-                                <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->group_id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
+                                <?php if (Application::$app->user->reg_no == $usergroup->creator) { ?>
+                                    <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
+                                <?php } ?>
 
-                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->group_id > 1)) { ?>
-                                    <form action="" method="POST">
-                                        <button class="btn btn-add btn-danger btn2-edit ml-2" type="submit" name="group_id" value="<?php echo $usergroup->group_id; ?>" data-id="<?php echo $usergroup->group_id; ?>">Remove</button>
+                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->id > 1)) { ?>
+                                    <form action="/admin/remove-user-group" method="POST" id='remove-ug-form'>
+                                        <input type="hidden" class='usergroup-remove-dataField' name='group_id' value="<?php echo $usergroup->id; ?>">
                                     </form>
+                                    <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $usergroup->id; ?>">Remove</button>
                                 <?php } ?>
                             </div>
                         </div>
 
-                <?php }
-                } ?>
+                    <?php } ?>
+                <?php } ?>
 
                 <?php if (empty($usergroups)) { ?>
                     <p class="no-records-available">No Records Available :(</p>
@@ -263,8 +253,44 @@ use app\core\Application;
 
     <Script>
         (() => {
+            const createnewcommunityBtn = document.getElementById('create-new-usergroup-btn');
+            const removeUsergroupBtns = document.querySelectorAll('.remove-ug-btn');
+            const ugRemoveDataField = document.querySelectorAll('.usergroup-remove-dataField');
+            const removeUGForm = document.getElementById('remove-ug-form');
 
-            const createnewcommunityBtn = document.getElementById('create-new-community-btn');
+            const dataObj = new Map();
+            const dataObj_dataFields = new Map();
+
+            const removeUG = function({
+                currentTarget
+            }) {
+                currentTarget.dataset.groupid = dataObj.get(currentTarget);
+                let dataField = dataObj_dataFields.get(dataObj.get(currentTarget));
+                dataField.name = 'group_id';
+                dataField.value = dataObj.get(currentTarget);
+
+                if (confirm('Do you want to delete this user group?')) removeUGForm.submit();
+            }
+
+            for (let dataFiled of ugRemoveDataField) {
+                dataObj_dataFields.set(dataFiled.value, dataFiled);
+            }
+            Object.freeze(dataObj_dataFields);
+
+            for (const btn of removeUsergroupBtns) {
+                dataObj.set(btn, btn.dataset.groupid);
+                btn.addEventListener('click', removeUG, false);
+            }
+            Object.freeze(dataObj);
+
+
+
+
+
+
+
+
+
             createnewcommunityBtn.onclick = function() {
                 window.location = '/admin/create-user-group';
             }

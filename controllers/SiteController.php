@@ -8,6 +8,7 @@ use app\core\exception\NotFoundException;
 use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\Request;
 use app\models\Community;
+use app\models\Notification;
 use app\models\User;
 
 class SiteController extends Controller
@@ -27,7 +28,7 @@ class SiteController extends Controller
     {
 
         $topLevelCommunities = new Community();
-        $topLevelCommunities = $topLevelCommunities->getAllTopLevelCommunities(1,1000000000);
+        $topLevelCommunities = $topLevelCommunities->getAllTopLevelCommunities(1, 1000000000);
 
         return $this->render('home', ['communities' => $topLevelCommunities]);
     }
@@ -45,5 +46,16 @@ class SiteController extends Controller
     public function advancedSearch()
     {
         return $this->render('advanced-search');
+    }
+
+    public function openNotification()
+    {
+        $notificationModel = new Notification();
+        $res = $notificationModel->openNotification();
+        if ($res) {
+            return "viewed";
+        } else {
+            return "not-viewed";
+        }
     }
 }

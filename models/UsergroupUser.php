@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\core\Application;
 use app\core\DbModel;
+use app\core\exception\ForbiddenException;
 
 class UsergroupUser extends DbModel
 
@@ -48,7 +50,38 @@ class UsergroupUser extends DbModel
             array_push($values, $value);
         }
         $values = implode(',', $values);
+
+
+
         $statement = self::prepare("INSERT INTO $tableName (group_id, user_reg_no) VALUES $values");
+
+        var_dump($statement);
+
+
+        return $statement->execute();
+    }
+
+    public function removeUser($groupID, $regNo)
+    {
+        var_dump($groupID, $regNo);
+
+        $currentUserRegNo = Application::$app->user->reg_no;
+        $usergroupModel = new Usergroup();
+
+        $group = $usergroupModel->findOne(['id' => $groupID]);
+        // If usergroup not exsist
+        if (!$group) return false;
+
+        // If current user is not a LIA/AL and not the owner of usergroup
+        if (Application::getUserRole() > 2 && (int)$currentUserRegNo != (int)$group->creator) throw new ForbiddenException();
+
+        $targetUser = $this->findOne(['user_reg_no' => $regNo]);
+        // If the user that tring to remove from the group is not exist in usegroup
+        if (!$targetUser) return  false;
+
+
+        $tableName = self::tableName();
+        $statement = self::prepare("DELETE FROM $tableName WHERE user_reg_no=$regNo ");
         return $statement->execute();
     }
 }

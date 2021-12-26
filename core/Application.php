@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use app\models\Notification;
 use app\models\Role;
 use Exception;
 
@@ -112,5 +113,11 @@ class Application
     {
         $this->user = null;
         $this->session->remove('user');
+    }
+
+    public static function getNotifications()
+    {
+        $notificationModel = new Notification();
+        return $notifications = $notificationModel->getNotifications();
     }
 }

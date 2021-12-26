@@ -186,7 +186,7 @@ justify-content: flex-end;
 }
 
 
-.create-new-community-btn-container{
+.create-new-usergroup-btn-container{
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -218,7 +218,7 @@ justify-content: flex-end;
     margin-bottom: 0 !important;
 }
 
-#create-new-community-btn{
+#create-new-usergroup-btn{
 font-size: 0.8rem;
 width: 250px;
 }
@@ -364,7 +364,7 @@ align-items: center;
         align-items: center;
     }
 
-    .create-new-community-btn-container{
+    .create-new-usergroup-btn-container{
         width: 100%;
         display: flex;
         justify-content: center;

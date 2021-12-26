@@ -3,6 +3,7 @@
 namespace app\core;
 
 use PDO;
+use stdClass;
 
 abstract class DbModel extends Model
 {
@@ -102,5 +103,28 @@ abstract class DbModel extends Model
     public static function prepare($sql)
     {
         return Application::$app->db->pdo->prepare($sql);
+    }
+
+
+    public static function paginate($query, $start, $limit)
+    {
+        $sql = $query;
+
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $rowCount = $statement->rowCount();
+        $pageCount = ceil($rowCount / $limit);
+
+        if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $response = new stdClass;
+        $response->pageCount = $pageCount;
+        $response->payload = $data;
+
+        return $response;
     }
 }

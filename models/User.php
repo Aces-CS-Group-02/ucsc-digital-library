@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\core\DbModel;
+use PDO;
 
 class User extends DbModel
 {
@@ -112,22 +113,29 @@ class User extends DbModel
         $studentEmailPattern = "/(.*)@(stu.ucsc.cmb.ac.lk|stu.ucsc.lk)/";
         $staffEmailPattern = "/(.*)@(ucsc.cmb.ac.lk)/";
 
-        if(preg_match($studentEmailPattern, $email))
-        {
+        if (preg_match($studentEmailPattern, $email)) {
             $roleName = "UCSC Student";
-        }else if(preg_match($staffEmailPattern, $email))
-        {
+        } else if (preg_match($staffEmailPattern, $email)) {
             $roleName = "UCSC Staff";
         }
-        
+
         $role = new Role();
 
         $where = [
             'name' => $roleName
         ];
-        
+
         $role = $role->findOne($where);
 
         return $role->role_id;
+    }
+
+    public function getAllLibraryStaffMember()
+    {
+        $tableName = self::tableName();
+        $sql = "SELECT reg_no FROM $tableName WHERE role_id IN(1,2)";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 }

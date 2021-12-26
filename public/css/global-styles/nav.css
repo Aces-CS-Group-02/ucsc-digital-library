@@ -58,6 +58,21 @@
   /* display: block; */
 }
 
+.notifications-count-label {
+  background-color: #cc0000;
+  color: white;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+  /* padding: 3px; */
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+  position: absolute;
+  left: 55%;
+  bottom: 35%;
+}
+
 #user-nav-link {
   color: white;
   font-size: 1.2rem;
@@ -68,6 +83,86 @@
   color: white;
   font-size: 1rem;
   margin-left: 20px;
+  background-color: transparent;
+  border: none;
+  position: relative;
+}
+
+#notification-nav-link > i {
+  transform: scale(1.2);
+}
+
+#notifications-panel {
+  background-color: #202124;
+  padding: 7px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  display: none;
+  overflow-y: scroll;
+  height: 400px;
+}
+
+#notifications-panel::-webkit-scrollbar {
+  width: 7px;
+}
+
+#notifications-panel::-webkit-scrollbar-track {
+  background: #202124;
+}
+
+#notifications-panel::-webkit-scrollbar-thumb {
+  background: rgb(161, 161, 161);
+  border-radius: 10px;
+}
+
+#notifications-panel > * {
+  color: white;
+}
+
+.new-notification-indicator {
+  width: 6px;
+  height: 6px;
+  background-color: #cc0000;
+  border-radius: 50%;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+.old-notification-indicator {
+  width: 6px;
+  height: 6px;
+  /* background-color: #cc0000; */
+  border-radius: 50%;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+.notification-msg-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.notification-msg-date-time-container {
+  display: flex;
+  align-items: center;
+  color: gray;
+  padding-left: 8px;
+}
+
+.notification-msg-date-time-container > div {
+  margin: 0 4px;
+}
+
+.notification-msg-date-time-container > p {
+  font-size: 0.7rem;
+}
+
+.notification-container {
+  margin-bottom: 16px;
 }
 
 #sign-in-btn {
@@ -105,7 +200,7 @@
 
 /* =========================<Search> *====================================== */
 
-.nav-bar-search-input-wrapper{
+.nav-bar-search-input-wrapper {
   display: flex;
   align-items: center;
   height: 26px !important;
@@ -113,7 +208,7 @@
   border-radius: 13px;
 }
 
-.nav-bar-search-input-wrapper > input{
+.nav-bar-search-input-wrapper > input {
   border: none;
   outline: none;
   height: 100% !important;
@@ -122,7 +217,7 @@
   border-bottom-left-radius: 13px;
 }
 
-#nav-search-btn{
+#nav-search-btn {
   border: 1px solid white;
   outline: none;
   height: 100% !important;
@@ -136,7 +231,7 @@
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-#nav-search-btn:hover{
+#nav-search-btn:hover {
   color: white;
   background-color: rgb(148, 148, 148);
 }

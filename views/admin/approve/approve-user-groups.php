@@ -1,4 +1,7 @@
 <?php
+
+use app\core\Application;
+
 $isLoggedIn = true;
 $userRole = "student";
 ?>
@@ -15,6 +18,8 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
+
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -46,13 +51,44 @@ $userRole = "student";
 
     </div>
 
-    <div class="second-border">
+    <div class="wrapper">
+
+        <?php
+
+        if (Application::$app->session->getFlashMessage('success')) { ?>
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+                <?php echo Application::$app->session->getFlashMessage('success'); ?>
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+        <?php } ?>
+
+
+
+
+        <!-- Flash Message Error -->
+        <?php
+        if (Application::$app->session->getFlashMessage('error')) { ?>
+            <div class="alert alert-warning" id="flash-msg-alert">
+                <strong>Error!</strong>
+                <?php echo Application::$app->session->getFlashMessage('error'); ?>
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+        <?php } ?>
+
+
 
         <div class="search-N-sort-components-container">
             <div class="search-component-container">
                 <form action="">
                     <div class="ug-search-input-wrapper">
-                        <input type="text" placeholder="Search user groups">
+                        <input type="text" placeholder="Search user groups" name='q'>
                         <button>
                             <i class="fas fa-search"></i>
                         </button>
@@ -64,7 +100,7 @@ $userRole = "student";
                     <div class="input-group sort-input-edited" id="adjustments">
                         <label class="labelPlace" for="select">Sort By: </label>
                         <select class="custom-select custom-select-edited" id="select">
-                            <option value="0"></option>
+                            <!-- <option value="0"></option> -->
                             <option value="1">Name</option>
                             <option value="2">Created Date</option>
                             <option value="3">Creator</option>
@@ -86,249 +122,92 @@ $userRole = "student";
     <div class="content-container">
 
         <div class="user-groups-headers-container">
-            <div class="block-a"> </div>
+            <!-- <div class="block-a"> </div> -->
             <div class="block-b">Created Date</div>
             <div class="block-c">Name</div>
+            <div class="block-c">Description</div>
             <div class="block-d">Creator</div>
             <div class="block-e">Action</div>
         </div>
 
         <div class="user-group-container">
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+            <?php foreach ($params['requests'] as $req) { ?>
+                <div class="user-group-info">
+                    <!-- <div class="block-a">
+                        <p>
+                        <div class="input-group custom-control">
+                            <div class="checkbox checkbox-edit">
+                                <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                            </div>
                         </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>25/04/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Students</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Janet Gilder</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                        </p>
+                    </div> -->
+                    <div class="block-b">
+                        <div class="block-title">
+                            <p>Created Date</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->created_date ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>02/05/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>New Course Students</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Aurora Young</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-c">
+                        <div class="block-title">
+                            <p>Name</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->name ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>17/09/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>External</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Nemo Fernando</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-c">
+                        <div class="block-title">
+                            <p>Name</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->description ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>14/06/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Class</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Alvin Soyza</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                    <div class="block-d">
+                        <div class="block-title">
+                            <p>Creator</p>
+                            <p>:</p>
                         </div>
+                        <p><?= $req->first_name ?> <?= $req->last_name ?></p>
                     </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
+                    <div class="block-e">
+                        <a href="/admin/review-user-group?id=<?= $req->id ?>">
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit">View</button>
+                        </a>
+                        <form action="/admin/approve-ug-request" method="POST">
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" type="submit" name="group-id" value="<?= $req->id ?>">Approve</button>
+                        </form>
+                        <!-- <form action="" method="POST"> -->
+                        <button class="btn btn-danger mr-1 mb-1 btn3-edit reject-btn" type="submit" data-reqid="<?= $req->id ?>">Reject</button>
+                        <!-- </form> -->
                     </div>
-                    <p>15/11/21</p>
                 </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Fellowship</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Denise Dare</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
-            <div class="user-group-info">
-                <div class="block-a">
-                    <p>
-                    <div class="input-group custom-control">
-                        <div class="checkbox checkbox-edit">
-                            <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
-                        </div>
-                    </div>
-                    </p>
-                </div>
-                <div class="block-b">
-                    <div class="block-title">
-                        <p>Created Date</p>
-                        <p>:</p>
-                    </div>
-                    <p>16/04/21</p>
-                </div>
-                <div class="block-c">
-                    <div class="block-title">
-                        <p>Name</p>
-                        <p>:</p>
-                    </div>
-                    <p>Followers</p>
-                </div>
-                <div class="block-d">
-                    <div class="block-title">
-                        <p>Creator</p>
-                        <p>:</p>
-                    </div>
-                    <p>Veno Silva</p>
-                </div>
-                <div class="block-e">
-                    <p>
-                        <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                        <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
-                    </p>
-                </div>
-            </div>
+            <?php } ?>
         </div>
+
+        <div id="reject-message-container">
+            <p>Reject user group</p>
+            <form action="/admin/reject-user-group" method="POST">
+                <label>Please enter the cause for reject this user group.</label>
+                <textarea id='rejection-msg-input' name='message'></textarea>
+                <input id='req-info' type="hidden" name='req_id' />
+                <button type="submit">Submit</button>
+                <button id='rejection-popup-close-btn' type="button">Cancel</button>
+            </form>
+        </div>
+
+        <div id='full-overlay'></div>
+
+        <?php if (empty($params['requests'])) { ?>
+            <p class="no-records-available">No Records Available :(</p>
+        <?php } ?>
+
+        <?php
+
+        if (!empty($params['requests']) && isset($params['pageCount'])) {
+            include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+        }
+        ?>
 
     </div>
 
@@ -345,6 +224,37 @@ $userRole = "student";
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/approve-user-groups.js"></script>
 
+    <script>
+        (() => {
+            const rejectMsgContainer = document.getElementById('reject-message-container');
+            const overlay = document.getElementById('full-overlay');
+            const rejectBtns = document.getElementsByClassName('reject-btn');
+            const cancelBtn = document.getElementById('rejection-popup-close-btn');
+
+            rejectMsgContainer.style.display = 'none';
+
+            const reject = ({
+                currentTarget
+            }) => {
+                overlay.classList.add('open')
+                rejectMsgContainer.style.display = 'block';
+                document.getElementById('req-info').value = currentTarget.dataset.reqid;
+            }
+
+            const cancelRejection = () => {
+                overlay.classList.remove('open')
+                rejectMsgContainer.style.display = 'none';
+            }
+
+            overlay.addEventListener('click', cancelRejection, false);
+
+            cancelBtn.addEventListener('click', cancelRejection, false);
+
+            for (rejectBtn of rejectBtns) {
+                rejectBtn.addEventListener('click', reject, false);
+            }
+        })()
+    </script>
 </body>
 
 </html>

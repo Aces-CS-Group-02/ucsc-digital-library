@@ -1,8 +1,3 @@
-<?php
-$isLoggedIn = false;
-$userRole = "student";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +29,7 @@ $userRole = "student";
 
   <!-- NAVIGATION BAR -->
 
-  <?php include_once __DIR__ . '/components/nav.php'; ?> 
+  <?php include_once __DIR__ . '/components/nav.php'; ?>
 
   <!-- HOMEPAGE CONTENT -->
 
@@ -137,24 +132,24 @@ $userRole = "student";
 
       <div class="contents-grid">
 
-        <?php foreach($params['communities'] as $community) { ?>
-        <div class="content-item-container">
+        <?php foreach ($params['communities'] as $community) { ?>
+          <div class="content-item-container">
 
 
-          <div class="content-item">
-            <div class="content-item-pattern"></div>
-            <div class="content-item-text">
-              <p class="content-item-title"><?php echo $community["name"]; ?></p>
-              <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community["description"]; ?></p>
-              <div class="content-item-view-more">
-                <a class="content-item-view-more-link" href="#">
-                  <p>View more</p>
-                  <i class="fas fa-long-arrow-alt-right"></i>
-                </a>
+            <div class="content-item">
+              <div class="content-item-pattern"></div>
+              <div class="content-item-text">
+                <p class="content-item-title"><?php echo $community["name"]; ?></p>
+                <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community["description"]; ?></p>
+                <div class="content-item-view-more">
+                  <a class="content-item-view-more-link" href="#">
+                    <p>View more</p>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         <?php } ?>
       </div>
 
@@ -359,7 +354,7 @@ $userRole = "student";
 
   <!-- FOOTER -->
 
-  <?php include_once __DIR__ . '/components/footer.php'; ?> 
+  <?php include_once __DIR__ . '/components/footer.php'; ?>
 
   <!-- SCRITP -->
 

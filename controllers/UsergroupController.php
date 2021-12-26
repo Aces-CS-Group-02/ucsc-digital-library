@@ -4,17 +4,37 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\DbModel;
 use app\core\exception\NotFoundException;
+use app\core\middlewares\AuthMiddleware;
+use app\core\middlewares\LIAAccessPermissionMiddleware;
+use app\core\middlewares\StaffAccessPermissionMiddleware;
+use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
-use app\models\PendingUserGroup;
-use app\models\PendingUsergroupUser;
 use app\models\User;
 use app\models\UserGroup;
 use app\models\UsergroupUser;
+use PDO;
 use stdClass;
 
 class UsergroupController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware([]));
+
+        $this->registerMiddleware(new StaffAccessPermissionMiddleware(
+            [
+                'approveUserGroup',
+                'approveUGRequest',
+                'rejectUserGroup'
+            ]
+        ));
+
+        $this->registerMiddleware(new StudentsAccessPermissionMiddleware([]));
+    }
+
     public function createUserGroup(Request $request)
     {
         $breadcrum = [
@@ -28,11 +48,7 @@ class UsergroupController extends Controller
             $data_keys = array_keys($data);
             if (!in_array('name', $data_keys)) throw new NotFoundException();
 
-            if (Application::getUserRole() <= 2) {
-                $usergroupModel = new Usergroup();
-            } else if (Application::getUserRole() === 3) {
-                $usergroupModel = new PendingUserGroup();
-            }
+            $usergroupModel = new Usergroup();
 
             $last_inserted_id = $usergroupModel->createUsergroup($data);
 
@@ -58,15 +74,13 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        if (Application::getUserRole() <= 2) {
-            $usergroupModel = new Usergroup();
-        } else if (Application::getUserRole() === 3) {
-            $usergroupModel = new PendingUserGroup();
-        }
+        $usergroupModel = new Usergroup();
 
-        $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
+
+        $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
 
         if ($user_group) {
+
             $row_count = $usergroupModel->getAllUsersNotInThisGroup(
                 $data['usergroup-id'],
                 $Search_params,
@@ -100,7 +114,7 @@ class UsergroupController extends Controller
                 self::BREADCRUM_MANAGE_USERGROUPS
             ];
 
-            array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->group_id"]);
+            array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->id"]);
 
             array_push($breadcrum, self::BREADCRUM_ADD_USERGROUP_USERS);
 
@@ -115,9 +129,16 @@ class UsergroupController extends Controller
     public function removeUser(Request $request)
     {
         $data = $request->getBody();
-        var_dump($data);
+        // Validate request params
+        $req_arr_keys = array_keys($data);
+        if (!in_array('usergroup_id', $req_arr_keys) || !in_array('user_reg_no', $req_arr_keys)) throw new NotFoundException();
+
         $usergroupUserModel = new UsergroupUser();
-        // $usergroupUserModel->removeUser($data['usergroup_id'], $data['user_reg_no']);
+
+        if ($usergroupUserModel->removeUser($data['usergroup_id'], $data['user_reg_no'])) {
+            $usergroup = $data['usergroup_id'];
+            Application::$app->response->redirect("/admin/manage-usergroup?usergroup-id=$usergroup");
+        }
     }
 
 
@@ -125,13 +146,12 @@ class UsergroupController extends Controller
     {
         $data = $request->getBody();
 
-        if (Application::getUserRole() <= 2) {
-            $userGroupModel = new Usergroup();
-        } else if (Application::getUserRole() === 3) {
-            $userGroupModel = new PendingUserGroup();
-        }
+        $userGroupModel = new Usergroup();
+
+
 
         if (isset($data['bulk_select_users_list'])) {
+
             $arr = explode(',', $data['bulk_select_users_list']);
             if ($userGroupModel->pushUsersToUserGroup($data['usergroup_id'], $arr)) {
                 Application::$app->session->setFlashMessage('success', 'Users added successfully');
@@ -139,6 +159,7 @@ class UsergroupController extends Controller
                 Application::$app->session->setFlashMessage('error', 'Something went wrong');
             }
         } else {
+
             if ($userGroupModel->pushUserToUserGroup($data['usergroup_id'], $data['user_reg_no'])) {
                 Application::$app->session->setFlashMessage('success', 'User added successfully');
             } else {
@@ -161,20 +182,17 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        // $usergroupModel = new Usergroup();
-        $usergroupUserModel = new UsergroupUser();
+
+        $usergroupModel = new Usergroup();
 
 
-        if (Application::getUserRole() <= 2) {
-            $usergroupModel = new Usergroup();
-            $show_request_approval_btn = false;
-        } else if (Application::getUserRole() === 3) {
-            $usergroupModel = new PendingUserGroup();
-            $show_request_approval_btn = true;
-        }
 
-        $user_group = $usergroupModel->findOne(['group_id' => $data['usergroup-id']]);
+        $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
         if (!$user_group) throw new NotFoundException();
+
+
+        $show_request_approval_btn = false;
+        if ($user_group->status === 3) $show_request_approval_btn = true;
 
 
         $row_count = $usergroupModel->getAllUsersInUserGroup(
@@ -211,7 +229,7 @@ class UsergroupController extends Controller
             self::BREADCRUM_MANAGE_USERGROUPS
         ];
 
-        array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->group_id"]);
+        array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->id"]);
 
         $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'show_request_approval_btn' => $show_request_approval_btn]);
     }
@@ -228,27 +246,13 @@ class UsergroupController extends Controller
 
         $usergroupModel = new UserGroup();
 
-        $row_count = $usergroupModel->getAllUsergroups(
-            $Search_params,
-            true // Fetch row count
-        );
-        $pageCount = ceil($row_count / $limit);
-        $paginateController = new PaginatePathController();
-        if (($page > $pageCount)) {
-            if ($pageCount) {
-                $path = $paginateController->getNewPath($pageCount);
-                Application::$app->response->redirect($path);
-                exit;
-            }
-        }
-        $paginateController->validatePage($page, $pageCount);
 
-        $usergroups = $usergroupModel->getAllUsergroups(
-            $Search_params,
-            false, // Fetch Data
-            $start,
-            $limit
-        );
+        $result = $usergroupModel->getAllUsergroups($Search_params, $start, $limit);
+        if (!$result) throw new NotFoundException;
+
+
+        if (($result->pageCount != 0 && $page > $result->pageCount) || $page <= 0) throw new NotFoundException();
+
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
@@ -263,7 +267,7 @@ class UsergroupController extends Controller
             $is_library_staff_member = false;
         }
 
-        $this->render('admin/user/manage-all-user-groups', ['usergroups' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'is_library_staff_member' => $is_library_staff_member]);
+        $this->render('admin/user/manage-all-user-groups', ['usergroups' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'is_library_staff_member' => $is_library_staff_member]);
     }
 
 
@@ -314,33 +318,97 @@ class UsergroupController extends Controller
     }
 
 
+    public function requestApproval(Request $request)
+    {
+        $data  = $request->getBody();
+        $usergroupModel = new UserGroup();
+
+        var_dump($data);
+
+        $res = $usergroupModel->requestApproval($data['group_id']);
+
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong.');
+        }
+        Application::$app->response->redirect('/admin/manage-usergroups');
+    }
+
+    public function removeGroup(Request $request)
+    {
+        $data = $request->getBody();
+
+        $usergroupModel = new UserGroup();
+
+        $res = $usergroupModel->removeGroup($data['group_id']);
+
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Request made successfull.');
+        }
+
+        Application::$app->response->redirect('/admin/manage-usergroups');
+    }
+
+
+    public function approveUserGroup(Request $request)
+    {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit  = 5;
+        $start = ($page - 1) * $limit;
+        $Search_params = $data['q'] ?? '';
+
+        $usergroupModel = new UserGroup();
+        $result = $usergroupModel->getAllRequests($Search_params, $start, $limit);
 
 
 
+        if (!$result) throw new NotFoundException;
+        if (($result->pageCount != 0 && $page > $result->pageCount) || $page <= 0) throw new NotFoundException();
 
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_USER_GROUPS
+        ];
 
+        return $this->render("admin/approve/approve-user-groups", ['breadcrum' => $breadcrum, 'requests' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page]);
+    }
 
+    public function approveUGRequest(Request $request)
+    {
+        $data = $request->getBody();
 
+        var_dump($data);
 
+        $usergroupModel = new UserGroup();
+        $res = $usergroupModel->approve($data['group-id']);
 
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong.');
+        }
 
+        Application::$app->response->redirect('/admin/approve-user-groups');
+    }
 
+    public function rejectUserGroup(Request $request)
+    {
+        $data = $request->getBody();
 
+        $usergroupModel = new UserGroup();
+        $res = $usergroupModel->reject($data['req_id'], $data['message']);
 
-    // public function requestApprovalForCustomUserGroup(Request $request)
-    // {
-    //     $data = $request->getBody();
-    //     $usergroupModel = new PendingUserGroup();
-    //     if ($usergroupModel->requestApproval($data['custom_usergroup_id'])) {
-    //         Application::$app->session->setFlashMessage('success', 'Submitted to aprrove');
-    //     } else {
-    //         Application::$app->session->setFlashMessage('error', 'Something went wrong');
-    //     }
-    //     Application::$app->response->redirect('/admin/my-usergroups');
-    // }
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Request made successfull.');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong.');
+        }
 
-    // public function manageMyUsergroups(Request $request)
-    // {
-    //     $this->render('admin/user/my-user-groups');
-    // }
+        Application::$app->response->redirect('/admin/approve-user-groups');
+    }
 }

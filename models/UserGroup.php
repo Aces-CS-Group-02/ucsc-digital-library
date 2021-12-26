@@ -4,14 +4,17 @@ namespace app\models;
 
 use app\core\Application;
 use app\core\DbModel;
+use Exception;
 use PDO;
 
 class Usergroup extends DbModel
 {
-    public int $group_id;
-    public string $name = '';
-    public string $description = '';
-    public int $creator_reg_no;
+    public int $id;
+    public string $name;
+    public string $description;
+    public int $creator;
+    public int $status;
+    public $created_date;
 
     public static function tableName(): string
     {
@@ -20,19 +23,21 @@ class Usergroup extends DbModel
 
     public function attributes(): array
     {
-        return ['name', 'description', 'creator_reg_no'];
+        return ['name', 'description', 'creator', 'status', 'created_date'];
     }
 
     public static function primaryKey(): string
     {
-        return 'group_id';
+        return 'id';
     }
 
     public function rules(): array
     {
 
         return [
-            'name' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class]],
+            'name' => [self::RULE_REQUIRED],
+            'creator' => [self::RULE_REQUIRED],
+            'status' => [self::RULE_REQUIRED]
         ];
     }
 
@@ -40,7 +45,14 @@ class Usergroup extends DbModel
     public function createUserGroup($data)
     {
         $this->loadData($data);
-        $this->creator_reg_no = Application::$app->user->reg_no;
+        $this->creator = Application::$app->user->reg_no;
+
+        if (Application::getUserRole() <= 2) {
+            $this->status = 1;
+        } else {
+            $this->status = 3;
+        }
+
         if ($this->validate()) {
             if ($this->save()) return Application::$app->db->pdo->lastInsertId();
             return true;
@@ -103,7 +115,7 @@ class Usergroup extends DbModel
     {
         $userModel = new User();
         // If group not exist return false
-        if (!$this->findOne(['group_id' => $group_id])) return false;
+        if (!$this->findOne(['id' => $group_id])) return false;
 
         //  If user id not exist return false
         if (!$userModel->findOne(['reg_no' => $reg_no])) return false;
@@ -117,7 +129,7 @@ class Usergroup extends DbModel
     public function pushUsersToUserGroup($group_id, $users_list)
     {
         // If group not exist return false
-        if (!$this->findOne(['group_id' => $group_id])) return false;
+        if (!$this->findOne(['id' => $group_id])) return false;
         $userModel = new User();
         $usergroupUserModel = new UsergroupUser();
 
@@ -181,52 +193,61 @@ class Usergroup extends DbModel
         }
     }
 
-    public function getAllUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    public function getAllUsergroups($search_params = '', $start, $limit)
     {
 
         $creator = Application::$app->user->reg_no;
-
+        $tableName = self::tableName();
 
         // $inject = '';
         // if (Application::getUserRole() === 3) $inject = "t1.creator_reg_no = $creator AND";
 
 
+        // if (Application::getUserRole() <= 2) {
+        //     $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name, 'live' as completed_status FROM 
+        //         usergroup t1 LEFT JOIN user t2
+        //         ON t1.creator_reg_no = t2.reg_no
+        //         WHERE
+        //         (name LIKE '%$search_params%'
+        //         OR description LIKE '%$search_params%'
+        //         OR first_name LIKE '%$search_params%'
+        //         OR last_name LIKE '%$search_params%')";
+        // }
+
+        // if (Application::getUserRole() === 3) {
+        //     $sql = "SELECT group_id, name, description, creator_reg_no, created_date, 'live' as completed_status FROM
+        //             usergroup
+        //             WHERE creator_reg_no = $creator AND
+        //             (name LIKE '%$search_params%'
+        //             OR description LIKE '%$search_params%')
+        //             UNION
+        //             SELECT group_id, name, description, creator_reg_no, created_date, completed_status FROM 
+        //             pending_usergroup
+        //             WHERE creator_reg_no = $creator AND
+        //             (name LIKE '%$search_params%'
+        //             OR description LIKE '%$search_params%')
+        //             ORDER BY name";
+        // }
+
         if (Application::getUserRole() <= 2) {
-            $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
-                usergroup t1 LEFT JOIN user t2
-                ON t1.creator_reg_no = t2.reg_no
-                WHERE
-                (name LIKE '%$search_params%'
-                OR description LIKE '%$search_params%'
-                OR first_name LIKE '%$search_params%'
-                OR last_name LIKE '%$search_params%')";
-        }
+            $sql = "SELECT g.*, u.first_name, u.last_name FROM usergroup g
+                    JOIN user u on u.reg_no = g.creator
+                    WHERE status=1";
 
-        if (Application::getUserRole() === 3) {
-            $sql = "SELECT group_id, name, description, creator_reg_no, created_date, 'live' as completed_status FROM
-                    usergroup
-                    WHERE creator_reg_no = $creator AND
-                    (name LIKE '%$search_params%'
-                    OR description LIKE '%$search_params%')
-                    UNION
-                    SELECT group_id, name, description, creator_reg_no, created_date, completed_status FROM 
-                    pending_usergroup
-                    WHERE creator_reg_no = $creator AND
-                    (name LIKE '%$search_params%'
-                    OR description LIKE '%$search_params%')
-                    ORDER BY name";
-        }
+            if ($search_params != '') $sql = $sql . " AND (name LIKE '%$search_params%' OR first_name LIKE '%$search_params%' OR last_name LIKE '%$search_params%')";
+        } else if (Application::getUserRole() === 3) {
+            $sql = "SELECT g.*, u.first_name, u.last_name FROM usergroup g
+                    JOIN user u on u.reg_no = g.creator
+                    WHERE creator=$creator AND g.status != 4";
 
-        if ($getRecordsCount) {
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->rowCount();
+            if ($search_params != '') $sql = $sql . " AND name LIKE '%$search_params%'";
         } else {
-            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_OBJ);
+            return false;
         }
+
+
+
+        return $this->paginate($sql, $start, $limit);
     }
 
 
@@ -250,6 +271,164 @@ class Usergroup extends DbModel
             $statement = self::prepare($sql);
             $statement->execute();
             return $statement->fetchAll(PDO::FETCH_OBJ);
+        }
+    }
+
+    public function removeGroup($group_id)
+    {
+        $usergroupTable = self::tableName();
+        $primaryKey = self::primaryKey();
+
+        $user = Application::$app->user->reg_no;
+
+        $group = $this->findOne(['id' => $group_id]);
+
+        if (!$group) return false;
+        if (Application::getUserRole() === 3 && $user != $group->creator) return false;
+
+        $statement = self::prepare("DELETE FROM $usergroupTable WHERE $primaryKey = $group_id");
+        return $statement->execute();
+    }
+
+    public function requestApproval($group_id)
+    {
+
+        $group = $this->findOne(['id' => $group_id]);
+        $currentUser = Application::$app->user->reg_no;
+
+        if (!$group) return false;
+
+        // var_dump($group);
+
+        if ($group->status == 3 && $group->creator == $currentUser) {
+            $this->loadData($group);
+            $this->status = 2;
+
+            $userModel = new User();
+            $staffMembers = $userModel->getAllLibraryStaffMember();
+            $staff_members_list = array();
+            foreach ($staffMembers as $staffMember) {
+                array_push($staff_members_list, $staffMember->reg_no);
+            }
+
+
+            $notificationModel = new Notification();
+            $notificationModel->loadData(['msg' => "New pending user group available"]);
+            if (!$notificationModel->validate()) return false;
+            $notificationReceiverModel = new NotificationReceiver();
+
+            try {
+                Application::$app->db->pdo->beginTransaction();
+                $this->update();
+                $notificationModel->save();
+                $notificationReceiverModel->setMultipleReceviers(Application::$app->db->pdo->lastInsertId(), $staff_members_list);
+                Application::$app->db->pdo->commit();
+            } catch (Exception $e) {
+                Application::$app->db->pdo->rollBack();
+            }
+        }
+    }
+
+    public function getAllRequests($search_params, $start, $limit)
+    {
+        $usergroupTable = self::tableName();
+        $userTable = User::tableName();
+        $sql = "SELECT DATE(g.created_date) as created_date,  g.id, g.name, g.description, u.first_name, u.last_name FROM 
+                $usergroupTable g 
+                JOIN $userTable u ON g.creator = u.reg_no 
+                WHERE status = 2
+                AND (g.name LIKE '%$search_params%' 
+                OR u.first_name LIKE '%$search_params%' 
+                OR u.last_name LIKE '%$search_params%')";
+
+        return $this->paginate($sql, $start, $limit);
+    }
+
+    public function approve($group_id)
+    {
+        $group = $this->findOne(['id' => $group_id]);
+        if (!$group) return false;
+
+        $this->loadData($group);
+        $this->status = 1;
+
+        $currentUser = Application::$app->user->reg_no;
+        $usergroupApprovedModel = new UsergroupApproved();
+        $usergroupApprovedModel->loadData(['group_id' => $group->id, 'performer' => $currentUser]);
+        if (!$usergroupApprovedModel->validate()) return false;
+
+
+        $notificationModel = new Notification();
+        $notificationModel->loadData(['msg' => "Your usergroup $group->name is approved by library staff."]);
+        if (!$notificationModel->validate()) return false;
+        $notificationReceiverModel = new NotificationReceiver();
+
+        // var_dump($notificationModel);
+
+        try {
+            Application::$app->db->pdo->beginTransaction();
+            $this->update();
+            $usergroupApprovedModel->save();
+            $notificationModel->save();
+
+            $notificationReceiverModel->loadData(['notification_id' => Application::$app->db->pdo->lastInsertId(), 'receiver' => $group->creator, 'view_status' => false]);
+            if (!$notificationReceiverModel->validate()) return false;
+            var_dump($notificationReceiverModel);
+
+            $notificationReceiverModel->save();
+
+            Application::$app->db->pdo->commit();
+            return true;
+        } catch (Exception $e) {
+            Application::$app->db->pdo->rollBack();
+            return false;
+        }
+    }
+
+    public function reject($group_id, $msg)
+    {
+        $request = $this->findOne(['id' => $group_id]);
+
+        if (!$request) return false;
+
+        $this->loadData($request);
+        $this->status = 4;
+
+        $usergroupRejectModel = new UsergroupReject();
+
+        $currentUser = Application::$app->user->reg_no;
+
+        $usergroupRejectModel->loadData(['group_id' => $group_id, 'msg' => $msg, 'performer' => $currentUser]);
+        if (!$usergroupRejectModel->validate()) return false;
+
+
+        // Notification
+        $notificationModel = new Notification();
+        $notificationModel->loadData(['msg' => "Your usergroup $request->name is rejected by library staff because of $msg "]);
+        if (!$notificationModel->validate()) return false;
+        $notificationReceiverModel = new NotificationReceiver();
+
+
+        try {
+            Application::$app->db->pdo->beginTransaction();
+            $this->update();
+
+            $usergroupRejectModel->save();
+
+            $notificationModel->save();
+
+            $notificationReceiverModel->loadData(['notification_id' => Application::$app->db->pdo->lastInsertId(), 'receiver' => $request->creator, 'view_status' => false]);
+            if (!$notificationReceiverModel->validate()) return false;
+            var_dump($notificationReceiverModel);
+
+            $notificationReceiverModel->save();
+
+            Application::$app->db->pdo->commit();
+            return true;
+        } catch (Exception $e) {
+            Application::$app->db->pdo->rollBack();
+
+            return false;
         }
     }
 }
