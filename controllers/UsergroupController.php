@@ -11,8 +11,6 @@ use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
-use app\models\PendingUserGroup;
-use app\models\PendingUsergroupUser;
 use app\models\User;
 use app\models\UserGroup;
 use app\models\UsergroupUser;
@@ -413,32 +411,4 @@ class UsergroupController extends Controller
 
         Application::$app->response->redirect('/admin/approve-user-groups');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    // public function requestApprovalForCustomUserGroup(Request $request)
-    // {
-    //     $data = $request->getBody();
-    //     $usergroupModel = new PendingUserGroup();
-    //     if ($usergroupModel->requestApproval($data['custom_usergroup_id'])) {
-    //         Application::$app->session->setFlashMessage('success', 'Submitted to aprrove');
-    //     } else {
-    //         Application::$app->session->setFlashMessage('error', 'Something went wrong');
-    //     }
-    //     Application::$app->response->redirect('/admin/my-usergroups');
-    // }
-
-    // public function manageMyUsergroups(Request $request)
-    // {
-    //     $this->render('admin/user/my-user-groups');
-    // }
 }

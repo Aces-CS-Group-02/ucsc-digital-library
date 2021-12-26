@@ -11,7 +11,6 @@ use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
-use app\models\PendingUserGroup;
 use app\models\User;
 use app\models\UserGroup;
 use ErrorException;
@@ -268,7 +267,7 @@ class AdministrationController extends Controller
         // var_dump($users);
         // echo '</pre>';
 
-        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum , 'users' => $users]);
+        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum, 'users' => $users]);
     }
 
 
@@ -342,7 +341,7 @@ class AdministrationController extends Controller
             self::BREADCRUM_APPROVE_CONTENT_COLLECTIONS
         ];
 
-        return $this->render("admin/approve/approve-content-categories",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/approve/approve-content-categories", ['breadcrum' => $breadcrum]);
     }
 
     public function approveUserGroup(Request $request)
@@ -353,7 +352,7 @@ class AdministrationController extends Controller
             self::BREADCRUM_APPROVE_USER_GROUPS
         ];
 
-        return $this->render("admin/approve/approve-user-groups",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/approve/approve-user-groups", ['breadcrum' => $breadcrum]);
     }
 
     public function manageContentCollections(Request $request)
@@ -363,7 +362,7 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_MANAGE_CONTENT_COLLECTIONS
         ];
-        return $this->render("admin/content/academic-manage-content-collection",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/content/academic-manage-content-collection", ['breadcrum' => $breadcrum]);
     }
 
     public function createContentCollection(Request $request)
@@ -373,7 +372,7 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_CREATE_CONTENT_COLLECTION
         ];
-        return $this->render("admin/content/admin-create-content-collections",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/content/admin-create-content-collections", ['breadcrum' => $breadcrum]);
     }
 
     public function contentCollections(Request $request)
@@ -383,9 +382,9 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_CONTENT_COLLECTIONS
         ];
-        return $this->render("admin/content/view-all-content-collections",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/content/view-all-content-collections", ['breadcrum' => $breadcrum]);
     }
-    
+
     public function approveSubmissions(Request $request)
     {
         $breadcrum = [
@@ -393,7 +392,7 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_APPROVALS,
             self::BREADCRUM_APPROVE_SUBMISSIONS
         ];
-        return $this->render("admin/approve/admin-approve-submission",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/approve/admin-approve-submission", ['breadcrum' => $breadcrum]);
     }
 
     public function viewReports(Request $request)
@@ -403,6 +402,6 @@ class AdministrationController extends Controller
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_VIEW_REPORTS
         ];
-        return $this->render("admin/reports/admin-report-dashboard",['breadcrum'=>$breadcrum]);
+        return $this->render("admin/reports/admin-report-dashboard", ['breadcrum' => $breadcrum]);
     }
 }

@@ -87,4 +87,15 @@ class Collection extends DbModel
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
     }
+
+
+
+    public function getCollections()
+    {
+        $collection_table = self::tableName();
+        $sql = "SELECT * FROM $collection_table";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
 }

@@ -10,6 +10,7 @@ use app\controllers\CommunitiesController;
 use app\controllers\ContentController;
 use app\controllers\DummyController;
 use app\controllers\UsergroupController;
+use app\controllers\PermissionsController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -224,6 +225,20 @@ $app->router->get('/ajax/open-notifications', [SiteController::class, "openNotif
 $app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
 
 $app->router->get('/test', [DummyController::class, "test"]);
+
+
+
+
+
+
+
+
+// Permission
+$app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browsePermissions"]);
+$app->router->post('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
+
+
+
 
 
 
