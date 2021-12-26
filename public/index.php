@@ -94,6 +94,8 @@ $app->router->get('/profile/pdf-viewer', [UserController::class, "pdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
 $app->router->get('/suggest-content', [UserController::class, "suggestContent"]);
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
+//here
+$app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
 
 
 // Create, Remove LIA

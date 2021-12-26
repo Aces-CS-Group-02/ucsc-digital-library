@@ -36,6 +36,14 @@ class UserController extends Controller
         return $this->render('user/user-collections', ['allCollections' => $allUserCollections]);
     }
 
+//here
+    public function getUserCollections()
+    {
+        $userCollectionModel = new UserCollection();
+        $allUserCollections = $userCollectionModel->getAllUserCollections();
+        return json_encode($allUserCollections);
+    }
+
     public function manageCollectionTest()
     {
         return $this->render('user/test-user-collection');

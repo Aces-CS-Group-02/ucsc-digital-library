@@ -203,7 +203,7 @@ $userRole = "student";
                         <!-- Modal to enter a message when approving or rejecting -->
                         <div id="myModal" class="modal">
 
-                            <div class="modal-content">
+                            <div class="modal-content" id="modal-content">
                                 <form id="modal-form" action="" method="POST">
                                     <div class="modal-top-section modal-title">
                                         <div class="title-section">

@@ -40,14 +40,23 @@ $userRole = "student";
                 <i class="fas fa-bars"></i>
                 <!-- <i class="fas fa-arrow-alt-circle-right"></i> -->
             </div>
-            <div class="side-bar-block-s">
+            <div class="side-bar-block-s hover-text" data-hover="Add Bookmark">
                 <i class="fas fa-bookmark"></i>
             </div>
-            <div id="add-notes-btn" class="side-bar-block-s add-notes-btn">
+            <div id="add-notes-btn" class="side-bar-block-s add-notes-btn hover-text" data-hover="Add Note">
                 <i class="fas fa-notes-medical"></i>
             </div>
-            <div class="side-bar-block-s">
+            <div id="add-to-collection-btn" class="side-bar-block-s add-to-collection-btn hover-text" data-hover="Add to Collection">
                 <i class="fas fa-folder-plus"></i>
+            </div>
+            <div id="download-btn" class="side-bar-block-s download-btn hover-text" data-hover="Download">
+                <i class="fas fa-download"></i>
+            </div>
+            <div id="get-citation-btn" class="side-bar-block-s get-citation-btn hover-text" data-hover="Get Citations">
+                <i class="fas fa-quote-right"></i>
+            </div>
+            <div id="share-btn" class="side-bar-block-s share-btn hover-text" data-hover="Share">
+                <i class="fas fa-share"></i>
             </div>
         </div>
         <div class="pdf-viewer-container" id="scroll-div">
@@ -65,7 +74,7 @@ $userRole = "student";
         <!-- ADD NOTES MODAL  -->
 
         <div id="notesModal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content" id="notes-modal-content">
                 <form id="notes-modal-form" action="" method="POST">
                     <div class="notes-modal-top-section notes-modal-title">
                         <div class="notes-title-section">Notes</div>
@@ -73,11 +82,46 @@ $userRole = "student";
                             <span class="edit-close-note">&times;</span>
                         </div>
                     </div>
-                    <div class="input-group edit-notes-input-group">
-                        <input type="textarea" class="form-control edit-notes-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
-                    </div>
+                    <textarea name="note-content"></textarea>
                     <div class="notes-modal-bottom-section">
-                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Okay</button>
+                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ADD TO COLLECTIONS MODAL  -->
+
+        <div id="collectionsModal" class="modal">
+            <div class="modal-content" id="collections-modal-content">
+                <form id="collections-modal-form" action="" method="POST">
+                    <div class="notes-modal-top-section notes-modal-title">
+                        <div class="notes-title-section">Add to my collection</div>
+                        <div class="close-collection">
+                            <span class="edit-close-note">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-middle-content" id="collection-modal-collections">
+                        <!-- <div class="input-group custom-control">
+                            <div class="checkbox checkbox-edit">
+                                <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
+                                Favourites
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="notes-modal-bottom-section edit-for-collection">
+                        <div class="new-collection-create">
+                            New Collection Name
+                        </div>
+                        <div class="input-group edit-input-group">
+                            <input type="text" class="form-control edit-form-control create-collection" id="reason" name="reason" placeholder="Enter collection name"></input>
+                        </div>
+                        <div class="btn-container" id="create-and-save">
+                            <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Create and Add</button>
+                        </div>
+                        <!-- <div class="btn-container-hidden" id="save-btn-container">
+                            <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Add</button>
+                        </div> -->
                     </div>
                 </form>
             </div>
@@ -124,22 +168,80 @@ $userRole = "student";
             <div class="side-bar-section">
                 <div class="side-bar-section-top">
                     <i class="fas fa-notes-medical"></i>
-                    <p>Add Notes</p>
+                    <p>Notes</p>
                     <button id="add-notes-btn" class="add-notes-btn"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="side-bar-section-expand-collaps no-content">
                 </div>
             </div>
 
+            <div class="side-bar-section">
+                <div class="side-bar-section-top">
+                    <i class="fas fa-folder-plus"></i>
+                    <p>Add To Collection</p>
+                    <button id="add-to-collection-btn" class="add-to-collection-btn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="side-bar-section-expand-collaps no-content">
+                </div>
+            </div>
 
+            <div class="side-bar-section">
+                <div class="side-bar-section-top">
+                    <i class="fas fa-download"></i>
+                    <p>Download</p>
+                    <button id="download-btn" class="download-btn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="side-bar-section-expand-collaps no-content">
+                </div>
+            </div>
 
+            <div class="side-bar-section">
+                <div class="side-bar-section-top">
+                    <i class="fas fa-quote-right"></i>
+                    <p>Get Citations</p>
+                    <button id="get-citation-btn" class="get-citation-btn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="side-bar-section-expand-collaps no-content">
+                </div>
+            </div>
+
+            <div class="side-bar-section">
+                <div class="side-bar-section-top">
+                    <i class="fas fa-share"></i>
+                    <p>Share</p>
+                    <button id="share-btn" class="share-btn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="side-bar-section-expand-collaps no-content">
+                </div>
+            </div>
 
         </div>
     </div>
 
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <!-- <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script> -->
+    <script src="/ckeditor/ckeditor.js"></script>
     <script src="/javascript/nav.js"></script>
     <script src="/javascript/pdf-viewer.js"></script>
+    <script>
+        CKEDITOR.replace('note-content', {
+            toolbar: [
+                ['Format', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', '-', 'Undo', 'Redo']
+            ],
+            height: 300,
+            wordcount: {
+                showParagraphs: false,
+                showWordCount: true,
+                showCharCount: true,
+                countSpacesAsChars: true,
+                countHTML: false,
+                maxWordCount: -1,
+                maxCharCount: 1000
+            },
+            editorplaceholder: 'Enter your text here',
+        });
+        CKEDITOR.config.removePlugins = 'resize';
+    </script>
 </body>
 
 </html>
