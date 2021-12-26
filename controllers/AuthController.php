@@ -87,18 +87,39 @@ class authController extends Controller
             $file = $_FILES['verification'];
 
             if ($file['name']) {
-                $file['name'] = $registrationRequest->email;
+                $file['name'] = preg_replace('/[\W]/', '', $registrationRequest->email);
 
                 $path = "data/user/request/" . basename($file['name']);
 
                 $registrationRequest->verification = $path;
+
+                // var_dump($_FILES['verification']);
+                // exit;
             }
 
 
-            if ($registrationRequest->validate() && move_uploaded_file($file['tmp_name'], $path) && $registrationRequest->save()) {
+            if ($registrationRequest->validate()) {
 
-                Application::$app->session->setFlashMessage('success', 'Registration request successfully sent');
-                Application::$app->response->redirect('/');
+                $file_is_ok =  true;
+
+                if ($file['size'] > 5000000) {
+                    $registrationRequest->addError('verification', 'File size should be less tha 5 MB.');
+                    $file_is_ok = false;
+                }
+
+                if (!($file['type'] == 'image/jpeg' || $file['type'] == 'image/png')) {
+                    $registrationRequest->addError('verification', 'File type should be JPEG of PNG.');
+                    $file_is_ok = false;
+                }
+
+                if (!$file_is_ok) {
+                    return $this->render('auth/registration-request', ['model' => $registrationRequest]);
+                }else if (move_uploaded_file($file['tmp_name'], $registrationRequest->verification) && $registrationRequest->save()) {
+                    var_dump($file['type']);
+
+                    Application::$app->session->setFlashMessage('success', 'Registration request successfully sent');
+                    Application::$app->response->redirect('/');
+                }
             }
 
 

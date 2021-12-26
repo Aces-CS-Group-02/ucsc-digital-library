@@ -11,6 +11,7 @@ use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
+use app\models\PendingUser;
 use app\models\User;
 use app\models\UserGroup;
 use ErrorException;
@@ -242,12 +243,44 @@ class AdministrationController extends Controller
         }
 
         if ($request->getMethod() === 'POST') {
+
+            $file = $_FILES['sheet'];
+
+            move_uploaded_file($file['tmp_name'], "temp/sheet.csv");
+
+            $file = fopen("temp/sheet.csv", "r");
+
+            print_r(fgetcsv($file));
+
+            $userArray = [];
+
+            while (!feof($file)) {
+                $user = new PendingUser();
+
+                $row = fgetcsv($file);
+
+                $user->first_name = $row[0];
+                $user->last_name = $row[1];
+                $user->email = $row[2];
+
+                $user->validate();
+
+                array_push($userArray,$user);
+
+                print_r($userArray);
+            }
+
+            fclose($file);
+            unlink("temp/sheet.csv");
+
+            // exit;
+
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_USERS,
                 self::BREADCRUM_BULK_REGISTER
             ];
-            return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum]);
+            return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum, 'users'=> $userArray]);
         }
     }
 

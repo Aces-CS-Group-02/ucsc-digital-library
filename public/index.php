@@ -107,7 +107,16 @@ $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController
 
 
 // Admin Dashboard => Manage Content Routes
-$app->router->get('/admin/upload-content', [ContentController::class, "selectCollection"]);
+$app->router->get('/admin/upload-content', [ContentController::class, "uploadContent"]);
+$app->router->post('/admin/upload-content', [ContentController::class, "uploadContent"]);
+$app->router->get('/admin/upload-content/metadata', [ContentController::class, "updateMetadata"]);
+$app->router->post('/admin/upload-content/metadata', [ContentController::class, "updateMetadata"]);
+$app->router->get('/admin/upload-content/insert-keyword-abstract', [ContentController::class, "updateKeywordAbstract"]);
+$app->router->post('/admin/upload-content/insert-keyword-abstract', [ContentController::class, "updateKeywordAbstract"]);
+$app->router->get('/admin/upload-content/upload-file', [ContentController::class, "uploadFile"]);
+$app->router->post('/admin/upload-content/upload-file', [ContentController::class, "uploadFile"]);
+$app->router->get('/admin/upload-content/verify', [ContentController::class, "verify"]);
+$app->router->post('/admin/upload-content/verify', [ContentController::class, "verify"]);
 $app->router->get('/admin/insert-metadata', [ContentController::class, "insertMetadata"]);
 $app->router->get('/admin/insert-keyword-abstract', [ContentController::class, "insertKeywordAbstract"]);
 $app->router->get('/admin/submit-content', [ContentController::class, "submitContent"]);

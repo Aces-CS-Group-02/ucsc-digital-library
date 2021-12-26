@@ -25,8 +25,8 @@ $userRole = "student";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/insert-keyword-abstract.css">
 
-
-
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <title>Upload Content</title>
 </head>
@@ -109,12 +109,25 @@ $userRole = "student";
 
                     <div class="input-row">
                         <div class="input-column-1">
-                            <label class="labelPlace" for="">Keyword(s)</label>
+                            <label class="labelPlace" for="keywords[]">Keyword(s)</label>
 
                         </div>
                         <div class="input-column-2">
-                            <input class="form-control" id="name" type="text" placeholder="Enter the keyword(s) of the content" />
-                            <button class="btn btn-secondary btn-override" type="button">+</button>
+                            <div class="multiple-keyword">
+                                <?php if (count($params['keywords']) > 0) { ?>
+                                    <div class="input-row">
+                                        <input class="form-control" name="keywords[]" type="text" placeholder="Enter a keyword" value="<?php echo $params['keywords'][0]; ?>" />
+                                    </div>
+                                    <?php for ($i = 1; $i < count($params['keywords']); $i++) { ?>
+                                        <div class="input-row"><input class="form-control" name="keywords[]" type="text" placeholder="Enter a keyword" value="<?php echo $params['keywords'][$i] ?>" /><button class="btn btn-danger mr-1 delete-keyword remove_button" type="button">Remove</button> </div>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <div class="input-row">
+                                        <input class="form-control" name="keywords[]" type="text" placeholder="Enter a keyword" />
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <button class="btn btn-secondary btn-override add_button" type="button">Add another keyword</button>
                         </div>
                     </div>
 
@@ -124,7 +137,7 @@ $userRole = "student";
 
                         </div>
                         <div class="input-column-2">
-                            <textarea class="form-control" name="abstract" placeholder="Enter the abstract of the content" id="" cols="30" rows="10"></textarea>
+                            <textarea class="form-control" name="abstract" placeholder="Enter the abstract of the content" id="" cols="30" rows="10"><?php echo $params['content']->abstract; ?></textarea>
                         </div>
                     </div>
 
@@ -132,14 +145,10 @@ $userRole = "student";
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
                         <button class="btn btn-warning mr-1" type="button">Draft</button>
                         <a href="/admin/insert-metadata" class="btn btn-secondary mr-1 step-next-btn">Back</a>
-                        <a href="/admin/submit-content" class="btn btn-primary mr-1 step-next-btn">Next</a>
+                        <button class="btn btn-primary mr-1" type="submit">Next</button>
                     </div>
                 </div>
             </form>
-
-
-
-
 
         </div>
     </div>
@@ -148,6 +157,32 @@ $userRole = "student";
     ?>
 
     <script src="/javascript/nav.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var maxField = 10; //Input fields increment limitation
+            var addButton = $('.add_button'); //Add button selector
+            var wrapper = $('.multiple-keyword'); //Input field wrapper
+            var fieldHTML = '<div class="input-row"><input class="form-control" name="keywords[]" type="text" placeholder="Enter a keyword" /><button class="btn btn-danger mr-1 delete-keyword remove_button" type="button">Remove</button> </div>'; //New input field html 
+            var x = 1; //Initial field counter is 1
+
+            //Once add button is clicked
+            $(addButton).click(function() {
+                //Check maximum number of input fields
+                if (x < maxField) {
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); //Add field html
+                }
+            });
+
+            //Once remove button is clicked
+            $(wrapper).on('click', '.remove_button', function(e) {
+                e.preventDefault();
+                $(this).parent('div').remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+        });
+    </script>
 </body>
 
 </html>

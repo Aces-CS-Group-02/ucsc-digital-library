@@ -35,6 +35,7 @@ $userRole = "student";
 
     <?php
     include_once dirname(dirname(__DIR__)) . '/components/nav.php';
+    $content = $params['content'];
     ?>
 
     <!-- Main Content Container -->
@@ -111,7 +112,7 @@ $userRole = "student";
                         </div>
                         <div class="card-content-override fw-400">
                             <div class="input-row">
-                                Selected collection appear here
+                                <?php echo $params['collection']->parent->name . ' > ' . $params['collection']->name; ?>
                             </div>
                             <div class="input-row content-align-right">
                                 <button class="btn btn-secondary" type="button">Edit</button>
@@ -126,34 +127,45 @@ $userRole = "student";
                         <div class="card-content-override fw-400">
                             <div class="input-row">
                                 <div class="input-column-1">
-                                    <b>Creator</b>
+                                    <b>Creator(s)</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>Name of the creator</p>
+                                    <p>
+                                        <?php
+                                        echo $params['creators'][0]['creator'];
+                                        for ($i = 1; $i < count($params['creators']); $i++) {
+                                            echo ', ' . $params['creators'][$i]['creator'];
+                                        } ?>
+                                    </p>
                                 </div>
                             </div>
                             <div class="input-row">
                                 <div class="input-column-1">
-                                    <b>Ttile</b>
+                                    <b>Title</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>Title of the content</p>
+                                    <p><?php echo $content->title; ?></p>
                                 </div>
                             </div>
-                            <div class="input-row">
-                                <div class="input-column-1">
-                                    <b>PUblisher</b>
+
+                            <?php if ($content->publisher != null and $content->publisher != '') { ?>
+                                <div class="input-row">
+                                    <div class="input-column-1">
+                                        <b>Publisher</b>
+                                    </div>
+                                    <div class="input-column-2">
+                                        <p><?php echo $content->publisher; ?></p>
+                                    </div>
                                 </div>
-                                <div class="input-column-2">
-                                    <p>Publisher of the content</p>
-                                </div>
-                            </div>
+                            <?php } ?>
                             <div class="input-row">
                                 <div class="input-column-1">
                                     <b>Date of Issue</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>Date of issue of the content</p>
+                                    <p><?php
+                                        $date = new DateTime($content->date);
+                                        echo $date->format('Y-m-d'); ?></p>
                                 </div>
                             </div>
                             <div class="input-row">
@@ -161,9 +173,27 @@ $userRole = "student";
                                     <b>Type</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>Type of the content</p>
+                                    <p><?php echo $params['type']->name; ?></p>
                                 </div>
                             </div>
+                            <div class="input-row">
+                                <div class="input-column-1">
+                                    <b>Language</b>
+                                </div>
+                                <div class="input-column-2">
+                                    <p><?php echo $params['language']->language; ?></p>
+                                </div>
+                            </div>
+                            <?php if ($content->isbn != null and $content->isbn != '') { ?>
+                                <div class="input-row">
+                                    <div class="input-column-1">
+                                        <b>ISBN</b>
+                                    </div>
+                                    <div class="input-column-2">
+                                        <p><?php echo $content->isbn; ?></p>
+                                    </div>
+                                </div>
+                            <?php } ?>
                             <div class="input-row content-align-right">
                                 <button class="btn btn-secondary" type="button">Edit</button>
                             </div>
@@ -181,7 +211,11 @@ $userRole = "student";
                                     <b>Keyword(s)</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>keyword1, keyword2, keyword3</p>
+                                    <?php
+                                    echo $params['keywords'][0]['keyword'];
+                                    for ($i = 1; $i < count($params['keywords']); $i++) {
+                                        echo ', ' . $params['keywords'][$i]['keyword'];
+                                    } ?>
                                 </div>
                             </div>
                             <div class="input-row">
@@ -189,7 +223,7 @@ $userRole = "student";
                                     <b>Abstract</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dolor alias quibusdam reprehenderit quisquam maxime fuga aliquam officiis. Odio et harum doloribus tempora architecto natus, cumque mollitia hic libero debitis.</p>
+                                    <p><?php echo $content->abstract; ?></p>
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
@@ -208,7 +242,7 @@ $userRole = "student";
                                     <b>File</b>
                                 </div>
                                 <div class="input-column-2">
-                                    <a href="link to the file">Click here to view the file</a>
+                                    <a href="http://localhost:8000/<?php echo $content->url; ?>">Click here to view the file</a>
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
@@ -221,7 +255,7 @@ $userRole = "student";
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
                         <button class="btn btn-warning mr-1" type="button">Draft</button>
                         <a href="/admin/submit-content" class="btn btn-secondary mr-1 step-next-btn">Back</a>
-                        <button class="btn btn-primary mr-1" type="button">Finish</button>
+                        <button class="btn btn-primary mr-1" type="submit">Finish</button>
                     </div>
                 </div>
             </form>

@@ -12,6 +12,10 @@ body {
     align-content: center;
 }
 
+.delete-creator{
+    margin-bottom: 1rem;
+}
+
 .content-align-right {
     float: right;
 }

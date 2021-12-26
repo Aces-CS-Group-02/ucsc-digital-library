@@ -105,17 +105,17 @@ $userRole = "student";
 
 
 
-            <form id="create-community-form" action="" method="POST">
+            <form id="create-community-form" action="" method="POST" enctype="multipart/form-data" >
                 <div class="input-row-group">
 
                     <div class="input-row">
                         <div class="input-column-1">
-                            <label class="labelPlace" for="">Upload the file:</label>
+                            <label class="labelPlace" for="content-file">Upload the file:</label>
 
                         </div>
                         <div class="input-column-2">
                             <div class="custom-file">
-                                <input class="custom-file-input" id="customFile" type="file" />
+                                <input class="custom-file-input" name="content-file" id="customFile" type="file" />
                                 <label class="custom-file-label" for="customFile"> </label>
                             </div>
                             <!-- <input class="form-control" id="name" type="text" placeholder="Enter the keyword(s) of the content" /> -->
@@ -127,7 +127,7 @@ $userRole = "student";
                         <button class="btn btn-danger mr-1" type="button">Cancel</button>
                         <button class="btn btn-warning mr-1" type="button">Draft</button>
                         <a href="/admin/insert-keyword-abstract" class="btn btn-secondary mr-1 step-next-btn">Back</a>
-                        <a href="/admin/verify-submission" class="btn btn-primary mr-1 step-next-btn">Next</a>
+                        <button class="btn btn-primary mr-1" type="submit">Next</button>
                     </div>
                 </div>
             </form>
