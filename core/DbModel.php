@@ -100,6 +100,21 @@ abstract class DbModel extends Model
 
         return $statement->execute();
     }
+
+    public function deleteAll($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("DELETE FROM $tableName WHERE $sql");
+
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+
+        return $statement->execute();
+    }
+    
     public static function prepare($sql)
     {
         return Application::$app->db->pdo->prepare($sql);

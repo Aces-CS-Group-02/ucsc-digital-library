@@ -43,7 +43,15 @@ class Request
 
         if ($this->getMethod() === "POST") {
             foreach ($_POST as $key => $value) {
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+
+                if (is_array($value)) {
+                    $body[$key] = [];
+                    foreach ($value as $v) {
+                        array_push($body[$key], filter_var($v, FILTER_SANITIZE_SPECIAL_CHARS));
+                    }
+                } else {
+                    $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                }
             }
         }
 

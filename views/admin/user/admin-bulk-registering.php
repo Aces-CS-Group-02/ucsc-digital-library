@@ -38,12 +38,12 @@ $userRole = "admin";
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="form-container form-container-override">
-            <form class="form-feature" action="" method="POST">
+            <form class="form-feature" action="" method="POST" enctype="multipart/form-data">
                 <div class="input-container">
                     <div class="input-group">
                         <label class="labelPlace" for="">Upload the xls file</label>
                         <div class="custom-file custom-file-override">
-                            <input class="custom-file-input" id="customFile" type="file" />
+                            <input class="custom-file-input" name="sheet" id="customFile" type="file" />
                             <label class="custom-file-label" for="customFile"> </label>
                         </div>
                     </div>

@@ -101,145 +101,38 @@ $userRole = "student";
                 </div>
 
                 <div class="bulk-register-container">
-                    <div class="bulk-register-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
+                    <?php foreach ($params['users'] as $user) { ?>
+                        <div class="bulk-register-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>First Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?= $user->first_name; ?></p>
                             </div>
-                            <p>Dilini</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Last Name</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?= $user->last_name; ?></p>
+
                             </div>
-                            <p>Silva</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Email</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?= $user->email; ?><p>
+
                             </div>
-                            <p>2019cs642@stu.ucsc.lk</p>
-                        </div>
-                        <div class="block-d">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bulk-register-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <p>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
+                                </p>
                             </div>
-                            <p>Shaine</p>
                         </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Perera</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>2019is213@stu.ucsc.lk</p>
-                        </div>
-                        <div class="block-d">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bulk-register-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Denise</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Thomas</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>2019cs257@stu.ucsc.lk</p>
-                        </div>
-                        <div class="block-d">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bulk-register-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Avin</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Soyza</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>2019cs283@stu.ucsc.lk</p>
-                        </div>
-                        <div class="block-d">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="bulk-register-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>First Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Nemo</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Last Name</p>
-                                <p>:</p>
-                            </div>
-                            <p>Fernando</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Email</p>
-                                <p>:</p>
-                            </div>
-                            <p>2022is563@stu.ucsc.lk</p>
-                        </div>
-                        <div class="block-d">
-                            <p>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                            </p>
-                        </div>
+                    <?php } ?>
                     </div>
                 </div>
 

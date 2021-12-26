@@ -108,49 +108,27 @@ $userRole = "student";
                 <div class="input-row-group">
                     <div class="input-row">
                         <div class="input-column-1">
-                            <label class="labelPlace" for="">Select the collection: </label>
+                            <label class="labelPlace" for="collection_id">Select the collection: </label>
 
                         </div>
                         <div class="input-column-2">
-                            <select class="custom-select custom-select-override">
-                                <option value="0"></option>
-                                <option value="1">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science in Computer Science (BSc in CS) > 2018</option>
-                                <option value="2">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science in Computer Science (BSc in CS) > 2019</option>
-                                <option value="3">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science Honors in Software Engineering (BSc Hons in SE) > 2018</option>
-                                <option value="4">Theses & Dissertations > Undergraduate Programmes > Bachelor of Science Honors in Software Engineering (BSc Hons in SE) > 2019</option>
-                                <option value="5">Postgraduate Programmes > Master’s Degree Programmes > Master of Computer Science (MCS) > 2018</option>
-                                <option value="6">Postgraduate Programmes > Master’s Degree Programmes > Master of Computer Science (MCS) > 2019</option>
-                                <option value="7">External Degree (BIT) > 2018</option>
-                                <option value="8">External Degree (BIT) > 2019</option>
+                            <select class="custom-select custom-select-override" name="collection_id">
+
+                                <?php foreach ($params['collections'] as $collection) { ?>
+                                    <option value="<?php echo $collection->collection_id; ?>" <?php if($collection->collection_id==$params['collection_id'])echo 'selected'; ?>><?php echo $collection->parent_community . '>' . $collection->name; ?></option>
+                                <?php } ?>
+
                             </select>
                         </div>
 
 
 
                     </div>
-                    <div class="input-row">
-                        <div class="input-column-1">
-                            <label class="labelPlace" for="">Select the type: </label>
-
-                        </div>
-                        <div class="input-column-2">
-                            <select class="custom-select custom-select-override">
-                                <option value="0"></option>
-                                <option value="1">Thesis & Dissertations</option>
-                                <option value="2">E-Book</option>
-                                <option value="3">Journals & Magazines</option>
-                                <option value="4">Past Papers</option>
-                                <option value="5">Institutional Publications</option>
-                                <option value="6">Newsletters</option>
-                                <option value="7">Audio (mp3)</option>
-                                <option value="8">Video (mp4)</option>
-
-
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="btn-row content-align-right">
-                        <a href="/admin/insert-metadata" class="btn btn-primary mr-1 step-next-btn">Next</a>
+                        <button class="btn btn-primary mr-1 mb-1" type="submit">
+                            Next
+                        </button>
                     </div>
                 </div>
             </form>
