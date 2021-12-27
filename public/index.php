@@ -243,8 +243,28 @@ $app->router->get('/test', [DummyController::class, "test"]);
 
 
 // Permission
-$app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browsePermissions"]);
-$app->router->post('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
+$app->router->get('/admin/set-access-permission', [PermissionsController::class, "browsePermissions"]);
+
+$app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
+
+$app->router->get('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
+$app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
+
+
+$app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
+$app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
+
+
+$app->router->get('/admin/view-access-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
+$app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
+
+
+
+
+
+
+
+// $app->router->post('/admin/set-access-permission/collections/set-permission', [PermissionsController::class, "setPermissionToCollection"]);
 
 
 
