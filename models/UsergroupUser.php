@@ -66,7 +66,7 @@ class UsergroupUser extends DbModel
         var_dump($groupID, $regNo);
 
         $currentUserRegNo = Application::$app->user->reg_no;
-        $usergroupModel = new Usergroup();
+        $usergroupModel = new UserGroup();
 
         $group = $usergroupModel->findOne(['id' => $groupID]);
         // If usergroup not exsist

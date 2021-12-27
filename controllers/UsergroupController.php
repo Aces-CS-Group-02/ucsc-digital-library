@@ -48,7 +48,7 @@ class UsergroupController extends Controller
             $data_keys = array_keys($data);
             if (!in_array('name', $data_keys)) throw new NotFoundException();
 
-            $usergroupModel = new Usergroup();
+            $usergroupModel = new UserGroup();
 
             $last_inserted_id = $usergroupModel->createUsergroup($data);
 
@@ -74,7 +74,7 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        $usergroupModel = new Usergroup();
+        $usergroupModel = new UserGroup();
 
 
         $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
@@ -146,7 +146,7 @@ class UsergroupController extends Controller
     {
         $data = $request->getBody();
 
-        $userGroupModel = new Usergroup();
+        $userGroupModel = new UserGroup();
 
 
 
@@ -183,7 +183,7 @@ class UsergroupController extends Controller
         $start = ($page - 1) * $limit;
 
 
-        $usergroupModel = new Usergroup();
+        $usergroupModel = new UserGroup();
 
 
 

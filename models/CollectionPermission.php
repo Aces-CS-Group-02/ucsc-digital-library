@@ -69,7 +69,7 @@ class CollectionPermission extends DbModel
             $group_id = $item->group_id;
             $permission = $item->permission;
 
-            $usergroupModel = new userGroup();
+            $usergroupModel = new UserGroup();
             $usergroup = $usergroupModel->findOne(['id' => $group_id]);
 
             $collectionModel = new Collection();
