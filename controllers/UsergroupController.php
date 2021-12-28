@@ -285,27 +285,29 @@ class UsergroupController extends Controller
 
         $usergroupModel = new UserGroup();
 
-        $row_count = $usergroupModel->getAllLiveUsergroups(
-            $Search_params,
-            true // Fetch row count
-        );
-        $pageCount = ceil($row_count / $limit);
-        $paginateController = new PaginatePathController();
-        if (($page > $pageCount)) {
-            if ($pageCount) {
-                $path = $paginateController->getNewPath($pageCount);
-                Application::$app->response->redirect($path);
-                exit;
-            }
-        }
-        $paginateController->validatePage($page, $pageCount);
+        $usergroups = $usergroupModel->getAllLiveUsergroups($Search_params, $start, $limit);
 
-        $usergroups = $usergroupModel->getAllLiveUsergroups(
-            $Search_params,
-            false, // Fetch Data
-            $start,
-            $limit
-        );
+        // $row_count = $usergroupModel->getAllLiveUsergroups(
+        //     $Search_params,
+        //     true // Fetch row count
+        // );
+        // $pageCount = ceil($row_count / $limit);
+        // $paginateController = new PaginatePathController();
+        // if (($page > $pageCount)) {
+        //     if ($pageCount) {
+        //         $path = $paginateController->getNewPath($pageCount);
+        //         Application::$app->response->redirect($path);
+        //         exit;
+        //     }
+        // }
+        // $paginateController->validatePage($page, $pageCount);
+
+        // $usergroups = $usergroupModel->getAllLiveUsergroups(
+        //     $Search_params,
+        //     false, // Fetch Data
+        //     $start,
+        //     $limit
+        // );
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
@@ -314,7 +316,7 @@ class UsergroupController extends Controller
         ];
 
 
-        $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+        $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups->payload, 'pageCount' => $usergroups->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
 
 
