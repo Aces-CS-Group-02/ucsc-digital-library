@@ -69,7 +69,7 @@ class PermissionsController extends Controller
         $collection_path_str = implode(' > ', $temp_path);
 
         $usergroupModel = new UserGroup();
-        $usergroups = $usergroupModel->getAllLiveUsergroups("", 1, 100);
+        $usergroups = $usergroupModel->getAllLiveUsergroups("", 0, 100);
 
 
         return $this->render('admin/set-permissions-browse', ['page_step' => 2, 'data' => $usergroups->payload, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id]);

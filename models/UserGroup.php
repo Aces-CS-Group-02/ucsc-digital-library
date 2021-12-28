@@ -278,10 +278,11 @@ class Usergroup extends DbModel
     public function getAllLiveUsergroups($search_params = '', $start, $limit)
     {
         $sql = "SELECT t1.id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
-                usergroup t1 LEFT JOIN user t2
+                usergroup t1 
+                JOIN user t2
                 ON t1.creator = t2.reg_no
-                WHERE
-                (name LIKE '%$search_params%'
+                WHERE status=1 
+                AND (name LIKE '%$search_params%'
                 OR description LIKE '%$search_params%'
                 OR first_name LIKE '%$search_params%'
                 OR last_name LIKE '%$search_params%')
