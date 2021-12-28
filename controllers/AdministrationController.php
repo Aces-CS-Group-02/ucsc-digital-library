@@ -265,7 +265,7 @@ class AdministrationController extends Controller
 
                 $user->validate();
 
-                array_push($userArray,$user);
+                array_push($userArray, $user);
 
                 print_r($userArray);
             }
@@ -280,7 +280,7 @@ class AdministrationController extends Controller
                 self::BREADCRUM_MANAGE_USERS,
                 self::BREADCRUM_BULK_REGISTER
             ];
-            return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum, 'users'=> $userArray]);
+            return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum, 'users' => $userArray]);
         }
     }
 
@@ -386,16 +386,6 @@ class AdministrationController extends Controller
         ];
 
         return $this->render("admin/approve/approve-user-groups", ['breadcrum' => $breadcrum]);
-    }
-
-    public function manageContentCollections(Request $request)
-    {
-        $breadcrum = [
-            self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_CONTENT,
-            self::BREADCRUM_MANAGE_CONTENT_COLLECTIONS
-        ];
-        return $this->render("admin/content/academic-manage-content-collection", ['breadcrum' => $breadcrum]);
     }
 
     public function createContentCollection(Request $request)

@@ -14,6 +14,8 @@ use app\controllers\PermissionsController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
+use app\controllers\ContentCollectionController;
+use app\models\ContentCollectionContent;
 
 require_once __DIR__ . "./../vendor/autoload.php";
 
@@ -133,7 +135,6 @@ $app->router->get('/admin/publish-content', [AdministrationController::class, "p
 $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
 $app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
 $app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
-$app->router->get('/admin/manage-content-collections', [AdministrationController::class, "manageContentCollections"]);
 $app->router->get('/admin/content-collections', [AdministrationController::class, "contentCollections"]);
 $app->router->get('/admin/admin-create-content-collection', [AdministrationController::class, "createContentCollection"]);
 
@@ -257,6 +258,32 @@ $app->router->get('/admin/set-access-permission/status-failed', [PermissionsCont
 
 $app->router->get('/admin/view-access-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
 $app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
+
+
+
+
+
+
+// Content Collection
+
+$app->router->get('/admin/create-content-collection', [ContentCollectionController::class, "createContentCollection"]);
+$app->router->post('/admin/create-content-collection', [ContentCollectionController::class, "createContentCollection"]);
+$app->router->get('/admin/add-content', [ContentCollectionController::class, "addContents"]);
+$app->router->post('/admin/add-content', [ContentCollectionController::class, "pushContentToContentCollection"]);
+$app->router->get('/admin/manage-content-collection', [ContentCollectionController::class, "manageContentCollection"]);
+$app->router->post('/content-collection/remove-content', [ContentCollectionController::class, "removeContent"]);
+$app->router->post('/admin/request-content-collection-approval', [ContentCollectionController::class, "requestApproval"]);
+$app->router->get('/admin/manage-content-collections', [ContentCollectionController::class, "manageAllUserGroups"]);
+$app->router->post('/admin/remove-content-collection', [ContentCollectionController::class, "removeContentCollection"]);
+$app->router->get('/admin/approve-content-collections', [ContentCollectionController::class, "approveContentCollections"]);
+$app->router->post('/admin/approve-cc-request', [ContentCollectionController::class, "approveCCRequest"]);
+$app->router->post('/admin/reject-content-collection', [ContentCollectionController::class, "rejectContentCollection"]);
+
+
+
+
+
+// $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 
 
 
