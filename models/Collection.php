@@ -38,14 +38,18 @@ class Collection extends DbModel
         ];
     }
 
-    public function getAllCollections($community_id)
+    public function getAllCollections($community_id, $start, $limit)
     {
         $tableName = static::tableName();
-        $statement = self::prepare("SELECT collection_id, name, description 
-                                    FROM $tableName 
-                                    WHERE community_id = $community_id");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+        // $statement = self::prepare("SELECT collection_id, name, description 
+        //                             FROM $tableName 
+        //                             WHERE community_id = $community_id");
+        // $statement->execute();
+        // return $statement->fetchAll(PDO::FETCH_OBJ);
+        $sql = "SELECT collection_id, name, description 
+                FROM $tableName 
+                WHERE community_id = $community_id";
+        return $this->paginate($sql, $start, $limit);
     }
 
     public function createNewCollection($data)

@@ -19,9 +19,14 @@ class CommunitiesController extends Controller
         $page = isset($data['page']) ? $data['page'] : 1;
         $limit = 5;
         $start = ($page - 1) * $limit;
+
+        if ($page <= 0) throw new NotFoundException();
+
         $community = new Community();
-        $pageCount = $community->getPageCount($limit);
         $allTopCommunities = $community->getAllTopLevelCommunities($start, $limit);
+
+        if ($allTopCommunities->pageCount > 0 && $page > $allTopCommunities->pageCount) throw new NotFoundException();
+
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
@@ -29,7 +34,7 @@ class CommunitiesController extends Controller
             self::BREADCRUM_MANAGE_COMMUNITIES_N_COLLECTIONS
         ];
 
-        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities, 'breadcrum' => $breadcrum, 'pageCount' => $pageCount, 'currentPage' => $page]);
+        return $this->render('admin/communities', ['communityType' => true, 'communities' => $allTopCommunities->payload, 'breadcrum' => $breadcrum, 'pageCount' => $allTopCommunities->pageCount, 'currentPage' => $page]);
     }
 
     public function createTopLevelCommunities()
@@ -243,22 +248,18 @@ class CommunitiesController extends Controller
         $subcommunityModel = new SubCommunity();
         $communityModel = new Community();
 
+
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 5;
+        $start = ($page - 1) * $limit;
+
         if (!$communityModel->findCommunity($data['community-id'])) {
             throw new NotFoundException();
         }
 
-        $allsubcommunities = $subcommunityModel->getAllSubCommunities(['parent_community_id' => $data['community-id']]);
-        $allSubcommunities_ID_List = array();
-        $communityModel->loadCommunity($data['community-id']);
-        $communities = [];
-
-        if ($allsubcommunities) {
-            foreach ($allsubcommunities as $subcommunity) {
-                array_push($allSubcommunities_ID_List, $subcommunity->child_community_id);
-            }
-
-            $communities = $communityModel->getCommunitiesByID($allSubcommunities_ID_List);
-        }
+        if ($page <= 0) throw new NotFoundException();
+        $allsubcommunities = $subcommunityModel->getAllSubCommunities($data['community-id'], $start, $limit);
+        if ($allsubcommunities->pageCount > 0 && $page > $allsubcommunities->pageCount) throw new NotFoundException();
 
 
         $collectionCount = Collection::getCollectionCount($data['community-id']);
@@ -279,6 +280,6 @@ class CommunitiesController extends Controller
         }
 
         //  IF community type is sub community => value = false. If community is top level value is true
-        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $communities, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum]);
+        return $this->render('admin/communities', ['parentID' => $data['community-id'], 'communityType' => false, 'communityname' => $communityModel->name, 'communities' => $allsubcommunities->payload, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum, 'pageCount' => $allsubcommunities->pageCount, 'currentPage' => $page]);
     }
 }

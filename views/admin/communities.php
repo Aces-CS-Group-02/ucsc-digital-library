@@ -160,6 +160,7 @@ use app\core\Application;
                     <?php
 
                     $communities = $params['communities'] ?? "";
+
                     $first_record = true;
 
                     ?>
@@ -171,7 +172,7 @@ use app\core\Application;
                     <?php if ($communities) {
                         foreach ($communities as $community) { ?>
 
-                            <div class="user-group-info " data-id="<?php echo $community['community_id'] ?>">
+                            <div class="user-group-info " data-id="<?php echo $community->community_id; ?>">
                                 <div class="block-a">
                                     <p>
                                     <div class="input-group custom-control">
@@ -186,22 +187,22 @@ use app\core\Application;
                                         <p>Name</p>
                                         <p>:</p>
                                     </div>
-                                    <p><?php echo $community['name'] ?></p>
+                                    <p><?php echo $community->name ?></p>
                                 </div>
                                 <div class="block-c">
                                     <div class="block-title">
                                         <p>Description</p>
                                         <p>:</p>
                                     </div>
-                                    <p class="line-clamp line-clamp-2-description row-description <?php if ($community['description'] === "") {
+                                    <p class="line-clamp line-clamp-2-description row-description <?php if ($community->description === "") {
                                                                                                         echo "gray-out";
                                                                                                     } ?>"><?php
 
 
-                                                                                                            if ($community['description'] === "") {
+                                                                                                            if ($community->description === "") {
                                                                                                                 echo "N/A";
                                                                                                             } else {
-                                                                                                                echo $community['description'];
+                                                                                                                echo $community->description;
                                                                                                             }
 
 
@@ -209,9 +210,9 @@ use app\core\Application;
                                 </div>
                                 <div class="block-d">
                                     <div>
-                                        <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community['community_id'] ?>">Manage</button>
-                                        <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community['community_id'] ?>">Edit</button>
-                                        <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community['community_id'] ?>">Delete</button>
+                                        <button class="btn action-btn-1-edit btn-view" type="button" data-id="<?php echo $community->community_id ?>">Manage</button>
+                                        <button class="btn action-btn-2-edit btn-update" type="button" data-id="<?php echo $community->community_id ?>">Edit</button>
+                                        <button class="btn action-btn-3-edit btn-del" type="button" data-id="<?php echo $community->community_id ?>">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +227,7 @@ use app\core\Application;
 
                     <?php
 
-                    if (isset($params['pageCount'])) {
+                    if ($params['pageCount']) {
                         include_once dirname(__DIR__) . '/components/paginate.php';
                     }
                     ?>

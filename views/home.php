@@ -139,8 +139,8 @@
             <div class="content-item">
               <div class="content-item-pattern"></div>
               <div class="content-item-text">
-                <p class="content-item-title"><?php echo $community["name"]; ?></p>
-                <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community["description"]; ?></p>
+                <p class="content-item-title"><?php echo $community->name; ?></p>
+                <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community->description; ?></p>
                 <div class="content-item-view-more">
                   <a class="content-item-view-more-link" href="#">
                     <p>View more</p>
