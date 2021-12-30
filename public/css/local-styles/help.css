@@ -19,8 +19,21 @@
     margin: 20px;
 }
 
+.txt-dec {
+    text-decoration: none;
+}
+
+#scroll-bar {
+    overflow-y: scroll;
+    height: 90vh;
+}
+
 .outer-container {
     margin: 0px 10px;
+}
+
+body {
+    overflow-y: hidden;
 }
 
 
@@ -37,9 +50,10 @@
     margin: 10px;
 }
 
-.btn-set {
+
+/* .btn-set {
     border: solid 1px red;
-}
+} */
 
 button {
     border-radius: 0;

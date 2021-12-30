@@ -22,6 +22,7 @@ class Controller
     // Manage Users Dashboard
     public const BREADCRUM_BULK_REGISTER = ['name' => 'Bulk register', 'link' => '/admin/bulk-register'];
     public const BREADCRUM_APPROVE_NEW_USERS = ['name' => 'Approve new users', 'link' => '/admin/verify-new-users'];
+    public const BREADCRUM_APPROVE_NEW_USER = ['name' => 'Approve new user', 'link' => '/admin/info-verify-new-users'];
     public const BREADCRUM_UPDATE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_DELETE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_CREATE_USER_GROUPS = ['name' => 'Create user group', 'link' => '/admin/create-user-group'];

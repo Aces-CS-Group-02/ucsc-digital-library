@@ -175,6 +175,7 @@ $app->router->post('/admin/create-user-group', [UsergroupController::class, "cre
 $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 $app->router->get('/admin/approve-new-user/view', [ApproveController::class, "viewNewUserDetails"]);
+$app->router->get('/help',[SiteController::class,"help"]);
 
 
 // $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);

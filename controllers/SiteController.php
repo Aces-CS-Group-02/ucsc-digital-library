@@ -279,4 +279,8 @@ class SiteController extends Controller
 
         return $this->render('browse-by-communities-and-collections', ['type' => 'collection', 'selected-item' => $collection, 'breadcrum' => $breadcrum]);
     }
+    public function help()
+    {
+        return $this->render('help');
+    }
 }
