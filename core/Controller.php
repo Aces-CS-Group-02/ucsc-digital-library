@@ -63,6 +63,8 @@ class Controller
 
 
     public const BREADCRUM_VIEW_REPORTS = ['name' => 'View reports', 'link' => '/admin/dashboard/view-reports'];
+    public const BREADCRUM_USER_APPROVALS_REPORT = ['name' => 'User approvals report', 'link' => '/admin/user-approvals-report'];
+    public const BREADCRUM_USERS_LOGIN_REPORT = ['name' => 'Users\' login report', 'link' => '/admin/users-login-report'];
 
     public const BREADCRUM_APPROVE_SUBMISSIONS = ['name' => 'Approve submissions', 'link' => '/admin/approve-submissions'];
 

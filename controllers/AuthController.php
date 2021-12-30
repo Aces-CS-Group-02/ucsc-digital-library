@@ -23,6 +23,9 @@ class authController extends Controller
             $loginForm->loadData($request->getBody());
 
             if ($loginForm->validate() && $loginForm->login()) {
+                $email = $loginForm->email;
+                $user = new User();
+                $user->updateLogInTime($email);
                 Application::$app->response->redirect('/');
                 return;
             }

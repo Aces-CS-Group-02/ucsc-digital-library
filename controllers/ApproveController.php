@@ -47,11 +47,14 @@ class ApproveController extends Controller
                 $pendingUser->email = $registrationRequest->email;
                 $pendingUser->token = $code;
 
+                $approvedBy = Application::$app->getUserDisplayName();
+
                 $userApproval = new UserApproval();
 
                 $userApproval->email = $registrationRequest->email;
                 $userApproval->is_approved = true;
                 $userApproval->reason = $reason;
+                $userApproval->approved_by = $approvedBy["firstname"]." ".$approvedBy["lastname"];
 
                 // var_dump($userApproval);
                 // if($reason){
@@ -109,11 +112,15 @@ class ApproveController extends Controller
             $registrationRequest = $registrationRequest->findOne($where);
             $reason = $requestData["reason"];
 
+            $approvedBy = Application::$app->getUserDisplayName();
+
             $userApproval = new UserApproval();
 
             $userApproval->email = $registrationRequest->email;
             $userApproval->is_approved = false;
             $userApproval->reason = $reason;
+            // $userApproval->approved_by = $approvedBy;
+            $userApproval->approved_by = $approvedBy["firstname"]." ".$approvedBy["lastname"];
 
             // echo '<pre>';
             // var_dump($registrationRequest);

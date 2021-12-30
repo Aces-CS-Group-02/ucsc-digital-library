@@ -15,6 +15,7 @@ class User extends DbModel
     public int $attempt_count = 0;
     public string $confirm_password = '';
     public int $role_id = 0;
+    public string $log_in_time = '';
 
     public static function tableName(): string
     {
@@ -23,7 +24,7 @@ class User extends DbModel
 
     public function attributes(): array
     {
-        return ["first_name", "last_name", "email", "password", "role_id", "attempt_count"];
+        return ["first_name", "last_name", "email", "password", "role_id", "attempt_count", "log_in_time"];
     }
 
     public static function primaryKey(): string
@@ -137,5 +138,28 @@ class User extends DbModel
         $statement = self::prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function updateLogInTime($value)
+    {
+        // echo $value;
+        $tableName = self::tableName();
+        $sql = "UPDATE $tableName set log_in_time = now() WHERE email = '$value'";
+        $statement = self::prepare($sql);
+        // echo $sql;
+        return $statement->execute();
+    }
+
+    public function getUsersOrderedByLoginTime($search_params = '', $start, $limit)
+    {
+        $tableName = self::tableName();
+        $sql = "SELECT * FROM $tableName ORDER BY log_in_time DESC";
+
+        if ($search_params != '') $sql = "SELECT * FROM $tableName WHERE (first_name LIKE '%$search_params%' OR last_name LIKE '%$search_params%') ORDER BY log_in_time DESC";
+        // $statement = self::prepare($sql);
+        // $statement->execute();
+        // return $statement->fetchAll(PDO::FETCH_OBJ);
+
+        return $this->paginate($sql, $start, $limit);
     }
 }

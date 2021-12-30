@@ -232,6 +232,9 @@ body {
 
 .block-c {
   flex: 1;
+  max-width: 160px;
+  height: max-content;
+  overflow: hidden;
 }
 
 .block-f {
@@ -241,11 +244,11 @@ body {
 }
 
 .block-d {
-  flex-basis: 70px;
+  flex-basis: 50px;
 }
 
 .block-e {
-  flex-basis: 280px;
+  min-width: 280px;
 }
 
 .block-a,
@@ -278,6 +281,12 @@ body {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 60px;
+}
+
+.truncate{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* --------------------------------------modal css-------------------------------------------- */

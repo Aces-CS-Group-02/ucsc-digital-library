@@ -48,7 +48,7 @@ $userRole = "admin";
             </div>
             
                 <div class="card-container">
-                    <a href="" class="card box-shadow-1">
+                    <a href="/admin/users-login-report" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="\assets\admin-reports-dashboard\users.png" alt=" document-image">
                         </div>
@@ -64,15 +64,15 @@ $userRole = "admin";
                     </a>
 
                 </div>
-                <!-- <div class="card-container">
-                    <a href="" class="card box-shadow-1">
+                <div class="card-container">
+                    <a href="/admin/user-approvals-report" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="\assets\admin-reports-dashboard\subscription-1.png" alt=" cloud-image">
                         </div>
-                        <div class="card-content ">Subscription Report</div>
+                        <div class="card-content ">User Approvals Report</div>
                     </a>
 
-                </div> -->
+                </div>
                 <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">

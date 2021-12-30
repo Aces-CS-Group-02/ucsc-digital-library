@@ -13,6 +13,7 @@ use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
 use app\models\PendingUser;
 use app\models\User;
+use app\models\UserApproval;
 use app\models\UserGroup;
 use ErrorException;
 use Exception;
@@ -422,9 +423,49 @@ class AdministrationController extends Controller
     {
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_VIEW_REPORTS
         ];
         return $this->render("admin/reports/admin-report-dashboard", ['breadcrum' => $breadcrum]);
+    }
+
+    public function viewApprovalsReport(Request $request)
+    {
+        $userApproval = new UserApproval();
+        $userList = $userApproval->getAll();
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::BREADCRUM_USER_APPROVALS_REPORT
+        ];
+        return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList]);
+    }
+
+    public function viewLoginReport(Request $request)
+    {
+        $data = $request->getBody();
+        $Search_params = $data['search-data'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 15;
+        $start = ($page - 1) * $limit;
+
+        $users = new User();
+        if ($page <= 0) throw new NotFoundException;
+
+
+        $result = $users->getUsersOrderedByLoginTime($Search_params, $start, $limit);
+        if (($result->pageCount != 0 && $page > $result->pageCount)) throw new NotFoundException();
+
+        
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::BREADCRUM_USERS_LOGIN_REPORT
+        ];
+        // echo '<pre>';
+        // var_dump($result);
+        // echo '</pre>';
+        // exit;
+
+        return $this->render("admin/reports/users-login-report", ['breadcrum' => $breadcrum, 'userList' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'resultCount' => $result->resultCount]);
     }
 }
