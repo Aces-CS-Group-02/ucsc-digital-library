@@ -354,7 +354,7 @@ class ContentController extends Controller
 
             $content = $content->findOne(['content_id' => $data['content_id']]);
 
-            $form_input = $request->getBody();
+            // $form_input = $request->getBody();
 
             // var_dump($form_input);
 
@@ -435,7 +435,7 @@ class ContentController extends Controller
             $language = new ContentLanguage();
             $type = new ContentType();
 
-            $collection = $collection->findOne([['collection_id' => $content->collection_id]]);
+            $collection = $collection->findOne(['collection_id' => $content->collection_id]);
             $collection->parent = $community->findCommunity($collection->community_id);
             $creators = $creators->findAll(['content_id' => $data['content_id']]);
             $keywords = $keywords->findAll(['content_id' => $data['content_id']]);
@@ -448,7 +448,7 @@ class ContentController extends Controller
                 self::BREADCRUM_UPLOAD_CONTENT
             ];
 
-            return $this->render("admin/content/verify-submission", ['content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
+            return $this->render("admin/content/verify-submission", ['breadcrum'=>$breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
         }
     }
 }

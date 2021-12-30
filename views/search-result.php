@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/global-styles/style.css">
     <link rel="stylesheet" href="./css/global-styles/nav.css">
     <link rel="stylesheet" href="./css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -30,7 +31,7 @@
     <!-- NAVIGATION BAR -->
 
     <?php include_once __DIR__ . '/components/nav.php'; ?>
-
+    <?php $data = $params['data']; ?>
 
     <!-- Advanced Search Content -->
 
@@ -42,14 +43,25 @@
                         <label class="labelPlace label-override add-margin" for="">Search items from :</label>
                         <select class="custom-select custom-select-override add-margin change-height" id="community-select">
 
-                            <option value="-1">Anywhere</option>
+                            <option value="-1" <?php if($data['community']=="-1")echo "selected"; ?>>Anywhere</option>
 
                             <?php foreach ($params['communities']->payload as $community) { ?>
                                 <option value="<?php echo $community->community_id; ?>"><?php echo $community->name; ?></option>
                             <?php } ?>
                         </select>
-                        <input class="form-control add-margin change-height" onkeyup="validateOperators(event)" id="search-box" type="text" />
-
+                        <input class="form-control add-margin change-height" onkeyup="validateOperators(event)" id="search-box" type="text" value="<?php echo $data['search_query']; ?>"/>
+                        <?php foreach($params['filters'] as $filter) { ?>
+                        <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
+                            <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                <option selected><?php echo $filter['type']; ?></option>
+                            </select>
+                            <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                <option selected><?php echo $filter['condition']; ?></option>
+                            </select>
+                            <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
+                            <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
+                        </div>
+                        <?php } ?>
                     </div>
                     <hr>
                     <div class="card-title">
@@ -81,20 +93,73 @@
                         <div class="input-group input-group-override-1">
                             <label for="" style="width: 50%;">Sort results by: </label>
                             <select class="custom-select custom-select-override add-margin" id="sort-by">
-                                <option value="relavance">Relavance</option>
-                                <option value="title">Title</option>
-                                <option value="date">Published date</option>
+                                <option value="relavance" <?php if($data['sort_by']=="relavance")echo "selected"; ?>>Relavance</option>
+                                <option value="title" <?php if($data['sort_by']=="title")echo "selected"; ?>>Title</option>
+                                <option value="date" <?php if($data['sort_by']=="date")echo "selected"; ?>>Published date</option>
                             </select>
                             <select class="custom-select custom-select-override add-margin" id="order">
-                                <option value="desc">Descending</option>
-                                <option value="asc">Ascending</option>
+                                <option value="desc" <?php if($data['order']=="desc")echo "selected"; ?>>Descending</option>
+                                <option value="asc" <?php if($data['order']=="asc")echo "selected"; ?>>Ascending</option>
 
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-        
+            <div class="">
+                <?php if (count($params['contents']) == 0) { ?>
+                    <div class="search-card box-shadow-1">
+                        <div class="search-card-details">
+                            <div class="search-card-title result-info">
+                                <h5>No results found !</h5>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php foreach ($params['contents'] as $content) { ?>
+
+                    <div class="search-card box-shadow-1">
+                        <div class="search-card-img">
+                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                        </div>
+                        <div class="search-card-details">
+                            <div class="search-card-title">
+                                <h5><?php echo $content->title; ?></h5>
+                            </div>
+                            <div class="search-card-views">
+                                <h6>1.5K views . 200 Cited</h6>
+                            </div>
+                            <div class="search-card-creator">
+                                <h6>
+                                    <?php
+                                    echo $content->creators[0]['creator'];
+                                    for ($i = 1; $i < count($content->creators); $i++) {
+                                        echo ', ' . $content->creators[$i]['creator'];
+                                    } ?>
+                                </h6>
+                            </div>
+                            <div>
+                                <p class="line-clamp line-clamp-x-description"><?php echo $content->abstract; ?> </p>
+                            </div>
+                            <div class="icon-bar">
+                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-download"></i>
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-quote-right"></i>
+                                <i class="fas fa-share"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                <?php } ?>
+            </div>
+
+            <?php
+
+            if (!empty($params['contents']) && isset($params['pageCount'])) {
+                include_once __DIR__ . '/components/paginate.php';
+            }
+            ?>
         </div>
         <div class="info-container">
             <div class="card type-column box-shadow-1">

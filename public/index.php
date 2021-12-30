@@ -11,6 +11,7 @@ use app\controllers\ContentController;
 use app\controllers\DummyController;
 use app\controllers\UsergroupController;
 use app\controllers\PermissionsController;
+use app\controllers\SearchController;
 use app\core\Application;
 use app\core\Database;
 use app\models\User;
@@ -36,7 +37,8 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [SiteController::class, "home"]);
 $app->router->get('/search', [SiteController::class, "search"]);
 $app->router->get('/browse', [SiteController::class, "browse"]);
-$app->router->get('/advanced-search', [SiteController::class, "advancedSearch"]);
+$app->router->get('/advanced-search', [SearchController::class, "advancedSearch"]);
+$app->router->get('/search-result', [SearchController::class, "searchResult"]);
 
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
@@ -260,6 +262,9 @@ $app->router->get('/admin/view-access-permission', [PermissionsController::class
 $app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
 
 
+
+//testing
+$app->router->get('/adv-search', [SearchController::class, "advancedS"]);
 
 
 

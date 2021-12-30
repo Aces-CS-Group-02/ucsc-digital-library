@@ -158,8 +158,8 @@ $userRole = "student";
 
                         </div>
                         <div class="input-column-2">
-                            <input class="form-control" name="date" id="name" type="date" placeholder="Enter the date of issue" <?php if (strtotime($params['content']->publish_date) != '0000-00-00') {
-                                                                                                                                    $date = new DateTime($params['content']->publish_date);
+                            <input class="form-control" name="date" id="name" type="date" placeholder="Enter the date of issue" <?php if (strtotime($params['content']->date) != '0000-00-00') {
+                                                                                                                                    $date = new DateTime($params['content']->date);
                                                                                                                                     echo 'value="' . $date->format('Y-m-d') . '"';
                                                                                                                                 } ?> />
                         </div>
