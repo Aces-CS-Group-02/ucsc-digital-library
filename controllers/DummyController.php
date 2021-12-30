@@ -8,7 +8,7 @@ class DummyController extends Controller
 {
     public function test()
     {
-        return $this->render('admin/content/view-all-content-collections');
+        return $this->render('test');
     }
 }
 //admin/content/academic-manage-content-collection

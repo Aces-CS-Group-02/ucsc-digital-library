@@ -445,7 +445,7 @@ class Usergroup extends DbModel
 
             $notificationModel->save();
 
-            $notificationReceiverModel->loadData(['notification_id' => Application::$app->db->pdo->lastInsertId(), 'receiver' => $request->creator, 'view_status' => false]);
+            $notificationReceiverModel->loadData(['notification_id' => Application::$app->db->pdo->lastInsertId(), 'receiver' => $request->creator, 'view_status' => FALSE]);
             if (!$notificationReceiverModel->validate()) return false;
             var_dump($notificationReceiverModel);
 
@@ -455,7 +455,7 @@ class Usergroup extends DbModel
             return true;
         } catch (Exception $e) {
             Application::$app->db->pdo->rollBack();
-
+            exit;
             return false;
         }
     }
