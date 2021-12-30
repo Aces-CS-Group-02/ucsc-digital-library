@@ -33,25 +33,43 @@ class SubCommunity extends DbModel
     }
 
 
-    public function getAllSubCommunities($where)
+    // public function getAllSubCommunities($where)
+    // {
+
+    //     $tableName = static::tableName();
+    //     $attributes = array_keys($where);
+    //     $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+
+
+    //     $statement = self::prepare("SELECT child_community_id FROM $tableName WHERE $sql");
+
+
+    //     foreach ($where as $key => $item) {
+    //         $statement->bindValue(":$key", $item);
+    //     }
+
+
+    //     $statement->execute();
+    //     return $statement->fetchAll(PDO::FETCH_OBJ);
+    // }
+
+
+    public function getAllSubCommunities($community_id, $start, $limit)
     {
 
-        $tableName = static::tableName();
-        $attributes = array_keys($where);
-        $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $subcommunity_table = self::tableName();
+        $community_table = Community::tableName();
 
-
-        $statement = self::prepare("SELECT child_community_id FROM $tableName WHERE $sql");
-
-
-        foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
-        }
-
-
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_OBJ);
+        $sql = "SELECT * FROM 
+                $community_table c
+                JOIN (SELECT child_community_id FROM 
+                      $community_table c
+                      JOIN $subcommunity_table s ON s.parent_community_id = c.community_id
+                      WHERE s.parent_community_id=$community_id) t ON t.child_community_id=c.community_id";
+        return $this->paginate($sql, $start, $limit);
     }
+
+
 
     public static function getSubcommunitiesCount($community_id)
     {

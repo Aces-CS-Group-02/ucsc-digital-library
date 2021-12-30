@@ -18,12 +18,18 @@ class CollectionController extends Controller
         $data_keys = array_keys($data);
         if (!in_array('community-id', $data_keys)) throw new NotFoundException();
 
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
         $communityModel = new Community();
         $community = $communityModel->findCommunity($data['community-id']);
         if (!$community) throw new NotFoundException();
 
+        if ($page <= 0) throw new NotFoundException();
         $collectionModel = new Collection();
-        $allCollections = $collectionModel->getAllCollections($data['community-id']);
+        $allCollections = $collectionModel->getAllCollections($data['community-id'], $start, $limit);
+        if ($allCollections->pageCount > 0 && $page > $allCollections->pageCount) throw new NotFoundException();
 
 
         $collectionCount = Collection::getCollectionCount($data['community-id']);
@@ -47,7 +53,7 @@ class CollectionController extends Controller
         // --------------------------------------------------------------------------------------
 
 
-        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum]);
+        $this->render("admin/collections", ['parentID' => $data['community-id'], 'communityName' => $community->name, 'allCollections' => $allCollections->payload, 'subCommunityCount' => $subCommunityCount->count, 'collectionCount' => $collectionCount->count, 'breadcrum' => $breadcrum, 'currentPage' => $page, 'pageCount' => $allCollections->pageCount]);
     }
 
     public function createCollection(Request $request)

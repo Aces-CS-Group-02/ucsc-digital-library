@@ -48,7 +48,7 @@ class UsergroupController extends Controller
             $data_keys = array_keys($data);
             if (!in_array('name', $data_keys)) throw new NotFoundException();
 
-            $usergroupModel = new Usergroup();
+            $usergroupModel = new UserGroup();
 
             $last_inserted_id = $usergroupModel->createUsergroup($data);
 
@@ -74,7 +74,7 @@ class UsergroupController extends Controller
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-        $usergroupModel = new Usergroup();
+        $usergroupModel = new UserGroup();
 
 
         $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
@@ -146,7 +146,7 @@ class UsergroupController extends Controller
     {
         $data = $request->getBody();
 
-        $userGroupModel = new Usergroup();
+        $userGroupModel = new UserGroup();
 
 
 
@@ -183,7 +183,7 @@ class UsergroupController extends Controller
         $start = ($page - 1) * $limit;
 
 
-        $usergroupModel = new Usergroup();
+        $usergroupModel = new UserGroup();
 
 
 
@@ -285,27 +285,29 @@ class UsergroupController extends Controller
 
         $usergroupModel = new UserGroup();
 
-        $row_count = $usergroupModel->getAllLiveUsergroups(
-            $Search_params,
-            true // Fetch row count
-        );
-        $pageCount = ceil($row_count / $limit);
-        $paginateController = new PaginatePathController();
-        if (($page > $pageCount)) {
-            if ($pageCount) {
-                $path = $paginateController->getNewPath($pageCount);
-                Application::$app->response->redirect($path);
-                exit;
-            }
-        }
-        $paginateController->validatePage($page, $pageCount);
+        $usergroups = $usergroupModel->getAllLiveUsergroups($Search_params, $start, $limit);
 
-        $usergroups = $usergroupModel->getAllLiveUsergroups(
-            $Search_params,
-            false, // Fetch Data
-            $start,
-            $limit
-        );
+        // $row_count = $usergroupModel->getAllLiveUsergroups(
+        //     $Search_params,
+        //     true // Fetch row count
+        // );
+        // $pageCount = ceil($row_count / $limit);
+        // $paginateController = new PaginatePathController();
+        // if (($page > $pageCount)) {
+        //     if ($pageCount) {
+        //         $path = $paginateController->getNewPath($pageCount);
+        //         Application::$app->response->redirect($path);
+        //         exit;
+        //     }
+        // }
+        // $paginateController->validatePage($page, $pageCount);
+
+        // $usergroups = $usergroupModel->getAllLiveUsergroups(
+        //     $Search_params,
+        //     false, // Fetch Data
+        //     $start,
+        //     $limit
+        // );
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
@@ -314,7 +316,7 @@ class UsergroupController extends Controller
         ];
 
 
-        $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+        $this->render('admin/user/view-all-user-groups', ['usergroups_list' => $usergroups->payload, 'pageCount' => $usergroups->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
     }
 
 

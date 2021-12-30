@@ -251,27 +251,55 @@ class Usergroup extends DbModel
     }
 
 
-    public function getAllLiveUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    // public function getAllLiveUsergroups($search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    // {
+    //     $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
+    //             usergroup t1 LEFT JOIN user t2
+    //             ON t1.creator_reg_no = t2.reg_no
+    //             WHERE
+    //             (name LIKE '%$search_params%'
+    //             OR description LIKE '%$search_params%'
+    //             OR first_name LIKE '%$search_params%'
+    //             OR last_name LIKE '%$search_params%')";
+
+    //     if ($getRecordsCount) {
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->rowCount();
+    //     } else {
+    //         if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->fetchAll(PDO::FETCH_OBJ);
+    //     }
+    // }
+
+
+    public function getAllLiveUsergroups($search_params = '', $start, $limit)
     {
-        $sql = "SELECT t1.group_id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
-                usergroup t1 LEFT JOIN user t2
-                ON t1.creator_reg_no = t2.reg_no
-                WHERE
-                (name LIKE '%$search_params%'
+        $sql = "SELECT t1.id, t1.name, t1.description, t2.first_name, t2.last_name FROM 
+                usergroup t1 
+                JOIN user t2
+                ON t1.creator = t2.reg_no
+                WHERE status=1 
+                AND (name LIKE '%$search_params%'
                 OR description LIKE '%$search_params%'
                 OR first_name LIKE '%$search_params%'
-                OR last_name LIKE '%$search_params%')";
+                OR last_name LIKE '%$search_params%')
+                ORDER BY t1.name";
 
-        if ($getRecordsCount) {
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->rowCount();
-        } else {
-            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_OBJ);
-        }
+        return $this->paginate($sql, $start, $limit);
+
+        // if ($getRecordsCount) {
+        //     $statement = self::prepare($sql);
+        //     $statement->execute();
+        //     return $statement->rowCount();
+        // } else {
+        //     if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+        //     $statement = self::prepare($sql);
+        //     $statement->execute();
+        //     return $statement->fetchAll(PDO::FETCH_OBJ);
+        // }
     }
 
     public function removeGroup($group_id)
@@ -430,5 +458,20 @@ class Usergroup extends DbModel
 
             return false;
         }
+    }
+
+    public function getUsergroupInfo($id)
+    {
+        $user_table = User::tableName();
+        $usergroup_table = self::tableName();
+
+        $sql = "SELECT g.*, u.first_name, u.last_name
+                FROM $usergroup_table g
+                JOIN $user_table u ON g.creator = u.reg_no
+                WHERE g.id=$id";
+
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
     }
 }
