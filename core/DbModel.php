@@ -140,6 +140,7 @@ abstract class DbModel extends Model
         $response = new stdClass;
         $response->pageCount = $pageCount;
         $response->payload = $data;
+        $response->resultCount = $rowCount;
 
         return $response;
     }

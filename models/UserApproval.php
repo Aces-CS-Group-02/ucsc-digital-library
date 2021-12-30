@@ -9,6 +9,8 @@ class UserApproval extends DbModel{
     public string $email = '';
     public bool $is_approved = false;
     public string $reason = '';
+    public string $time = '';
+    public string $approved_by ='';
 
     public static function tableName(): string
     {
@@ -17,7 +19,7 @@ class UserApproval extends DbModel{
 
     public function attributes(): array
     {
-        return ['email', 'is_approved', 'reason'];
+        return ['email', 'is_approved', 'reason', 'approved_by'];
     }
 
     public static function primaryKey(): string

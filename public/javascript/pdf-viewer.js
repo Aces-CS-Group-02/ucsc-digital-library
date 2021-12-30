@@ -15,18 +15,9 @@ var notesBtns = document.getElementsByClassName("add-notes-btn");
 var noteModal = document.getElementById("notesModal");
 var noteSpan = document.getElementsByClassName("close-note")[0];
 
-
-// const arrowChange = () => {
-//   if (
-//     sideBarExpandBtn.firstElementChild.classList.contains(
-//       "fa-arrow-alt-circle-right"
-//     )
-//   ) {
-//     sideBarExpandBtn.innerHTML = `<i class="fas fa-arrow-alt-circle-left"></i>`;
-//   } else {
-//     sideBarExpandBtn.innerHTML = `<i class="fas fa-arrow-alt-circle-right"></i>`;
-//   }
-// };
+var collectionBtns = document.getElementsByClassName("add-to-collection-btn");
+var collectionModal = document.getElementById("collectionsModal");
+var collectionSpan = document.getElementsByClassName("close-collection")[0];
 
 sideBarExpandBtn.addEventListener("click", () => {
   sideBarExpanded.classList.toggle("active");
@@ -55,7 +46,7 @@ sidebarSectionExpandCollapsBtn.addEventListener("click", () => {
   }
 });
 
-for(var i=0; i < notesBtns.length; i++){
+for (var i = 0; i < notesBtns.length; i++) {
   notesBtns[i].addEventListener("click", () => {
     noteModal.style.display = "flex";
   });
@@ -65,6 +56,104 @@ for(var i=0; i < notesBtns.length; i++){
 noteSpan.onclick = function () {
   noteModal.style.display = "none";
 };
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == noteModal || event.target == collectionModal) {
+    // console.log("modal clicked");
+    collectionModal.style.display = "none";
+    noteModal.style.display = "none";
+  }
+};
+
+const getCollections = ({ currentTarget }) => {
+  // AJAX request
+  const collectionReq = new XMLHttpRequest();
+  // let params = [];
+  // params = `reg_no=${id}`;
+  var url = "/ajax/get-user-collections";
+  // var url = "/ajax/get-user-collections" + "&rand=" + new Date().getTime();
+  // var randNo = parseInt(Math.random()*99999999);
+  collectionReq.open("GET", url);
+  collectionReq.onreadystatechange = getCollectionData;
+  // collectionReq.send(params);
+  collectionReq.send(null);
+  collectionModal.style.display = "flex";
+};
+
+function getCollectionData() {
+  var parentDiv = document.getElementById("collection-modal-collections");
+
+  if (this.readyState == 4) {
+    if (this.status == 200) {
+      // console.log("got the data");
+      parentDiv.innerHTML = "";
+      var collections = JSON.parse(this.responseText);
+      // console.log(collections);
+      for (var collection of collections) {
+        // console.log(collection["name"]);
+        var div1 = document.createElement("div");
+        div1.classList.add("input-group", "custom-control");
+        parentDiv.appendChild(div1);
+        var div2 = document.createElement("div");
+        div2.classList.add("checkbox", "checkbox-edit");
+        div1.appendChild(div2);
+        var checkbx = document.createElement("input");
+        checkbx.classList.add("checkbox", "checkbox-edit");
+        checkbx.type = "checkbox";
+        checkbx.id = collection["user_collection_id"];
+        div2.appendChild(checkbx);
+        var collectionName = document.createTextNode(collection["name"]);
+        div2.appendChild(collectionName);
+      }
+
+      // alert("The server said:" + this.responseText);
+    }
+  }
+}
+
+for (var btn of collectionBtns) {
+  btn.addEventListener("click", getCollections, false);
+}
+
+// When the user clicks on <span> (x), close the collections-modal
+collectionSpan.onclick = function () {
+  collectionModal.style.display = "none";
+};
+
+// function DivShowHide(check) {
+//   var buttonDisplay = document.getElementById("save-btn-container");
+//   var toHide = document.getElementById("create-and-save");
+//   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+//   let count = 0;
+//   for (let checkbox of checkboxes) {
+//     if (checkbox.checked) {
+//       count++;
+//     }
+//   }
+
+//   if (count) {
+//     buttonDisplay.classList.add("display-save-btn");
+//     toHide.classList.add("hide-create-and-save-btn");
+//   } else {
+//     buttonDisplay.classList.remove("display-save-btn");
+//     toHide.classList.remove("hide-create-and-save-btn");
+//   }
+// }
+
+document.querySelector(".create-collection").addEventListener("focus", () => {
+  var buttonDisplay = document.getElementById("save-btn-container");
+  var toHide = document.getElementById("create-and-save");
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  for (let checkbox of checkboxes) {
+    if (checkbox.checked) {
+      checkbox.checked = false;
+      buttonDisplay.classList.remove("display-save-btn");
+      toHide.classList.remove("hide-create-and-save-btn");
+    }
+  }
+});
 
 // Content container from here
 
@@ -78,7 +167,6 @@ var div = document.querySelector("#pdf-render");
 
 //   Render the pages
 function renderPage(num) {
-
   // Get page
   pdfDoc.getPage(num).then((page) => {
     // console.log(page);
@@ -93,7 +181,7 @@ function renderPage(num) {
     canvas.style.margin = "auto";
     canvas.style.overflow = "hidden";
     canvas.style.minHeight = "100vh";
-    canvas.style.marginBottom = "5px"; 
+    canvas.style.marginBottom = "5px";
 
     var ctx = canvas.getContext("2d");
 
@@ -144,7 +232,6 @@ pdfjsLib
   });
 
 document.querySelector("#scroll-div").addEventListener("scroll", () => {
-
   var scrollDiv = document.querySelector("#scroll-div");
   const scrolled = scrollDiv.scrollTop;
   // console.log(scrolled);

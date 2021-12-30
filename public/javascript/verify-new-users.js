@@ -20,6 +20,7 @@ function DivShowHide(check) {
 
 // Get the modal
 var modal = document.getElementById("myModal");
+var modalContent = document.getElementById("modal-content");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -55,13 +56,14 @@ span.onclick = function () {
 };
 
 // When the user clicks on the okay button, close the modal
-btnOkay.onclick = function () {
-  modal.style.display = "none";
-};
+// btnOkay.onclick = function () {
+//   modal.style.display = "none";
+// };
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
+window.onclick = function(event) {
   if (event.target == modal) {
+    // console.log("modal clicked");
     modal.style.display = "none";
   }
-};
+}

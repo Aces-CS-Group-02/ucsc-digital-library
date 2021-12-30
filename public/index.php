@@ -94,6 +94,8 @@ $app->router->get('/profile/pdf-viewer', [UserController::class, "pdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
 $app->router->get('/suggest-content', [UserController::class, "suggestContent"]);
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
+//here
+$app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
 
 
 // Create, Remove LIA
@@ -108,6 +110,7 @@ $app->router->get('/admin/dashboard', [AdministrationController::class, "adminDa
 $app->router->get('/admin/dashboard/manage-content', [AdministrationController::class, "manageContentDashboard"]);
 $app->router->get('/admin/dashboard/manage-users', [AdministrationController::class, "manageUsersDashboard"]);
 $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController::class, "manageApprovalsDashboard"]);
+$app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
 
 
 // Admin Dashboard => Manage Content Routes
@@ -148,6 +151,11 @@ $app->router->get('/admin/verify-new-users', [ApproveController::class, "approve
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/reject-new-user', [ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
+
+// Admin Dashboard => Manage Reports Routes
+$app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
+$app->router->get('/admin/user-approvals-report', [AdministrationController::class, "viewApprovalsReport"]);
+$app->router->get('/admin/users-login-report', [AdministrationController::class, "viewLoginReport"]);
 
 
 // Still Implementing
@@ -234,7 +242,6 @@ $app->router->get('/ajax/open-notifications', [SiteController::class, "openNotif
 
 
 
-$app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
 
 $app->router->get('/test', [DummyController::class, "test"]);
 

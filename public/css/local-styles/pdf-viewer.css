@@ -105,7 +105,7 @@ body {
 .side-bar-section {
   /* margin-top: 60px; */
   width: 100%;
-  min-height: 100px;
+  /* min-height: 100px; */
   height: fit-content;
   background-color: rgb(255, 255, 255);
   padding: 10px;
@@ -183,6 +183,34 @@ body {
   border-radius: 10px;
 }
 
+.hover-text{
+  position: relative;
+  /* border-bottom: 1px dotted black; */
+}
+
+.hover-text::before{
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 5px;
+  padding: 5px;
+  /* transition: opacity 1s ease-in-out; */
+
+  position: absolute;
+  z-index: 1;
+  left: 80%;
+  top: 50%;
+}
+
+.hover-text:hover::before{
+  opacity: 0.8;
+  visibility: visible;
+}
 /*================================================================*/
 
 @media only screen and (max-width: 500px) {
@@ -253,7 +281,7 @@ body {
   /* min-height: 100vh; */
 }
 
-/* --------------------------------------notes modal css-------------------------------------------- */
+/* --------------------------------------all modals css-------------------------------------------- */
 
 .modal {
   display: none; /* Hidden by default */
@@ -280,16 +308,22 @@ body {
   border-radius: 0.5rem;
 }
 
+#collections-modal-content {
+  min-width: 300px !important;
+  width: fit-content;
+  max-width: 60% !important;
+}
+
 .notes-modal-top-section {
   display: flex;
   flex-direction: row;
   /* background-color: #27bdfd3a; */
-  background-color: #EDEDED;
+  background-color: #ededed;
   /* padding: 10px 10px; */
   border-radius: 0.5rem 0.5rem 0 0;
   border-bottom: 1px solid #d8e2ef;
   font-family: "Poppins", sans-serif;
-  color: #807E7E;
+  color: #807e7e;
   font-size: 1.2rem;
   font-weight: 600;
   /* border-color: #7c7b7b; */
@@ -307,9 +341,22 @@ body {
   padding: 15px 0;
 } */
 
+.modal-middle-content{
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.display-save-btn{
+  display: flex !important;
+}
+
+.hide-create-and-save-btn{
+  display: none !important;
+}
+
 .notes-title-section {
   display: flex;
-  margin: 10px;    
+  margin: 10px;
   white-space: nowrap;
   align-items: center;
   justify-content: center;
@@ -319,7 +366,7 @@ body {
 
 .notes-modal-bottom-section {
   /* border-top: 1px solid #d8e2ef; */
-  background-color: #EDEDED;
+  background-color: #ededed;
   padding: 10px;
   /* height: 2rem; */
   border-radius: 0 0 0.5rem 0.5rem;
@@ -327,9 +374,22 @@ body {
   justify-content: flex-end;
 }
 
+.edit-for-collection {
+  flex-direction: column;
+}
+
+.edit-input-group{
+  padding: 10px 0;
+}
+
+.new-collection-create {
+  width: 100%;
+}
+
 /* The Close Button */
 
-.close-note {
+.close-note,
+.close-collection {
   /* float: right; */
   font-size: 1.5rem;
   font-weight: 700;
@@ -339,14 +399,17 @@ body {
   text-shadow: 0 1px 0 #fff;
   opacity: 0.5;
   padding: 0;
-  margin: 5px 10px 10px 10px;
+  margin-right: 5px;
+  /* margin: 5px 10px 10px 10px; */
   /* width: 10%; */
-  align-items: flex-end;
-  justify-content: flex-end;
+  /* align-items: flex-end; */
+  /* justify-content: flex-end; */
 }
 
 .close-note:hover,
-.close-note:focus {
+.close-collection:hover,
+.close-note:focus,
+.close-collection:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -355,7 +418,6 @@ body {
 .edit-close-note {
   padding-bottom: 5px !important;
   height: 29px;
-  box-sizing: calc(24px);
 }
 
 .edit-notes-form-control {
@@ -364,12 +426,29 @@ body {
   /* height: 110px; */
 }
 
-.edit-notes-input-group{
+.edit-notes-input-group {
   padding: 10px 20px !important;
 }
 
-#add-note{
+#add-note {
   color: #fff;
 }
 
-/* --------------------------------------notes modal css-------------------------------------------- */
+.btn-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.btn-container-hidden{
+  display: none;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* .ck-editor__editable {
+  height: 400px;
+} */
+/* --------------------------------------all modals css-------------------------------------------- */

@@ -232,6 +232,9 @@ body {
 
 .block-c {
   flex: 1;
+  max-width: 160px;
+  height: max-content;
+  overflow: hidden;
 }
 
 .block-f {
@@ -241,11 +244,11 @@ body {
 }
 
 .block-d {
-  flex-basis: 70px;
+  flex-basis: 50px;
 }
 
 .block-e {
-  flex-basis: 280px;
+  min-width: 280px;
 }
 
 .block-a,
@@ -278,6 +281,12 @@ body {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 60px;
+}
+
+.truncate{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* --------------------------------------modal css-------------------------------------------- */
@@ -320,11 +329,11 @@ body {
 
 .modal-title {
   /* display: flex; */
-  align-items: center;
+  /* align-items: center; */
   font-size: 1.2rem;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
   /* width: 50%; */
   color: #807E7E;
   /* padding: 15px 0; */
@@ -332,9 +341,10 @@ body {
 
 .title-section {
   display: flex;
+  flex: 1;
   flex-direction: row;
   margin: 10px;    
-  white-space: nowrap;
+  /* white-space: nowrap; */
   /* width: 90%; */
 }
 
@@ -360,7 +370,7 @@ body {
   font-weight: 700;
   /* line-height: 1; */
   display: flex;
-  flex: 1;
+  /* flex: 1; */
   color: rgb(49, 47, 47);
   text-shadow: 0 1px 0 #fff;
   opacity: 0.5;
@@ -369,6 +379,7 @@ body {
   /* width: 10%; */
   align-items: flex-end;
   justify-content: flex-end;
+  width: fit-content;
 }
 
 .close:hover,
@@ -399,6 +410,11 @@ body {
 #break-modal-title {
   display: flex;
   flex-direction: row;
+}
+
+#mtitle{
+  margin: 0 !important;
+  width: fit-content;
 }
 
 /* --------------------------------------modal css-------------------------------------------- */

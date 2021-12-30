@@ -1,8 +1,3 @@
-<?php
-$isLoggedIn = true;
-$userRole = "student";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 

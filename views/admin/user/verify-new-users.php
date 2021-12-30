@@ -124,7 +124,7 @@ $userRole = "student";
     <div class="content-container">
 
         <div class="new-users-headers-container">
-            <div class="block-a"> </div>
+            <!-- <div class="block-a"> </div> -->
             <div class="block-b">Registered Date</div>
             <div class="block-c">User Email</div>
             <div class="block-d">NIC</div>
@@ -141,7 +141,7 @@ $userRole = "student";
                 $lName = $request->last_name; ?>
 
                 <div class="new-user-info">
-                    <div class="block-a">
+                    <!-- <div class="block-a">
                         <p>
                         <div class="input-group custom-control">
                             <div class="checkbox checkbox-edit">
@@ -149,7 +149,7 @@ $userRole = "student";
                             </div>
                         </div>
                         </p>
-                    </div>
+                    </div> -->
                     <div class="block-b">
                         <div class="block-title">
                             <p>Registered Date</p>
@@ -164,7 +164,7 @@ $userRole = "student";
                             <p>User Email</p>
                             <p>:</p>
                         </div>
-                        <p><?php echo $request->email; ?></p>
+                        <p class="truncate"><?php echo $request->email; ?></p>
                     </div>
                     <div class="block-d">
                         <div class="block-title">
@@ -203,7 +203,7 @@ $userRole = "student";
                         <!-- Modal to enter a message when approving or rejecting -->
                         <div id="myModal" class="modal">
 
-                            <div class="modal-content">
+                            <div class="modal-content" id="modal-content">
                                 <form id="modal-form" action="" method="POST">
                                     <div class="modal-top-section modal-title">
                                         <div class="title-section">
