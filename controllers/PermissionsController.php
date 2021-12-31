@@ -247,8 +247,11 @@ class PermissionsController extends Controller
                 if (Application::getUserRole() <= 2) {
                     $contentCollectionPermissionModel->loadData($permission);
                     $contentCollectionPermissionModel->permission = $permissionInput;
+
+
                     if ($contentCollectionPermissionModel->validate()) {
-                        if ($contentCollectionPermissionModel->save()) {
+
+                        if ($contentCollectionPermissionModel->updatePermission()) {
                             $msg = 'Permission updated';
                             $msgType = 'success';
                         } else {
