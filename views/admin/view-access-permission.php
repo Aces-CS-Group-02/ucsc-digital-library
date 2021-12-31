@@ -1,6 +1,7 @@
 <?php
 
 use app\core\Application;
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@ use app\core\Application;
     <link rel="stylesheet" href="/css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="/css/local-styles/set-access-permission.css">
+    <link rel="stylesheet" href="/css/local-styles/view-access-permission.css">
 
 
 
@@ -47,7 +48,7 @@ use app\core\Application;
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id='page-header-title'>Set Access permission</p>
+            <p id='page-header-title'>View Access permission</p>
 
 
             <?php include_once dirname(__DIR__) . '/components/breadcrum.php' ?>
@@ -99,18 +100,13 @@ use app\core\Application;
                 <div class="search-N-sort-components-container">
                     <div>
                         <p class="page-step-title">
-                            <?php if ($params['page_step'] == 1) {
-                                echo 'Select a content collection';
-                            } else if ($params['page_step'] == 2) {
-                                echo 'Select a user group';
-                            } ?>
+                            Granted permissions
                         </p>
                     </div>
 
                     <div class="search-component-container">
                         <form action="">
                             <div class="ug-search-input-wrapper">
-                                <input type="hidden" name='collection-id' value='<?= $params['collection']->id ?>'>
                                 <input type="text" placeholder="Search user groups" name='q'>
                                 <button>
                                     <i class="fas fa-search"></i>
@@ -118,90 +114,71 @@ use app\core\Application;
                             </div>
                         </form>
                     </div>
+
                 </div>
 
-                <!-- Form goes here -->
-                <div class="user-groups-headers-container">
-                    <div class="block-a">Name </div>
-                    <div class="block-b">Description</div>
-                    <div class="block-c">Creator</div>
-                    <div class="block-d">Action</div>
-                </div>
 
                 <div class="user-group-container">
-
-                    <!-- This is for print top border of the first record at every time -->
-                    <div class="user-group-info"></div>
-
-                    <!-- This loop render all the communities to the page -->
                     <?php foreach ($params['data'] as $data) { ?>
-
-                        <div class="user-group-info ">
-
-                            <div class="block-a">
-                                <div class="block-title">
-                                    <p>Name</p>
-                                    <p>:</p>
+                        <div class="item-info-container">
+                            <div class='item-info-info-side'>
+                                <div class='item-info-block'>
+                                    <p class='item-info-header-block'>Collection Name</p>
+                                    <span>:</span>
+                                    <p><?= $data->collection_name ?></p>
                                 </div>
-                                <p><?= $data->name ?></p>
+
+                                <div class='item-info-block make-margin-bottom'>
+                                    <p class='item-info-header-block'>Collection Owner</p>
+                                    <span>:</span>
+                                    <p><?= $data->collection_owner_fn ?> <?= $data->collection_owner_ln ?></p>
+                                </div>
+
+                                <div class='item-info-block gray-out-block'>
+                                    <p class='item-info-header-block'>Usergroup Name</p>
+                                    <span>:</span>
+                                    <p><?= $data->ug_name ?></p>
+                                </div>
+
+                                <div class='item-info-block make-margin-bottom gray-out-block'>
+                                    <p class='item-info-header-block'>Usergroup Owner</p>
+                                    <span>:</span>
+                                    <p><?= $data->ug_owner_fn ?> <?= $data->ug_owner_ln ?></p>
+                                </div>
+                                <div class='item-info-block'>
+                                    <p class='item-info-header-block'>Permission</p>
+                                    <span>:</span>
+                                    <p class='permission-label'><?php if ($data->permission == 1) {
+                                                                    echo 'READ ONLY';
+                                                                } else if ($data->permission == 2) {
+                                                                    echo 'READ/DOWNLOAD';
+                                                                } ?></p>
+                                </div>
                             </div>
-                            <div class="block-b">
-                                <div class="block-title">
-                                    <p>Description</p>
-                                    <p>:</p>
-                                </div>
-                                <p class="line-clamp line-clamp-2-description row-description <?php if ($data->description === "") {
-                                                                                                    echo "gray-out";
-                                                                                                } ?>"><?php
-
-
-                                                                                                        if ($data->description === "") {
-                                                                                                            echo "N/A";
-                                                                                                        } else {
-                                                                                                            echo $data->description;
-                                                                                                        }
-
-
-                                                                                                        ?></p>
-                            </div>
-                            <div class="block-c">
-                                <div class="block-title">
-                                    <p>Creator</p>
-                                    <p>:</p>
-                                </div>
-                                <p><?= $data->first_name ?> <?= $data->last_name ?></p>
-                            </div>
-                            <div class="block-d">
-                                <div>
-                                    <?php if ($params['page_step'] == 1) { ?>
-                                        <form action="/admin/set-content-collection-access-permission/content-collection" method="GET">
-                                            <button class="btn action-btn-2-edit btn-update" name='collection-id' value="<?= $data->id ?>">Select</button>
-                                        </form>
-                                    <?php } else if ($params['page_step'] == 2) { ?>
-                                        <form action="/admin/set-content-collection-access-permission/select-permission" method="GET">
-                                            <input type="hidden" name='collection-id' value="<?= $params['collection']->id ?>" />
-                                            <button class="btn action-btn-2-edit btn-update" name='usergroup-id' value="<?= $data->id ?>">Select</button>
-                                        </form>
-                                    <?php } ?>
-                                </div>
+                            <div class='item-info-btn-side'>
+                                <form action="/admin/remove-content-collection-access-permission" method="POST">
+                                    <input type='hidden' name='collection-id' value='<?= $data->content_collection_id ?>' />
+                                    <input type='hidden' name='group-id' value='<?= $data->group_id ?>' />
+                                    <button class="btn action-btn-3-edit btn-update>Remove">Remove</button>
+                                </form>
                             </div>
                         </div>
-
                     <?php } ?>
-
-                    <?php if (empty($data)) { ?>
-                        <p class="no-records-available">No Records Available :(</p>
-                    <?php } ?>
-
-
-                    <?php
-
-                    if ($params['data']) {
-                        include_once dirname(__DIR__) . '/components/paginate.php';
-                    }
-                    ?>
 
                 </div>
+
+
+                <?php if (empty($params['data'])) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } ?>
+
+
+                <?php
+
+                if ($params['data']) {
+                    include_once dirname(__DIR__) . '/components/paginate.php';
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -209,7 +186,7 @@ use app\core\Application;
     include_once dirname(__DIR__) . '/components/footer.php';
     ?>
 
-    <script src="/javascript/nav.js"></script>
+    <script src=" /javascript/nav.js"></script>
     <script src="/javascript/profile.js"></script>
 
     <Script>
@@ -223,6 +200,8 @@ use app\core\Application;
                     flashMessage.remove();
                 }
             }
+
+
 
         })();
     </Script>

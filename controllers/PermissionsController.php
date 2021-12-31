@@ -198,24 +198,43 @@ class PermissionsController extends Controller
 
     // ----------------------------------------------------------
 
-    public function browseContentCollectionPermissions()
+    public function browseContentCollectionPermissions(Request $request)
     {
+        $data = $request->getBody();
+
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
         $contentCollectionModel = new ContentCollection();
-        $res = $contentCollectionModel->browserContentCollections('', 0, 10000);
-        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 1, 'data' => $res->payload]);
+
+        $res = $contentCollectionModel->browserContentCollections($Search_params, $start, $limit);
+
+
+        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 1, 'data' => $res->payload, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
     }
 
 
     public function browseUsergroupForContentCollection(Request $request)
     {
         $data = $request->getBody();
+
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $data = $request->getBody();
         $usergroupModel = new UserGroup();
-        $res = $usergroupModel->browseUsergroup('', 0, 10000);
+        $res = $usergroupModel->browseUsergroup($Search_params, $start, $limit);
 
         $contentCollectionModel = new ContentCollection();
         $collection = $contentCollectionModel->loadContentCollection($data['collection-id']);
 
-        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 2, 'data' => $res->payload, 'collection' => $collection]);
+        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 2, 'data' => $res->payload, 'collection' => $collection, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
     }
 
 
@@ -226,6 +245,9 @@ class PermissionsController extends Controller
         $collectionModel = new ContentCollection();
         $collection = $collectionModel->findOne(['id' => $data['collection-id']]);
         if (!$collection) throw new NotFoundException();
+
+        $collection = $collectionModel->loadContentCollection($data['collection-id']);
+
 
         // Usergroup info
         $usergroupModel = new UserGroup();
@@ -241,7 +263,7 @@ class PermissionsController extends Controller
 
 
             if ($permission && $permission->permission == $permissionInput) {
-                $msg = 'permission already exists';
+                $msg = 'Permission already granted';
                 $msgType = 'alert';
             } else if ($permission && $permission->permission != $permissionInput) {
                 if (Application::getUserRole() <= 2) {
@@ -259,7 +281,7 @@ class PermissionsController extends Controller
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $contentCollectionPermissionModel]);
+                        return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $contentCollectionPermissionModel]);
                     }
                 } else if (Application::getUserRole() == 3) {
                     $pendingContentCollectionPermissionModel = new PendingContentCollectionPermission();
@@ -267,21 +289,21 @@ class PermissionsController extends Controller
 
                     if ($pendingPermission) {
                         if ($pendingPermission->permission == $permissionInput) {
-                            $msg = 'nothing to update. Already pending.';
+                            $msg = 'Nothing to update. The permission you are selected is already in pending list';
                             $msgType = 'alert';
                         } else {
                             $pendingContentCollectionPermissionModel->loadData($pendingPermission);
                             $pendingContentCollectionPermissionModel->permission = $permissionInput;
                             if ($pendingContentCollectionPermissionModel->validate()) {
                                 if ($pendingContentCollectionPermissionModel->updatePermission()) {
-                                    $msg = 'successfully updated pending permisson';
+                                    $msg = 'Successfully updated pending permisson';
                                     $msgType = 'success';
                                 } else {
                                     $msg = 'Something went wrong';
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                                return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
                             }
                         }
                     } else {
@@ -289,14 +311,14 @@ class PermissionsController extends Controller
 
                         if ($pendingContentCollectionPermissionModel->validate()) {
                             if ($pendingContentCollectionPermissionModel->save()) {
-                                $msg = 'successfully created new pending permisson';
+                                $msg = 'Successfully created new pending permisson request';
                                 $msgType = 'success';
                             } else {
                                 $msg = 'Something went wrong';
                                 $msgType = 'error';
                             }
                         } else {
-                            return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                            return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
                         }
                     }
                 }
@@ -306,14 +328,14 @@ class PermissionsController extends Controller
 
                     if ($contentCollectionPermissionModel->validate()) {
                         if ($contentCollectionPermissionModel->save()) {
-                            $msg = 'successfully created new permisson';
+                            $msg = 'Successfully granted new permisson';
                             $msgType = 'success';
                         } else {
                             $msg = 'Something went wrong';
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $contentCollectionPermissionModel]);
+                        return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $contentCollectionPermissionModel]);
                     }
                 } else if (Application::getUserRole() == 3) {
                     $pendingContentCollectionPermissionModel = new PendingContentCollectionPermission();
@@ -323,7 +345,7 @@ class PermissionsController extends Controller
                     if ($pendingPermission) {
 
                         if ($pendingPermission->permission == $permissionInput) {
-                            $msg = 'nothing to update. Already pending.';
+                            $msg = 'Nothing to update. The permission you are selected is already in pending list.';
                             $msgType = 'alert';
                         } else {
                             $pendingContentCollectionPermissionModel->loadData($pendingPermission);
@@ -331,14 +353,14 @@ class PermissionsController extends Controller
 
                             if ($pendingContentCollectionPermissionModel->validate()) {
                                 if ($pendingContentCollectionPermissionModel->updatePermission()) {
-                                    $msg = 'successfully updated pending permisson';
+                                    $msg = 'Successfully updated pending permisson';
                                     $msgType = 'success';
                                 } else {
                                     $msg = 'Something went wrong';
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                                return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
                             }
                         }
                     } else {
@@ -346,14 +368,14 @@ class PermissionsController extends Controller
 
                         if ($pendingContentCollectionPermissionModel->validate()) {
                             if ($pendingContentCollectionPermissionModel->save()) {
-                                $msg = 'successfully created new pending permisson';
+                                $msg = 'Successfully created new pending permisson request';
                                 $msgType = 'success';
                             } else {
                                 $msg = 'Something went wrong';
                                 $msgType = 'error';
                             }
                         } else {
-                            return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                            return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection, 'permissionModel' => $pendingContentCollectionPermissionModel]);
                         }
                     }
                 }
@@ -362,7 +384,7 @@ class PermissionsController extends Controller
             Application::$app->session->setFlashMessage($msgType, $msg);
             Application::$app->response->redirect('/admin/set-content-collection-access-permission');
         } else {
-            return $this->render('admin/set-permissions-browse-content-collections', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection]);
+            return $this->render('admin/set-permissions-select-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection]);
         }
     }
 
@@ -405,5 +427,43 @@ class PermissionsController extends Controller
         } else {
             echo 'Failed';
         }
+    }
+
+
+    public function viewContentCollectionPermission(Request $request)
+    {
+        $data = $request->getBody();
+
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $contentCollectionPermissionModel = new ContentCollectionPermission();
+
+        if (Application::getUserRole() <= 2) {
+            $res = $contentCollectionPermissionModel->viewContentCollectionPermissions($Search_params, $start, $limit);
+            return $this->render('admin/view-access-permission', ['data' => $res->payload, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
+        } else if (Application::getUserRole() === 3) {
+            $res = $contentCollectionPermissionModel->viewOnlyMyContentCollectionPermissions($Search_params, $start, $limit);
+            return $this->render('admin/view-access-permission', ['data' => $res->payload, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
+        }
+    }
+
+
+    public function removeConentCollectionAccessPermission(Request $request)
+    {
+        $data = $request->getBody();
+        var_dump($data);
+
+        $contentCollectionPermissionModel = new ContentCollectionPermission();
+        $res = $contentCollectionPermissionModel->removePermission($data['collection-id'], $data['group-id']);
+        if ($res) {
+            Application::$app->session->setFlashMessage('success', 'Access permission removed');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong');
+        }
+        Application::$app->response->redirect('/admin/view-content-collection-permission');
     }
 }

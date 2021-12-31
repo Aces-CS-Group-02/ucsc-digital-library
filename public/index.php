@@ -305,6 +305,11 @@ $app->router->post('/admin/approve-access-permission/content-collections/reject'
 
 
 
+$app->router->get('/admin/view-content-collection-permission', [PermissionsController::class, "viewContentCollectionPermission"]);
+$app->router->post('/admin/remove-content-collection-access-permission', [PermissionsController::class, "removeConentCollectionAccessPermission"]);
+
+
+
 
 
 // $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);

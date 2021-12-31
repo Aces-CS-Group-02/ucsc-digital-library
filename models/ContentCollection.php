@@ -329,7 +329,8 @@ class ContentCollection extends DbModel
         if ($currentUserRole <= 2) {
             $sql = "SELECT a.*, b.first_name, b.last_name FROM content_collection a
                     JOIN user b ON a.creator = b.reg_no
-                    WHERE status = 1 AND name LIKE '%$search_params%'";
+                    WHERE status = 1 
+                    AND (name LIKE '%$search_params%' OR first_name LIKE '%$search_params%' OR last_name LIKE '%$search_params%')";
         } else if ($currentUserRole == 3) {
             $sql = "SELECT a.*, b.first_name, b.last_name FROM content_collection a
                     JOIN user b ON a.creator = b.reg_no

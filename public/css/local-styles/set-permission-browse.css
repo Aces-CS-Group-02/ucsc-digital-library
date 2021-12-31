@@ -1,4 +1,18 @@
+body {
+  height: 100vh;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
 .usergroup-item-container {
   display: flex;
   align-items: flex-start;
+}
+
+.main-container {
+  flex-grow: 1;
+  max-width: 1440px;
+  width: 80%;
+  margin: 0 auto;
 }
