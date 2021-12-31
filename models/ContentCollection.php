@@ -5,6 +5,7 @@ namespace app\models;
 use app\core\Application;
 use app\core\DbModel;
 use Exception;
+use PDO;
 
 class ContentCollection extends DbModel
 {
@@ -317,5 +318,34 @@ class ContentCollection extends DbModel
             Application::$app->db->pdo->rollBack();
             return false;
         }
+    }
+
+
+    public function browserContentCollections($search_params, $start, $limit)
+    {
+        $currentUserRole = Application::getUserRole();
+        $currentUser = Application::$app->user->reg_no;
+
+        if ($currentUserRole <= 2) {
+            $sql = "SELECT a.*, b.first_name, b.last_name FROM content_collection a
+                    JOIN user b ON a.creator = b.reg_no
+                    WHERE status = 1 AND name LIKE '%$search_params%'";
+        } else if ($currentUserRole == 3) {
+            $sql = "SELECT a.*, b.first_name, b.last_name FROM content_collection a
+                    JOIN user b ON a.creator = b.reg_no
+                    WHERE status = 1 AND creator = '$currentUser' AND name LIKE '%$search_params%'";
+        }
+        return $this->paginate($sql, $start, $limit);
+    }
+
+    public function loadContentCollection($id)
+    {
+        $sql = "SELECT a.*, b.first_name, b.last_name FROM 
+                content_collection a
+                JOIN user b ON a.creator = b.reg_no
+                WHERE a.id = $id";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
     }
 }
