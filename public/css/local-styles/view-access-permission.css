@@ -194,10 +194,16 @@ body {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 40px;
+  justify-content: space-between !important;
+}
+
+.page-step-title {
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .search-component-container {
-  flex: 1;
+  /* flex: 1; */
 }
 
 .sort-component-container {
@@ -210,6 +216,78 @@ body {
 .sort-component-container > form {
   width: 250px;
   /* background-color: aquamarine; */
+}
+
+.item-info-container {
+  background-color: #ececec;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 7px;
+  display: flex;
+}
+
+.item-info-info-side {
+  flex: 1;
+}
+.item-info-btn-side {
+  flex-basis: 150px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.item-info-name {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.item-info-block {
+  display: flex;
+}
+
+.make-margin-bottom {
+  margin-bottom: 10px;
+}
+
+.gray-out-block {
+  color: #5a5a5a;
+}
+
+.item-info-header-block {
+  flex-basis: 150px;
+}
+
+.item-info {
+  flex: 1;
+  overflow-wrap: break-word;
+}
+
+.item-info-block > span {
+  margin-right: 20px;
+}
+
+.permission-form {
+  padding-top: 10px;
+}
+
+.radio-btns-container {
+}
+
+.radio-btn-input-group {
+  margin: 7px 0;
+}
+
+.permission-form-btns-container {
+  /* border: 1px solid red; */
+  margin-top: 20px;
+}
+
+.permission-form-btns-container > button {
+  margin-right: 10px;
+}
+
+.permission-label {
+  color: red;
 }
 
 @media only screen and (max-width: 654px) {
@@ -337,21 +415,21 @@ body {
 }
 
 .block-a {
-  width: 50px;
+  width: 300px;
 }
 
 .block-b {
-  flex: 1;
+  flex: 1.2;
   padding-right: 10px;
 }
 
 .block-c {
-  flex: 1.3;
+  flex: 1;
   padding-right: 10px;
 }
 
 .block-d {
-  flex-basis: 300px;
+  flex-basis: 100px;
   display: flex;
   justify-content: flex-end;
 }
@@ -392,6 +470,15 @@ body {
 }
 
 @media only screen and (max-width: 854px) {
+  .item-info-container {
+    flex-direction: column;
+  }
+
+  .item-info-btn-side {
+    flex-basis: 70px;
+    justify-content: flex-start;
+  }
+
   .block-title {
     display: flex;
     flex-basis: 110px !important;

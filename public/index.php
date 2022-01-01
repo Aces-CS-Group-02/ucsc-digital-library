@@ -111,6 +111,9 @@ $app->router->get('/admin/dashboard/manage-content', [AdministrationController::
 $app->router->get('/admin/dashboard/manage-users', [AdministrationController::class, "manageUsersDashboard"]);
 $app->router->get('/admin/dashboard/manage-approvals', [AdministrationController::class, "manageApprovalsDashboard"]);
 $app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
+$app->router->get('/admin/dashboard/manage-approvals/approve-access', [AdministrationController::class, "manageAccess"]);
+
+
 
 
 // Admin Dashboard => Manage Content Routes
@@ -254,17 +257,11 @@ $app->router->get('/test', [DummyController::class, "test"]);
 
 // Permission
 $app->router->get('/admin/set-access-permission', [PermissionsController::class, "browsePermissions"]);
-
 $app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
-
 $app->router->get('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
 $app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
-
-
 $app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
 $app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
-
-
 $app->router->get('/admin/view-access-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
 $app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
 
@@ -291,6 +288,38 @@ $app->router->get('/admin/approve-content-collections', [ContentCollectionContro
 $app->router->post('/admin/approve-cc-request', [ContentCollectionController::class, "approveCCRequest"]);
 $app->router->post('/admin/reject-content-collection', [ContentCollectionController::class, "rejectContentCollection"]);
 
+
+
+// Permission
+$app->router->get('/admin/set-content-collection-access-permission', [PermissionsController::class, "browseContentCollectionPermissions"]);
+$app->router->get('/admin/set-content-collection-access-permission/content-collection', [PermissionsController::class, "browseUsergroupForContentCollection"]);
+$app->router->get('/admin/set-content-collection-access-permission/select-permission', [PermissionsController::class, "setPermissionToContentCollection"]);
+$app->router->post('/admin/set-content-collection-access-permission/select-permission', [PermissionsController::class, "setPermissionToContentCollection"]);
+// $app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
+// $app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
+// $app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
+// $app->router->get('/admin/view-access-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
+// $app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
+
+
+
+
+
+
+$app->router->get('/admin/view-content-collection-permission', [PermissionsController::class, "viewContentCollectionPermission"]);
+$app->router->post('/admin/remove-content-collection-access-permission', [PermissionsController::class, "removeConentCollectionAccessPermission"]);
+
+
+// Approve, Reject Content Collection Access Permission
+$app->router->get('/admin/approve-access-permission/content-collections', [PermissionsController::class, "approveContentCollectionAccessPermission"]);
+$app->router->post('/admin/approve-content-collection-access-permission', [PermissionsController::class, "approveAccessPermission"]);
+$app->router->post('/admin/reject-content-collection-access-permission', [PermissionsController::class, "rejectAccessPermission"]);
+
+
+// Approve, Reject Collection Access Permission
+$app->router->get('/admin/approve-access-permission/collections', [PermissionsController::class, "reviewCollectionAccessPermission"]);
+$app->router->post('/admin/approve-collection-access-permission', [PermissionsController::class, "approveCollectionAccessPermission"]);
+$app->router->post('/admin/reject-collection-access-permission', [PermissionsController::class, "rejectCollectionAccessPermission"]);
 
 
 

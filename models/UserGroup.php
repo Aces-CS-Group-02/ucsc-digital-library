@@ -474,4 +474,24 @@ class Usergroup extends DbModel
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
     }
+
+
+    public function browseUsergroup($search_params, $start, $limit)
+    {
+        $currentUser = Application::$app->user->reg_no;
+        $currentUserRole = Application::getUserRole();
+
+        if ($currentUserRole <= 2) {
+            $sql = "SELECT a.*, b.first_name, b.last_name FROM usergroup a
+                    JOIN user b ON a.creator = b.reg_no
+                    WHERE status = 1
+                    AND (name LIKE '%$search_params%' OR description LIKE '%$search_params%' OR first_name LIKE '%$search_params%' OR last_name LIKE '%$search_params%')";
+        } else if ($currentUserRole == 3) {
+            $sql = "SELECT a.*, b.first_name, b.last_name FROM usergroup a 
+                    JOIN user b ON a.creator = b.reg_no
+                    WHERE creator = $currentUser AND status = 1
+                    AND (name LIKE '%$search_params%' OR description LIKE '%$search_params%' OR first_name LIKE '%$search_params%' OR last_name LIKE '%$search_params%')";
+        }
+        return $this->paginate($sql, $start, $limit);
+    }
 }

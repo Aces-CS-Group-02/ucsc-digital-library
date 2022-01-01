@@ -33,49 +33,31 @@ $userRole = "admin";
     ?>
     <div class="admin-dashboard-main-content">
         <div class="admin-dashboard-text">
-            <p id='page-header-title'>Manage Approvals</p>
+            <p id='page-header-title'>Review Access Permissions</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="grid-container">
             <div class="card-container">
-                <a href="/admin/approve-submissions" class="card box-shadow-1">
+                <a href="/admin/approve-access-permission/collections" class="card box-shadow-1">
                     <div class="card-icon">
                         <div style="position: relative;">
                             <img class="card-icon-img" src="/assets\admin-approvals\checked.svg" alt=" approve-submission-image">
                         </div>
                     </div>
-                    <div class="card-content">Approve Submissions</div>
+                    <div class="card-content">Review Collection Access Permission</div>
                 </a>
 
             </div>
             <div class="card-container">
-                <a href="/admin/approve-content-collections" class="card box-shadow-1">
+                <a href="/admin/approve-access-permission/content-collections" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-approvals\file_collection.png" alt=" approve-content-category-image">
                     </div>
-                    <div class="card-content">Approve Content Collections</div>
-                </a>
-
-            </div>
-            <div class="card-container">
-                <a href="/admin/approve-user-groups" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-approvals\team.png" alt=" access-user-group-image">
-                    </div>
-                    <div class="card-content">Approve User Groups</div>
+                    <div class="card-content">Review Content Collection Access permission</div>
                 </a>
 
             </div>
 
-            <div class="card-container">
-                <a href="/admin/dashboard/manage-approvals/approve-access" class="card box-shadow-1">
-                    <div class="card-icon">
-                        <img class="card-icon-img" src="/assets\admin-approvals\key.png" alt=" approve-access-image">
-                    </div>
-                    <div class="card-content">Approve Access</div>
-                </a>
-
-            </div>
         </div>
     </div>
 
