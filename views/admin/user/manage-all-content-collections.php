@@ -109,12 +109,12 @@ use app\core\Application;
             </div>
 
             <div class="create-new-usergroup-btn-container">
-                <button class="btn btn-primary" id="create-new-usergroup-btn">Create new user group</button>
+                <button class="btn btn-primary" id="create-new-usergroup-btn">Create new content collection</button>
             </div>
 
             <!-- Form goes here -->
             <div class="user-groups-headers-container">
-                <div class="block-a"> </div>
+                <!-- <div class="block-a"> </div> -->
                 <div class="block-b">Name</div>
                 <div class="block-b">Description</div>
 
@@ -140,7 +140,7 @@ use app\core\Application;
                     <?php foreach ($content_collections as $content_collection) { ?>
 
                         <div class="user-group-info ">
-                            <div class="block-a">
+                            <!-- <div class="block-a">
                                 <p>
                                 <div class="input-group custom-control">
                                     <div class="checkbox checkbox-edit">
@@ -148,7 +148,7 @@ use app\core\Application;
                                     </div>
                                 </div>
                                 </p>
-                            </div>
+                            </div> -->
                             <div class="block-b">
                                 <div class="block-title">
                                     <p>Name</p>
@@ -209,16 +209,13 @@ use app\core\Application;
 
                             </div>
                             <div class="block-d">
-                                <?php if (Application::$app->user->reg_no == $content_collection->creator) { ?>
-                                    <a href="/admin/manage-content-collection?content-collection-id=<?php echo $content_collection->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
-                                <?php } ?>
+                                <a href="/admin/manage-content-collection?content-collection-id=<?php echo $content_collection->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
 
-                                <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $content_collection->id > 1)) { ?>
-                                    <form action="/admin/remove-content-collection" method="POST" id='remove-ug-form'>
-                                        <input type="hidden" class='usergroup-remove-dataField' name='content-collection-id' value="<?php echo $content_collection->id; ?>">
-                                    </form>
-                                    <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $content_collection->id; ?>">Remove</button>
-                                <?php } ?>
+
+                                <form action="/admin/remove-content-collection" method="POST" id='remove-ug-form'>
+                                    <input type="hidden" class='usergroup-remove-dataField' name='content-collection-id' value="<?php echo $content_collection->id; ?>">
+                                </form>
+                                <button class="btn btn-add btn-danger btn2-edit ml-2 remove-ug-btn" id='remove-usergroup-btn' data-groupid="<?php echo $content_collection->id; ?>">Remove</button>
                             </div>
                         </div>
 
@@ -282,14 +279,6 @@ use app\core\Application;
                 btn.addEventListener('click', removeUG, false);
             }
             Object.freeze(dataObj);
-
-
-
-
-
-
-
-
 
             createnewcommunityBtn.onclick = function() {
                 window.location = '/admin/create-content-collection';

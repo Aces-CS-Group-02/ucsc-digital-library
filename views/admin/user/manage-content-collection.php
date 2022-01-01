@@ -132,7 +132,7 @@ $userRole = "student";
                 <?php if ($params['show_request_approval_btn']) { ?>
                     <div class="create-new-community-btn-container">
                         <form action="/admin/request-content-collection-approval" method='POST' id='request-approval-form'>
-                            <input type="text" id='request-approval-data-field' hidden name='content-collection-id' value='<?php echo $params['collection']->id ?>'>
+                            <input type="hidden" id='request-approval-data-field' name='content-collection-id' value='<?php echo $params['collection']->id ?>'>
                         </form>
                         <button class="btn btn-primary" id="request-approval-btn" data-groupid='<?php echo $params['collection']->id ?>'>Request approval</button>
                     </div>
