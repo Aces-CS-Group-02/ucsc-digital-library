@@ -45,17 +45,49 @@
             $total = sizeof($users);
             date_default_timezone_set('Asia/Kolkata');
             $currentTime = date('Y-m-d H:i:s');
-            // var_dump($currentTime);
+            // $currentDate = date('Y-m-d');
+            // var_dump($currentDate);
+            // $currentDateObj = date_create($currentDate);
+            $loginData = $params['loginData'];
+            echo '<pre>';
+            var_dump($loginData);
+            echo '</pre>';
+            // $loginDataArray = [];
+            // // $dateArray = [];
+            // // $countArray = [];
+            // for ($i = 0; $i < sizeof($loginData); $i++) {
+
+            //     $loginDataArray[$i] = (array) $loginData[$i];
+            //     // $loginDataObj = date_create($loginData[$i]->date);
+            //     // $diff = $currentDateObj->diff($loginDataObj);
+            //     // // echo '<pre>';
+            //     // // var_dump($diff);
+            //     // // echo '</pre>';
+            //     // if ($diff->d <= 7) {
+            //     //     $dateArray[$i] = $loginDataArray[$i]["date"];
+            //     //     $countArray[$i] = $loginDataArray[$i]["count"];
+            //     // }
+            // }
+            // echo '<pre>';
+            // var_dump($loginDataArray);
+            // echo '</pre>';
+            // echo $currentDate;
+            // var_dump($currentDate);
             // var_dump($user->log_in_time);
             // var_dump(date_create($currentTime));
             $crntTime = date_create($currentTime);
+
             ?>
+
+            <div class="bar-chart-container">
+                <canvas id="bar-chart"></canvas>
+            </div>
 
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
                     <form action="" method="GET">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search users" name='search-data' value="<?php echo $params['search_params'] ?? '' ?>"> 
+                            <input type="text" placeholder="Search users" name='search-data' value="<?php echo $params['search_params'] ?? '' ?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -193,7 +225,7 @@
                                 $s = $diff->s;
                                 ?>
                                 <p><?php
-                                // var_dump($user->log_in_time);
+                                    // var_dump($user->log_in_time);
                                     if ($user->log_in_time != '0000-00-00 00:00:00') {
                                         if ($y) {
                                             if ($y == 1) {
@@ -291,6 +323,55 @@
     <!-- SCRIPT -->
 
     <script src="/javascript/nav.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js" integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const ctx = document.getElementById('bar-chart');
+        var loginData = <?php echo ($loginData) ?>;
+        // var temp = JSON.parse(loginData);
+        var count = loginData.length;
+        console.log(loginData);
+        // var data = [];
+        for (var i = 0; i < count; i++) {
+            // document.write(datesArray[i]);
+            // document.write(countArray[i]);
+            // data[i] = datesArray[i].concat(countArray[i]);
+            document.write(loginData);
+        }
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                // labels: [datesArray],
+                datasets: [{
+                    label: 'Users\' login data',
+                    data: loginData,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }],
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    parsing: {
+                        xAxisKey: 'x',
+                        yAxisKey: 'y'
+                    },
+                    plugins: {
+                        // legend: {
+                        //     position: 'top',
+                        // },
+                        title: {
+                            display: true,
+                            text: 'Users\' login data'
+                        }
+                    }
+                }
+            },
+        });
+    </script>
 
 </body>
 

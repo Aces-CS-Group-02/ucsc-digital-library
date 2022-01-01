@@ -150,6 +150,17 @@ class User extends DbModel
         return $statement->execute();
     }
 
+    public function getLogInDate($value)
+    {
+        // echo $value;
+        $tableName = self::tableName();
+        $sql = "SELECT DATE(log_in_time) FROM $tableName WHERE email = '$value'";
+        $statement = self::prepare($sql);
+        // echo $sql;
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function getUsersOrderedByLoginTime($search_params = '', $start, $limit)
     {
         $tableName = self::tableName();

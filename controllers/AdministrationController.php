@@ -15,8 +15,10 @@ use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;
 use app\models\UserGroup;
+use app\models\UsersLoginCount;
 use ErrorException;
 use Exception;
+use stdClass;
 
 class AdministrationController extends Controller
 {
@@ -458,6 +460,19 @@ class AdministrationController extends Controller
         $start = ($page - 1) * $limit;
 
         $users = new User();
+        $usersLoginCount = new UsersLoginCount();
+        $loginData = $usersLoginCount->getLastRecords();
+
+        $array = [];
+        foreach($loginData as $login){
+
+            $temp = new stdClass;
+            $temp->x = $login->date;
+            $temp->y = (int)$login->count;
+            array_push($array,$temp);
+        }
+        $array = json_encode($array);
+
         if ($page <= 0) throw new NotFoundException;
 
 
@@ -475,6 +490,6 @@ class AdministrationController extends Controller
         // echo '</pre>';
         // exit;
 
-        return $this->render("admin/reports/users-login-report", ['breadcrum' => $breadcrum, 'userList' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'resultCount' => $result->resultCount]);
+        return $this->render("admin/reports/users-login-report", ['breadcrum' => $breadcrum, 'userList' => $result->payload, 'pageCount' => $result->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'resultCount' => $result->resultCount, 'loginData' => $array]);
     }
 }
