@@ -42,13 +42,26 @@ class PendingContentCollectionPermission extends DbModel
 
     public function getAllRequests($start, $limit)
     {
-        $tableName = self::tableName();
-        $sql = "SELECT a.*, b.name as collection_name, c.name as usergroup_name
-                FROM content_collection_permission_pending a
+        $pending_content_collection_permission_table = self::tableName();
+        $content_collection_table = ContentCollection::tableName();
+        $usergroup_table = UserGroup::tableName();
+        $user_table = User::tableName();
+
+        $sql = "SELECT 
+                    a.*, 
+                    b.name as collection_name, 
+                    c.first_name as collection_owner_fn, c.last_name as collection_owner_ln,
+                    d.name as ug_name,
+                    e.first_name as ug_owner_fn, e.last_name as ug_owner_ln
+                FROM $pending_content_collection_permission_table a
                 JOIN content_collection b
                 ON b.id = a.content_collection_id
-                JOIN usergroup c
-                ON a.group_id = c.id";
+                JOIN $user_table c
+                ON b.creator = c.reg_no
+                JOIN $usergroup_table d
+                ON d.id = a.group_id
+                JOIN $user_table e
+                ON d.creator = e.reg_no";
         return $this->paginate($sql, $start, $limit);
     }
 

@@ -165,6 +165,15 @@ class AdministrationController extends Controller
         return $this->render("admin/approve/admin-approvals", ['breadcrum' => $breadcrum]);
     }
 
+    public function manageAccess()
+    {
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS
+        ];
+        return $this->render("admin/approve/admin-approve-access", ['breadcrum' => $breadcrum]);
+    }
+
     public function bulkUpload(Request $request)
     {
         $breadcrum = [

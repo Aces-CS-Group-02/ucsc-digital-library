@@ -257,6 +257,11 @@ body {
   flex-basis: 150px;
 }
 
+.item-info {
+  flex: 1;
+  overflow-wrap: break-word;
+}
+
 .item-info-block > span {
   margin-right: 20px;
 }
