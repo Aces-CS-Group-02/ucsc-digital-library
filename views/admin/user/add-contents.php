@@ -92,7 +92,7 @@ $userRole = "student";
             <?php } ?>
 
             <div class="tab-btn-container">
-                <a class="tab-link-btn blured" href="/admin/manage-content-collection?content-collection-id=<?php echo $params['collection']->id ?>">Manage Users</a>
+                <a class="tab-link-btn blured" href="/admin/manage-content-collection?content-collection-id=<?php echo $params['collection']->id ?>">Manage Contents</a>
                 <a class="tab-link-btn active" href="/admin/add-content?content-collection-id=<?php echo $params['collection']->id ?>">Add Contents</a>
 
             </div>

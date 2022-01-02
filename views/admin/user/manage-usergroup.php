@@ -140,73 +140,7 @@ $userRole = "student";
 
             </div>
 
-            <div class="a-to-z-sort-main-container">
-                <p id="a-to-z-sort-name">First Name: </p>
-                <div class="a-to-z-sort-component-container">
-                    <button class="a-to-z-sort-btn a-to-z-all-btn selected">All</button>
-                    <button class="a-to-z-sort-btn">A</button>
-                    <button class="a-to-z-sort-btn">B</button>
-                    <button class="a-to-z-sort-btn">C</button>
-                    <button class="a-to-z-sort-btn">D</button>
-                    <button class="a-to-z-sort-btn">E</button>
-                    <button class="a-to-z-sort-btn">F</button>
-                    <button class="a-to-z-sort-btn">G</button>
-                    <button class="a-to-z-sort-btn">H</button>
-                    <button class="a-to-z-sort-btn">I</button>
-                    <button class="a-to-z-sort-btn">J</button>
-                    <button class="a-to-z-sort-btn">K</button>
-                    <button class="a-to-z-sort-btn">L</button>
-                    <button class="a-to-z-sort-btn">M</button>
-                    <button class="a-to-z-sort-btn">N</button>
-                    <button class="a-to-z-sort-btn">O</button>
-                    <button class="a-to-z-sort-btn">P</button>
-                    <button class="a-to-z-sort-btn">Q</button>
-                    <button class="a-to-z-sort-btn">R</button>
-                    <button class="a-to-z-sort-btn">S</button>
-                    <button class="a-to-z-sort-btn">T</button>
-                    <button class="a-to-z-sort-btn">U</button>
-                    <button class="a-to-z-sort-btn">V</button>
-                    <button class="a-to-z-sort-btn">W</button>
-                    <button class="a-to-z-sort-btn">X</button>
-                    <button class="a-to-z-sort-btn">Y</button>
-                    <button class="a-to-z-sort-btn">Z</button>
 
-                </div>
-            </div>
-
-            <div class="a-to-z-sort-main-container second">
-                <p id="a-to-z-sort-name">Last Name: </p>
-                <div class="a-to-z-sort-component-container">
-                    <button class="a-to-z-sort-btn a-to-z-all-btn selected">All</button>
-                    <button class="a-to-z-sort-btn">A</button>
-                    <button class="a-to-z-sort-btn">B</button>
-                    <button class="a-to-z-sort-btn">C</button>
-                    <button class="a-to-z-sort-btn">D</button>
-                    <button class="a-to-z-sort-btn">E</button>
-                    <button class="a-to-z-sort-btn">F</button>
-                    <button class="a-to-z-sort-btn">G</button>
-                    <button class="a-to-z-sort-btn">H</button>
-                    <button class="a-to-z-sort-btn">I</button>
-                    <button class="a-to-z-sort-btn">J</button>
-                    <button class="a-to-z-sort-btn">K</button>
-                    <button class="a-to-z-sort-btn">L</button>
-                    <button class="a-to-z-sort-btn">M</button>
-                    <button class="a-to-z-sort-btn">N</button>
-                    <button class="a-to-z-sort-btn">O</button>
-                    <button class="a-to-z-sort-btn">P</button>
-                    <button class="a-to-z-sort-btn">Q</button>
-                    <button class="a-to-z-sort-btn">R</button>
-                    <button class="a-to-z-sort-btn">S</button>
-                    <button class="a-to-z-sort-btn">T</button>
-                    <button class="a-to-z-sort-btn">U</button>
-                    <button class="a-to-z-sort-btn">V</button>
-                    <button class="a-to-z-sort-btn">W</button>
-                    <button class="a-to-z-sort-btn">X</button>
-                    <button class="a-to-z-sort-btn">Y</button>
-                    <button class="a-to-z-sort-btn">Z</button>
-
-                </div>
-            </div>
 
             <div class="bulk-select-place" id="buttonDiv">
                 <p id="checked-items-container"></p>
@@ -225,6 +159,9 @@ $userRole = "student";
                     <div class="block-b">First Name</div>
                     <div class="block-c">Last Name</div>
                     <div class="block-d">Email</div>
+                    <?php if (Application::getUserRole() <= 2) { ?>
+                        <div class="block-d">User Role</div>
+                    <?php } ?>
                     <div class="block-f">Action</div>
                 </div>
 
@@ -261,6 +198,20 @@ $userRole = "student";
                                 </div>
                                 <p><?php echo $student->email ?></p>
                             </div>
+                            <?php if (Application::getUserRole() <= 2) { ?>
+                                <div class="block-d">
+                                    <div class="block-title">
+                                        <p>User Role</p>
+                                        <p>:</p>
+                                    </div>
+                                    <p><span class="badge badge-soft-<?php if ($student->role_id == 1) echo "danger";
+                                                                        else if ($student->role_id == 2) echo "warning";
+                                                                        else if ($student->role_id == 3) echo "primary";
+                                                                        else if ($student->role_id == 4) echo "success";
+                                                                        else echo "secondary";
+                                                                        ?>"><?php echo Application::$app->getUserRoleNameByID($student->role_id); ?></span></p>
+                                </div>
+                            <?php } ?>
 
                             <div class="block-f">
                                 <form action="/usergroup/remove-user" method="POST">

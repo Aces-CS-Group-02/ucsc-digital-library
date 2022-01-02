@@ -272,12 +272,35 @@ class PermissionsController extends Controller
     }
 
 
-    public function viewAccessPermissionOnCollections()
-    {
-        $permissionModel = new CollectionPermission();
-        $data = $permissionModel->getAccessPermissionOnCollections();
+    // public function viewAccessPermissionOnCollections()
+    // {
+    //     $permissionModel = new CollectionPermission();
+    //     $data = $permissionModel->getAccessPermissionOnCollections();
 
-        return $this->render('admin/set-permissions-browse', ['page_step' => 5, 'data' => $data]);
+    //     return $this->render('admin/set-permissions-browse', ['page_step' => 5, 'data' => $data]);
+    // }
+
+
+    public function viewAccessPermissionOnCollections(Request $request)
+    {
+        $data = $request->getBody();
+
+        $Search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $contentCollectionPermissionModel = new CollectionPermission();
+
+        $res = $contentCollectionPermissionModel->getAccessPermissionOnCollections($start, $limit);
+
+        // echo '<pre>';
+        // var_dump($res->payload);
+        // echo '</pre>';
+
+
+        return $this->render('admin/view-collection-access-permission', ['data' => $res->payload, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
     }
 
 
@@ -294,13 +317,13 @@ class PermissionsController extends Controller
             $res = $permissionModel->removeCollectionPermission($permission->collection_id, $permission->group_id);
 
             if ($res) {
-                Application::$app->session->setFlashMessage('error', "Couldn't find the permission");
+                Application::$app->session->setFlashMessage('success', "Permission removed");
             } else {
                 Application::$app->session->setFlashMessage('error', "Couldn't find the permission");
             }
         }
 
-        Application::$app->response->redirect('/admin/view-access-permission');
+        Application::$app->response->redirect('/admin/view-collection-permission');
     }
 
 

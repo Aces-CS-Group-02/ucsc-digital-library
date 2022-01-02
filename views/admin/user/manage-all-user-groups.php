@@ -209,8 +209,11 @@ use app\core\Application;
 
                             </div>
                             <div class="block-d">
+                                <button class="btn btn-add" id='edit-usergroup-btn' data-id='<?= $usergroup->id ?>'><i class="fas fa-pencil-alt"></i></button>
+
+
                                 <?php if (Application::$app->user->reg_no == $usergroup->creator) { ?>
-                                    <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Edit</a>
+                                    <a href="/admin/manage-usergroup?usergroup-id=<?php echo $usergroup->id ?>" class="btn btn-add btn-danger btn-edit-user-group">Manage</a>
                                 <?php } ?>
 
                                 <?php if (!$params['is_library_staff_member'] ||  ($params['is_library_staff_member'] && $usergroup->id > 1)) { ?>
@@ -282,13 +285,6 @@ use app\core\Application;
                 btn.addEventListener('click', removeUG, false);
             }
             Object.freeze(dataObj);
-
-
-
-
-
-
-
 
 
             createnewcommunityBtn.onclick = function() {

@@ -161,8 +161,10 @@ class ContentCollection extends DbModel
                 $notificationModel->save();
                 $notificationReceiverModel->setMultipleReceviers(Application::$app->db->pdo->lastInsertId(), $staff_members_list);
                 Application::$app->db->pdo->commit();
+                return true;
             } catch (Exception $e) {
                 Application::$app->db->pdo->rollBack();
+                return false;
             }
         }
     }

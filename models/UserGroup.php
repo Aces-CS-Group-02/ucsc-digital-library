@@ -89,26 +89,57 @@ class Usergroup extends DbModel
     \ If we specify getRecordsCount false then returns All fetched data. Here we can specify 
     \ start position and limit                           
     ---------------------------------------------------------------------------------------------*/
-    public function getAllUsersNotInThisGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
-    {
-        $sql = "SELECT * FROM user t1
-                LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
-                ON t2.user_reg_no = t1.reg_no
-                WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
-                (first_name LIKE '%$search_params%'
-                OR last_name LIKE '%$search_params%'
-                OR email LIKE '%$search_params%')";
+    // public function getAllUsersNotInThisGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    // {
+    //     $sql = "SELECT * FROM user t1
+    //             LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+    //             ON t2.user_reg_no = t1.reg_no
+    //             WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
+    //             (first_name LIKE '%$search_params%'
+    //             OR last_name LIKE '%$search_params%'
+    //             OR email LIKE '%$search_params%')";
 
-        if ($getRecordsCount) {
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->rowCount();
-        } else {
-            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_OBJ);
+    //     if ($getRecordsCount) {
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->rowCount();
+    //     } else {
+    //         if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->fetchAll(PDO::FETCH_OBJ);
+    //     }
+    // }
+
+
+    public function getAllUsersNotInThisGroup($group_id, $search_params, $start, $limit)
+    {
+
+        if (Application::getUserRole() <= 2) {
+            // Get All user (Excepting user role)
+            $sql = "SELECT * FROM user t1
+                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+                    ON t2.user_reg_no = t1.reg_no
+                    JOIN role t3
+                    ON t1.role_id = t3.role_id
+                    WHERE t2.user_reg_no IS NULL
+                    AND
+                    (first_name LIKE '%$search_params%'
+                    OR last_name LIKE '%$search_params%'
+                    OR email LIKE '%$search_params%'
+                    OR t3.name LIKE '%$search_params%')";
+        } else if (Application::getUserRole() == 3) {
+            // Get only students (user role >= 4)
+            $sql = "SELECT * FROM user t1
+                    LEFT JOIN (SELECT * FROM usergroup_user WHERE group_id = $group_id) t2 
+                    ON t2.user_reg_no = t1.reg_no
+                    WHERE t2.user_reg_no IS NULL AND t1.role_id >= 4 AND
+                    (first_name LIKE '%$search_params%'
+                    OR last_name LIKE '%$search_params%'
+                    OR email LIKE '%$search_params%')";
         }
+
+        return $this->paginate($sql, $start, $limit);
     }
 
     public function pushUserToUserGroup($group_id, $reg_no)
@@ -163,7 +194,37 @@ class Usergroup extends DbModel
 
 
 
-    public function getAllUsersInUserGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    // public function getAllUsersInUserGroup($group_id, $search_params = '', $getRecordsCount = false, $start = false, $limit = false)
+    // {
+    //     $userModel = new User();
+    //     $usergroupUserModel = new UsergroupUser();
+
+    //     $tableName_1 = $userModel::tableName();
+    //     $tableName_2 = $usergroupUserModel::tableName();
+
+    //     $sql = "SELECT *
+    //             FROM $tableName_2 t1
+    //             JOIN $tableName_1 t2
+    //             ON t2.reg_no = t1.user_reg_no
+    //             WHERE group_id = $group_id AND
+    //             (first_name LIKE '%$search_params%'
+    //             OR last_name LIKE '%$search_params%'
+    //             OR email LIKE '%$search_params%')";
+
+
+    //     if ($getRecordsCount) {
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->rowCount();
+    //     } else {
+    //         if ($limit)  $sql = $sql . " LIMIT $start, $limit";
+    //         $statement = self::prepare($sql);
+    //         $statement->execute();
+    //         return $statement->fetchAll(PDO::FETCH_OBJ);
+    //     }
+    // }
+
+    public function getAllUsersInUserGroup($group_id, $search_params, $start, $limit)
     {
         $userModel = new User();
         $usergroupUserModel = new UsergroupUser();
@@ -171,27 +232,21 @@ class Usergroup extends DbModel
         $tableName_1 = $userModel::tableName();
         $tableName_2 = $usergroupUserModel::tableName();
 
-        $sql = "SELECT t2.reg_no, t2.first_name, t2.last_name, t2.email
+        $sql = "SELECT *
                 FROM $tableName_2 t1
                 JOIN $tableName_1 t2
                 ON t2.reg_no = t1.user_reg_no
+                JOIN role t3
+                ON t2.role_id = t3.role_id
                 WHERE group_id = $group_id AND
                 (first_name LIKE '%$search_params%'
                 OR last_name LIKE '%$search_params%'
-                OR email LIKE '%$search_params%')";
+                OR email LIKE '%$search_params%'
+                OR t3.name LIKE '%$search_params%')";
 
-
-        if ($getRecordsCount) {
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->rowCount();
-        } else {
-            if ($limit)  $sql = $sql . " LIMIT $start, $limit";
-            $statement = self::prepare($sql);
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_OBJ);
-        }
+        return $this->paginate($sql, $start, $limit);
     }
+
 
     public function getAllUsergroups($search_params = '', $start, $limit)
     {
@@ -351,8 +406,10 @@ class Usergroup extends DbModel
                 $notificationModel->save();
                 $notificationReceiverModel->setMultipleReceviers(Application::$app->db->pdo->lastInsertId(), $staff_members_list);
                 Application::$app->db->pdo->commit();
+                return true;
             } catch (Exception $e) {
                 Application::$app->db->pdo->rollBack();
+                return false;
             }
         }
     }

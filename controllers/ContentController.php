@@ -7,8 +7,10 @@ use app\core\Controller;
 use app\core\exception\NotFoundException;
 use app\core\Request;
 use app\models\Collection;
+use app\models\CollectionPermission;
 use app\models\Community;
 use app\models\Content;
+use app\models\ContentCollectionPermission;
 use app\models\ContentCreator;
 use app\models\ContentKeyword;
 use app\models\ContentLanguage;
@@ -17,6 +19,7 @@ use app\models\Creator;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
+use stdClass;
 
 class ContentController extends Controller
 {
@@ -448,7 +451,79 @@ class ContentController extends Controller
                 self::BREADCRUM_UPLOAD_CONTENT
             ];
 
-            return $this->render("admin/content/verify-submission", ['breadcrum'=>$breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
+            return $this->render("admin/content/verify-submission", ['breadcrum' => $breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
         }
+    }
+
+
+
+    public function viewContentAbstract(Request $request)
+    {
+        $data = $request->getBody();
+        if (!isset($data['content_id'])) throw new NotFoundException();
+
+        $contentModel = new Content();
+        $content = $contentModel->findOne(['content_id' => $data['content_id']]);
+        if (!$content) throw new NotFoundException();
+
+        $contentKeywordModel = new ContentKeyword();
+        $contentKeywords = $contentKeywordModel->findAll(['content_id' => $content->content_id]);
+
+        $contentLanguageModel = new ContentLanguage();
+        $contentLanguage = $contentLanguageModel->findOne(['language_id' => $content->language]);
+
+        $contentCreatorModel = new ContentCreator();
+        $authors = $contentCreatorModel->findContentAuthors($content->content_id);
+
+        // Access Permission
+        $collectionPermissionModel = new CollectionPermission();
+        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content->collection_id);
+
+        $contentCollectionPermissionModel = new ContentCollectionPermission();
+        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content->content_id);
+
+        $permission = new stdClass;
+        if ($collectionPermissionObj->permission || $contentCollectionPermissionObj->permission) {
+            $permission->permission = true;
+
+            if ($collectionPermissionObj->grant_type === "READ_DOWNLOAD" || $contentCollectionPermissionObj->grant_type === "READ_DOWNLOAD") {
+                $permission->grant_type = "READ_DOWNLOAD";
+            } else {
+                $permission->grant_type = "READ";
+            }
+        } else {
+            $permission->permission = false;
+            $permission->grant_type = "NULL";
+        }
+
+
+        $collectionModel = new Collection();
+        $collection = $collectionModel->findOne(['collection_id' => $content->collection_id]);
+
+        $communityModel = new Community();
+        $res = $communityModel->communityBreadcrumGenerate($collection->community_id);
+        array_push($res, ['name' => $collection->name]);
+
+        $path_name = [];
+        foreach ($res as $r) {
+            array_push($path_name, $r['name']);
+        }
+        $path = implode(' > ', $path_name);
+
+
+        $contentObj = new stdClass;
+        $contentObj->contentInfo = $content;
+        $contentObj->authors = $authors ? $authors :  '';
+        $contentObj->language = $contentLanguage ?  $contentLanguage->language : '';
+        $contentObj->keywords = $contentKeywords ?  $contentKeywords : '';
+        $contentObj->permission = $permission;
+        $contentObj->path = $path;
+
+        // echo '<pre>';
+        // var_dump($contentObj);
+        // echo '</pre>';
+
+
+        $this->render('content-abstract-info', ['content' => $contentObj]);
     }
 }
