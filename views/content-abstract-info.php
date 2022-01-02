@@ -132,7 +132,7 @@ $userRole = "student";
                 </div>
                 <div class="info-item-content">
                     <?php foreach ($contentObj->keywords as $keyword) { ?>
-                        <a href="/search-result?community=-1&sort_by=relavance&order=desc&search_query=<?= $keyword['keyword'] ?>" class="keyword-badge"><?= $keyword['keyword'] ?></a>
+                        <a href="/search-result?community=-1&sort_by=relavance&order=desc&search_query=<?= $keyword['keyword'] ?>" class="keyword-badge" target="_blank"><?= $keyword['keyword'] ?></a>
                     <?php } ?>
                 </div>
             </div>
