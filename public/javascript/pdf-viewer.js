@@ -157,7 +157,17 @@ document.querySelector(".create-collection").addEventListener("focus", () => {
 
 // Content container from here
 
-let url = "/docs/a-christmas-carol.pdf";
+// var contentName = "<?php echo $url ?>";
+console.log(contentUrl);
+
+// var req = new XMLHttpRequest(); 
+//     req.onload = function() {
+//     console.log(this.responseText); 
+//  };
+// req.open("get", "get-data.php", true); 
+// req.send();
+
+let url = contentUrl;
 
 let pdfDoc = null,
   pageNum = 1;

@@ -24,8 +24,15 @@ $userRole = "student";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/pdf-viewer.css">
 
-
-    <title>A Christmas Carol</title>
+    <?php 
+        $content = $params['content'];
+        // var_dump($content);
+        $contentId = $content->content_id;
+        $contentName = $content->title;
+        $url = '/data/content/uploads/'.$contentId.'.pdf';
+        // echo json_encode($url);
+    ?>
+    <title><?= $contentName ?></title>
 </head>
 
 <body>
@@ -222,7 +229,8 @@ $userRole = "student";
     <!-- <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script> -->
     <script src="/ckeditor/ckeditor.js"></script>
     <script src="/javascript/nav.js"></script>
-    <script src="/javascript/pdf-viewer.js"></script>
+    <script type="text/javascript">var contentUrl = "<?= $url ?>";</script>
+    <script type="text/javascript" src="/javascript/pdf-viewer.js"></script>
     <script>
         CKEDITOR.replace('note-content', {
             toolbar: [

@@ -7,5 +7,5 @@ use Exception;
 class ForbiddenException extends Exception
 {
     protected $code = 403;
-    protected $message = "Sorry, but you dont have permission to access this page";
+    protected $message = "Sorry, but you don't have permission to access this page";
 }

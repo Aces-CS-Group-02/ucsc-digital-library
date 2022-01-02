@@ -90,7 +90,7 @@ $app->router->get('/profile/my-collections', [UserController::class, "userCollec
 // $app->router->post('/profile/my-collections', [UserController::class, "userCollections"]);
 $app->router->get('/profile/manage-collection-view', [UserController::class, "manageCollectionTest"]);
 $app->router->get('/profile/manage-collection', [UserController::class, "manageCollection"]);
-$app->router->get('/profile/pdf-viewer', [UserController::class, "pdfViewer"]);
+$app->router->get('/content/view', [UserController::class, "viewPdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
 $app->router->get('/suggest-content', [UserController::class, "suggestContent"]);
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
