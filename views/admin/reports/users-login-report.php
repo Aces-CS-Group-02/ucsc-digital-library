@@ -49,10 +49,16 @@
             // var_dump($currentDate);
             // $currentDateObj = date_create($currentDate);
             $loginData = $params['loginData'];
-            echo '<pre>';
-            var_dump($loginData);
-            echo '</pre>';
+            // echo '<pre>';
+            // var_dump($loginData);
+            // echo '</pre>';
             // $loginDataArray = [];
+            $loginDataArray = json_decode($loginData);
+            // echo '<pre>';
+            // var_dump($loginDataArray);
+            // echo '</pre>';
+            $count = sizeof($loginDataArray);
+            // echo $count;
             // // $dateArray = [];
             // // $countArray = [];
             // for ($i = 0; $i < sizeof($loginData); $i++) {
@@ -330,47 +336,68 @@
         var loginData = <?php echo ($loginData) ?>;
         // var temp = JSON.parse(loginData);
         var count = loginData.length;
-        console.log(loginData);
-        // var data = [];
         for (var i = 0; i < count; i++) {
-            // document.write(datesArray[i]);
-            // document.write(countArray[i]);
-            // data[i] = datesArray[i].concat(countArray[i]);
-            document.write(loginData);
+            // var date = loginData[i]['x'];
+            // var formatted = (date.getMonth()+1) + "-" + date.getDate();
+            var parts = loginData[i]['x'].split('-');
+            var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            // var mont = monthNames[mydate.getMonth()];
+            // console.log(mont);
+            var formatted = monthNames[mydate.getMonth()] + "-" + mydate.getDate();
+            // console.log(loginData[i]);
+            // console.log(formatted);
+            loginData[i]['x'] = formatted;
         }
+        // // var data = [];
+        // for (var i = 0; i < count; i++) {
+        //     // document.write(datesArray[i]);
+        //     // document.write(countArray[i]);
+        //     // data[i] = datesArray[i].concat(countArray[i]);
+        //     // document.write(loginData);
+        // }
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
-                // labels: [datesArray],
                 datasets: [{
-                    label: 'Users\' login data',
                     data: loginData,
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
                 }],
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    parsing: {
-                        xAxisKey: 'x',
-                        yAxisKey: 'y'
-                    },
-                    plugins: {
-                        // legend: {
-                        //     position: 'top',
-                        // },
-                        title: {
-                            display: true,
-                            text: 'Users\' login data'
+            },
+            options: {
+                // animations: {
+                //     tension: {
+                //         duration: 1000,
+                //         easing: 'linear',
+                //         from: 1,
+                //         to: 0,
+                //         loop: true
+                //     }
+                // },
+                scales: {
+                    y: {
+                        min: 0,
+                        ticks: {
+                            stepSize: 1
                         }
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Users\' login data for the previous <?php echo $count ?> days',
+                        fontStyle: "Poppins"
+                    },
+                    legend: {
+                        display: false
+                    }
                 }
-            },
+            }
         });
+        // Chart.defaults.scales.linear.min = 0;
     </script>
 
 </body>

@@ -37,7 +37,7 @@ class UsersLoginCount extends DbModel
     public function findLoginDate($value)
     {
         $tableName = self::tableName();
-        $sql = "SELECT count(*) FROM $tableName WHERE date = '$value'";
+        $sql = "SELECT count(*) FROM $tableName WHERE date = '$value' ORDER BY id DESC LIMIT 1";
         // $sql = "SELECT Format(DCount("*", $tableName, date='$value') > 0, 'True/False') AS value_exists;";
         $statement = self::prepare($sql);
         // echo $sql;
@@ -73,11 +73,21 @@ class UsersLoginCount extends DbModel
         return $statement->execute();
     }
 
+    public function getLastDate()
+    {
+        $tableName = self::tableName();
+        $sql = "SELECT date FROM $tableName ORDER BY id DESC LIMIT 1";
+        $statement = self::prepare($sql);
+        // echo $sql;
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function getLastRecords()
     {
         $tableName = self::tableName();
         $sql = "SELECT * FROM (
-            SELECT * FROM $tableName ORDER BY id DESC LIMIT 30
+            SELECT * FROM $tableName ORDER BY id DESC LIMIT 14
         ) sub
         ORDER BY id ASC";
         $statement = self::prepare($sql);

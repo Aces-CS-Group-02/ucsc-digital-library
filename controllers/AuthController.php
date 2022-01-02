@@ -29,25 +29,66 @@ class authController extends Controller
                 $loginDateObj = $user->getLogInDate($email);
                 $loginDateArray = (array) $loginDateObj[0];
                 $loginDate = $loginDateArray["DATE(log_in_time)"];
+                date_default_timezone_set('Asia/Kolkata');
+                $currentDate = date('Y-m-d');
+
                 // echo '<pre>';
                 // var_dump($loginDate);
                 // echo '</pre>';
                 $usersLoginCount = new UsersLoginCount();
-                $dateExists = $usersLoginCount->findLoginDate($loginDate);
+                $lastDate = $usersLoginCount->getLastDate();
+                // if(strcmp($loginDate,$lastDate[0]->date) == 0){
+                //     echo "equal!";
+                // }
+                // $dateExists = $usersLoginCount->findLoginDate($loginDate);
                 // echo (!($dateExists[0][0]));
+                $dateObj = date_create($currentDate);
+                $lastDateObj = date_create($lastDate[0]->date);
+                $diff = $dateObj->diff($lastDateObj);
                 // echo '<pre>';
-                // var_dump($dateExists);
-                // var_dump($dateExists[0][0]);
+                // var_dump($lastDateObj->format('Y-m-d'));
                 // echo '</pre>';
-                if (!($dateExists[0][0])) {
-                    date_default_timezone_set('Asia/Kolkata');
-                    $currentDate = date('Y-m-d');
+                // $time = strtotime($lastDate[0]->date);
+
+                // $newformat = date('Y-m-d', $time);
+                // echo '<pre>';
+                // var_dump($newDate);
+                // echo '</pre>';
+                $days = $diff->d;
+                // echo '<pre>';
+                // echo($days);
+                // echo '</pre>';
+                if ($days) {
+                    for ($i = 1; $i < $days; $i++) {
+                        $newDate = $lastDateObj->modify('+1 day');
+                        // echo '<pre>';
+                        // var_dump($newDate);
+                        // echo '</pre>';
+                        $date = $newDate->format('Y-m-d');
+                        $count = 0;
+                        $usersLoginCount->addRecord($date, $count);
+                    }
+                    // $loginDate = $currentDate;
+                    // str_replace($loginDate,$currentDate,$loginDate);
+                }
+                // echo '<pre>';
+                // var_dump($loginDate);
+                // var_dump($lastDate[0]->date);
+                // // var_dump($dateExists);
+                // // var_dump(!($dateExists[0][0]));
+                // echo '</pre>';
+                // echo($currentDate);
+                // echo ($loginDate);
+                // echo ($lastDate[0]->date);
+                if ($loginDate != $currentDate) {
+                    // date_default_timezone_set('Asia/Kolkata');
+                    // $currentDate = date('Y-m-d');
                     // echo $currentDate;
                     $currentDateExists = $usersLoginCount->findLoginDate($currentDate);
                     // var_dump($currentDateExists);
                     // echo ($currentDateExists[0][0] == '0');
                     if ($currentDateExists[0][0] == '1') {
-                        $count = $usersLoginCount->getCount($currentDate);
+                        // $count = $usersLoginCount->getCount($currentDate);
                         // $integerCount = array_map('intval', explode(',', $count));
                         // var_dump($count);
                         // $integerCount++;
@@ -60,7 +101,7 @@ class authController extends Controller
                 // exit;
                 $user->updateLogInTime($email);
                 Application::$app->response->redirect('/');
-                return;
+                // return;
             }
         }
         return $this->render('auth/login', ['model' => $loginForm]);
