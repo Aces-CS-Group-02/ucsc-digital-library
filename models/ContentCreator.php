@@ -52,4 +52,15 @@ class ContentCreator extends DbModel
         }
         return $dataArray;
     }
+
+
+    public function findContentAuthors($content_id)
+    {
+        $content_creator_table = self::tableName();
+        $sql = "SELECT creator FROM $content_creator_table WHERE content_id = $content_id";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $authors = $statement->fetchAll(PDO::FETCH_OBJ);
+        return $authors;
+    }
 }

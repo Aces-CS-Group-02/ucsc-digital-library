@@ -255,15 +255,7 @@ $app->router->get('/test', [DummyController::class, "test"]);
 
 
 
-// Permission
-$app->router->get('/admin/set-access-permission', [PermissionsController::class, "browsePermissions"]);
-$app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
-$app->router->get('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
-$app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
-$app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
-$app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
-$app->router->get('/admin/view-access-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
-$app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
+
 
 
 
@@ -274,7 +266,6 @@ $app->router->get('/adv-search', [SearchController::class, "advancedS"]);
 
 
 // Content Collection
-
 $app->router->get('/admin/create-content-collection', [ContentCollectionController::class, "createContentCollection"]);
 $app->router->post('/admin/create-content-collection', [ContentCollectionController::class, "createContentCollection"]);
 $app->router->get('/admin/add-content', [ContentCollectionController::class, "addContents"]);
@@ -290,11 +281,27 @@ $app->router->post('/admin/reject-content-collection', [ContentCollectionControl
 
 
 
-// Permission
+// Collection Permission
+$app->router->get('/admin/set-access-permission', [PermissionsController::class, "browsePermissions"]);
+$app->router->get('/admin/set-access-permission/collections', [PermissionsController::class, "browseUsergroup"]);
+$app->router->get('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
+$app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
+$app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
+$app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
+$app->router->get('/admin/view-collection-permission', [PermissionsController::class, "viewAccessPermissionOnCollections"]);
+$app->router->post('/admin/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
+
+
+// Content Collection Permission
 $app->router->get('/admin/set-content-collection-access-permission', [PermissionsController::class, "browseContentCollectionPermissions"]);
 $app->router->get('/admin/set-content-collection-access-permission/content-collection', [PermissionsController::class, "browseUsergroupForContentCollection"]);
 $app->router->get('/admin/set-content-collection-access-permission/select-permission', [PermissionsController::class, "setPermissionToContentCollection"]);
 $app->router->post('/admin/set-content-collection-access-permission/select-permission', [PermissionsController::class, "setPermissionToContentCollection"]);
+$app->router->get('/admin/view-content-collection-permission', [PermissionsController::class, "viewContentCollectionPermission"]);
+$app->router->post('/admin/remove-content-collection-access-permission', [PermissionsController::class, "removeConentCollectionAccessPermission"]);
+
+
+
 // $app->router->post('/admin/set-access-permission/collections/select-permission', [PermissionsController::class, "setPermissionToCollection"]);
 // $app->router->get('/admin/set-access-permission/status-success', [PermissionsController::class, "statusSuccess"]);
 // $app->router->get('/admin/set-access-permission/status-failed', [PermissionsController::class, "statusSuccess"]);
@@ -302,12 +309,6 @@ $app->router->post('/admin/set-content-collection-access-permission/select-permi
 // $app->router->post('/remove-permission/collection', [PermissionsController::class, "removePermissionOnCollections"]);
 
 
-
-
-
-
-$app->router->get('/admin/view-content-collection-permission', [PermissionsController::class, "viewContentCollectionPermission"]);
-$app->router->post('/admin/remove-content-collection-access-permission', [PermissionsController::class, "removeConentCollectionAccessPermission"]);
 
 
 // Approve, Reject Content Collection Access Permission
@@ -323,10 +324,10 @@ $app->router->post('/admin/reject-collection-access-permission', [PermissionsCon
 
 
 
-
 // $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 
 
+$app->router->get('/content', [ContentController::class, 'viewContentAbstract']);
 
 
 

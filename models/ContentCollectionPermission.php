@@ -5,6 +5,7 @@ namespace app\models;
 use app\core\Application;
 use app\core\DbModel;
 use PDO;
+use stdClass;
 
 class ContentCollectionPermission extends DbModel
 {
@@ -147,5 +148,52 @@ class ContentCollectionPermission extends DbModel
         } else {
             return false;
         }
+    }
+
+    public function checkAccessPermission($content_id)
+    {
+        $content_collection_permission_table = ContentCollectionPermission::tableName();
+        $content_collection_content_table = ContentCollectionContent::tableName();
+        $usergroup_user_table = UsergroupUser::tableName();
+
+        $currentUser = Application::$app->user->reg_no;
+
+
+        $sql = "SELECT permission 
+                FROM $content_collection_permission_table a
+                JOIN (SELECT collection_id FROM $content_collection_content_table WHERE content_id = $content_id) b 
+                ON b.collection_id = a.content_collection_id
+                WHERE group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser)";
+
+
+
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $permission = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $permissionObj = new stdClass;
+
+
+        if ($permission) {
+            // echo 'you have access';
+            $permission_arr = [];
+            foreach ($permission as $p) {
+                array_push($permission_arr, (int)$p->permission);
+            }
+
+            $permissionObj->permission = true;
+
+            if (in_array(2, $permission_arr)) {
+                $permissionObj->grant_type = "READ_DOWNLOAD";
+            } else if (in_array(1, $permission_arr)) {
+                $permissionObj->grant_type = "READ";
+            }
+        } else {
+            // echo 'No Access permission';
+            $permissionObj->permission = false;
+            $permissionObj->grant_type = "NULL";
+        }
+
+        return $permissionObj;
     }
 }

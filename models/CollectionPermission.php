@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Application;
 use app\core\DbModel;
 use PDO;
 use stdClass;
@@ -54,23 +55,40 @@ class CollectionPermission extends DbModel
         return $statement->execute();
     }
 
-    public function getAccessPermissionOnCollections()
+    public function getAccessPermissionOnCollections($start, $limit)
     {
         $collection_permission_table = self::tableName();
-        $sql = "SELECT * FROM $collection_permission_table";
+        $currentUser = Application::$app->user->reg_no;
 
-        $statement = self::prepare($sql);
-        $statement->execute();
-        $data = $statement->fetchAll(PDO::FETCH_OBJ);
+        if (Application::getUserRole() <= 2) {
+            $sql = "SELECT 
+                        a.*, 
+                        b.name as ug_name, 
+                        c.first_name as ug_owner_fn, c.last_name as ug_owner_ln 
+                    FROM $collection_permission_table a
+                    JOIN usergroup b
+                    ON a.group_id=b.id
+                    JOIN user c
+                    ON b.creator=c.reg_no";
+        } else if (Application::getUserRole() == 3) {
+            $sql = "SELECT 
+                        a.*, 
+                        b.name as ug_name, 
+                        c.first_name as ug_owner_fn, c.last_name as ug_owner_ln 
+                    FROM $collection_permission_table a
+                    JOIN usergroup b
+                    ON a.group_id=b.id
+                    JOIN user c
+                    ON b.creator=c.reg_no
+                    WHERE b.creator=$currentUser";
+        }
+
+
+        $data = $this->paginate($sql, $start, $limit);
 
         $arr = [];
-        foreach ($data as $item) {
+        foreach ($data->payload as $item) {
             $collection_id = $item->collection_id;
-            $group_id = $item->group_id;
-            $permission = $item->permission;
-
-            $usergroupModel = new UserGroup();
-            $usergroup = $usergroupModel->findOne(['id' => $group_id]);
 
             $collectionModel = new Collection();
             $collection = $collectionModel->findOne(['collection_id' => $collection_id]);
@@ -86,36 +104,95 @@ class CollectionPermission extends DbModel
 
             $dataObj = new stdClass;
             $dataObj->collection_id = $collection_id;
-            $dataObj->group_id = $group_id;
+            $dataObj->group_id = $item->group_id;
             $dataObj->collection = $collection_path_str;
-            $dataObj->group = $usergroup->name;
-
-            switch ($permission) {
-                case 1:
-                    $permission_name = 'Read Only';
-                    break;
-                case 2:
-                    $permission_name = 'Read/Download';
-                    break;
-                case 3:
-                    $permission_name = 'Block';
-                    break;
-            }
-
-            $dataObj->permission = $permission_name;
-
+            $dataObj->group = $item->ug_name;
+            $dataObj->ug_owner_fn = $item->ug_owner_fn;
+            $dataObj->ug_owner_ln = $item->ug_owner_ln;
+            $dataObj->permission = $item->permission;
 
             array_push($arr, $dataObj);
         }
 
-        return $arr;
+        $retObj = new stdClass;
+        $retObj->pageCount = $data->pageCount;
+        $retObj->payload = $arr;
+
+        return $retObj;
     }
+
+
+
+    // public function viewCollectionPermissions($Search_params, $start, $limit)
+    // {
+    //     $sql = "SELECT * FROM collection_permission";
+    //     $statement = self::prepare($sql);
+    //     $statement->execute();
+    //     $data = $statement->fetchAll(PDO::FETCH_OBJ);
+    // }
 
     public function removeCollectionPermission($collection_id, $group_id)
     {
         $collection_permission_table = self::tableName();
+
+        $currentUser = Application::$app->user->reg_no;
+
+        if (Application::getUserRole() == 3) {
+            $sql_temp = "SELECT * FROM usergroup WHERE id=$group_id AND creator=$currentUser";
+            $statement = self::prepare($sql_temp);
+            $statement->execute();
+            $res = $statement->fetch(PDO::FETCH_OBJ);
+            if (!$res) return false;
+        }
+
         $sql = "DELETE FROM $collection_permission_table WHERE collection_id=$collection_id AND group_id=$group_id";
+
         $statement = self::prepare($sql);
         return $statement->execute();
+    }
+
+
+    public function checkAccessPermission($collection_id)
+    {
+        $collection_permission_table = self::tableName();
+        $usergroup_user_table = UsergroupUser::tableName();
+
+        $currentUser = Application::$app->user->reg_no;
+
+        $sql = "SELECT permission
+                FROM $collection_permission_table 
+                WHERE collection_id=$collection_id
+                AND group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser)";
+
+
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $permission = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+        $permissionObj = new stdClass;
+
+
+        if ($permission) {
+            // echo 'you have access';
+            $permission_arr = [];
+            foreach ($permission as $p) {
+                array_push($permission_arr, (int)$p->permission);
+            }
+
+            $permissionObj->permission = true;
+
+            if (in_array(2, $permission_arr)) {
+                $permissionObj->grant_type = "READ_DOWNLOAD";
+            } else if (in_array(1, $permission_arr)) {
+                $permissionObj->grant_type = "READ";
+            }
+        } else {
+            // echo 'No Access permission';
+            $permissionObj->permission = false;
+            $permissionObj->grant_type = "NULL";
+        }
+
+        return $permissionObj;
     }
 }
