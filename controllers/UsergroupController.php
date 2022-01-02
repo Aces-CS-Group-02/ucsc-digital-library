@@ -61,6 +61,72 @@ class UsergroupController extends Controller
         return $this->render("/admin/user/admin-create-user-group", ['breadcrum' => $breadcrum]);
     }
 
+    // public function addUsers(Request $request)
+    // {
+    //     $data = $request->getBody();
+    //     $data_keys = array_keys($data);
+    //     if (!in_array('usergroup-id', $data_keys)) throw new NotFoundException();
+
+    //     $Search_params = $data['q'] ?? '';
+
+    //     $page = isset($data['page']) ? $data['page'] : 1;
+
+    //     $limit = 10;
+    //     $start = ($page - 1) * $limit;
+
+    //     $usergroupModel = new UserGroup();
+
+
+    //     $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
+
+    //     if ($user_group) {
+
+    //         $row_count = $usergroupModel->getAllUsersNotInThisGroup(
+    //             $data['usergroup-id'],
+    //             $Search_params,
+    //             true // Fetch row count
+    //         );
+    //         $pageCount = ceil($row_count / $limit);
+
+    //         $paginateController = new PaginatePathController();
+
+    //         if (($page > $pageCount)) {
+    //             if ($pageCount) {
+    //                 $path = $paginateController->getNewPath($pageCount);
+    //                 Application::$app->response->redirect($path);
+    //                 exit;
+    //             }
+    //         }
+
+    //         $paginateController->validatePage($page, $pageCount);
+
+    //         $users_list = $usergroupModel->getAllUsersNotInThisGroup(
+    //             $data['usergroup-id'],
+    //             $Search_params,
+    //             false, // Fetch Data
+    //             $start,
+    //             $limit
+    //         );
+
+    //         $breadcrum = [
+    //             self::BREADCRUM_DASHBOARD,
+    //             self::BREADCRUM_MANAGE_USERS,
+    //             self::BREADCRUM_MANAGE_USERGROUPS
+    //         ];
+
+    //         array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->id"]);
+
+    //         array_push($breadcrum, self::BREADCRUM_ADD_USERGROUP_USERS);
+
+
+
+    //         $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+    //     } else {
+    //         throw new NotFoundException();
+    //     }
+    // }
+
+
     public function addUsers(Request $request)
     {
         $data = $request->getBody();
@@ -68,45 +134,28 @@ class UsergroupController extends Controller
         if (!in_array('usergroup-id', $data_keys)) throw new NotFoundException();
 
         $Search_params = $data['q'] ?? '';
-
         $page = isset($data['page']) ? $data['page'] : 1;
-
+        if ($page <= 0) $page = 1;
         $limit = 10;
         $start = ($page - 1) * $limit;
 
         $usergroupModel = new UserGroup();
 
-
         $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
 
         if ($user_group) {
+            $users = $usergroupModel->getAllUsersNotInThisGroup($data['usergroup-id'], $Search_params, $start, $limit);
 
-            $row_count = $usergroupModel->getAllUsersNotInThisGroup(
-                $data['usergroup-id'],
-                $Search_params,
-                true // Fetch row count
-            );
-            $pageCount = ceil($row_count / $limit);
-
-            $paginateController = new PaginatePathController();
-
-            if (($page > $pageCount)) {
-                if ($pageCount) {
-                    $path = $paginateController->getNewPath($pageCount);
-                    Application::$app->response->redirect($path);
-                    exit;
+            if ($users->pageCount != 0 && $page > $users->pageCount) {
+                $paginateController = new PaginatePathController();
+                if (($page > $users->pageCount)) {
+                    if ($users->pageCount) {
+                        $path = $paginateController->getNewPath($users->pageCount);
+                        Application::$app->response->redirect($path);
+                        exit;
+                    }
                 }
             }
-
-            $paginateController->validatePage($page, $pageCount);
-
-            $users_list = $usergroupModel->getAllUsersNotInThisGroup(
-                $data['usergroup-id'],
-                $Search_params,
-                false, // Fetch Data
-                $start,
-                $limit
-            );
 
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
@@ -118,9 +167,7 @@ class UsergroupController extends Controller
 
             array_push($breadcrum, self::BREADCRUM_ADD_USERGROUP_USERS);
 
-
-
-            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
+            $this->render('admin/user/add-users', ['group' => $user_group, 'users_list' => $users->payload, 'pageCount' => $users->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum]);
         } else {
             throw new NotFoundException();
         }
@@ -176,52 +223,31 @@ class UsergroupController extends Controller
     public function manageUserGroup(Request $request)
     {
         $data = $request->getBody();
-
         $Search_params = $data['q'] ?? '';
         $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
         $limit = 10;
         $start = ($page - 1) * $limit;
 
-
         $usergroupModel = new UserGroup();
-
-
 
         $user_group = $usergroupModel->findOne(['id' => $data['usergroup-id']]);
         if (!$user_group) throw new NotFoundException();
 
-
         $show_request_approval_btn = false;
         if ($user_group->status === 3) $show_request_approval_btn = true;
 
-
-        $row_count = $usergroupModel->getAllUsersInUserGroup(
-            $data['usergroup-id'],
-            $Search_params,
-            true // Fetch row count
-        );
-        $pageCount = ceil($row_count / $limit);
+        $users = $usergroupModel->getAllUsersInUserGroup($data['usergroup-id'], $Search_params, $start, $limit);
 
         $paginateController = new PaginatePathController();
 
-        if (($page > $pageCount)) {
-            if ($pageCount) {
-                $path = $paginateController->getNewPath($pageCount);
+        if (($page > $users->pageCount)) {
+            if ($users->pageCount) {
+                $path = $paginateController->getNewPath($users->pageCount);
                 Application::$app->response->redirect($path);
                 exit;
             }
         }
-
-        $paginateController->validatePage($page, $pageCount);
-
-        $users_list = $usergroupModel->getAllUsersInUserGroup(
-            $data['usergroup-id'],
-            $Search_params,
-            false, // Fetch Data
-            $start,
-            $limit
-        );
-
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
@@ -231,7 +257,7 @@ class UsergroupController extends Controller
 
         array_push($breadcrum, ['name' => $user_group->name, 'link' => "/admin/manage-usergroup?usergroup-id=$user_group->id"]);
 
-        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users_list, 'pageCount' => $pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'show_request_approval_btn' => $show_request_approval_btn]);
+        $this->render("admin/user/manage-usergroup", ['group' => $user_group, 'users_list' => $users->payload, 'pageCount' => $users->pageCount, 'currentPage' => $page, 'search_params' => $Search_params, 'breadcrum' => $breadcrum, 'show_request_approval_btn' => $show_request_approval_btn]);
     }
 
 

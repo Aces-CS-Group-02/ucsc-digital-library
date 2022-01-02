@@ -163,11 +163,27 @@ $userRole = "admin";
                 </a>
             </div>
             <div class="card-container">
+                <a href="/admin/view-collection-permission" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\manage-collection-permissions.png" alt=" cloud-image">
+                    </div>
+                    <div class="card-content ">Manage Community-Collection Access Permission</div>
+                </a>
+            </div>
+            <div class="card-container">
                 <a href="/admin/set-content-collection-access-permission" class="card box-shadow-1">
                     <div class="card-icon">
                         <img class="card-icon-img" src="/assets\admin-manage-content\set-content-collection-access-permission.png" alt=" cloud-image">
                     </div>
                     <div class="card-content ">Set Content Collection Access Permission</div>
+                </a>
+            </div>
+            <div class="card-container">
+                <a href="/admin/view-content-collection-permission" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\manage-content-collection-permissions.png" alt=" cloud-image">
+                    </div>
+                    <div class="card-content ">Manage Content Collection Access Permission</div>
                 </a>
             </div>
         </div>
