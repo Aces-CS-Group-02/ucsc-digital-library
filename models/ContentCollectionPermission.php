@@ -156,15 +156,23 @@ class ContentCollectionPermission extends DbModel
         $content_collection_content_table = ContentCollectionContent::tableName();
         $usergroup_user_table = UsergroupUser::tableName();
 
-        $currentUser = Application::$app->user->reg_no;
 
+        if (Application::$app->user) {
+            $currentUser = Application::$app->user->reg_no;
+            $sql = "SELECT permission 
+                    FROM $content_collection_permission_table a
+                    JOIN (SELECT collection_id FROM $content_collection_content_table WHERE content_id = $content_id) b 
+                    ON b.collection_id = a.content_collection_id
+                    WHERE group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser UNION SELECT 1)";
+        } else {
+            $sql = "SELECT permission 
+                    FROM $content_collection_permission_table a
+                    JOIN (SELECT collection_id FROM $content_collection_content_table WHERE content_id = $content_id) b 
+                    ON b.collection_id = a.content_collection_id
+                    WHERE group_id IN(1)";
 
-        $sql = "SELECT permission 
-                FROM $content_collection_permission_table a
-                JOIN (SELECT collection_id FROM $content_collection_content_table WHERE content_id = $content_id) b 
-                ON b.collection_id = a.content_collection_id
-                WHERE group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser)";
-
+            // SYSTEMP_PUBLIC usergroup has id 1
+        }
 
 
         $statement = self::prepare($sql);
