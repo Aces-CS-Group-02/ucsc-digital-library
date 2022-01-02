@@ -104,6 +104,7 @@ class PermissionsController extends Controller
     {
         $data = $request->getBody();
 
+        $redirect = $data['redirect'] ?? false;
 
         $collectionModel = new Collection();
         $collection = $collectionModel->findOne(['collection_id' => $data['collection-id']]);
@@ -148,7 +149,7 @@ class PermissionsController extends Controller
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel]);
+                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect]);
                     }
                 } else if (Application::getUserRole() == 3) {
                     $pendingContentCollectionPermissionModel = new PendingCollectionPermission();
@@ -170,7 +171,7 @@ class PermissionsController extends Controller
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
                             }
                         }
                     } else {
@@ -188,7 +189,7 @@ class PermissionsController extends Controller
                             }
                         } else {
 
-                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
                         }
                     }
                 }
@@ -206,7 +207,7 @@ class PermissionsController extends Controller
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel]);
+                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect]);
                     }
                 } else if (Application::getUserRole() == 3) {
 
@@ -231,7 +232,7 @@ class PermissionsController extends Controller
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
                             }
                         }
                     } else {
@@ -247,16 +248,21 @@ class PermissionsController extends Controller
                                 $msgType = 'error';
                             }
                         } else {
-                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel]);
+                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
                         }
                     }
                 }
             }
 
             Application::$app->session->setFlashMessage($msgType, $msg);
-            Application::$app->response->redirect('/admin/set-access-permission');
+
+            if (isset($data['redirect']) && $data['redirect']) {
+                Application::$app->response->redirect('/admin/view-collection-permission');
+            } else {
+                Application::$app->response->redirect('/admin/set-access-permission');
+            }
         } else {
-            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id]);
+            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'redirect' => $redirect]);
         }
     }
 

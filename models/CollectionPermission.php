@@ -157,12 +157,21 @@ class CollectionPermission extends DbModel
         $collection_permission_table = self::tableName();
         $usergroup_user_table = UsergroupUser::tableName();
 
-        $currentUser = Application::$app->user->reg_no;
+        if (Application::$app->user) {
+            $currentUser = Application::$app->user->reg_no;
+            $sql = "SELECT permission
+                    FROM $collection_permission_table 
+                    WHERE collection_id=$collection_id
+                    AND group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser UNION SELECT 1)";
+        } else {
+            $sql = "SELECT permission
+                    FROM $collection_permission_table 
+                    WHERE collection_id=$collection_id
+                    AND group_id IN(1)";
 
-        $sql = "SELECT permission
-                FROM $collection_permission_table 
-                WHERE collection_id=$collection_id
-                AND group_id IN(SELECT group_id FROM $usergroup_user_table WHERE user_reg_no = $currentUser)";
+            // SYSTEMP_PUBLIC usergroup has id 1
+
+        }
 
 
         $statement = self::prepare($sql);

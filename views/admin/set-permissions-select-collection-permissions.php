@@ -147,6 +147,7 @@ use app\core\Application;
                         <form class='permission-form' action="" method="POST">
                             <input type="hidden" name="collection-id" value="<?= $params['collection-id'] ?>" />
                             <input type="hidden" name="usergroup-id" value="<?= $params['usergroup']->id ?>" />
+                            <input type="hidden" name="redirect" value="<?= $params['redirect'] ?>" />
                             <div class='radio-btns-container'>
                                 <div class='radio-btn-input-group'>
                                     <input type="radio" name='permission' value="1" />

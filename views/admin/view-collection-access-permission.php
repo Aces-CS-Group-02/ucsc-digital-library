@@ -25,7 +25,7 @@ use app\core\Application;
     <link rel="stylesheet" href="/css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
-    <link rel="stylesheet" href="/css/local-styles/view-access-permission.css">
+    <link rel="stylesheet" href="/css/local-styles/view-collection-access-permission.css">
 
 
 
@@ -151,6 +151,13 @@ use app\core\Application;
                                 </div>
                             </div>
                             <div class='item-info-btn-side'>
+                                <form action="/admin/set-access-permission/collections/select-permission" method="GET">
+                                    <input type='hidden' name='collection-id' value='<?= $data->collection_id ?>' />
+                                    <input type='hidden' name='usergroup-id' value='<?= $data->group_id ?>' />
+                                    <input type='hidden' name='redirect' value='true' />
+                                    <button class="btn action-btn-2-edit btn-update>Remove">Edit</button>
+                                </form>
+
                                 <form action="/admin/remove-permission/collection" method="POST">
                                     <input type='hidden' name='collection-id' value='<?= $data->collection_id ?>' />
                                     <input type='hidden' name='group-id' value='<?= $data->group_id ?>' />
