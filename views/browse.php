@@ -17,6 +17,7 @@ use app\core\Application;
     <link rel="stylesheet" href="./css/global-styles/style.css">
     <link rel="stylesheet" href="./css/global-styles/nav.css">
     <link rel="stylesheet" href="./css/global-styles/footer.css">
+    <link rel="stylesheet" href="./css/global-styles/paginate.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -32,10 +33,7 @@ use app\core\Application;
 </head>
 
 <body>
-
-
     <!-- NAVIGATION BAR -->
-
     <?php include_once __DIR__ . '/components/nav.php'; ?>
 
     <!-- SEARCH CONTENT -->
@@ -43,46 +41,9 @@ use app\core\Application;
         Browse
     </div>
     <div class="main-container">
-        <!-- <div class="heading-container">
-            Browse
-        </div> -->
-        <div class="left-panel-container">
-            <div class="left-panel-card box-shadow-1">
-                <div class="left-panel-card-title">
-                    <h5>Browse menu</h5>
-                </div>
-                <!-- <div class="left-panel-card-item">
-                    Community 1
-                </div>
-                <div class="left-panel-card-item">
-                    Community 2
-                </div>
-                <div class="left-panel-card-item">
-                    Community 3
-                </div>
-                <div class="left-panel-card-footer">
-                    Community 4
-                </div> -->
-            </div>
-            <!-- <a href="/suggest-content" style="text-decoration: none;">
-                <div class="left-panel-card box-shadow-1">
-                    <div class="left-panel-card-title">
-                        <h5>Suggest New Content</h5>
-                    </div>
-                </div>
-            </a> -->
-            <div class="left-panel-card">
-                <!-- <div class="left-panel-card-title"> -->
-                <?php if (Application::$app->getUserRole()) { ?>
-                <a href="/suggest-content" class="edit-link">
-                    Suggest New Content
-                </a>
-                <?php } ?>
-                <!-- </div> -->
-            </div>
 
-        </div>
-        <div class="search-result-container">
+
+        <div class="wrapper">
 
             <!-- Flash Message Success -->
             <?php
@@ -104,7 +65,6 @@ use app\core\Application;
 
             <?php } ?>
 
-
             <!-- Flash Message Error -->
             <?php
             if (Application::$app->session->getFlashMessage('error')) { ?>
@@ -120,128 +80,140 @@ use app\core\Application;
                 </div>
             <?php } ?>
 
+            <div class="filters-container">
+                <?php if ($params['type'] === 'dateissued') { ?>
+                    <p>Browse By Date Issued</p>
+                    <form action="" method="GET">
+                        <input type="hidden" name='type' value='dateissued' />
+                        <label>Choose Year</label>
+                        <select name="year">
+                            <option selected="selected" value="-1">Select a year</option>
+                            <?php for ($i = 1950; $i <= (int)date("Y"); $i++) { ?>
+                                <option value="<?= $i ?>"><?= $i ?></option>
+                            <?php } ?>
+                        </select>
 
-            <div class="open-side-menu">
-                <button class="btn btn-light mr-1 mb-1" type="button">Show Menu</button>
-            </div>
-            <!-- <div class="search-result-info">
-                <h6>15,000 Results for: <b>Javascript</b></h6>
-                <h6>Showing 1-20 of 15,000 results | Page : 01</h6>
-            </div> -->
-            <div class="search-card box-shadow-1">
-                <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/91crsfALwBL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
-                </div>
-                <div class="search-card-details">
-                    <div class="search-card-title">
-                        <h5>Beginnnig C++ Game Programming</h5>
-                    </div>
-                    <div class="search-card-views">
-                        <h6>1.5K views . 200 Cited</h6>
-                    </div>
-                    <div class="search-card-creator">
-                        <h6>Phu H. Phung </h6>
-                    </div>
-                    <div>
-                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
-                    </div>
-                    <div class="icon-bar">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-download"></i>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-quote-right"></i>
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
 
-            </div>
+                        <label>Choose Year</label>
+                        <select name="month">
+                            <option selected="selected" value="-1">Select a month</option>
+                            <?php for ($i = 1; $i <= 12; $i++) { ?>
+                                <option value="<?= $i ?>"><?php
+                                                            $monthName = date("F", mktime(0, 0, 0, $i, 10));
+                                                            echo $monthName;
+                                                            ?></option>
+                            <?php } ?>
+                        </select>
 
-            <div class="search-card box-shadow-1">
-                <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
-                </div>
-                <div class="search-card-details">
-                    <div class="search-card-title">
-                        <h5>Learning PHP, MySQL & JavaScript</h5>
-                    </div>
-                    <div class="search-card-views">
-                        <h6>1.5K views . 200 Cited</h6>
-                    </div>
-                    <div class="search-card-creator">
-                        <h6>Phu H. Phung </h6>
-                    </div>
-                    <div>
-                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
-                    </div>
-                    <div class="icon-bar">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-download"></i>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-quote-right"></i>
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
+                        <label>In Order</label>
+                        <select name="order">
+                            <option value="DESC">DESC</option>
+                            <option value="ASC">ASC</option>
+                        </select>
 
-            </div>
 
-            <div class="search-card box-shadow-1">
-                <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/810p+IMoNbL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
-                </div>
-                <div class="search-card-details">
-                    <div class="search-card-title">
-                        <h5>Java Coding Problems</h5>
-                    </div>
-                    <div class="search-card-views">
-                        <h6>1.5K views . 200 Cited</h6>
-                    </div>
-                    <div class="search-card-creator">
-                        <h6>Phu H. Phung </h6>
-                    </div>
-                    <div>
-                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
-                    </div>
-                    <div class="icon-bar">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-download"></i>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-quote-right"></i>
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
+                        <label>Result per page</label>
+                        <select name="rpp">
+                            <?php for ($i = 5; $i <= 100; $i += 5) { ?>
+                                <option <?php if ($i == 20) {
+                                            echo "selected='selected'";
+                                        } ?> value="<?= $i ?>"><?= $i ?></option>
+
+
+
+                            <?php } ?>
+                        </select>
+
+                        <button>GO</button>
+                    </form>
+                <?php } ?>
+
+
+                <?php if ($params['type'] === 'title') { ?>
+                    <p>Browse By Title</p>
+                    <form action="" method="GET">
+                        <input type="hidden" name='type' value='title' />
+
+                        <select name="starts_with">
+                            <option selected="selected" value="-1">Starts with</option>
+                            <option value="100">0-9</option>
+                            <?php for ($i = 65; $i <= 91; $i++) { ?>
+                                <option value="<?= $i ?>"><?php echo chr($i) ?></option>
+                            <?php } ?>
+                        </select>
+
+
+                        <label>In Order</label>
+                        <select name="order">
+                            <option value="ASC">ASC</option>
+                            <option value="DESC">DESC</option>
+                        </select>
+
+
+                        <label>Result per page</label>
+                        <select name="rpp">
+                            <?php for ($i = 5; $i <= 100; $i += 5) { ?>
+                                <option <?php if ($i == 20) {
+                                            echo "selected='selected'";
+                                        } ?> value="<?= $i ?>"><?= $i ?></option>
+
+
+
+                            <?php } ?>
+                        </select>
+
+                        <button>GO</button>
+                    </form>
+                <?php } ?>
+
 
             </div>
 
-            <div class="search-card box-shadow-1">
-                <div class="search-card-img">
-                    <img src="https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
-                </div>
-                <div class="search-card-details">
-                    <div class="search-card-title">
-                        <h5>Modern C++ Programming Cookbook</h5>
-                    </div>
-                    <div class="search-card-views">
-                        <h6>1.5K views . 200 Cited</h6>
-                    </div>
-                    <div class="search-card-creator">
-                        <h6>Phu H. Phung </h6>
-                    </div>
-                    <div>
-                        <p class="line-clamp line-clamp-x-description">The The large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. large majority of websites nowadays embeds third-party JavaScript into their pages, coming from external partners. …</p>
-                    </div>
-                    <div class="icon-bar">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-download"></i>
-                        <i class="fas fa-plus"></i>
-                        <i class="fas fa-quote-right"></i>
-                        <i class="fas fa-share"></i>
-                    </div>
-                </div>
+            <div class="result-container">
 
+                <?php foreach ($params['data'] as $result) { ?>
+                    <div class="search-card box-shadow-1">
+                        <div class="search-card-img">
+                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                        </div>
+                        <div class="search-card-details">
+                            <div class="search-card-title">
+                                <a href="/content?content_id=<?= $result->content_id ?>">
+                                    <h5><?= $result->title ?></h5>
+                                </a>
+                            </div>
+                            <div class="search-card-views">
+                                <h6>1.5K views . 200 Cited</h6>
+                            </div>
+                            <div class="search-card-creator">
+                                <h6>
+                                    <?= $result->creators ?>
+                                </h6>
+                            </div>
+                            <div>
+                                <p class="line-clamp line-clamp-x-description"><?= $result->abstract ?></p>
+                            </div>
+                            <div class="icon-bar">
+                                <i class="fas fa-heart" data-id="<?= $result->content_id ?>"></i>
+                                <i class="fas fa-download"></i>
+                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-quote-right"></i>
+                                <i class="fas fa-share"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                <?php } ?>
             </div>
-
         </div>
     </div>
+
+    <?php if ($params['data']) { ?>
+        <?php include_once __DIR__ . '/components/paginate.php'; ?>
+    <?php } else { ?>
+        No Entries
+    <?php } ?>
+
 
     <!-- FOOTER -->
 
