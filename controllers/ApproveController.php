@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\exception\NotFoundException;
 use app\core\Mail;
 use app\core\middlewares\AuthMiddleware;
 use app\core\middlewares\LIAAccessPermissionMiddleware;
@@ -154,5 +155,32 @@ class ApproveController extends Controller
                 return $this->render('auth/registration-request');
             }
         }
+    }
+    public function viewNewUserDetails(Request $request)
+    {
+        $registrationRequest = new RegistrationRequest;
+
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+ 
+         if(!in_array('id',$data_keys)){
+             throw new NotFoundException();
+         }
+ 
+         
+         $registrationRequest = $registrationRequest->findOne(['request_id' => $data['id']]);
+         if($registrationRequest){
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_USERS,
+                self::BREADCRUM_APPROVE_NEW_USERS,
+                self::BREADCRUM_APPROVE_NEW_USER
+            ];
+
+             return $this->render('admin/approve/info-approve-new-user',['model' => $registrationRequest, 'breadcrum'=>$breadcrum]);
+         }
+         throw new NotFoundException();
+ 
+        
     }
 }

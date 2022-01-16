@@ -16,6 +16,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -47,13 +48,57 @@ $userRole = "student";
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
 
+
         <div class="wrapper">
+            <div class="second-border">
+                <!-- Flash Message -->
+                <?php
+
+                use app\core\Application;
+
+                if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+
+                <?php
+
+
+                if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+            </div>
 
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search content">
+                            <input type="text" placeholder="Search content by title" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -155,266 +200,65 @@ $userRole = "student";
                     <div class="block-d">Date</div>
                     <div class="block-e">Action</div>
                 </div>
-
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
+                <?php foreach ($params['content'] as $content) { ?>
+                    <div class="unpublish-content-container">
+                        <div class="unpublish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $content->title; ?></p>
                             </div>
-                            <p>Software Enginnering at Google</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php
+                                    echo $content->creators[0]['creator'];
+                                    for ($i = 1; $i < count($content->creators); $i++) {
+                                        echo ', ' . $content->creators[$i]['creator'];
+                                    } ?></p>
                             </div>
-                            <p>Titus Winters</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php
+                                    $date = new DateTime($content->date);
+                                    echo $date->format('Y-m-d'); ?></p>
                             </div>
-                            <p>17/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
+                            <div class="block-e">
+                                <p>
+                                <form action="/admin/unpublish-content/view" method="GET">
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id; ?>">View</button>
+                                </form>
+                                <form action="/admin/unpublish-content/unpublish" method="POST">
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id; ?>">Unpublish</button>
+                                </form>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
+                <?php if (empty($params['content'])) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } ?>
+                <?php
 
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Architecture in Practice</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Len Bass</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>10/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                if (!empty($params['content']) && isset($params['pageCount'])) {
+                    include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+                }
+                ?>
 
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Clean Architecture</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Robert C martin</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/11/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Beginning Angular with typescript</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>greg Lim</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Programming PHP</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Kevin Tatroe</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>16/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>learning Angular</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Pablo Deelemen</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>16/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Modern C++ Programming Cookbook</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Marius Bancila</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>02/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="unpublish-content-container">
-                    <div class="unpublish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Beginning C++ Game programming</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>John Horton</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>16/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Unpublish</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
     </div>
+
 
     <!-- FOOTER -->
 

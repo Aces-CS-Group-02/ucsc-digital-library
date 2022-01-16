@@ -42,4 +42,12 @@ class RegistrationRequest extends DbModel
         // $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }
+    public function getUserDetails($request_id)
+    {
+        $tableName = static::tableName();
+        $statement = self::prepare("SELECT * FROM $tableName WHERE request_id = $request_id");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
 }

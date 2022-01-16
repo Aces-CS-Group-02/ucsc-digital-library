@@ -42,7 +42,102 @@ class Content extends DbModel
     {
         return [];
     }
+    public function getAllUnpublishContent($search_params, $start, $limit)
+    {
+        $tableName = static::tableName();
 
+        $sql = "SELECT content_id, title, date 
+                                    FROM content              
+                                    WHERE publish_state = 0 
+                                    AND title LIKE '%$search_params%'";
+
+        return $this->paginate($sql, $start, $limit);
+    }
+    public function getAllPublishContent($search_params, $start, $limit)
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT content_id, title, date 
+                                    FROM content               
+                                    WHERE publish_state = 1
+                                    AND title LIKE '%$search_params%'";
+
+
+        return $this->paginate($sql, $start, $limit);
+    }
+    public function getInfoUnpublishedContent($content_id)
+    {
+        $tableName = self::tableName();
+
+        $statement = self::prepare("SELECT content.content_id, content.title, content.date, content.subject,  content.isbn, content.abstract, content.publisher,
+                                    content_language.language, content_type.name as type_name
+                                    FROM content 
+                                    LEFT JOIN content_language ON content.language = content_language.language_id
+                                    LEFT JOIN content_type ON content.type = content_type.content_type_id               
+                                    WHERE publish_state = 0 AND content.content_id = $content_id");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
+    public function getInfoPublishedContent($content_id)
+    {
+        $tableName = self::tableName();
+
+        $statement = self::prepare("SELECT content.content_id, content.title, content.date, content.subject,  content.isbn, content.abstract, content.publisher,
+                                    content_language.language, content_type.name as type_name
+                                    FROM content 
+                                    LEFT JOIN content_language ON content.language = content_language.language_id
+                                    LEFT JOIN content_type ON content.type = content_type.content_type_id               
+                                    WHERE publish_state = 1 AND content.content_id = $content_id");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
+    public function doPublishContent($content_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("UPDATE content 
+                                    SET publish_state = 1
+                                    WHERE content_id = $content_id");
+
+        return $statement->execute();
+    }
+    public function doUnpublishContent($content_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("UPDATE content 
+                                    SET publish_state = 0
+                                    WHERE content_id = $content_id");
+
+        return $statement->execute();
+    }
+    public function deleteContent($content_id)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("DELETE FROM content
+                                    WHERE content_id = $content_id");
+
+        return $statement->execute();
+    }
+    public function getAllContent($search_params, $start, $limit)
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT content.content_id, content.title, content.date,content.publish_state, content_type.name as type_name
+                                    FROM content  
+                                    LEFT JOIN content_type ON content.type = content_type.content_type_id             
+                                    WHERE title LIKE '%$search_params%'";
+        return $this->paginate($sql, $start, $limit);
+    }
+    public function getInfoContent($content_id)
+    {
+        $tableName = self::tableName();
+
+        $statement = self::prepare("SELECT content.content_id, content.title, content.date, content.subject,  content.isbn, content.abstract, content.publisher,
+                                content_language.language, content_type.name as type_name
+                                FROM content 
+                                LEFT JOIN content_language ON content.language = content_language.language_id
+                                LEFT JOIN content_type ON content.type = content_type.content_type_id               
+                                WHERE content.content_id = $content_id");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_OBJ);
+    }
     public function browseByDateIssued($start, $limit, $year, $month, $order, $rpp, $collections)
     {
         $bindData = [];
@@ -164,6 +259,7 @@ class Content extends DbModel
                     $year_filter = "AND YEAR(a.date) = ?";
                     array_push($bindData, ['value' => $year, 'type' => PDO::PARAM_INT]);
                 }
+
 
                 $month_filter = '';
                 if ($month && $month >= 1 && $month <= 12) {

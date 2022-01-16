@@ -32,7 +32,7 @@ if ($user) {
                 </form>
             </div>
             <a class="nav-link" href="/browse">Browse</a>
-            <a class="nav-link" href="#">Help</a>
+            <a class="nav-link" href="/help">Help</a>
 
 
             <?php if (!$user) { ?>
@@ -182,7 +182,7 @@ if ($user) {
                         <p>Notifications</p>
                     </div>
                 </a>
-                <a href="#" class="slide-panel-link">
+                <a href="/help" class="slide-panel-link">
                     <div class="dropdown-menu-link-item">
                         <i class="fas fa-question-circle"></i>
                         <p>Help</p>

@@ -22,6 +22,7 @@ class Controller
     // Manage Users Dashboard
     public const BREADCRUM_BULK_REGISTER = ['name' => 'Bulk register', 'link' => '/admin/bulk-register'];
     public const BREADCRUM_APPROVE_NEW_USERS = ['name' => 'Approve new users', 'link' => '/admin/verify-new-users'];
+    public const BREADCRUM_APPROVE_NEW_USER = ['name' => 'Approve new user', 'link' => '/admin/info-verify-new-users'];
     public const BREADCRUM_UPDATE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_DELETE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_CREATE_USER_GROUPS = ['name' => 'Create user group', 'link' => '/admin/create-user-group'];
@@ -39,6 +40,8 @@ class Controller
     public const BREADCRUM_BULK_UPLOAD = ['name' => 'Bulk upload', 'link' => '/admin/bulk-upload'];
     public const BREADCRUM_PUBLISH_CONTENT = ['name' => 'Publish content', 'link' => '/admin/publish-content'];
     public const BREADCRUM_UNPUBLISH_CONTENT = ['name' => 'Unpublish content', 'link' => '/admin/unpublish-content'];
+    public const BREADCRUM_PUBLISH_CONTENT_VIEW = ['name' => 'Published content view', 'link' => '/admin/publish-content/view'];
+    public const BREADCRUM_UNPUBLISH_CONTENT_VIEW = ['name' => 'Unpublished content view', 'link' => '/admin/unpublish-content/view'];
     public const BREADCRUM_REMOVE_CONTENT = ['name' => 'Delete content', 'link' => '/admin/remove-content'];
     public const BREADCRUM_CREATE_SUB_COMMUNITY = ['name' => 'Create sub community', 'link' => ''];
     public const BREADCRUM_CREATE_COLLECTION = ['name' => 'Create collection', 'link' => ''];
@@ -53,6 +56,7 @@ class Controller
 
     public const BREADCRUM_BULK_UPLOAD_REVIEW = ['name' => 'Review', 'link' => '/admin/bulk-upload/review'];
     public const BREADCRUM_MANAGE_CONTENTS = ['name' => 'Manage contents', 'link' => '/admin/manage-content'];
+    public const BREADCRUM_MANAGE_CONTENTS_VIEW = ['name' => 'Manage contents view', 'link' => '/admin/manage-content/view'];    
     public const BREADCRUM_MY_SUBMISSIONS = ['name' => 'My submissions', 'link' => '/admin/my-submissions'];
     public const BREADCRUM_VIEW_ALL_USER_GROUPS = ['name' => 'View all usergroups', 'link' => '/admin/user-groups'];
 
@@ -71,6 +75,7 @@ class Controller
     public const BREADCRUM_APPROVE_SUBMISSIONS = ['name' => 'Approve submissions', 'link' => '/admin/approve-submissions'];
 
     public const BREADCRUM_APPROVE_USER_GROUPS = ['name' => 'Approve user groups', 'link' => '/admin/approve-user-groups'];
+
 
 
 

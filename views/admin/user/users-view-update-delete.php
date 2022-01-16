@@ -49,6 +49,39 @@ $userRole = "student";
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="wrapper">
+
+
+            <?php
+
+            if (Application::$app->session->getFlashMessage('success')) {
+            ?>
+                <div class="alert alert-success" id="flash-msg-alert">
+                    <strong>Success!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+            <?php } ?>
+
+            <?php
+            if (Application::$app->session->getFlashMessage('error')) {
+            ?>
+                <div class="alert alert-warning" id="flash-msg-alert">
+                    <strong>Error!</strong>
+
+                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                    <button class="close" type="button" id="flash-msg-remove">
+                        <span class="font-weight-light"></span>
+                        <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
+                    </button>
+                </div>
+            <?php } ?>
+
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
                     <form action="">
@@ -159,6 +192,9 @@ $userRole = "student";
 
                 <div class="users-ud-container">
                     <?php foreach ($params['users'] as $user) { ?>
+                        <?php $id = $user->reg_no;
+                               $fName = $user->first_name;
+                               $lName = $user->last_name; ?>
                         <div class="users-ud-info">
                             <div class="block-a">
                                 <div class="block-title">
@@ -196,12 +232,38 @@ $userRole = "student";
                             <div class="block-e">
                                 <p>
                                     <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" type="button">Delete</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" onclick="showModal(<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Delete</button>
                                 </p>
+                                <!-- Modal to enter a message why deleting the user -->
+                                <div id="myModal" class="modal">
+                                    <div class="modal-content">
+                                        <form id="modal-form" action="" method="POST">
+                                            <div class="modal-top-section modal-title">
+                                                <div class="title-section">
+                                                    <p id="mtitle"></p>
+                                                    <div id="break-modal-title">
+                                                        <p id="FName"></p>
+                                                        <p id="LName"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="close">
+                                                    <span class="edit-close">&times;</span>
+                                                </div>
+                                            </div>
+                                            <div class="input-group edit-input-group">
+                                                <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                                            </div>
+                                            <div class="modal-bottom-section">
+                                                <button class="btn btn-info mr-1 mb-1" name="reg_no" id="idOut" type="submit">Okay</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     <?php } ?>
-                    
+
                 </div>
 
             </div>
@@ -215,6 +277,8 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/users-view-update-delete.js"></script>
+
     <!-- <script>
         (function() {
             const allbtns = document.getElementsByClassName("a-to-z-sort-btn");

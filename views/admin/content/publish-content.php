@@ -16,7 +16,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
-
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Aces css framework -->
@@ -24,6 +24,7 @@ $userRole = "student";
 
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/publish-content.css">
+
 
 
 
@@ -46,12 +47,57 @@ $userRole = "student";
             <p id="page-header-title">Publish Content</p>
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
+
         <div class="wrapper">
+            <div class="second-border">
+                <!-- Flash Message -->
+                <?php
+
+                use app\core\Application;
+
+                if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+
+                <?php
+
+
+                if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+            </div>
+
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
-                    <form action="">
+                    <form action="" method="GET">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search content">
+                            <input type="text" placeholder="Search content by title" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -156,335 +202,64 @@ $userRole = "student";
                 </div>
 
                 <div class="publish-content-container">
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
+                    <?php foreach ($params['content'] as $content) { ?>
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $content->title; ?></p>
                             </div>
-                            <p>Learning PHP, MySQL & JavaScript</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Robin Nixon</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/06/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
 
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php
+                                    echo $content->creators[0]['creator']; //ask
+                                    for ($i = 1; $i < count($content->creators); $i++) {
+                                        echo ', ' . $content->creators[$i]['creator'];
+                                    } ?></p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php $date = new DateTime($content->date);
+                                    echo $date->format('Y-m-d'); ?></p>
+                            </div>
+                            <div class="block-e">
+                                <p>
+                                <form action="/admin/publish-content/view" method="GET">
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id; ?>">View</button>
+                                </form>
+                                <form action="/admin/publish-content/publish" method="POST">
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?= $content->content_id ?>">Publish</button>
+                                </form>
+                                </p>
+                            </div>
+                        </div>
+                    <?php } ?>
 
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Learn JAVA in one day and LEARN IT WELL</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Jamie Chan</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>20/10/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
+                    <?php if (empty($params['content'])) { ?>
+                        <p class="no-records-available">No Records Available :(</p>
+                    <?php } ?>
+                    <?php
 
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Java Coading Problems</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Angel Leonard</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
+                    if (!empty($params['content']) && isset($params['pageCount'])) {
+                        include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+                    }
+                    ?>
 
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Learning Web Design</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Jennifer Niederst Robbins</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>10/01/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Modern CSS</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Joe Attrid</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/04/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>React Cookbook</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>David Grifth</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/09/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Phu Phung</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Publish</button>
-                            </p>
-                        </div>
-                    </div> -->
                 </div>
 
             </div>
 
         </div>
+
     </div>
 
     <!-- FOOTER -->

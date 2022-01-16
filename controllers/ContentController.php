@@ -14,8 +14,10 @@ use app\models\ContentCollectionPermission;
 use app\models\ContentCreator;
 use app\models\ContentKeyword;
 use app\models\ContentLanguage;
+use app\models\ContentPublishStateChange;
 use app\models\ContentType;
 use app\models\Creator;
+use app\models\DeleteContent;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
@@ -78,15 +80,7 @@ class ContentController extends Controller
         return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum]);
     }
 
-    public function manageContent()
-    {
-        $breadcrum = [
-            self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_CONTENT,
-            self::BREADCRUM_MANAGE_CONTENTS
-        ];
-        return $this->render("admin/content/admin-inner-manage-content", ['breadcrum' => $breadcrum]);
-    }
+
 
     public function uploadContent(Request $request)
     {
@@ -452,6 +446,303 @@ class ContentController extends Controller
             ];
 
             return $this->render("admin/content/verify-submission", ['breadcrum' => $breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
+        }
+    }
+
+    public function loadPublishContentPage(Request $request)
+    {
+
+        $data = $request->getBody();
+
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $contentModel = new Content();
+        $allUnpublishedContent = $contentModel->getAllUnpublishContent($search_params, $start, $limit);
+
+        foreach ($allUnpublishedContent->payload as $c) {
+            $content_creators = new ContentCreator();
+            $content_keywords = new ContentKeyword();
+
+            $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+            $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
+
+            $c->creators = $content_creators;
+            $c->keywords = $content_keywords;
+        }
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_PUBLISH_CONTENT
+        ];
+
+        return $this->render('admin/content/publish-content', ['content' => $allUnpublishedContent->payload, 'currentPage' => $page, 'pageCount' => $allUnpublishedContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
+    }
+    public function loadUnpublishContentPage(Request $request)
+    {
+        $data = $request->getBody();
+
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $contentModel = new Content();
+        $allPublishedContent = $contentModel->getAllPublishContent($search_params, $start, $limit);
+
+
+        foreach ($allPublishedContent->payload as $c) {
+            $content_creators = new ContentCreator();
+            $content_keywords = new ContentKeyword();
+
+            $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+            $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
+
+            $c->creators = $content_creators;
+            $c->keywords = $content_keywords;
+        }
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_UNPUBLISH_CONTENT
+        ];
+
+        return $this->render('admin/content/unpublish-content', ['content' => $allPublishedContent->payload, 'currentPage' => $page, 'pageCount' => $allPublishedContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
+    }
+    public function viewUnpublishContentDetails(Request $request)
+    {
+        $contentModel = new Content();
+
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoPublishContent = $contentModel->getInfoPublishedContent($contentData->content_id);
+
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoPublishContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoPublishContent->content_id]);
+
+        $infoPublishContent->creators = $content_creators;
+        $infoPublishContent->keywords = $content_keywords;
+        // echo '<pre>';
+        // var_dump($infoPublishContent);
+        // echo '</pre>';
+        // exit;
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_PUBLISH_CONTENT,
+                self::BREADCRUM_PUBLISH_CONTENT_VIEW
+            ];
+
+            return $this->render('admin/content/info-unpublish-content', ['model' => $infoPublishContent, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
+    }
+    public function viewPublishContentDetails(Request $request)
+    {
+        $contentModel = new Content();
+
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoUnpublishContent = $contentModel->getInfoUnpublishedContent($contentData->content_id);
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoUnpublishContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoUnpublishContent->content_id]);
+
+        $infoUnpublishContent->creators = $content_creators;
+        $infoUnpublishContent->keywords = $content_keywords;
+
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_PUBLISH_CONTENT,
+                self::BREADCRUM_UNPUBLISH_CONTENT_VIEW
+            ];
+
+            return $this->render('admin/content/info-publish-content', ['model' => $infoUnpublishContent, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
+    }
+
+    public function publishingContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        if ($request->isPOST()) {
+
+            $data = $request->getBody();
+            $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+            if ($contentData) {
+                $updatePublishState = $contentModel->doPublishContent($contentData->content_id);
+
+                if ($updatePublishState) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content was successfully published on the system');
+                    Application::$app->response->redirect('/admin/publish-content');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Selected content was not published on the system');
+                    Application::$app->response->redirect('/admin/publish-content');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Selected content does not exist on the system');
+                Application::$app->response->redirect('/admin/publish-content');
+            }
+        }
+    }
+    public function unpublishingContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        if ($request->isPOST()) {
+
+            $data = $request->getBody();
+            $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+            if ($contentData) {
+                $updatePublishState = $contentModel->doUnpublishContent($contentData->content_id);
+
+                if ($updatePublishState) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content was successfully unpublished on the system');
+                    Application::$app->response->redirect('/admin/unpublish-content');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Selected content was not unpublished on the system');
+                    Application::$app->response->redirect('/admin/unpublish-content');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Selected content does not exist on the system');
+                Application::$app->response->redirect('/admin/publish-content');
+            }
+        }
+    }
+    public function manageContent(Request $request)
+    {
+
+        $data = $request->getBody();
+
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $contentModel = new Content();
+        $allContent = $contentModel->getAllContent($search_params, $start, $limit);
+
+        foreach ($allContent->payload as $c) {
+            $content_creators = new ContentCreator();
+            $content_keywords = new ContentKeyword();
+
+            $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+            $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
+
+            $c->creators = $content_creators;
+            $c->keywords = $content_keywords;
+        }
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_CONTENTS
+        ];
+        return $this->render("admin/content/admin-inner-manage-content", ['content' => $allContent->payload, 'currentPage' => $page, 'pageCount' => $allContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
+    }
+    public function viewContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoContent = $contentModel->getInfoContent($contentData->content_id);
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoContent->content_id]);
+
+        $infoContent->creators = $content_creators;
+        $infoContent->keywords = $content_keywords;
+
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_MANAGE_CONTENTS,
+                self::BREADCRUM_MANAGE_CONTENTS_VIEW
+
+            ];
+
+            return $this->render('admin/content/info-content', ['model' => $infoContent, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
+    }
+
+    public function deleteContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        if ($request->isPost()) {
+
+            $data = $request->getBody();
+            $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+            if ($contentData) {
+                $deleteCon = new DeleteContent();
+                $deleteCon->deleted_by = Application::$app->user->reg_no;
+
+                // $deleteContent = $contentModel->deleteContent($contentData->content_id);
+
+                // echo '<pre>';
+                // var_dump($contentData);
+                // echo '</pre>';
+                // exit;
+                if ($contentData->deleteContent($contentData->content_id) & $deleteCon->save()) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
+                    Application::$app->response->redirect('/admin/manage-content');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Selected content was not deleted from the system');
+                    Application::$app->response->redirect('/admin/manage-content');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Selected content does not exist on the system');
+                Application::$app->response->redirect('/admin/manage-content');
+            }
         }
     }
 
