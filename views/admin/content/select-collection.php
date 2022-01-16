@@ -95,11 +95,12 @@ $userRole = "student";
             <?php } ?>
 
             <div class="btn-row">
-                <a href="/admin/upload-content" class="btn btn-primary mr-1 step-next-btn">Step 1</a>
-                <a href="/admin/insert-metadata" class="btn btn-light mr-1 step-next-btn">Step 2</a>
-                <a href="/admin/insert-keyword-abstract" class="btn btn-light mr-1 step-next-btn">Step 3</a>
-                <a href="/admin/submit-content" class="btn btn-light mr-1 step-next-btn">Step 4</a>
-                <a href="/admin/verify-submission" class="btn btn-light mr-1 step-next-btn">Step 5</a>
+                <button class="btn btn-primary mr-1 step-next-btn">Step 1</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 1 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/metadata?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 1 ? "" : "disabled") . ''; ?>>Step 2</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 3 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/insert-keyword-abstract?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 2 ? "" : "disabled") . ''; ?>>Step 3</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 4 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/upload-file?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 3 ? "" : "disabled") . ''; ?>>Step 4</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 5 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/verify?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 4 ? "" : "disabled") . ''; ?>>Step 5</button>
+
             </div>
 
 
@@ -115,7 +116,7 @@ $userRole = "student";
                             <select class="custom-select custom-select-override" name="collection_id">
 
                                 <?php foreach ($params['collections'] as $collection) { ?>
-                                    <option value="<?php echo $collection->collection_id; ?>" <?php if($collection->collection_id==$params['collection_id'])echo 'selected'; ?>><?php echo $collection->parent_community . '>' . $collection->name; ?></option>
+                                    <option value="<?php echo $collection->collection_id; ?>" <?php if ($collection->collection_id == $params['collection_id']) echo 'selected'; ?>><?php echo $collection->parent_community . '>' . $collection->name; ?></option>
                                 <?php } ?>
 
                             </select>
@@ -124,8 +125,9 @@ $userRole = "student";
 
 
                     </div>
-                    
+
                     <div class="btn-row content-align-right">
+                        <button class="btn btn-danger mr-1 mb-1" onclick="window.location='/admin/dashboard/manage-content';" type="button">Cancel</button>
                         <button class="btn btn-primary mr-1 mb-1" type="submit">
                             Next
                         </button>

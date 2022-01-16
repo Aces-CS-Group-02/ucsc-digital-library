@@ -9,6 +9,7 @@ use app\models\Community;
 use app\models\Content;
 use app\core\BooleanSearchParser\src\Parser;
 use app\models\ContentCreator;
+use app\models\ContentKeyword;
 
 class SearchController extends Controller
 {
@@ -160,10 +161,13 @@ class SearchController extends Controller
 
             foreach ($content->payload as $c) {
                 $content_creators = new ContentCreator();
+                // $content_keywords = new ContentKeyword();
 
                 $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+                // $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
 
                 $c->creators = $content_creators;
+                // $c->keywords = $content_keywords;
             }
 
             $communities = new Community();
@@ -172,7 +176,7 @@ class SearchController extends Controller
 
             // echo '<pre>';
             // var_dump($search_query);
-            // var_dump($data);
+            // var_dump($content);
 
             // echo '</pre>';
 

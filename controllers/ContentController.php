@@ -148,6 +148,8 @@ class ContentController extends Controller
                 $collection->parent_community = $community->name;
             }
 
+            $upload_steps = 0;
+
             if (in_array('content_id', $data_keys)) {
                 $content = new Content();
                 $content = $content->findOne(['content_id' => $data['content_id']]);
@@ -157,9 +159,10 @@ class ContentController extends Controller
                 }
 
                 $collection_id = $content->collection_id;
+                $upload_steps = $content->upload_steps;
             }
 
-            return $this->render("admin/content/select-collection", ['breadcrum' => $breadcrum, 'collections' => $collections, 'collection_id' => $collection_id]);
+            return $this->render("admin/content/select-collection", ['breadcrum' => $breadcrum, 'collections' => $collections, 'collection_id' => $collection_id, 'upload_steps' => $upload_steps, 'data' => $data]);
         }
     }
 
@@ -220,11 +223,14 @@ class ContentController extends Controller
         } else {
 
             $data = $request->getBody();
+            $upload_steps = 0;
 
             $content = $content->findOne(['content_id' => $data['content_id']]);
             if (!$content) {
                 throw new NotFoundException();
             }
+
+            $upload_steps = $content->upload_steps;
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_CONTENT,
@@ -246,7 +252,7 @@ class ContentController extends Controller
                 array_push($creators, $content_creator['creator']);
             }
 
-            return $this->render("admin/content/insert-metadata", ['breadcrum' => $breadcrum, 'content' => $content, 'creators' => $creators, 'languages' => $languages, 'contentTypes' => $contentTypes]);
+            return $this->render("admin/content/insert-metadata", ['breadcrum' => $breadcrum, 'content' => $content, 'creators' => $creators, 'languages' => $languages, 'contentTypes' => $contentTypes, 'upload_steps' => $upload_steps, 'data' => $data]);
         }
     }
 
@@ -315,6 +321,8 @@ class ContentController extends Controller
                 throw new NotFoundException();
             }
 
+            $upload_steps = $content->upload_steps;
+
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_CONTENT,
@@ -332,7 +340,7 @@ class ContentController extends Controller
 
             // var_dump($keywords);
 
-            return $this->render("admin/content/insert-keyword-abstract", ['breadcrum' => $breadcrum, 'content' => $content, 'keywords' => $keywords]);
+            return $this->render("admin/content/insert-keyword-abstract", ['breadcrum' => $breadcrum, 'content' => $content, 'keywords' => $keywords, 'upload_steps' => $upload_steps, 'data' => $data]);
         }
     }
 
@@ -346,6 +354,7 @@ class ContentController extends Controller
                 $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
             if (!$content->findOne(['content_id' => $data['content_id']])) {
+                var_dump($data);
                 throw new NotFoundException();
             }
 
@@ -353,9 +362,10 @@ class ContentController extends Controller
 
             // $form_input = $request->getBody();
 
-            // var_dump($form_input);
 
             $file = $_FILES['content-file'];
+            var_dump($file);
+
 
             if ($file['tmp_name'] == "" and $content->url != "") {
                 Application::$app->response->redirect('/admin/upload-content/verify?content_id=' . $data['content_id']);
@@ -392,7 +402,9 @@ class ContentController extends Controller
                 self::BREADCRUM_UPLOAD_CONTENT
             ];
 
-            return $this->render("admin/content/submit-content");
+            $upload_steps = $content->upload_steps;
+
+            return $this->render("admin/content/submit-content", ['breadcrum' => $breadcrum, 'upload_steps' => $upload_steps, 'data' => $data]);
         }
     }
 
@@ -445,7 +457,9 @@ class ContentController extends Controller
                 self::BREADCRUM_UPLOAD_CONTENT
             ];
 
-            return $this->render("admin/content/verify-submission", ['breadcrum' => $breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type]);
+            $upload_steps = $content->upload_steps;
+
+            return $this->render("admin/content/verify-submission", ['breadcrum' => $breadcrum, 'content' => $content, 'collection' => $collection, 'creators' => $creators, 'keywords' => $keywords, 'language' => $language, 'type' => $type, 'upload_steps' => $upload_steps, 'data' => $data]);
         }
     }
 
