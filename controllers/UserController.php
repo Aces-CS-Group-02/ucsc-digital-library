@@ -343,60 +343,41 @@ class UserController extends Controller
     {
         $user = new User();
 
-        if($request->isPOST()){
+        if ($request->isPOST()) {
             $data = $request->getBody();
             $user = $user->findOne(["reg_no" => $data["reg_no"]]);
-            $reason = $data["reason"];//must implement this in view
+            $reason = $data["reason"];
 
+            if ($user) {
 
-            //create a model and a table
-            $deleteUser = new DeleteUsers();
-            $deleteUser->email = $user->email;
-            $deleteUser->reason = $reason;
-            
+                $deleteUser = new DeleteUsers();
+                $deleteUser->email = $user->email;
+                $deleteUser->reason = $reason;
+                $deleteUser->deleted_by = Application::$app->user->reg_no;
+               
+                $subject = "Account is deleted";
 
-            if ($request){
-                $subject ="Account is deleted";
-                
-                if($reason){
-                    $body = "<h3> We are here to inform you that your UCSC Digital Library account has been removed by the administration 
+                if ($reason) {
+                    $body = "<h3> This email is to inform that your UCSC Digital Library account has been removed by the administration 
                             due to the following reason(s).</h3>
                             <p>{$reason}</p>";
-                }
-                else{
-                   $body = "<h3> We are here to inform you that your UCSC Digital Library account has been removed by the administration"; 
+                } else {
+                    $body = "<h3> This email is to inform that your UCSC Digital Library account has been removed by the administration";
                 }
                 $altBody = "this is the alt body";
-                $mail = new Mail([$request->email], $subject, $body, $altBody);
+                $mail = new Mail([$user->email], $subject, $body, $altBody);
                 $mail->sendMail();
 
-                if($user->delete() && $deleteUser->save()){
-                    Application::$app->session->setFlashMessage('success','Selected user is successfully deleted from the system');
-                    
-
-                }
-                else{
-                    Application::$app->session->setFlashMessage('error','The user you are trying to delete does not exists');
-                   
+                if ($user->delete() && $deleteUser->save()) {
+                    Application::$app->session->setFlashMessage('success', 'Selected user is successfully deleted from the system');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'The user you are trying to delete does not exists');
                 }
                 Application::$app->response->redirect('/admin/users');
+            } else {
+                Application::$app->session->setFlashMessage('error', 'The user you are trying to delete does not exists');
+                Application::$app->response->redirect('/admin/users');
             }
-            else{
-                Application::$app->session->setFlashMessage('error','The user you are trying to delete does not exists');
-                return $this->render('/admin/users');
-            }
-            
-
-
         }
-
-
     }
-    
-    
-        
-
-        
-
-        
 }

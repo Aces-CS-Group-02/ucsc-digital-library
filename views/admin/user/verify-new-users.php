@@ -195,11 +195,13 @@ $userRole = "student";
                         <p><?php echo $request->first_name; ?> <?php echo $request->last_name; ?></p>
                     </div>
                     <div class="block-e">
+                    <form action="/admin/approve-new-user/view" method="GET">
                         <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="id" value="<?php echo $request->request_id; ?>">View</button>
                             <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Approve</button>
                             <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Reject</button>
                         </p>
+                    </form>
                         <!-- Modal to enter a message when approving or rejecting -->
                         <div id="myModal" class="modal">
 

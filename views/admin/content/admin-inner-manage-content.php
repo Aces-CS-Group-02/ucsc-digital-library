@@ -16,6 +16,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -51,7 +52,7 @@ $userRole = "student";
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
+                            <input type="text" placeholder="Search contents by title" name='q' value="<?php echo $params['search_params'] ?? ''?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -156,229 +157,85 @@ $userRole = "student";
                     <div class="block-f">Action</div>
 
                 </div>
+                <?php foreach ($params['content'] as $content) { ?>
+                    <div class="publish-content-container">
+                        <div class="publish-content-info">
+                            <div class="block-a">
+                                <div class="block-title">
+                                    <p>Title</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $content->title; ?></p>
+                            </div>
+                            <div class="block-b">
+                                <div class="block-title">
+                                    <p>Creator</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php
+                                    echo $content->creators[0]['creator'];
+                                    for ($i = 1; $i < count($content->creators); $i++) {
+                                        echo ', ' . $content->creators[$i]['creator'];
+                                    } ?></p>
+                            </div>
+                            <div class="block-c">
+                                <div class="block-title">
+                                    <p>Type</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php echo $content->type_name ?></p>
+                            </div>
+                            <div class="block-d">
+                                <div class="block-title">
+                                    <p>Date</p>
+                                    <p>:</p>
+                                </div>
+                                <p><?php
+                                    $date = new DateTime($content->date);
+                                    echo $date->format('Y-m-d');
+                                    ?></p>
+                            </div>
+                            <div class="block-e">
+                                <div class="block-title">
+                                    <p>Status</p>
+                                    <p>:</p>
+                                </div>
+                                <?php if($content->publish_state === '1'){?>
+                                    <p><span class="badge badge-soft-success">Published</span></p>
+                               <?php }else if($content->publish_state === '0'){?>
+                                    <p><span class="badge badge-soft-danger">Unpublished</span></p>
+                                <?php }?>
+                                
+                                
+                                
+                            </div>
+                            <div class="block-f">
+                                <p>
+                                <form action="/admin/manage-content/view" method="GET">
+                                    <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id?>">View</button>
+                                </form>
+                                <form action="/admin/upload-content" method="GET">
+                                    <button class="btn btn-success mr-1 mb-1 btn-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id?>">Update</button>
+                                </form>
+                                <form action="/admin/manage-content/delete" method="POST">
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id?>">Delete</button>
+                                </form>
 
-                <div class="publish-content-container">
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
+                                </p>
                             </div>
-                            <p>Java Coding Problems</p>
                         </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Anghel Leonard</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>Programming</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>14/08/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-success">Published</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
+
                     </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Data Structures</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Aurora Young</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>18/19 CS SCS2201 DSA</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-success">Published</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Learning Web Design</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Jennifer N. Robbins</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>Wed Development</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>30/02/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-danger">Unpublished</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering at Google</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Hyrum Wright</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>Software Engineering</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>17/90/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-success">Published</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="publish-content-info">
-                        <div class="block-a">
-                            <div class="block-title">
-                                <p>Title</p>
-                                <p>:</p>
-                            </div>
-                            <p>Introuction to Java</p>
-                        </div>
-                        <div class="block-b">
-                            <div class="block-title">
-                                <p>Creator</p>
-                                <p>:</p>
-                            </div>
-                            <p>Y. Daniel Liang</p>
-                        </div>
-                        <div class="block-c">
-                            <div class="block-title">
-                                <p>Type</p>
-                                <p>:</p>
-                            </div>
-                            <p>Programming</p>
-                        </div>
-                        <div class="block-d">
-                            <div class="block-title">
-                                <p>Date</p>
-                                <p>:</p>
-                            </div>
-                            <p>25/02/21</p>
-                        </div>
-                        <div class="block-e">
-                            <div class="block-title">
-                                <p>Status</p>
-                                <p>:</p>
-                            </div>
-                            <p><span class="badge badge-soft-danger">Unpublished</span></p>
-                        </div>
-                        <div class="block-f">
-                            <p>
-                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Update</button>
-                                <button class="btn btn-danger mr-1 mb-1 btn4-edit" type="button">Delete</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
+                <?php if (empty($params['content'])) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } ?>
+                <?php
+
+                if (!empty($params['content']) && isset($params['pageCount'])) {
+                    include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+                }
+                ?>
 
             </div>
 
@@ -395,4 +252,3 @@ $userRole = "student";
 </body>
 
 </html>
-

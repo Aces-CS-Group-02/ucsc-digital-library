@@ -275,6 +275,7 @@ body {
 }
 
 .block-f {
+    display: flex;
     flex-basis: 290px;
 }
 
@@ -363,4 +364,14 @@ body {
         display: flex;
         justify-content: space-between;
     }
+}
+
+.no-records-available {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgb(172, 172, 172);
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 60px;
 }

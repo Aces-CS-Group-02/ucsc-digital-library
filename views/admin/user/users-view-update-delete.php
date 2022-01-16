@@ -192,6 +192,9 @@ $userRole = "student";
 
                 <div class="users-ud-container">
                     <?php foreach ($params['users'] as $user) { ?>
+                        <?php $id = $user->reg_no;
+                               $fName = $user->first_name;
+                               $lName = $user->last_name; ?>
                         <div class="users-ud-info">
                             <div class="block-a">
                                 <div class="block-title">
@@ -229,11 +232,10 @@ $userRole = "student";
                             <div class="block-e">
                                 <p>
                                     <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
-                                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" onclick="showModal(this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Delete</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn2-edit" onclick="showModal(<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Delete</button>
                                 </p>
                                 <!-- Modal to enter a message why deleting the user -->
                                 <div id="myModal" class="modal">
-
                                     <div class="modal-content">
                                         <form id="modal-form" action="" method="POST">
                                             <div class="modal-top-section modal-title">
@@ -252,7 +254,7 @@ $userRole = "student";
                                                 <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
                                             </div>
                                             <div class="modal-bottom-section">
-                                                <button class="btn btn-info mr-1 mb-1" name="user" id="idOut" type="submit">Okay</button>
+                                                <button class="btn btn-info mr-1 mb-1" name="reg_no" id="idOut" type="submit">Okay</button>
                                             </div>
                                         </form>
                                     </div>
@@ -275,6 +277,8 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/users-view-update-delete.js"></script>
+
     <!-- <script>
         (function() {
             const allbtns = document.getElementsByClassName("a-to-z-sort-btn");

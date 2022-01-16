@@ -16,6 +16,7 @@ use app\core\Application;
 use app\core\Database;
 use app\models\User;
 use app\controllers\ContentCollectionController;
+use app\models\Content;
 use app\models\ContentCollectionContent;
 
 require_once __DIR__ . "./../vendor/autoload.php";
@@ -147,8 +148,8 @@ $app->router->get('/admin/manage-content', [ContentController::class, "manageCon
 
 $app->router->get('/admin/bulk-upload', [AdministrationController::class, "bulkUpload"]);
 $app->router->get('/admin/bulk-upload/review', [AdministrationController::class, "bulkUploadReview"]);
-$app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
-$app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
+// $app->router->get('/admin/publish-content', [AdministrationController::class, "publishContent"]);
+// $app->router->get('/admin/unpublish-content', [AdministrationController::class, "unpublishContent"]);
 $app->router->get('/admin/edit-metadata', [AdministrationController::class, "editMetadata"]);
 $app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
 $app->router->get('/admin/content-collections', [AdministrationController::class, "contentCollections"]);
@@ -176,6 +177,18 @@ $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 $app->router->get('/admin/approve-new-user/view', [ApproveController::class, "viewNewUserDetails"]);
 $app->router->get('/help',[SiteController::class,"help"]);
+$app->router->post('/admin/users/delete',[UserController::class, "deleteUsers"]);
+$app->router->get('/admin/publish-content', [ContentController::class, "loadPublishContentPage"]);
+$app->router->get('/admin/unpublish-content', [ContentController::class, "loadUnpublishContentPage"]);
+$app->router->get('/admin/publish-content/view', [ContentController::class, "viewPublishContentDetails"]);
+$app->router->get('/admin/unpublish-content/view', [ContentController::class, "viewUnpublishContentDetails"]);
+$app->router->post('/admin/publish-content/publish', [ContentController::class, "publishingContent"]);
+$app->router->post('/admin/unpublish-content/unpublish', [ContentController::class, "unpublishingContent"]);
+$app->router->get('/admin/manage-content', [ContentController::class, "manageContent"]);
+$app->router->post('/admin/manage-content', [ContentController::class, "manageContent"]);
+$app->router->get('/admin/manage-content/view', [ContentController::class, "viewContent"]);
+$app->router->post('/admin/manage-content/delete', [ContentController::class, "deleteContent"]);
+
 
 
 // $app->router->post('/push-user-to-user-group', [UsergroupController::class, "pushUserToUserGroup"]);
