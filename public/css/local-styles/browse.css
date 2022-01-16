@@ -1,0 +1,22 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: fit-content;
+}
+
+.main-container {
+  flex-grow: 1;
+}
+
+.browse-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 16px 0;
+}
+
+.filters-container {
+  margin: 10px 0 20px 0;
+  border-bottom: 1px solid gray;
+  padding-bottom: 20px;
+}

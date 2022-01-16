@@ -80,4 +80,20 @@ class SubCommunity extends DbModel
         $statement->execute();
         return $statement->fetch(PDO::FETCH_OBJ);
     }
+
+    public function selectAllSubCommunities($community_id)
+    {
+        $sql = "SELECT b.community_id ,b.name FROM
+                sub_community a
+                JOIN community b
+                ON a.child_community_id = b.community_id
+                WHERE a.parent_community_id = $community_id";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function getAllCollections()
+    {
+    }
 }

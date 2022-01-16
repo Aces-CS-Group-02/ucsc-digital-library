@@ -54,6 +54,25 @@ body {
   margin-top: 10px;
 }
 
+.breadcrum-container-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+
+  width: 100%;
+  /* min-height: 50px; */
+  padding: 7px 12px;
+  height: fit-content;
+  background-color: #0faf51;
+  /* background-color: rgb(52, 199, 89); */
+  border-radius: 5px;
+  margin-top: 4vh;
+  margin-bottom: 6vh;
+}
+
 .breadcrum-link {
   text-decoration: none;
   color: #8a8a8a;
@@ -61,9 +80,21 @@ body {
   padding: 4px 0;
 }
 
+.breadcrum-link-white {
+  text-decoration: none;
+  color: #ffffff;
+  /* padding: 4px 0; */
+  font-family: "Poppins", sans-serif;
+}
+
 .breadcrum-link,
 .breadcrum-link-arrow {
   color: #727272;
+}
+
+.breadcrum-link-arrow-white {
+  color: white;
+  margin: 0 7px;
 }
 
 .breadcrum-link-arrow {
@@ -77,4 +108,14 @@ body {
 .required:after {
   content: " *";
   color: red;
+}
+
+.no-records-available {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(172, 172, 172);
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 60px;
 }

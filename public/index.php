@@ -333,6 +333,12 @@ $app->router->get('/content', [ContentController::class, 'viewContentAbstract'])
 
 
 
+$app->router->get('/community-list', [SiteController::class, 'browseByCommunitiesAndCollections']);
+$app->router->get('/browse/community', [SiteController::class, 'browseByCommunity']);
+$app->router->get('/browse/collection', [SiteController::class, 'browseByCollection']);
+
+
+
 // $app->router->post('/admin/set-access-permission/collections/set-permission', [PermissionsController::class, "setPermissionToCollection"]);
 
 

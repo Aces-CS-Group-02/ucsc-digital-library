@@ -25,8 +25,8 @@ use app\core\Application;
     <link rel="stylesheet" href="./css/aces-css-framework/style.css">
 
     <!-- Local Styles -->
+    <link rel="stylesheet" href="./css/local-styles/browse.css">
     <link rel="stylesheet" href="./css/local-styles/search.css">
-    <link rel="stylesheet" href="./css/local-styles/home.css">
 
 
     <title>Browse Content</title>
@@ -37,53 +37,30 @@ use app\core\Application;
     <?php include_once __DIR__ . '/components/nav.php'; ?>
 
     <!-- SEARCH CONTENT -->
+
     <div class="heading-container">
-        Browse
-    </div>
-    <div class="main-container">
-
-
         <div class="wrapper">
-
-            <!-- Flash Message Success -->
-            <?php
-
-            if (Application::$app->session->getFlashMessage('success')) { ?>
-
-
-                <div class="alert alert-success" id="flash-msg-alert">
-                    <strong>Success!</strong>
-
-                    <?php echo Application::$app->session->getFlashMessage('success'); ?>
-
-                    <button class="close" type="button" id="flash-msg-remove">
-                        <span class="font-weight-light"></span>
-                        <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
-                    </button>
-                </div>
-
-
+            <?php if ($params['browseCollectionOrCommunityName'] != '') { ?>
+                <p class="browse-heading">Browsing "<?= $params['browseCollectionOrCommunityName'] ?>" by Issue Date</p>
+            <?php } else { ?>
+                <p class="browse-heading">Browsing by Issue Date</p>
             <?php } ?>
+        </div>
+    </div>
 
-            <!-- Flash Message Error -->
-            <?php
-            if (Application::$app->session->getFlashMessage('error')) { ?>
-                <div class="alert alert-warning" id="flash-msg-alert">
-                    <strong>Error!</strong>
 
-                    <?php echo Application::$app->session->getFlashMessage('error'); ?>
-
-                    <button class="close" type="button" id="flash-msg-remove">
-                        <span class="font-weight-light"></span>
-                        <i class="fas fa-times icon-warning" style="font-size: 0.73em"></i>
-                    </button>
-                </div>
-            <?php } ?>
-
+    <div class="main-container">
+        <div class="wrapper">
             <div class="filters-container">
                 <?php if ($params['type'] === 'dateissued') { ?>
-                    <p>Browse By Date Issued</p>
                     <form action="" method="GET">
+                        <?php if ($params['browse-type']) { ?>
+                            <?php if ($params['browse-type'] == 'community') { ?>
+                                <input type="hidden" name="community" value="<?= $params['typeDataId'] ?>" />
+                            <?php } else if ($params['browse-type'] == 'collection') { ?>
+                                <input type="hidden" name="collection" value="<?= $params['typeDataId'] ?>" />
+                            <?php } ?>
+                        <?php } ?>
                         <input type="hidden" name='type' value='dateissued' />
                         <label>Choose Year</label>
                         <select name="year">
@@ -107,8 +84,8 @@ use app\core\Application;
 
                         <label>In Order</label>
                         <select name="order">
-                            <option value="DESC">DESC</option>
                             <option value="ASC">ASC</option>
+                            <option value="DESC">DESC</option>
                         </select>
 
 
@@ -132,6 +109,13 @@ use app\core\Application;
                 <?php if ($params['type'] === 'title') { ?>
                     <p>Browse By Title</p>
                     <form action="" method="GET">
+                        <?php if ($params['browse-type']) { ?>
+                            <?php if ($params['browse-type'] == 'community') { ?>
+                                <input type="hidden" name="community" value="<?= $params['typeDataId'] ?>" />
+                            <?php } else if ($params['browse-type'] == 'collection') { ?>
+                                <input type="hidden" name="collection" value="<?= $params['typeDataId'] ?>" />
+                            <?php } ?>
+                        <?php } ?>
                         <input type="hidden" name='type' value='title' />
 
                         <select name="starts_with">
@@ -170,7 +154,6 @@ use app\core\Application;
             </div>
 
             <div class="result-container">
-
                 <?php foreach ($params['data'] as $result) { ?>
                     <div class="search-card box-shadow-1">
                         <div class="search-card-img">
@@ -205,14 +188,15 @@ use app\core\Application;
                     </div>
                 <?php } ?>
             </div>
+
+
+            <?php if ($params['data']) { ?>
+                <?php include_once __DIR__ . '/components/paginate.php'; ?>
+            <?php } else { ?>
+                <p class="no-records-available">No contents available :-(</p>
+            <?php } ?>
         </div>
     </div>
-
-    <?php if ($params['data']) { ?>
-        <?php include_once __DIR__ . '/components/paginate.php'; ?>
-    <?php } else { ?>
-        No Entries
-    <?php } ?>
 
 
     <!-- FOOTER -->

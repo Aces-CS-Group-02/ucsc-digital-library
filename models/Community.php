@@ -47,7 +47,7 @@ class Community extends DbModel
 
 
         $sql = "SELECT * FROM $tableName WHERE parent_community_id IS NULL";
-        return $this->paginate($sql, $start, $limit);
+        return $this->paginate2($sql, [], $start, $limit);
     }
 
     public function createNewTopLevelCommunity($data)
