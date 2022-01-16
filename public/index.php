@@ -90,12 +90,20 @@ $app->router->get('/profile/my-collections', [UserController::class, "userCollec
 // $app->router->post('/profile/my-collections', [UserController::class, "userCollections"]);
 $app->router->get('/profile/manage-collection-view', [UserController::class, "manageCollectionTest"]);
 $app->router->get('/profile/manage-collection', [UserController::class, "manageCollection"]);
-$app->router->get('/profile/pdf-viewer', [UserController::class, "pdfViewer"]);
+$app->router->get('/content/view', [UserController::class, "viewPdfViewer"]);
+// $app->router->post('/content/view', [UserController::class, "viewPdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
 $app->router->get('/suggest-content', [UserController::class, "suggestContent"]);
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
 //here
 $app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
+$app->router->post('/ajax/get-user-notes', [UserController::class, "saveContentNote"]);
+$app->router->get('/ajax/get-user-notes', [UserController::class, "getContentNote"]);
+$app->router->get('/ajax/get-user-collection-content', [UserController::class, "getCollectionContent"]);
+$app->router->post('/ajax/add-content-to-user-collection', [UserController::class, "addContentToCollection"]);
+$app->router->post('/ajax/remove-content-from-user-collection', [UserController::class, "removeContentFromCollection"]);
+$app->router->post('/ajax/remove-user-collection', [UserController::class, "removeUserCollection"]);
+$app->router->post('/ajax/create-and-add-to-collection', [UserController::class, "createUserCollectionAndAddContent"]);
 
 
 // Create, Remove LIA

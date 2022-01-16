@@ -43,112 +43,113 @@ use app\core\Application;
 
     <!-- Profile Top -->
 
-    <div class="profile-banner">
-        <div class="profile-banner-img">
-        </div>
-    </div>
-
-    <div class="profile-user-info wrapper">
-        <div class="user-info-container">
-            <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpeg);">
-
+    <div class="outside-wrapper">
+        <div class="profile-banner">
+            <div class="profile-banner-img">
             </div>
+        </div>
 
+        <div class="profile-user-info wrapper">
+            <div class="user-info-container">
+                <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpeg);">
 
-            <div class="user-info-and-btns-container">
-                <?php
-
-                $userName = Application::$app->getUserDisplayName();
-                $userEmail = Application::$app->getUserEmail();
-                $userRole = Application::$app->getUserRoleName();
-
-                ?>
-                <div class="user-info">
-                    <div class="user-name-and-user-role">
-                        <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
-                        <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole; ?></p>
-                    </div>
-
-                    <p><?php echo $userEmail['email'] ?></p>
                 </div>
 
-                <div class="user-profile-settings-btn-container">
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/edit-profile.php">
-                            <i class="fas fa-edit"></i>
-                            <p>Edit Profile</p>
-                        </a>
+                <div class="user-info-and-btns-container">
+                    <?php
+
+                    $userName = Application::$app->getUserDisplayName();
+                    $userEmail = Application::$app->getUserEmail();
+                    $userRole = Application::$app->getUserRoleName();
+
+                    ?>
+                    <div class="user-info">
+                        <div class="user-name-and-user-role">
+                            <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
+                            <p id="user-name-and-role-seperator">|</p>
+                            <p id="user-role-id"><?php echo $userRole; ?></p>
+                        </div>
+
+                        <p><?php echo $userEmail['email'] ?></p>
                     </div>
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/user-activity-log.php">
-                            <i class="fas fa-clipboard-list"></i>
-                            <p>Activity Log</p>
-                        </a>
-                    </div>
+                    <div class="user-profile-settings-btn-container">
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="#">
-                            <i class="fas fa-users"></i>
-                            <p>User Groups</p>
-                        </a>
-                    </div>
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="/edit-profile.php">
+                                <i class="fas fa-edit"></i>
+                                <p>Edit Profile</p>
+                            </a>
+                        </div>
 
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="/user-activity-log.php">
+                                <i class="fas fa-clipboard-list"></i>
+                                <p>Activity Log</p>
+                            </a>
+                        </div>
+
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="#">
+                                <i class="fas fa-users"></i>
+                                <p>User Groups</p>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
+
+
             </div>
+        </div>
 
 
+        <!-- Section A -->
+
+        <div class="profile-section-a wrapper">
+            <div class="section-header">
+                <p class="section-header-title">Create New Collection</p>
+            </div>
+            <div class="input-division">
+                <form id="create-user-collection-form" action="" method="POST">
+
+                    <?php {
+                        $attr_name = 'name';
+                        $errors_on_name = false;
+                        if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
+                            $errors_on_name = true;
+                        }
+                    ?>
+
+                        <div class="input-group edit-input-group">
+                            <label class="labelPlace <?php if ($errors_on_name) {
+                                                            echo "danger-text";
+                                                        } ?>" for="Name">Collection Name</label>
+                            <input class="form-control <?php if ($errors_on_name) {
+                                                            echo "danger-border";
+                                                        } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
+
+                            <?php
+                            if ($errors_on_name) {
+                                foreach ($params['model']->errors[$attr_name] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
+
+                        </div>
+
+                    <?php } ?>
+
+                    <button class="btn btn-primary btn-edit" id="create-user-collection-btn">Create</button>
+                </form>
+            </div>
         </div>
     </div>
-
-
-    <!-- Section A -->
-
-    <div class="profile-section-a wrapper">
-        <div class="section-header">
-            <p class="section-header-title">Create New Collection</p>
-        </div>
-        <div class="input-division">
-            <form id="create-user-collection-form" action="" method="POST">
-
-                <?php {
-                    $attr_name = 'name';
-                    $errors_on_name = false;
-                    if (isset($params['model']) && $params['model']->hasErrors($attr_name)) {
-                        $errors_on_name = true;
-                    }
-                ?>
-
-                    <div class="input-group edit-input-group">
-                        <label class="labelPlace <?php if ($errors_on_name) {
-                                                        echo "danger-text";
-                                                    } ?>" for="Name">Collection Name</label>
-                        <input class="form-control <?php if ($errors_on_name) {
-                                                        echo "danger-border";
-                                                    } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
-
-                        <?php
-                        if ($errors_on_name) {
-                            foreach ($params['model']->errors[$attr_name] as $error) { ?>
-                                <div class="validation-error">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                    <p><?php echo $error ?></p>
-                                </div>
-                        <?php }
-                        };
-                        ?>
-
-                    </div>
-
-                <?php } ?>
-
-                <button class="btn btn-primary btn-edit" id="create-user-collection-btn">Create</button>
-            </form>
-        </div>
-    </div>
-
     <!-- FOOTER -->
 
     <?php

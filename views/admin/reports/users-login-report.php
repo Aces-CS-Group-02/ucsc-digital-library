@@ -45,17 +45,32 @@
             $total = sizeof($users);
             date_default_timezone_set('Asia/Kolkata');
             $currentTime = date('Y-m-d H:i:s');
-            // var_dump($currentTime);
-            // var_dump($user->log_in_time);
-            // var_dump(date_create($currentTime));
+            // $currentDate = date('Y-m-d');
+            // var_dump($currentDate);
+            // $currentDateObj = date_create($currentDate);
+            $loginData = $params['loginData'];
+            // echo '<pre>';
+            // var_dump($loginData);
+            // echo '</pre>';
+            // $loginDataArray = [];
+            $loginDataArray = json_decode($loginData);
+            // echo '<pre>';
+            // var_dump($loginDataArray);
+            // echo '</pre>';
+            $count = sizeof($loginDataArray);
             $crntTime = date_create($currentTime);
+
             ?>
+
+            <div class="bar-chart-container">
+                <canvas id="bar-chart"></canvas>
+            </div>
 
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
                     <form action="" method="GET">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search users" name='search-data' value="<?php echo $params['search_params'] ?? '' ?>"> 
+                            <input type="text" placeholder="Search users" name='search-data' value="<?php echo $params['search_params'] ?? '' ?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -193,7 +208,7 @@
                                 $s = $diff->s;
                                 ?>
                                 <p><?php
-                                // var_dump($user->log_in_time);
+                                    // var_dump($user->log_in_time);
                                     if ($user->log_in_time != '0000-00-00 00:00:00') {
                                         if ($y) {
                                             if ($y == 1) {
@@ -291,6 +306,76 @@
     <!-- SCRIPT -->
 
     <script src="/javascript/nav.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js" integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const ctx = document.getElementById('bar-chart');
+        var loginData = <?php echo ($loginData) ?>;
+        // var temp = JSON.parse(loginData);
+        var count = loginData.length;
+        for (var i = 0; i < count; i++) {
+            // var date = loginData[i]['x'];
+            // var formatted = (date.getMonth()+1) + "-" + date.getDate();
+            var parts = loginData[i]['x'].split('-');
+            var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            // var mont = monthNames[mydate.getMonth()];
+            // console.log(mont);
+            var formatted = monthNames[mydate.getMonth()] + "-" + mydate.getDate();
+            // console.log(loginData[i]);
+            // console.log(formatted);
+            loginData[i]['x'] = formatted;
+        }
+        // // var data = [];
+        // for (var i = 0; i < count; i++) {
+        //     // document.write(datesArray[i]);
+        //     // document.write(countArray[i]);
+        //     // data[i] = datesArray[i].concat(countArray[i]);
+        //     // document.write(loginData);
+        // }
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    data: loginData,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                }],
+            },
+            options: {
+                // animations: {
+                //     tension: {
+                //         duration: 1000,
+                //         easing: 'linear',
+                //         from: 1,
+                //         to: 0,
+                //         loop: true
+                //     }
+                // },
+                scales: {
+                    y: {
+                        min: 0,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Users\' login data for the previous <?php echo $count ?> days',
+                        fontStyle: "Poppins"
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        // Chart.defaults.scales.linear.min = 0;
+    </script>
 
 </body>
 
