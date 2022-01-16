@@ -22,9 +22,9 @@ body {
 
 .side-bar-block-s {
   width: 100%;
-  height: 60px;
+  height: 60px !important;
   background-color: white;
-  color: rgb(119, 119, 119);
+  color: rgb(119, 119, 119) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,12 +32,17 @@ body {
   transition: background-color 0.1s ease-in-out;
 }
 
+.edit-anchor{
+  color: rgb(119, 119, 119) !important;
+  text-decoration: none;
+}
+
 .side-bar-block-s:hover {
   background-color: rgb(236, 236, 236);
 }
 
 .side-bar-block-s > i {
-  transform: scale(1.5);
+  transform: scale(1.5) !important;
 }
 
 #side-bar-expand-btn {
@@ -304,14 +309,15 @@ body {
   margin: auto; /* 10% from the top and centered */
   /* padding: 20px; */
   border: 1px solid #888;
+  /* max-width: 400px; */
   width: 60%; /* Could be more or less, depending on screen size */
   border-radius: 0.5rem;
 }
 
 #collections-modal-content {
-  min-width: 300px !important;
-  width: fit-content;
-  max-width: 60% !important;
+  /* min-width: 300px !important; */
+  width: 400px;
+  max-width: 400px;
 }
 
 .notes-modal-top-section {
@@ -372,6 +378,7 @@ body {
   border-radius: 0 0 0.5rem 0.5rem;
   display: flex;
   justify-content: flex-end;
+  box-sizing: border-box;
 }
 
 .edit-for-collection {
@@ -430,8 +437,9 @@ body {
   padding: 10px 20px !important;
 }
 
-#add-note {
-  color: #fff;
+#add-note,
+#add-collection {
+  color: #fff !important;
 }
 
 .btn-container{
@@ -448,6 +456,31 @@ body {
   width: 100%;
 }
 
+.message-container{
+  /* color: #555353; */
+  display: none;
+  /* margin-top: 5px; */
+  padding: 10px 10px 0 10px;
+  width: inherit;
+  max-width: inherit;
+  height: fit-content;
+}
+
+.add-green{
+  color: green !important;
+}
+
+.add-orange{
+  color: orangered !important;
+}
+
+.red-bg{
+  background-color: rgb(238, 102, 102);
+}
+
+.add-red{
+  color: red;
+}
 /* .ck-editor__editable {
   height: 400px;
 } */

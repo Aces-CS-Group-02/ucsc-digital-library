@@ -4,8 +4,8 @@ namespace app\models;
 
 use app\core\DbModel;
 
-class UserCollectionContent extends DbModel{
-    public int $id;
+class UserCollectionContent extends DbModel
+{
     public int $content_id;
     public int $user_collection_id;
 
@@ -21,15 +21,12 @@ class UserCollectionContent extends DbModel{
 
     public static function primaryKey(): string
     {
-        return 'id';
+        return '';
     }
 
     public function rules(): array
     {
-        return [
-            'content_id' => [self::RULE_REQUIRED],
-            'user_collection_id' => [self::RULE_REQUIRED]
-        ];
+        return [];
     }
 
     public function getCollectionContent($data)
@@ -41,5 +38,24 @@ class UserCollectionContent extends DbModel{
         $statement = self::prepare("SELECT * FROM $tableName WHERE user_collection_id = $this->user_collection_id");
         $statement->execute();
         return $statement->fetchAll();
+    }
+
+    public function addContentToCollection($collectionId, $contentId)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("INSERT INTO $tableName (user_collection_id, content_id) VALUES ($collectionId, $contentId)");
+
+        // var_dump($statement);
+        return $statement->execute();
+    }
+
+    public function removeContentFromCollection($collectionId, $contentId)
+    {
+        $userCollectionModel = new UserCollection();
+        if (!$userCollectionModel->findOne(['user_collection_id' => $collectionId])) return false;
+
+        $tableName = self::tableName();
+        $statement = self::prepare("DELETE FROM $tableName WHERE user_collection_id=$collectionId AND content_id=$contentId");
+        return $statement->execute();
     }
 }

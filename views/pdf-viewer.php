@@ -24,13 +24,17 @@ $userRole = "student";
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/pdf-viewer.css">
 
-    <?php 
-        $content = $params['content'];
-        // var_dump($content);
-        $contentId = $content->content_id;
-        $contentName = $content->title;
-        $url = '/data/content/uploads/'.$contentId.'.pdf';
-        // echo json_encode($url);
+    <?php
+    $content = $params['content'];
+    // var_dump($content);
+    $contentId = $content->content_id;
+    $contentName = $content->title;
+    $permission = $params['permission'];
+    $userRegNo = $params['user_reg_no'];
+    // echo $permission;
+    // echo $userRegNo;
+    $url = '/data/content/uploads/' . $contentId . '.pdf';
+    // echo json_encode($url);
     ?>
     <title><?= $contentName ?></title>
 </head>
@@ -47,18 +51,24 @@ $userRole = "student";
                 <i class="fas fa-bars"></i>
                 <!-- <i class="fas fa-arrow-alt-circle-right"></i> -->
             </div>
-            <div class="side-bar-block-s hover-text" data-hover="Add Bookmark">
-                <i class="fas fa-bookmark"></i>
-            </div>
-            <div id="add-notes-btn" class="side-bar-block-s add-notes-btn hover-text" data-hover="Add Note">
-                <i class="fas fa-notes-medical"></i>
-            </div>
-            <div id="add-to-collection-btn" class="side-bar-block-s add-to-collection-btn hover-text" data-hover="Add to Collection">
-                <i class="fas fa-folder-plus"></i>
-            </div>
-            <div id="download-btn" class="side-bar-block-s download-btn hover-text" data-hover="Download">
-                <i class="fas fa-download"></i>
-            </div>
+            <?php if ($userRegNo) { ?>
+                <div class="side-bar-block-s hover-text" data-hover="Add Bookmark">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div id="add-notes-btn" class="side-bar-block-s add-notes-btn hover-text" data-hover="Add Note">
+                    <i class="fas fa-notes-medical"></i>
+                </div>
+                <div id="add-to-collection-btn" class="side-bar-block-s add-to-collection-btn hover-text" data-hover="Add to Collection">
+                    <i class="fas fa-folder-plus"></i>
+                </div>
+            <?php } ?>
+            <?php if ($permission == "READ_DOWNLOAD") { ?>
+                <a href="<?= $url ?>" class="edit-anchor" download>
+                    <div id="download-btn" class="side-bar-block-s download-btn hover-text" data-hover="Download">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </a>
+            <?php } ?>
             <div id="get-citation-btn" class="side-bar-block-s get-citation-btn hover-text" data-hover="Get Citations">
                 <i class="fas fa-quote-right"></i>
             </div>
@@ -82,16 +92,17 @@ $userRole = "student";
 
         <div id="notesModal" class="modal">
             <div class="modal-content" id="notes-modal-content">
-                <form id="notes-modal-form" action="" method="POST">
+                <form id="notes-modal-form" action="/ajax/get-user-notes" method="POST">
                     <div class="notes-modal-top-section notes-modal-title">
                         <div class="notes-title-section">Notes</div>
                         <div class="close-note">
                             <span class="edit-close-note">&times;</span>
                         </div>
                     </div>
-                    <textarea name="note-content"></textarea>
+                    <textarea id="note-data" name="note"></textarea>
+                    <input name="content_id" value="<?= $contentId ?>" type="hidden"></input>
                     <div class="notes-modal-bottom-section">
-                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Save</button>
+                        <button class="btn btn-info mr-1 mb-1" id="add-note">Save</button>
                     </div>
                 </form>
             </div>
@@ -101,35 +112,41 @@ $userRole = "student";
 
         <div id="collectionsModal" class="modal">
             <div class="modal-content" id="collections-modal-content">
-                <form id="collections-modal-form" action="" method="POST">
-                    <div class="notes-modal-top-section notes-modal-title">
-                        <div class="notes-title-section">Add to my collection</div>
-                        <div class="close-collection">
-                            <span class="edit-close-note">&times;</span>
-                        </div>
+                <div class="notes-modal-top-section notes-modal-title">
+                    <div class="notes-title-section">Add to my collection</div>
+                    <div class="close-collection">
+                        <span class="edit-close-note">&times;</span>
                     </div>
-                    <div class="modal-middle-content" id="collection-modal-collections">
-                        <!-- <div class="input-group custom-control">
+                </div>
+                <div class="modal-middle-content" id="collection-modal-collections">
+                    <!-- <div class="input-group custom-control">
                             <div class="checkbox checkbox-edit">
                                 <input class="checkbox checkbox-edit" type="checkbox" id="check" onclick="DivShowHide(this)" />
                                 Favourites
                             </div>
                         </div> -->
-                    </div>
+                </div>
+                <form id="collections-modal-form" action="" method="">
+
                     <div class="notes-modal-bottom-section edit-for-collection">
                         <div class="new-collection-create">
                             New Collection Name
                         </div>
                         <div class="input-group edit-input-group">
-                            <input type="text" class="form-control edit-form-control create-collection" id="reason" name="reason" placeholder="Enter collection name"></input>
+                            <input type="text" class="form-control edit-form-control create-collection" id="name" name="name" placeholder="Enter collection name"></input>
+                            <!-- <input id="content_id" name="content_id" value="<?= $contentId ?>" type="hidden"></input> -->
                         </div>
                         <div class="btn-container" id="create-and-save">
-                            <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Create and Add</button>
+                            <div class="btn btn-info mr-1 mb-1" id="add-collection">Create and Add</div>
+                        </div>
+                        <div class="message-container" id="message-container">
+                            <!-- Test -->
                         </div>
                         <!-- <div class="btn-container-hidden" id="save-btn-container">
                             <button class="btn btn-info mr-1 mb-1" name="request_id" id="add-note" type="submit">Add</button>
                         </div> -->
                     </div>
+
                 </form>
             </div>
         </div>
@@ -141,72 +158,82 @@ $userRole = "student";
     <div class="pdf-viewer-side-bar-expanded">
         <div class="side-bar-sections-container">
 
+        <?php if ($userRegNo) { ?>
 
             <div class="side-bar-section">
-                <div class="side-bar-section-top">
-                    <i class="fas fa-bookmark"></i>
-                    <p>Bookmarks</p>
-                    <button id="add-bookmark-btn"><i class="fas fa-plus"></i></button>
-                </div>
-                <div class="side-bar-section-content">
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                    <div class="bookmark-card"></div>
-                </div>
-                <div class="side-bar-section-expand-collaps">
-                    <button class="side-bar-section-expand-collaps-btn">
-                        <i class="fas fa-chevron-down"></i>
+                    <div class="side-bar-section-top">
+                        <i class="fas fa-bookmark"></i>
+                        <p>Bookmarks</p>
+                        <button id="add-bookmark-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="side-bar-section-content">
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div>
+                    </div>
+                    <div class="side-bar-section-expand-collaps">
+                        <button class="side-bar-section-expand-collaps-btn">
+                            <i class="fas fa-chevron-down"></i>
 
-                    </button>
-                </div>
+                        </button>
+                    </div>
+
             </div>
 
-            <div class="side-bar-section">
-                <div class="side-bar-section-top">
-                    <i class="fas fa-notes-medical"></i>
-                    <p>Notes</p>
-                    <button id="add-notes-btn" class="add-notes-btn"><i class="fas fa-plus"></i></button>
+                <div class="side-bar-section">
+                    <div class="side-bar-section-top">
+                        <i class="fas fa-notes-medical"></i>
+                        <p>Notes</p>
+                        <button id="add-notes-btn" class="add-notes-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="side-bar-section-expand-collaps no-content">
+                    </div>
                 </div>
-                <div class="side-bar-section-expand-collaps no-content">
-                </div>
-            </div>
 
-            <div class="side-bar-section">
-                <div class="side-bar-section-top">
-                    <i class="fas fa-folder-plus"></i>
-                    <p>Add To Collection</p>
-                    <button id="add-to-collection-btn" class="add-to-collection-btn"><i class="fas fa-plus"></i></button>
-                </div>
-                <div class="side-bar-section-expand-collaps no-content">
-                </div>
-            </div>
 
-            <div class="side-bar-section">
-                <div class="side-bar-section-top">
-                    <i class="fas fa-download"></i>
-                    <p>Download</p>
-                    <button id="download-btn" class="download-btn"><i class="fas fa-plus"></i></button>
+                <div class="side-bar-section">
+                    <div class="side-bar-section-top">
+                        <i class="fas fa-folder-plus"></i>
+                        <p>Add To Collection</p>
+                        <button id="add-to-collection-btn" class="add-to-collection-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="side-bar-section-expand-collaps no-content">
+                    </div>
                 </div>
-                <div class="side-bar-section-expand-collaps no-content">
+            <?php } ?>
+
+
+
+            <?php if ($permission == "READ_DOWNLOAD") { ?>
+                <a href="<?= $url ?>" class="edit-anchor" download>
+                <div class="side-bar-section">
+                    <div class="side-bar-section-top">
+                        <i class="fas fa-download"></i>
+                        <p>Download</p>
+                        <button id="download-btn" class="download-btn"></button>
+                    </div>
+                    <div class="side-bar-section-expand-collaps no-content">
+                    </div>
                 </div>
-            </div>
+                </a>
+            <?php } ?>
 
             <div class="side-bar-section">
                 <div class="side-bar-section-top">
                     <i class="fas fa-quote-right"></i>
                     <p>Get Citations</p>
-                    <button id="get-citation-btn" class="get-citation-btn"><i class="fas fa-plus"></i></button>
+                    <button id="get-citation-btn" class="get-citation-btn"></button>
                 </div>
                 <div class="side-bar-section-expand-collaps no-content">
                 </div>
@@ -216,7 +243,7 @@ $userRole = "student";
                 <div class="side-bar-section-top">
                     <i class="fas fa-share"></i>
                     <p>Share</p>
-                    <button id="share-btn" class="share-btn"><i class="fas fa-plus"></i></button>
+                    <button id="share-btn" class="share-btn"></button>
                 </div>
                 <div class="side-bar-section-expand-collaps no-content">
                 </div>
@@ -229,12 +256,17 @@ $userRole = "student";
     <!-- <script src="https://cdn.ckeditor.com/4.17.1/standard-all/ckeditor.js"></script> -->
     <script src="/ckeditor/ckeditor.js"></script>
     <script src="/javascript/nav.js"></script>
-    <script type="text/javascript">var contentUrl = "<?= $url ?>";</script>
+    <script type="text/javascript">
+        var contentUrl = "<?= $url ?>";
+        var contentId = "<?= $contentId ?>";
+        var regNo = "<?= $userRegNo ?>";
+    </script>
     <script type="text/javascript" src="/javascript/pdf-viewer.js"></script>
     <script>
-        CKEDITOR.replace('note-content', {
+        CKEDITOR.replace('note', {
             toolbar: [
-                ['Format', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', '-', 'Undo', 'Redo']
+                // ['Format', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', '-', 'Undo', 'Redo']
+                ['Format', '-', 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Undo', 'Redo']
             ],
             height: 300,
             wordcount: {
@@ -247,6 +279,7 @@ $userRole = "student";
                 maxCharCount: 1000
             },
             editorplaceholder: 'Enter your text here',
+            htmlEncodeOutput: true
         });
         CKEDITOR.config.removePlugins = 'resize';
     </script>

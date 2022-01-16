@@ -43,112 +43,164 @@ use app\core\Application;
 
     <!-- Profile Top -->
 
-    <div class="profile-banner">
-        <div class="profile-banner-img">
-        </div>
-    </div>
-
-    <div class="profile-user-info wrapper">
-        <div class="user-info-container">
-            <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpeg);">
-
+    <div class="outside-wrapper">
+        <div class="profile-banner">
+            <div class="profile-banner-img">
             </div>
+        </div>
 
+        <div class="profile-user-info wrapper">
+            <div class="user-info-container">
+                <div class="user-profile-avatar" style="background-image: url(/assets/profile/profile.jpeg);">
 
-            <div class="user-info-and-btns-container">
-                <?php
-
-                $userName = Application::$app->getUserDisplayName();
-                $userEmail = Application::$app->getUserEmail();
-                $userRole = Application::$app->getUserRoleName();
-
-                ?>
-                <div class="user-info">
-                    <div class="user-name-and-user-role">
-                        <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
-                        <p id="user-name-and-role-seperator">|</p>
-                        <p id="user-role-id"><?php echo $userRole; ?></p>
-                    </div>
-
-                    <p><?php echo $userEmail['email'] ?></p>
                 </div>
 
-                <div class="user-profile-settings-btn-container">
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/profile/edit">
-                            <i class="fas fa-edit"></i>
-                            <p>Edit Profile</p>
-                        </a>
+                <div class="user-info-and-btns-container">
+                    <?php
+
+                    $userName = Application::$app->getUserDisplayName();
+                    $userEmail = Application::$app->getUserEmail();
+                    $userRole = Application::$app->getUserRoleName();
+
+                    ?>
+                    <div class="user-info">
+                        <div class="user-name-and-user-role">
+                            <p id="user-name-id"><?php echo $userName['firstname'] . ' ' . $userName['lastname'] ?></p>
+                            <p id="user-name-and-role-seperator">|</p>
+                            <p id="user-role-id"><?php echo $userRole; ?></p>
+                        </div>
+
+                        <p><?php echo $userEmail['email'] ?></p>
                     </div>
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="/user-activity-log.php">
-                            <i class="fas fa-clipboard-list"></i>
-                            <p>Activity Log</p>
-                        </a>
-                    </div>
+                    <div class="user-profile-settings-btn-container">
 
-                    <div class="each-btn-container">
-                        <a class="user-profile-settings-btn" href="#">
-                            <i class="fas fa-users"></i>
-                            <p>User Groups</p>
-                        </a>
-                    </div>
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="/profile/edit">
+                                <i class="fas fa-edit"></i>
+                                <p>Edit Profile</p>
+                            </a>
+                        </div>
 
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="/user-activity-log.php">
+                                <i class="fas fa-clipboard-list"></i>
+                                <p>Activity Log</p>
+                            </a>
+                        </div>
+
+                        <div class="each-btn-container">
+                            <a class="user-profile-settings-btn" href="#">
+                                <i class="fas fa-users"></i>
+                                <p>User Groups</p>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
+
+
             </div>
-
-
         </div>
-    </div>
 
 
-    <!-- Section A -->
+        <!-- Section A -->
 
-    <div class="profile-section-a wrapper">
-        <?php
-        $collectionModel = $params['model'];
-        // echo $name;
-        ?>
-        <div class="section-header">
-            <p class="section-header-title"><?php echo $collectionModel->name ?></p>
-        </div>
-        <div class="button-place">
-            <!-- <a href="/profile/create-user-collection">
+        <div class="profile-section-a wrapper">
+            <?php
+            $collectionModel = $params['model'];
+            // echo '<pre>';
+            // var_dump($collectionModel->user_collection_id);
+            // echo '</pre>';
+            // echo $name;
+            ?>
+            <div class="section-header">
+                <p class="section-header-title"><?php echo $collectionModel->name ?></p>
+            </div>
+            <div class="button-place">
+                <!-- <a href="/profile/create-user-collection">
                 <button class="btn btn-primary mr-1 mb-1">Create New Collection</button>
             </a> -->
-            <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
-            <button class="btn btn-danger mr-1 mb-1 btn2-edit edit" type="button">Delete</button>
+                <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
+                <button class="btn btn-danger mr-1 mb-1 btn2-edit edit" type="button" id="delete-collection">Delete</button>
+            </div>
+
+            <div class="profile-grid">
+
+                <?php
+                $collectionContent = $params['content'] ?? "";
+                $collectionContentData = $params['content_data'] ?? "";
+                // echo $collectionContent;
+                // var_dump($collectionContent);
+                ?>
+                <input id="collection_id" class="collection_id" value="<?= $collectionModel->user_collection_id ?>" type="hidden"></input>
+                <?php if (empty($collectionContent)) { ?>
+                    <p class="no-records-available">No Records Available :(</p>
+                <?php } else { ?>
+                    <?php foreach ($collectionContentData as $contentData) { ?>
+
+                        <div class="profile-gird-container profile-section-b">
+                            <a href="/content/view?content_id=<?= $contentData->content_id ?>" class="edit-link">
+                                <div class="profile-grid-item box-shadow-2">
+                                    <div class="content-card">
+                                        <?php if ($contentData->type == 1) { ?>
+                                            <div class="content-card-img" style="background-color: peachpuff;">
+                                                <img src="/assets/content-icons/book.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 2) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(222, 203, 151);">
+                                                <img src="/assets/content-icons/thesis.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 3) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(255, 250, 135);">
+                                                <img src="/assets/content-icons/publication.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 4) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(170, 189, 227);">
+                                                <img src="/assets/content-icons/paper.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 5) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(215, 174, 245);">
+                                                <img src="/assets/content-icons/magazine.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 6) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(177, 224, 200);">
+                                                <img src="/assets/content-icons/newsletter.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 7) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(190, 204, 196);">
+                                                <img src="/assets/content-icons/audio.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 8) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(250, 207, 224);">
+                                                <img src="/assets/content-icons/video.png" class="img-class">
+                                            </div>
+                                        <?php } elseif ($contentData->type == 9) { ?>
+                                            <div class="content-card-img" style="background-color: rgb(187, 230, 181);">
+                                                <img src="/assets/content-icons/other.png" class="img-class">
+                                            </div>
+                                        <?php } ?>
+                            </a>
+
+                            <div class="content-card-bottom">
+                                <p class="content-card-bottom-title line-clamp line-clamp-2-description"><?= $contentData->title ?></p>
+                                <div class="content-card-icon">
+                                    <!-- <input id="content_id" name="content_id" value="<?= $contentData->content_id ?>" type="hidden"></input> -->
+                                    <!-- <input id="collection_id" class="collection_id" value="<?= $collectionModel->user_collection_id ?>" type="hidden"></input> -->
+                                    <button id="content_id" class="delete-content content_id" value="<?= $contentData->content_id ?>" style="all: unset;"><i class="fas fa-trash" id="delete-content"></i></button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
         </div>
 
-        <div class="profile-grid">
+<?php }
+                } ?>
 
-            <?php
-            $collectionContent = $params['content'] ?? "";
-            // echo $collectionContent;
-            // var_dump($collectionContent);
-            ?>
-
-            <?php if (empty($collectionContent)) { ?>
-                <p class="no-records-available">No Records Available :(</p>
-            <?php } ?>
-            <!-- <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">React coockbook</p>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-        </div>
     </div>
-
+    </div>
+    </div>
     <!-- FOOTER -->
 
     <?php
@@ -156,6 +208,7 @@ use app\core\Application;
     ?>
 
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/user-collection.js"></script>
 </body>
 
 </html>

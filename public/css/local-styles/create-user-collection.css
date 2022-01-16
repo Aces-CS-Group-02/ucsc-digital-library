@@ -1,3 +1,14 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: fit-content;
+}
+
+.outside-wrapper {
+  flex-grow: 1;
+}
+
 .wrapper {
   width: 80%;
   max-width: 1000px;
@@ -165,18 +176,18 @@
   font-weight: 600;
 }
 
-.input-division{
+.input-division {
   /* display: flex;
   flex-grow: 5; */
   /* height: 124px; */
 }
 
-.edit-input-group{
-  padding-left: 0!important;
-  padding-right: 0!important;
+.edit-input-group {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
-.btn-edit{
+.btn-edit {
   width: 250px;
 }
 

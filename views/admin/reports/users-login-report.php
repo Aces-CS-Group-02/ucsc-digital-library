@@ -58,29 +58,6 @@
             // var_dump($loginDataArray);
             // echo '</pre>';
             $count = sizeof($loginDataArray);
-            // echo $count;
-            // // $dateArray = [];
-            // // $countArray = [];
-            // for ($i = 0; $i < sizeof($loginData); $i++) {
-
-            //     $loginDataArray[$i] = (array) $loginData[$i];
-            //     // $loginDataObj = date_create($loginData[$i]->date);
-            //     // $diff = $currentDateObj->diff($loginDataObj);
-            //     // // echo '<pre>';
-            //     // // var_dump($diff);
-            //     // // echo '</pre>';
-            //     // if ($diff->d <= 7) {
-            //     //     $dateArray[$i] = $loginDataArray[$i]["date"];
-            //     //     $countArray[$i] = $loginDataArray[$i]["count"];
-            //     // }
-            // }
-            // echo '<pre>';
-            // var_dump($loginDataArray);
-            // echo '</pre>';
-            // echo $currentDate;
-            // var_dump($currentDate);
-            // var_dump($user->log_in_time);
-            // var_dump(date_create($currentTime));
             $crntTime = date_create($currentTime);
 
             ?>
