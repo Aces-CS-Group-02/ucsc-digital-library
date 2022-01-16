@@ -2,6 +2,7 @@
 
 namespace app\core;
 
+use Exception;
 use PDO;
 use stdClass;
 
@@ -58,7 +59,7 @@ abstract class DbModel extends Model
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
-        
+
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
         }
@@ -115,7 +116,7 @@ abstract class DbModel extends Model
 
         return $statement->execute();
     }
-    
+
     public static function prepare($sql)
     {
         return Application::$app->db->pdo->prepare($sql);
@@ -143,5 +144,60 @@ abstract class DbModel extends Model
         $response->resultCount = $rowCount;
 
         return $response;
+    }
+
+
+    public static function paginate2($sql, $bindData, $start, $limit)
+    {
+        // Fetching and calculating page count --------------------------------
+        $stmt = self::prepare($sql);
+
+        // Bind values
+        $i = 1;
+        foreach ($bindData as $arr) {
+            $stmt->bindValue($i, $arr['value'], $arr['type']);
+            $i++;
+        }
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        $rowCount = $stmt->rowCount();
+        $pageCount = ceil($rowCount / $limit);
+
+
+        // Fetching data------------------------------------------------------
+
+        $sql = $sql . " LIMIT ? , ?";
+
+        array_push($bindData, ['value' => $start, 'type' => PDO::PARAM_INT]);
+        array_push($bindData, ['value' => $limit, 'type' => PDO::PARAM_INT]);
+
+        $stmt_2 = self::prepare($sql);
+
+        // Bind values
+        $i = 1;
+        foreach ($bindData as $arr) {
+            $stmt_2->bindValue($i, $arr['value'], $arr['type']);
+            $i++;
+        }
+
+        try {
+            $stmt_2->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        $payload = $stmt_2->fetchAll(PDO::FETCH_OBJ);
+
+
+        // Include all the data into a response Object and return it
+        $responseObj = new stdClass();
+        $responseObj->pageCount = $pageCount;
+        $responseObj->payload = $payload;
+        return $responseObj;
     }
 }

@@ -9,6 +9,8 @@ class Controller
     protected array $middlewares = [];
     public string $action = '';
 
+    public const BREADCRUM_HOME = ['name' => 'home', 'link' => '/'];
+
 
     public const BREADCRUM_DASHBOARD = ['name' => 'Dashboard', 'link' => '/admin/dashboard'];
 
