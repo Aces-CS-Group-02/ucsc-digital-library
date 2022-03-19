@@ -95,25 +95,23 @@ class ExportController extends Controller
 
         //creating the csv file for metadata
         $csv_name = "temp/metadata.csv";
-        $fp = fopen($csv_name,'w');
+        $fp = fopen($csv_name, 'w');
 
         if ($fp === false) {
             die('Error opening the file ' . $csv_name);
         }
-        
+
         // write each row at a time to a file
         foreach ($data as $row) {
             fputcsv($fp, $row);
         }
-        
+
         // close the file
         fclose($fp);
 
         //add the csv file to the zip
         $zip->addFile($csv_name, "metedata.csv");
 
-        //deleting the csv file
-        unlink($csv_name);
 
         $zip->close();
 
@@ -127,6 +125,7 @@ class ExportController extends Controller
 
         // deleting the zip file from the file structure
         unlink($zip_name);
-
+        //deleting the csv file
+        unlink($csv_name);
     }
 }
