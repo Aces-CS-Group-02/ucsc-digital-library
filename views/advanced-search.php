@@ -69,7 +69,7 @@
                     </div>
                     <div class="input-group input-group-override-1">
                         <div class="input-group">
-                            <input class="form-control add-margin change-height" onkeyup="validateOperators(event)" id="query" type="text" />
+                            <input class="form-control add-margin change-height" onkeydown="if(event.keyCode===13)addFilter()" onkeyup="validateOperators(event)" id="query" type="text" />
                         </div>
 
                         <button class="btn btn-secondary" type="button" onclick="addFilter()"><i class="fas fa-plus-circle add-margin"></i></button>
