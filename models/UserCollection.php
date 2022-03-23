@@ -85,13 +85,15 @@ class UserCollection extends DbModel
         return $this->findAll(['reg_no' => $this->reg_no]) ?? false;
     }
 
-    // public function findUserCollection($data)
-    // {
-    //     $tableName = static::tableName();
-    //     $statement = self::prepare("SELECT * FROM $tableName WHERE user_collection_id = $data");
-    //     $statement->execute();
-    //     return $statement->fetchAll();
-    // }
+    public function editUserCollection($data)
+    {
+        $this->name = $data["name"];
+        $this->user_collection_id = $data["collection-id"];
+        $tableName = static::tableName();
+        $statement = self::prepare("UPDATE $tableName SET name = '$this->name' WHERE user_collection_id = $this->user_collection_id");
+        // var_dump($statement);
+        if ($this->validate()) return $statement->execute();
+    }
 
     public function addContentToCollection($collectionId, $contentId)
     {

@@ -1,11 +1,3 @@
-<?php
-$isLoggedIn = true;
-
-
-use app\core\Application;
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +22,7 @@ use app\core\Application;
 
 
 
-    <title>New Collection</title>
+    <title>Edit Collection</title>
 </head>
 
 <body>
@@ -38,6 +30,9 @@ use app\core\Application;
     <!-- NAVIGATION BAR -->
 
     <?php
+
+    use app\core\Application;
+
     include_once dirname(__DIR__) . '/components/nav.php';
     ?>
 
@@ -109,7 +104,7 @@ use app\core\Application;
 
         <div class="profile-section-a wrapper">
             <div class="section-header">
-                <p class="section-header-title">Create New Collection</p>
+                <p class="section-header-title">Edit Collection <?= $params['model']->name ?></p>
             </div>
             <div class="input-division">
                 <form id="create-user-collection-form" action="" method="POST">
@@ -121,11 +116,12 @@ use app\core\Application;
                             $errors_on_name = true;
                         }
                     ?>
+                        <input id="collection-id" class="collection-id" name="collection-id" value="<?= $params['model']->user_collection_id ?>" type="hidden"></input>
 
                         <div class="input-group edit-input-group">
                             <label class="labelPlace <?php if ($errors_on_name) {
                                                             echo "danger-text";
-                                                        } ?>" for="name">Collection Name</label>
+                                                        } ?>" for="Name">Collection New Name</label>
                             <input class="form-control <?php if ($errors_on_name) {
                                                             echo "danger-border";
                                                         } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
@@ -145,7 +141,7 @@ use app\core\Application;
 
                     <?php } ?>
 
-                    <button class="btn btn-primary btn-edit" id="create-user-collection-btn" type="submit">Create</button>
+                    <button class="btn btn-primary btn-edit" id="create-user-collection-btn" type="submit">Save</button>
                 </form>
             </div>
         </div>

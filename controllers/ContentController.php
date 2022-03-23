@@ -6,6 +6,8 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\exception\NotFoundException;
 use app\core\Request;
+use app\models\Citation;
+use app\models\citationCount;
 use app\models\Collection;
 use app\models\CollectionPermission;
 use app\models\Community;
@@ -843,5 +845,61 @@ class ContentController extends Controller
 
 
         $this->render('content-abstract-info', ['content' => $contentObj]);
+    }
+
+    public function getContentShareLink()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+        $shareLink = "http://localhost:8000/content?content_id=" . $contentId;
+        return $shareLink;
+    }
+
+    public function getCitation()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+        $citationType = $_POST["citation_type"];
+        $contentModel = new Content();
+        $content = $contentModel->findOne(['content_id' => $contentId]);
+        $citationClass = new Citation($contentId);
+
+        switch ($content->type) {
+            case 1:
+                $citation = $citationClass->eBooks($citationType);
+                break;
+            case 2:
+                $citation = $citationClass->thesis($citationType);
+                break;
+            case 3:
+                $citation = $citationClass->publications($citationType);
+                break;
+            case 4:
+                // $citation = $citationClass->pastPapers($citationType);
+                return "";
+                break;
+            case 5:
+                $citation = $citationClass->journals($citationType);
+                break;
+            case 6:
+                $citation = $citationClass->newsletters($citationType);
+                break;
+            case 7:
+                $citation = $citationClass->audio($citationType);
+                break;
+            case 8:
+                $citation = $citationClass->video($citationType);
+                break;
+            case 9:
+                // $citation = $citationClass->other($citationType);
+                return "";
+                break;
+        }
+        $citationCountModel = new citationCount();
+        $citationCountModel->addRecord(['content_id' => $contentId]);
+        return $citation;
+        // var_dump($_POST);
+        // $data = $request->getBody();
+        // var_dump($content->type);
     }
 }

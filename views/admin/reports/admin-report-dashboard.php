@@ -74,7 +74,7 @@ $userRole = "admin";
 
                 </div>
                 <div class="card-container">
-                    <a href="" class="card box-shadow-1">
+                    <a href="/admin/citation-history-report" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="\assets\admin-reports-dashboard\citation-1.png" alt=" cloud-image">
                         </div>

@@ -11,22 +11,33 @@ const sidebarSectionContent = document.querySelector(
 );
 
 // var notesBtns = document.querySelector("#add-notes-btn");
+var bookmarkBtns = document.getElementsByClassName("add-bookmark-btn");
 var notesBtns = document.getElementsByClassName("add-notes-btn");
 var noteModal = document.getElementById("notesModal");
 var noteSpan = document.getElementsByClassName("close-note")[0];
 var noteSave = document.getElementById("notes-modal-form");
 var noteData = document.getElementById("note-data");
+var shareBtns = document.getElementsByClassName("share-btn");
+var shareModal = document.getElementById("shareModal");
+var shareSpan = document.getElementsByClassName("close-share")[0];
+var citationBtns = document.getElementsByClassName("get-citation-btn");
+var citationModal = document.getElementById("citationsModal");
+var citationSpan = document.getElementsByClassName("close-citation")[0];
+var citationSelect = document.getElementById("select-citation");
 
 var collectionBtns = document.getElementsByClassName("add-to-collection-btn");
 var collectionModal = document.getElementById("collectionsModal");
 var collectionSpan = document.getElementsByClassName("close-collection")[0];
 var addCollectionBtn = document.getElementById("add-collection");
 // const collectionCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-sideBarExpandBtn.addEventListener("click", () => {
+sideBarExpandBtn.addEventListener("click", (e) => {
   sideBarExpanded.classList.toggle("active");
   // arrowChange();
   overlay.classList.toggle("active");
+  getBookmarks();
 });
+
+// sideBarExpandBtn.addEventListener("click", getBookmarks, false);
 
 overlay.addEventListener("click", () => {
   overlay.classList.remove("active");
@@ -58,14 +69,130 @@ noteSpan.onclick = function () {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-  if (event.target == noteModal || event.target == collectionModal) {
+  if (
+    event.target == noteModal ||
+    event.target == collectionModal ||
+    event.target == citationModal ||
+    event.target == shareModal
+  ) {
     // console.log("modal clicked");
     collectionModal.style.display = "none";
     var messageContainer = document.getElementById("message-container");
     messageContainer.style.display = "none";
     noteModal.style.display = "none";
+    citationModal.style.display = "none";
+    shareModal.style.display = "none";
   }
 };
+
+var shareLinkContainer = document.querySelector(".share-link-container");
+var shareLinkCopyBtn = document.getElementById("copy-share-link");
+
+const selection = window.getSelection();
+const range = document.createRange();
+// const textToCopy = document.getElementById("textToCopy")
+
+// shareLinkCopyBtn.addEventListener('click', function(e) {
+//     range.selectNodeContents(shareLinkContainer);
+//     selection.removeAllRanges();
+//     selection.addRange(range);
+//     const successful = document.execCommand('copy');
+//     if(successful){
+//       console.log('Copied!');
+//     } else {
+//       console.log('Unable to copy!');
+//     }
+//     window.getSelection().removeAllRanges()
+// });
+var linkCopyMsg = document.querySelector(".link-copy-msg");
+
+function copyShareLink() {
+  shareLinkContainer.select();
+  shareLinkContainer.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(shareLinkContainer.value);
+  linkCopyMsg.classList.add("add-animation");
+  setTimeout(function () {
+    linkCopyMsg.classList.remove("add-animation");
+  }, 1500);
+}
+
+const getShareLink = () => {
+  const getSLinkReq = new XMLHttpRequest();
+  var url = "/ajax/get-content-share-link";
+  getSLinkReq.open("POST", url);
+  getSLinkReq.onreadystatechange = function () {
+    // console.log(this.responseText);
+    if (this.readyState == 4 && this.status == 200) {
+      shareModal.style.display = "flex";
+      shareLinkContainer.innerText = this.responseText;
+    }
+  };
+  getSLinkReq.send(JSON.stringify({ content_id: contentId }));
+};
+
+for (var btn of shareBtns) {
+  btn.addEventListener("click", getShareLink, false);
+}
+
+shareSpan.onclick = function () {
+  shareModal.style.display = "none";
+};
+
+var citationTextArea = document.getElementById("citation-data");
+var citationCopyBtn = document.getElementById("copy-citation");
+var citationCopyMsg = document.querySelector(".copy-msg");
+
+const getCitations = (type) => {
+  // currentTarget.preventDefault();
+  const getCitationReq = new XMLHttpRequest();
+  var url = "/ajax/get-citation";
+  getCitationReq.open("POST", url);
+  getCitationReq.onreadystatechange = function () {
+    // console.log(this.responseText);
+    if (this.readyState == 4 && this.status == 200) {
+      citationTextArea.innerText = this.responseText;
+      citationCopyBtn.style.display = "flex";
+      citationCopyBtn.addEventListener("click", (e) => {
+        citationCopyMsg.classList.add("add-animation");
+        setTimeout(function () {
+          citationCopyMsg.classList.remove("add-animation");
+        }, 1500);
+      });
+    }
+  };
+  getCitationReq.send(
+    JSON.stringify({ content_id: contentId, citation_type: type })
+  );
+};
+
+var citationForm = document.getElementById("citation-select-form");
+
+citationSelect.addEventListener("change", (e) => {
+  // console.log(e.target);
+  if (e.target.value != 0) {
+    getCitations(e.target.value);
+  }
+});
+
+for (var btn of citationBtns) {
+  btn.addEventListener("click", () => {
+    citationModal.style.display = "flex";
+  });
+}
+
+citationSpan.onclick = function () {
+  citationModal.style.display = "none";
+};
+
+function copyCitation() {
+  citationTextArea.select();
+  citationTextArea.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(citationTextArea.value);
+}
 
 const saveNote = (currentTarget) => {
   // var noteData = document.getElementById("note-data").value;
@@ -115,6 +242,75 @@ const getNoteData = ({ currentTarget }) => {
 
 for (var btn of notesBtns) {
   btn.addEventListener("click", getNoteData, false);
+}
+
+const addBookmark = (currentTarget) => {
+  const addBookmarkReq = new XMLHttpRequest();
+  // let params = [];
+  // params = `content_id=${contentId}&reg_no=${regNo}`;
+  pageNo = document.querySelector("#page-num").textContent;
+  var url = "/ajax/user-bookmarks";
+  addBookmarkReq.open("POST", url);
+  addBookmarkReq.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      // console.log(this.responseText);
+      alert(this.responseText);
+      getBookmarks();
+    }
+  };
+  addBookmarkReq.send(
+    JSON.stringify({ content_id: contentId, page_no: pageNo })
+  );
+};
+
+const getBookmarks = () => {
+  // AJAX request
+  const bookmarkReq = new XMLHttpRequest();
+  // let params = [];
+  // params = `reg_no=${id}`;
+  var url = "/ajax/get-user-bookmarks";
+  // var url = "/ajax/get-user-collections" + "&rand=" + new Date().getTime();
+  // var randNo = parseInt(Math.random()*99999999);
+  bookmarkReq.open("POST", url);
+  bookmarkReq.onreadystatechange = getBookmarkData;
+  // collectionReq.send(params);
+  bookmarkReq.send(JSON.stringify({ content_id: contentId }));
+};
+
+function getBookmarkData() {
+  var parentDiv = document.getElementById("side-bar-section-content"); //from here
+
+  if (this.readyState == 4) {
+    if (this.status == 200) {
+      // console.log("got the data");
+      parentDiv.innerHTML = "";
+      var bookmarks = JSON.parse(this.responseText);
+      // console.log(this.responseText);
+      for (var bookmark of bookmarks) {
+        var div = document.createElement("div");
+        div.classList.add("bookmark-card");
+        // div.setAttribute("id", bookmark.page);
+        div.dataset.id = bookmark.page;
+        div.innerText = "Page: " + bookmark.page;
+        parentDiv.appendChild(div);
+        div.addEventListener("click", (e) => {
+          // alert();
+          console.log(e.target.dataset.id);
+          var canvas = document.querySelector(".pdfCanvas");
+          var pageHeight = canvas.height;
+          console.log(pageHeight);
+          var scrollHeight = pageHeight * e.target.dataset.id;
+          console.log(scrollHeight);
+          var scrollDiv = document.querySelector("#scroll-div");
+          scrollDiv.scrollTop = scrollHeight;
+        });
+      }
+    }
+  }
+}
+
+for (var btn of bookmarkBtns) {
+  btn.addEventListener("click", addBookmark, false);
 }
 
 const getCollections = ({ currentTarget }) => {
@@ -391,9 +587,10 @@ function renderPage(num) {
     // Set scale
     const viewport = page.getViewport({ scale });
 
-    //Xreating a canvas for each page to draw it on
+    //Creating a canvas for each page to draw it on
     var canvas = document.createElement("canvas");
     canvas.id = num;
+    canvas.className = "pdfCanvas";
     canvas.style.display = "flex";
     canvas.style.margin = "auto";
     canvas.style.overflow = "hidden";
@@ -472,3 +669,12 @@ document.querySelector("#scroll-div").addEventListener("scroll", () => {
   }
   document.querySelector("#page-num").textContent = num;
 });
+
+// console.log(bookmarkCard);
+// if(bookmarkCard){
+//   bookmarkCard.addEventListener("click", (e) => {
+//     alert();
+//     console.log(e.target.id);
+//     // document.querySelector("#page-num").textContent = e.target.id;
+//   })
+// }

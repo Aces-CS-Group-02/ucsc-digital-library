@@ -32,7 +32,7 @@ body {
   transition: background-color 0.1s ease-in-out;
 }
 
-.edit-anchor{
+.edit-anchor {
   color: rgb(119, 119, 119) !important;
   text-decoration: none;
 }
@@ -79,6 +79,11 @@ body {
 
 .pdf-viewer-overlay.active {
   display: block;
+}
+
+.get-citation-btn,
+.share-btn {
+  cursor: pointer;
 }
 
 /*================================================================*/
@@ -181,19 +186,25 @@ body {
 }
 
 .bookmark-card {
+  display: flex;
   width: 100%;
   height: 50px;
   background-color: rgb(219, 219, 219);
   margin: 5px 0;
   border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: rgb(99, 99, 99);
+  cursor: pointer;
 }
 
-.hover-text{
+.hover-text {
   position: relative;
   /* border-bottom: 1px dotted black; */
 }
 
-.hover-text::before{
+.hover-text::before {
   content: attr(data-hover);
   visibility: hidden;
   opacity: 0;
@@ -212,7 +223,7 @@ body {
   top: 50%;
 }
 
-.hover-text:hover::before{
+.hover-text:hover::before {
   opacity: 0.8;
   visibility: visible;
 }
@@ -320,6 +331,98 @@ body {
   max-width: 400px;
 }
 
+.share-modal-middle-content {
+  padding: 10px 10px 5px 10px;
+}
+
+.share-link-container {
+  width: 100%;
+  /* margin: 10px; */
+  min-height: 100px;
+  outline: none;
+  border-color: #ededed;
+  resize: none;
+  padding: 10px;
+}
+
+#adjustments {
+  display: flex;
+  flex-direction: row;
+}
+
+.custom-select-edited {
+  margin: 0 0 0 10px;
+  flex: 1;
+}
+
+#citation-data {
+  /* border: none; */
+  margin: 10px;
+  max-height: 200px;
+  min-height: 200px;
+  outline: none;
+  border-color: #ededed;
+  resize: none;
+  padding: 10px;
+}
+
+#copy-citation {
+  display: none;
+  color: white;
+  cursor: pointer !important;
+  position: absolute;
+  z-index: 10;
+}
+
+#copy-share-link {
+  color: white;
+  cursor: pointer !important;
+  position: absolute;
+  z-index: 10;
+}
+
+.copy-msg,
+.link-copy-msg {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 5px;
+
+  opacity: 0;
+  /* display: none; */
+  /* animation: fade 0.5s 1 alternate; */
+  /* animation-fill-mode: none; */
+  animation-fill-mode: forwards;
+}
+
+.add-animation {
+  z-index: 20;
+  animation: fade 2.5s ease;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+    transform: translateY(0em);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-10em);
+  }
+  100% {
+    display: none;
+    opacity: 0;
+    transform: translateY(-16em);
+  }
+  /* from {
+    transform: translateY(0em);
+  } 
+  to {
+    transform: translateY(-10em);
+  } */
+}
+
 .notes-modal-top-section {
   display: flex;
   flex-direction: row;
@@ -347,16 +450,16 @@ body {
   padding: 15px 0;
 } */
 
-.modal-middle-content{
+.modal-middle-content {
   max-height: 200px;
   overflow-y: scroll;
 }
 
-.display-save-btn{
+.display-save-btn {
   display: flex !important;
 }
 
-.hide-create-and-save-btn{
+.hide-create-and-save-btn {
   display: none !important;
 }
 
@@ -381,11 +484,25 @@ body {
   box-sizing: border-box;
 }
 
+.citations-modal-bottom {
+  height: 3.8rem;
+}
+
+.close-citation,
+.close-share {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.edit-label {
+  margin-top: 3px;
+}
+
 .edit-for-collection {
   flex-direction: column;
 }
 
-.edit-input-group{
+.edit-input-group {
   padding: 10px 0;
 }
 
@@ -442,21 +559,21 @@ body {
   color: #fff !important;
 }
 
-.btn-container{
+.btn-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
 }
 
-.btn-container-hidden{
+.btn-container-hidden {
   display: none;
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
 }
 
-.message-container{
+.message-container {
   /* color: #555353; */
   display: none;
   /* margin-top: 5px; */
@@ -466,19 +583,19 @@ body {
   height: fit-content;
 }
 
-.add-green{
+.add-green {
   color: green !important;
 }
 
-.add-orange{
+.add-orange {
   color: orangered !important;
 }
 
-.red-bg{
+.red-bg {
   background-color: rgb(238, 102, 102);
 }
 
-.add-red{
+.add-red {
   color: red;
 }
 /* .ck-editor__editable {
