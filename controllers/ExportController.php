@@ -35,6 +35,9 @@ class ExportController extends Controller
             ['content_hash', 'title', 'subject', 'creators', 'keywords', 'date', 'language', 'type', 'publish_state', 'upload_steps', 'isbn', 'abstract', 'publisher']
         ];
 
+        $description = [$collection->description];
+        array_push($data, $description);
+
         //creating the zip file
         $zip_name = "$collection->name.zip";
         $zip = new ZipArchive();
@@ -101,6 +104,9 @@ class ExportController extends Controller
             die('Error opening the file ' . $csv_name);
         }
 
+        // var_dump($data);
+        // exit;
+
         // write each row at a time to a file
         foreach ($data as $row) {
             fputcsv($fp, $row);
@@ -110,7 +116,7 @@ class ExportController extends Controller
         fclose($fp);
 
         //add the csv file to the zip
-        $zip->addFile($csv_name, "metedata.csv");
+        $zip->addFile($csv_name, "metadata.csv");
 
 
         $zip->close();

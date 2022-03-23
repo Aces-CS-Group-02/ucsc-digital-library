@@ -45,6 +45,7 @@ class Controller
     public const BREADCRUM_REMOVE_CONTENT = ['name' => 'Delete content', 'link' => '/admin/remove-content'];
     public const BREADCRUM_CREATE_SUB_COMMUNITY = ['name' => 'Create sub community', 'link' => ''];
     public const BREADCRUM_CREATE_COLLECTION = ['name' => 'Create collection', 'link' => ''];
+    public const BREADCRUM_IMPORT_COLLECTION = ['name' => 'Import Collection', 'link' => ''];
     public const BREADCRUM_EDIT_COMMUNITY = ['name' => 'Edit community', 'link' => ''];
     public const BREADCRUM_EDIT_TOP_LEVEL_COMMUNITY = ['name' => 'Edit top level community', 'link' => ''];
 

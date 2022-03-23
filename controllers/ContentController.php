@@ -22,6 +22,10 @@ use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
 use stdClass;
+use Imagick;
+use ImalH\PDFBox\PDFLib;
+
+
 
 class ContentController extends Controller
 {
@@ -111,11 +115,12 @@ class ContentController extends Controller
                 $input = $request->getBody();
 
                 $content->collection_id = $input['collection_id'];
-
+                $content->uploaded_by = Application::$app->user->reg_no;
                 $content->upload_steps = 1;
                 $content->publish_state = 0;
 
-                // var_dump($content);
+                // var_dump(Application::$app->user->regNo);
+                // exit;
 
                 if ($content->save()) {
                     $last_inserted_id = Application::$app->db->pdo->lastInsertId();
@@ -273,7 +278,7 @@ class ContentController extends Controller
 
             $form_input = $request->getBody();
 
-            var_dump($form_input);
+            // var_dump($form_input);
 
             $content_keyword = new ContentKeyword();
 
@@ -354,7 +359,7 @@ class ContentController extends Controller
                 $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
             if (!$content->findOne(['content_id' => $data['content_id']])) {
-                var_dump($data);
+                // var_dump($data);
                 throw new NotFoundException();
             }
 
@@ -364,7 +369,7 @@ class ContentController extends Controller
 
 
             $file = $_FILES['content-file'];
-            var_dump($file);
+            // var_dump($file);
 
 
             if ($file['tmp_name'] == "" and $content->url != "") {
@@ -380,11 +385,26 @@ class ContentController extends Controller
 
             if ($content->upload_steps < 4) $content->upload_steps = 4;
 
-
+            // phpinfo();
+            // exit;
+            // var_dump($content->url);
 
             $content->update();
 
             if (move_uploaded_file($file['tmp_name'], $content->url)) {
+                // $coverPage = new Imagick($content->url."[0]");
+                // // $coverPage->setImageFormat('jpg');
+                // // header('Content-Type: image/jpeg');
+                // // echo $coverPage;
+                // $pdf = new Pdf($content->url);
+                // $pdf->saveImage('/');
+                // exit;
+                // $pdf = $content->url;
+                // $save = 'temp\output.jpg';
+
+                // exec('convert "' . $pdf . '" -colorspace RGB -resize 800 "' . $save . '"', $output, $return_var);
+
+                // exit;
                 Application::$app->response->redirect('/admin/upload-content/verify?content_id=' . $data['content_id']);
             }
         } else {

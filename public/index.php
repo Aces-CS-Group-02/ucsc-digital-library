@@ -19,6 +19,7 @@ use app\controllers\ContentCollectionController;
 use app\models\Content;
 use app\controllers\ExportController;
 use app\models\ContentCollectionContent;
+use app\controllers\ImportController;
 
 require_once __DIR__ . "./../vendor/autoload.php";
 
@@ -156,6 +157,8 @@ $app->router->get('/admin/remove-content', [AdministrationController::class, "re
 $app->router->get('/admin/content-collections', [AdministrationController::class, "contentCollections"]);
 $app->router->get('/admin/admin-create-content-collection', [AdministrationController::class, "createContentCollection"]);
 $app->router->get('/admin/export/collection',[ExportController::class, "exportCollection"]);
+$app->router->get('/admin/import/collection',[ImportController::class,"importCollection"]);
+$app->router->post('/admin/import/collection',[ImportController::class,"importCollection"]);
 
 
 // Admin Dashboard => Manage Users Routes

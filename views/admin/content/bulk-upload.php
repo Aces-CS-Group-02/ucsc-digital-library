@@ -27,7 +27,7 @@ $userRole = "student";
 
 
 
-    <title>Bulk Upload</title>
+    <title>Import Collection</title>
 </head>
 
 <body>
