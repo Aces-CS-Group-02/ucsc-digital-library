@@ -128,6 +128,16 @@ class Content extends DbModel
                                     WHERE title LIKE '%$search_params%'";
         return $this->paginate($sql, $start, $limit);
     }
+
+    public function getAllUnapprovedContent($search_params, $start, $limit)
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT *
+                FROM content              
+                WHERE title LIKE '%$search_params%' AND approved=0";
+        return $this->paginate($sql, $start, $limit);
+    }
+
     public function getInfoContent($content_id)
     {
         $tableName = self::tableName();

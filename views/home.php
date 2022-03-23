@@ -99,9 +99,9 @@
       </div>
       <div class="middle">
         <div class="main-searchbox-container">
-          <input id="main-searchbox-input" type="text" />
+          <input id="main-searchbox-input" type="text" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)"/>
           <div class="search-N-advanced-search-btn-container">
-            <button id="main-search-btn" onclick="document.location='/search'">Search</button>
+            <button id="main-search-btn" onclick="search()" >Search</button>
             <a href="/advanced-search">Advanced Search</a>
           </div>
         </div>
@@ -360,6 +360,29 @@
 
   <script src="./javascript/nav.js"></script>
   <script src="./javascript/home.js"></script>
+  <script>
+    function search() {
+      let searchQuery = document.getElementById("main-searchbox-input").value.trim();
+      let old_url = new URL(window.location.href);
+      let host_name = old_url.hostname;
+      let protocol = old_url.protocol;
+      let port = old_url.port;
+      const url = new URL(protocol + "//" + host_name + ":" + port + "/search-result  ");
+      url.searchParams.append('community', '-1');
+      url.searchParams.append('sort_by', 'relavance');
+      url.searchParams.append('order', 'desc');
+      url.searchParams.append('search_query', searchQuery);
+      window.location.href = url;
+
+    }
+
+    function validateOperators(event) {
+      clearErrorMsg(event.target);
+      if ((/((\band\b|\bor\b|\bnot\b)( (\band\b|\bor\b|\bnot\b))+)+/).test(event.target.value.toLowerCase())) {
+        addErrorMsg(event.target, 'Operators cannot be used in between words');
+      }
+    }
+  </script>
 </body>
 
 </html>

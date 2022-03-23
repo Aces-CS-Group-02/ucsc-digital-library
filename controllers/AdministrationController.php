@@ -11,6 +11,7 @@ use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
+use app\models\Content;
 use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;
@@ -422,12 +423,45 @@ class AdministrationController extends Controller
 
     public function approveSubmissions(Request $request)
     {
-        $breadcrum = [
-            self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_APPROVALS,
-            self::BREADCRUM_APPROVE_SUBMISSIONS
-        ];
-        return $this->render("admin/approve/admin-approve-submission", ['breadcrum' => $breadcrum]);
+
+
+        if ($request->isPOST()) {
+        } else {
+
+            $data = $request->getBody();
+
+            $search_params =  $data['q'] ?? '';
+            $page = isset($data['page']) ? $data['page'] : 1;
+            if($page <= 0) $page = 1;
+            $limit = 10;
+            $start = ($page - 1) * $limit;
+
+            $contents =  new Content();
+
+            $contents = $contents -> getAllUnapprovedContent($search_params, $start, $limit);
+
+            // echo '<pre>';
+            // var_dump($contents);
+            // echo '</pre>';
+            // exit;
+
+            foreach($contents as $content)
+            {
+                $user = new User();
+                $user = $user->findOne(['reg_no'=>$content->uploaded_by]);
+                // var_dump($user->first_name + $user->last_name);
+
+                $content->uploader = $user->first_name ." ".$user->last_name;
+            }
+
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_APPROVALS,
+                self::BREADCRUM_APPROVE_SUBMISSIONS
+            ];
+
+            return $this->render("admin/approve/admin-approve-submission", ['breadcrum' => $breadcrum, 'contents'=>$contents->payload,'currentPage' => $page, 'pageCount' => $contents->pageCount, 'search_params' => $search_params]);
+        }
     }
 
     public function viewReports(Request $request)
@@ -464,12 +498,12 @@ class AdministrationController extends Controller
         $loginData = $usersLoginCount->getLastRecords();
 
         $array = [];
-        foreach($loginData as $login){
+        foreach ($loginData as $login) {
 
             $temp = new stdClass;
             $temp->x = $login->date;
             $temp->y = (int)$login->count;
-            array_push($array,$temp);
+            array_push($array, $temp);
         }
         $array = json_encode($array);
 
@@ -479,7 +513,7 @@ class AdministrationController extends Controller
         $result = $users->getUsersOrderedByLoginTime($Search_params, $start, $limit);
         if (($result->pageCount != 0 && $page > $result->pageCount)) throw new NotFoundException();
 
-        
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_VIEW_REPORTS,

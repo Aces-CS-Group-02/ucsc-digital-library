@@ -24,12 +24,12 @@ if ($user) {
 
         <div class="nav-links">
             <div class="nav-bar-search-component-container">
-                <form action="">
+                
                     <div class="nav-bar-search-input-wrapper">
-                        <input type="text" placeholder="Search">
-                        <button id="nav-search-btn"><i class="fas fa-search"></i></button>
+                        <input type="text" placeholder="Search" id="nav-search" onkeydown="if(event.keyCode===13)navSearch()">
+                        <button id="nav-search-btn" onclick="navSearch()"><i class="fas fa-search"></i></button>
                     </div>
-                </form>
+                
             </div>
             <a class="nav-link" href="/browse">Browse</a>
             <a class="nav-link" href="/help">Help</a>
@@ -192,3 +192,21 @@ if ($user) {
         </div>
     </div>
 </div>
+
+<script>
+    function navSearch() {
+        let searchQuery = document.getElementById("nav-search").value.trim();
+        let old_url = new URL(window.location.href);
+        let host_name = old_url.hostname;
+        let protocol = old_url.protocol;
+        let port = old_url.port;
+        // console.log(searchQuery);
+        const url = new URL(protocol + "//" + host_name + ":" + port + "/search-result  ");
+        url.searchParams.append('community', '-1');
+        url.searchParams.append('sort_by', 'relavance');
+        url.searchParams.append('order', 'desc');
+        url.searchParams.append('search_query', searchQuery);
+        console.log(url);
+        window.location.href = url;
+    }
+</script>
