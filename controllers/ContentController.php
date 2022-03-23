@@ -21,6 +21,7 @@ use app\models\ContentType;
 use app\models\Creator;
 use app\models\DeleteContent;
 use app\models\LendPermission;
+use app\models\DeleteContentBy;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
@@ -79,6 +80,17 @@ class ContentController extends Controller
 
     public function mySubmissions(Request $request)
     {
+        $data = $request->getBody();
+
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] :1;
+        if($page<=0) $page = 1;
+        $limit = 10;
+        $start = ($page-1) * $limit;
+
+        $content = new Content();
+        // $mySubmissions = $content->getMySubmissions($search_params, $start, $limit);
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
@@ -708,6 +720,8 @@ class ContentController extends Controller
         ];
         return $this->render("admin/content/admin-inner-manage-content", ['content' => $allContent->payload, 'currentPage' => $page, 'pageCount' => $allContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
     }
+
+    
     public function viewContent(Request $request)
     {
         $contentModel = new Content();
@@ -755,18 +769,63 @@ class ContentController extends Controller
 
             $data = $request->getBody();
             $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+            
 
             if ($contentData) {
-                $deleteCon = new DeleteContent();
-                $deleteCon->deleted_by = Application::$app->user->reg_no;
+                $deleteContentModel = new DeleteContent();
+                $deleteContentModel = $contentData;
+                
+                $contentModel->loadData($data);
+                echo '<pre>';
+                var_dump($contentModel);
+                echo '</pre>';
+                exit;
+                // $deleteContentModel->title = 
+                // $deleteContentModel->language =
+                // $deleteContentModel->type =
+                // $deleteContentModel->subject =
+                // $deleteContentModel->publisher =
+                // date
+                //  'publish_state', 'url', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher'
+            //     ["title"]=>
+            //     string(38) "Bug Prediction Model Using Code Smells"
+            //     ["subject"]=>
+            //     string(0) ""
+            //     ["date"]=>
+            //     string(10) "2021-03-07"
+            //     ["language"]=>
+            //     int(0)
+            //     ["type"]=>
+            //     int(2)
+            //     ["publish_state"]=>
+            //     int(1)
+            //     ["url"]=>
+            //     string(27) "data/content/uploads/34.pdf"
+            //     ["collection_id"]=>
+            //     int(71)
+            //     ["upload_steps"]=>
+            //     int(5)
+            //     ["isbn"]=>
+            //     string(0) ""
+            //     ["abstract"]=>
+            //     string(2008) "The term ‘Code Smells’ was first coined in the book by Folwer [1]. A code smell is a surface indication that usually corresponds to a deeper problem in the system. These poor design choices have the potential to cause an error or failure in a computer program. The objective of this study is to use ‘Code Smells’ as a candidate metric to build a bug prediction model. Bug prediction models are often very useful. When bugs of a software can be predicted, the quality assurance teams can identify error prone components in advance and effectively allocate more resources to validate those components thoroughly. Bug prediction is an active research area in the community and various bug prediction models have been proposed using different metrics such as source code, process, network and code smells etc. In this study we have built a bug prediction model using both source code metrics and code smell based metrics proposed in the literature. We cannot use code smell based metrics only as a single predictor to predict buggy components of a software. There can be files in the source code which do not contain code smells. Therefore we will not be able to predict bug proneness of such components if we use code smell based metrics only. Therefore we initially built a basic model using source code metrics and then enhanced the basic model by using code smell based metrics. We used Naive Bayes, Random Forest and Logistic Regression as our candidate algorithms to build the model. We have trained our model against multiple versions of thirteen different Java based open source projects. The trained model was used to predict bugs in a particular version of a project and a particular project. We have also trained our model among different projects and trained model was used to predict bugs in an entirely different project. We were able to demonstrate in this study, that code smell based metrics can significantly improve the accuracy of a bug prediction model when integrated with source co"
+            //     ["publisher"]=>
+            //     string(0) ""
+            //     ["errors"]=>
+            //     array(0) {
+            //     }
+            //     ["content_id"]=>
+            //     string(2) "34"
+            //   }
+              
+                // $deleteByModel = new DeleteContentBy();
+                // $deleteByModel->deleted_by = Application::$app->user->reg_no;
 
-                // $deleteContent = $contentModel->deleteContent($contentData->content_id);
+                
 
-                // echo '<pre>';
-                // var_dump($contentData);
-                // echo '</pre>';
-                // exit;
-                if ($contentData->deleteContent($contentData->content_id) & $deleteCon->save()) {
+                //create a new table to put the content details deleted 3 tables one for creators content details deleted by
+
+                if ($contentData->deleteContent($contentData->content_id) & $deleteContentModel->save()) {
                     Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
                     Application::$app->response->redirect('/admin/manage-content');
                 } else {

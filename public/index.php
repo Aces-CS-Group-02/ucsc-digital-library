@@ -44,7 +44,7 @@ $app->router->get('/search', [SiteController::class, "search"]);
 $app->router->get('/browse', [SiteController::class, "browse"]);
 $app->router->get('/advanced-search', [SearchController::class, "advancedSearch"]);
 $app->router->get('/search-result', [SearchController::class, "searchResult"]);
-
+$app->router->get('/latest-contents', [SiteController::class, "home"]);
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
 
@@ -205,6 +205,7 @@ $app->router->get('/admin/manage-content', [ContentController::class, "manageCon
 $app->router->post('/admin/manage-content', [ContentController::class, "manageContent"]);
 $app->router->get('/admin/manage-content/view', [ContentController::class, "viewContent"]);
 $app->router->post('/admin/manage-content/delete', [ContentController::class, "deleteContent"]);
+
 
 
 

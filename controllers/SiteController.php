@@ -37,7 +37,11 @@ class SiteController extends Controller
 
         $topLevelCommunities = new Community();
         $topLevelCommunities = $topLevelCommunities->getAllTopLevelCommunities(0, 10000000);
-        return $this->render('home', ['communities' => $topLevelCommunities->payload]);
+
+        $latestContents = new Content();
+        $latestContents = $latestContents->getLatestContents();
+
+        return $this->render('home', ['communities' => $topLevelCommunities->payload, 'latestContents' => $latestContents]);
     }
 
     public function search()

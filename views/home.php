@@ -175,75 +175,30 @@
           </button>
         </div>
         <div class="carousel-content-container">
+
+          <?php
+          $latestContent = $params['latestContents'] ?? "";
+          ?>
+
           <div class="carousel-content">
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Learning PHP, MySQL & JavaScript</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81yh-4QQC8L._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Learn Java in one dayand LEARN IT WELL</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/810p+IMoNbL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Java Coding Problems</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/A1O2e-E1WkL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Learning Web Design</p>
-                </div>
-              </div>
-            </div>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/61wEatFvokL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Modern CSS</p>
-                </div>
-              </div>
-            </div>
+            <?php if ($latestContent) {
+              foreach ($latestContent as $content) { 
+              
+                ?>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> React Cookbook</p>
+                <div class="item">
+                  <div class="book-card box-shadow-2">
+                    <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
+                    <div class="book-title-container">
+                      <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id?>"> <?php echo $content->title ?></p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+            <?php }
+            } ?>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Modern C++ Programming Cookbook</p>
-                </div>
-              </div>
-            </div>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91crsfALwBL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Beginnnig C++ Game Programming</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="button-container">
