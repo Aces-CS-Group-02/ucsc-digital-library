@@ -93,11 +93,11 @@ $userRole = "student";
 
 
             <div class="btn-row">
-                <a href="/admin/upload-content" class="btn btn-info mr-1 step-next-btn">Step 1</a>
-                <a href="/admin/insert-metadata" class="btn btn-info mr-1 step-next-btn">Step 2</a>
-                <a href="/admin/insert-keyword-abstract" class="btn btn-info mr-1 step-next-btn">Step 3</a>
-                <a href="/admin/submit-content" class="btn btn-info mr-1 step-next-btn">Step 4</a>
-                <a href="/admin/verify-submission" class="btn btn-primary mr-1 step-next-btn">Step 5</a>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 1 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 1 ? "" : "disabled") . ''; ?>>Step 1</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 3 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/metadata?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 2 ? "" : "disabled") . ''; ?>>Step 2</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 3 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/insert-keyword-abstract?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 2 ? "" : "disabled") . ''; ?>>Step 3</button>
+                <button class="btn <?php echo '' . ($params['upload_steps'] >= 4 ? "btn-info" : "btn-light") . ''; ?> mr-1 step-next-btn" onclick="window.location='/admin/upload-content/upload-file?content_id=<?php echo $params['data']['content_id']; ?>';" <?php echo '' . ($params['upload_steps'] >= 3 ? "" : "disabled") . ''; ?>>Step 4</button>
+                <button class="btn btn-primary mr-1 step-next-btn">Step 5</button>
 
             </div>
 
@@ -115,7 +115,7 @@ $userRole = "student";
                                 <?php echo $params['collection']->parent->name . ' > ' . $params['collection']->name; ?>
                             </div>
                             <div class="input-row content-align-right">
-                                <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" onclick="window.location='/admin/upload-content?content_id=<?php echo $params['data']['content_id']; ?>';" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -195,7 +195,7 @@ $userRole = "student";
                                 </div>
                             <?php } ?>
                             <div class="input-row content-align-right">
-                                <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" onclick="window.location='/admin/upload-content/metadata?content_id=<?php echo $params['data']['content_id']; ?>';" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -227,7 +227,7 @@ $userRole = "student";
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
-                                <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" onclick="window.location='/admin/upload-content/insert-keyword-abstract?content_id=<?php echo $params['data']['content_id']; ?>';" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -246,15 +246,14 @@ $userRole = "student";
                                 </div>
                             </div>
                             <div class="input-row content-align-right">
-                                <button class="btn btn-secondary" type="button">Edit</button>
+                                <button class="btn btn-secondary" onclick="window.location='/admin/upload-content/upload-file?content_id=<?php echo $params['data']['content_id']; ?>';" type="button">Edit</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="btn-row content-align-right">
-                        <button class="btn btn-danger mr-1" type="button">Cancel</button>
-                        <button class="btn btn-warning mr-1" type="button">Draft</button>
-                        <a href="/admin/submit-content" class="btn btn-secondary mr-1 step-next-btn">Back</a>
+                        <button class="btn btn-danger mr-1" onclick="window.location='/admin/dashboard/manage-content';" type="button">Cancel</button>
+                        <button class="btn btn-secondary mr-1" onclick="window.location='/admin/upload-content/upload-file?content_id=<?php echo $params['data']['content_id']; ?>';" type="button">Back</button>
                         <button class="btn btn-primary mr-1" type="submit">Finish</button>
                     </div>
                 </div>

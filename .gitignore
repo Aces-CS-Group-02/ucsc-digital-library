@@ -2,3 +2,5 @@ vendor
 .env
 .metals/
 .idea/
+Dockerfile
+public/phpmyadmin

@@ -22,6 +22,8 @@ class Content extends DbModel
     public ?string $isbn = null;
     public ?string $abstract = null;
     public ?string $publisher = null;
+    public ?int $uploaded_by = null;
+
 
     public static function tableName(): string
     {
@@ -30,7 +32,7 @@ class Content extends DbModel
 
     public function attributes(): array
     {
-        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher'];
+        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by'];
     }
 
     public static function primaryKey(): string
