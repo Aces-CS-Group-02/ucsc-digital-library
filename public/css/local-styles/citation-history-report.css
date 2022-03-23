@@ -1,0 +1,37 @@
+.admin-dashboard-text {
+  max-width: 1400px;
+  width: 96%;
+  margin: 0 auto;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  padding: 15px 0;
+}
+
+#page-header-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+}
+
+.admin-dashboard-main-content {
+  flex-grow: 1;
+}
+
+.details-container {
+  width: 900px;
+  max-width: 900px;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+  margin: 10px auto;
+  font-family: "Poppins", sans-serif !important;
+}
+
+@media only screen and (max-width: 854px) {
+  .details-container {
+    width: 90%;
+  }
+}

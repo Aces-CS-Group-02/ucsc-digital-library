@@ -153,7 +153,7 @@ $userRole = "student";
     </div> -->
 
     <script src="./javascript/nav.js"></script>
-    <script src="./javascript/pdf-viewer.js"></script>
+    <!-- <script src="./javascript/pdf-viewer.js"></script> -->
 </body>
 
 </html>

@@ -122,7 +122,9 @@ use app\core\Application;
                 <!-- <a href="/profile/create-user-collection">
                 <button class="btn btn-primary mr-1 mb-1">Create New Collection</button>
             </a> -->
-                <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
+                <a href="/profile/edit-collection?collection-id=<?= $collectionModel->user_collection_id ?>">
+                    <button class="btn btn-success mr-1 mb-1 btn1-edit" type="button">Edit</button>
+                </a>
                 <button class="btn btn-danger mr-1 mb-1 btn2-edit edit" type="button" id="delete-collection">Delete</button>
             </div>
 

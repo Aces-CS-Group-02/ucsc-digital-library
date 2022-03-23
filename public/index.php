@@ -93,6 +93,8 @@ $app->router->get('/profile/my-collections', [UserController::class, "userCollec
 // $app->router->post('/profile/my-collections', [UserController::class, "userCollections"]);
 $app->router->get('/profile/manage-collection-view', [UserController::class, "manageCollectionTest"]);
 $app->router->get('/profile/manage-collection', [UserController::class, "manageCollection"]);
+$app->router->get('/profile/edit-collection', [UserController::class, "editCollection"]);
+$app->router->post('/profile/edit-collection', [UserController::class, "saveEditCollection"]);
 $app->router->get('/content/view', [UserController::class, "viewPdfViewer"]);
 // $app->router->post('/content/view', [UserController::class, "viewPdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
@@ -100,6 +102,10 @@ $app->router->get('/suggest-content', [UserController::class, "suggestContent"])
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
 //here
 $app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
+$app->router->post('/ajax/user-bookmarks', [UserController::class, "addContentBookmark"]);
+$app->router->post('/ajax/get-user-bookmarks', [UserController::class, "getContentBookmark"]);
+$app->router->post('/ajax/get-content-share-link', [ContentController::class, "getContentShareLink"]);
+$app->router->post('/ajax/get-citation', [ContentController::class, "getCitation"]);
 $app->router->post('/ajax/get-user-notes', [UserController::class, "saveContentNote"]);
 $app->router->get('/ajax/get-user-notes', [UserController::class, "getContentNote"]);
 $app->router->get('/ajax/get-user-collection-content', [UserController::class, "getCollectionContent"]);
@@ -173,6 +179,7 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 $app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
 $app->router->get('/admin/user-approvals-report', [AdministrationController::class, "viewApprovalsReport"]);
 $app->router->get('/admin/users-login-report', [AdministrationController::class, "viewLoginReport"]);
+$app->router->get('/admin/citation-history-report', [AdministrationController::class, "viewCitationHistoryReport"]);
 
 
 // Still Implementing

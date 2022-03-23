@@ -12,6 +12,7 @@ use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
 use app\models\Content;
+use app\models\citationCount;
 use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;
@@ -483,6 +484,18 @@ class AdministrationController extends Controller
             self::BREADCRUM_USER_APPROVALS_REPORT
         ];
         return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList]);
+    }
+
+    public function viewCitationHistoryReport()
+    {
+        $citationCountModel = new citationCount();
+        $citations = $citationCountModel->getAll();
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::CITATION_HISTORY_REPORT
+        ];
+        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations]);
     }
 
     public function viewLoginReport(Request $request)
