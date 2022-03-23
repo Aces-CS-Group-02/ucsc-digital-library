@@ -118,6 +118,9 @@ class ContentController extends Controller
                 $content->uploaded_by = Application::$app->user->reg_no;
                 $content->upload_steps = 1;
                 $content->publish_state = 0;
+                $user_role = Application::getUserRole();
+
+                if($user_role==1 || $user_role==2)$content->approved = 1;
 
                 // var_dump(Application::$app->user->regNo);
                 // exit;
