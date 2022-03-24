@@ -385,29 +385,19 @@ class ContentController extends Controller
 
             $file['name'] = $newfilename;
             $content->url = "data/content/uploads/" . $file['name'];
+            $content->thumbnail = "data/content/thumbnails/".$data['content_id'].".jpg";
 
             if ($content->upload_steps < 4) $content->upload_steps = 4;
-
-            // phpinfo();
-            // exit;
-            // var_dump($content->url);
-
             $content->update();
 
             if (move_uploaded_file($file['tmp_name'], $content->url)) {
-                // $coverPage = new Imagick($content->url."[0]");
-                // // $coverPage->setImageFormat('jpg');
-                // // header('Content-Type: image/jpeg');
-                // // echo $coverPage;
-                // $pdf = new Pdf($content->url);
-                // $pdf->saveImage('/');
-                // exit;
-                // $pdf = $content->url;
-                // $save = 'temp\output.jpg';
+                $coverPage = new Imagick($content->url."[0]");
+                $coverPage->setImageFormat('jpg');
+                header('Content-Type: image/jpeg');
+                //var_dump("/data/content/thumbnails/".$data['content_id'].".jpg");
+                // echo $coverPage;
+                $coverPage->writeImage($content->thumbnail);
 
-                // exec('convert "' . $pdf . '" -colorspace RGB -resize 800 "' . $save . '"', $output, $return_var);
-
-                // exit;
                 Application::$app->response->redirect('/admin/upload-content/verify?content_id=' . $data['content_id']);
             }
         } else {

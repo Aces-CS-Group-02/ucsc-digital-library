@@ -445,7 +445,7 @@ class AdministrationController extends Controller
             // echo '</pre>';
             // exit;
 
-            foreach($contents as $content)
+            foreach($contents->payload as $content)
             {
                 $user = new User();
                 $user = $user->findOne(['reg_no'=>$content->uploaded_by]);
