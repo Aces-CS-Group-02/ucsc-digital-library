@@ -388,7 +388,7 @@ class ContentController extends Controller
 
             $file['name'] = $newfilename;
             $content->url = "data/content/uploads/" . $file['name'];
-            $content->thumbnail = "data/content/thumbnails/" . $data['content_id'] . ".jpg";
+            $content->thumbnail = "data/content/thumbnails/".$data['content_id'].".jpg";
 
             if ($content->upload_steps < 4) $content->upload_steps = 4;
             $content->update();

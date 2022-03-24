@@ -4,6 +4,7 @@ vendor
 .idea/
 Dockerfile
 public/phpmyadmin
+controllers/DemoController.php
 .DS_Store
 public/.DS_Store
 public/data/.DS_Store
