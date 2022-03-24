@@ -12,6 +12,9 @@ use app\core\middlewares\StaffAccessPermissionMiddleware;
 use app\core\middlewares\StudentsAccessPermissionMiddleware;
 use app\core\Request;
 use app\models\Content;
+use app\models\citationCount;
+use app\models\ContentSubmissionStatus;
+use app\models\ContentSuggestion;
 use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;
@@ -424,34 +427,60 @@ class AdministrationController extends Controller
     public function approveSubmissions(Request $request)
     {
 
+        $contents =  new Content();
 
         if ($request->isPOST()) {
+            $contentData = $request->getBody();
+
+            $where = [
+                "content_id" => $contentData["content_id"]
+            ];
+            $content = $contents->findOne($where);
+            if ($content) {
+                $reason = $contentData["reason"];
+                $approvedBy = Application::$app->user->reg_no;
+
+                $contentSubmissionStatus = new ContentSubmissionStatus();
+                $contentSubmissionStatus->content_id = $content->content_id;
+                $contentSubmissionStatus->is_approved = true;
+                $contentSubmissionStatus->reason = $reason;
+                $contentSubmissionStatus->approved_by = $approvedBy;
+
+                $contentStateUpdated =  $contents->UpdateApprovedState($content->content_id);
+                if ($contentSubmissionStatus->save() && $contentStateUpdated) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content submission is successfully approved');
+                    Application::$app->response->redirect('/admin/approve-submissions');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'The content submission you are trying to approve does not exist!');
+                return $this->render('admin/approve/admin-approve-submission');
+            }
         } else {
 
             $data = $request->getBody();
 
             $search_params =  $data['q'] ?? '';
             $page = isset($data['page']) ? $data['page'] : 1;
-            if($page <= 0) $page = 1;
+            if ($page <= 0) $page = 1;
             $limit = 10;
             $start = ($page - 1) * $limit;
 
-            $contents =  new Content();
 
-            $contents = $contents -> getAllUnapprovedContent($search_params, $start, $limit);
+            $contents = $contents->getAllUnapprovedContent($search_params, $start, $limit);
 
             // echo '<pre>';
             // var_dump($contents);
             // echo '</pre>';
             // exit;
 
-            foreach($contents as $content)
-            {
+            foreach ($contents->payload as $content) {
+                // var_dump($content->uploaded_by);
                 $user = new User();
-                $user = $user->findOne(['reg_no'=>$content->uploaded_by]);
+                $user = $user->findOne(['reg_no' => $content->uploaded_by]);
+
                 // var_dump($user->first_name + $user->last_name);
 
-                $content->uploader = $user->first_name ." ".$user->last_name;
+                $content->uploader = $user->first_name . " " . $user->last_name;
             }
 
             $breadcrum = [
@@ -460,7 +489,38 @@ class AdministrationController extends Controller
                 self::BREADCRUM_APPROVE_SUBMISSIONS
             ];
 
-            return $this->render("admin/approve/admin-approve-submission", ['breadcrum' => $breadcrum, 'contents'=>$contents->payload,'currentPage' => $page, 'pageCount' => $contents->pageCount, 'search_params' => $search_params]);
+            return $this->render("admin/approve/admin-approve-submission", ['breadcrum' => $breadcrum, 'contents' => $contents->payload, 'currentPage' => $page, 'pageCount' => $contents->pageCount, 'search_params' => $search_params]);
+        }
+    }
+
+    public function rejectSubmissions(Request $request)
+    {
+        $contents =  new Content();
+
+        $contentData = $request->getBody();
+
+        $where = [
+            "content_id" => $contentData["content_id"]
+        ];
+        $content = $contents->findOne($where);
+        if ($content) {
+            $reason = $contentData["reason"];
+            $approvedBy = Application::$app->user->reg_no;
+
+            $contentSubmissionStatus = new ContentSubmissionStatus();
+            $contentSubmissionStatus->content_id = $content->content_id;
+            $contentSubmissionStatus->is_approved = false;
+            $contentSubmissionStatus->reason = $reason;
+            $contentSubmissionStatus->approved_by = $approvedBy;
+
+            $content->delete();
+            if ($contentSubmissionStatus->save()) {
+                Application::$app->session->setFlashMessage('success', 'Selected content submission is successfully approved');
+                Application::$app->response->redirect('/admin/approve-submissions');
+            }
+        } else {
+            Application::$app->session->setFlashMessage('error', 'The content submission you are trying to approve does not exist!');
+            return $this->render('admin/approve/admin-approve-submission');
         }
     }
 
@@ -483,6 +543,18 @@ class AdministrationController extends Controller
             self::BREADCRUM_USER_APPROVALS_REPORT
         ];
         return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList]);
+    }
+
+    public function viewCitationHistoryReport()
+    {
+        $citationCountModel = new citationCount();
+        $citations = $citationCountModel->getAll();
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::CITATION_HISTORY_REPORT
+        ];
+        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations]);
     }
 
     public function viewLoginReport(Request $request)

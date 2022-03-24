@@ -26,12 +26,12 @@ $userRole = "student";
 
     <?php
     $content = $params['content'];
-    // var_dump($content);
+    $contentType = $content->type;
     $contentId = $content->content_id;
     $contentName = $content->title;
     $permission = $params['permission'];
     $userRegNo = $params['user_reg_no'];
-    // echo $permission;
+    // var_dump($contentType);
     // echo $userRegNo;
     $url = '/data/content/uploads/' . $contentId . '.pdf';
     // echo json_encode($url);
@@ -52,7 +52,7 @@ $userRole = "student";
                 <!-- <i class="fas fa-arrow-alt-circle-right"></i> -->
             </div>
             <?php if ($userRegNo) { ?>
-                <div class="side-bar-block-s hover-text" data-hover="Add Bookmark">
+                <div class="side-bar-block-s hover-text add-bookmark-btn" data-hover="Add Bookmark">
                     <i class="fas fa-bookmark"></i>
                 </div>
                 <div id="add-notes-btn" class="side-bar-block-s add-notes-btn hover-text" data-hover="Add Note">
@@ -63,15 +63,17 @@ $userRole = "student";
                 </div>
             <?php } ?>
             <?php if ($permission == "READ_DOWNLOAD") { ?>
-                <a href="<?= $url ?>" class="edit-anchor" download>
+                <a href="<?= $url ?>" class="edit-anchor" download="<?= $contentName ?>.pdf">
                     <div id="download-btn" class="side-bar-block-s download-btn hover-text" data-hover="Download">
                         <i class="fas fa-download"></i>
                     </div>
                 </a>
             <?php } ?>
-            <div id="get-citation-btn" class="side-bar-block-s get-citation-btn hover-text" data-hover="Get Citations">
-                <i class="fas fa-quote-right"></i>
-            </div>
+            <?php if ($contentType != 4) { ?>
+                <div id="get-citation-btn" class="side-bar-block-s get-citation-btn hover-text" data-hover="Get Citations">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            <?php } ?>
             <div id="share-btn" class="side-bar-block-s share-btn hover-text" data-hover="Share">
                 <i class="fas fa-share"></i>
             </div>
@@ -105,6 +107,56 @@ $userRole = "student";
                         <button class="btn btn-info mr-1 mb-1" id="add-note">Save</button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <!-- SHARE MODAL  -->
+
+        <div id="shareModal" class="modal">
+            <div class="modal-content" id="share-modal-content">
+                <div class="notes-modal-top-section notes-modal-title">
+                    <div class="notes-title-section">Use this link to share</div>
+                    <div class="close-share">
+                        <span class="edit-close-note">&times;</span>
+                    </div>
+                </div>
+                <div class="share-modal-middle-content">
+                    <textarea class="share-link-container" readonly></textarea>
+                </div>
+                <div class="notes-modal-bottom-section citations-modal-bottom">
+                    <button class="btn btn-info mr-1 mb-1" id="copy-share-link" onclick="copyShareLink()">Copy</button>
+                    <div class="link-copy-msg">Copied!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CITATIONS MODAL  -->
+
+        <div id="citationsModal" class="modal">
+            <div class="modal-content" id="citations-modal-content">
+                <div class="notes-modal-top-section notes-modal-title">
+                    <div class="notes-title-section">Citations</div>
+                    <div class="close-citation">
+                        <span class="edit-close-note">&times;</span>
+                    </div>
+                </div>
+                <div class="citation-type-selector">
+                    <form action="/ajax/get-citation" method="POST" id="citation-select-form">
+                        <div class="input-group sort-input-edited" id="adjustments">
+                            <label class="labelPlace edit-label" for="select">Citation Type: </label>
+                            <select class="custom-select custom-select-edited" id="select-citation" name="type">
+                                <option value="0">Select Type</option>
+                                <option value="1">IEEE</option>
+                                <option value="2">ACM</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <textarea id="citation-data" readonly></textarea>
+                <div class="notes-modal-bottom-section citations-modal-bottom">
+                    <button class="btn btn-info mr-1 mb-1" id="copy-citation" onclick="copyCitation()">Copy</button>
+                    <div class="copy-msg">Copied!</div>
+                </div>
             </div>
         </div>
 
@@ -158,15 +210,16 @@ $userRole = "student";
     <div class="pdf-viewer-side-bar-expanded">
         <div class="side-bar-sections-container">
 
-        <?php if ($userRegNo) { ?>
+            <?php if ($userRegNo) { ?>
 
-            <div class="side-bar-section">
+                <div class="side-bar-section">
                     <div class="side-bar-section-top">
                         <i class="fas fa-bookmark"></i>
                         <p>Bookmarks</p>
-                        <button id="add-bookmark-btn"><i class="fas fa-plus"></i></button>
+                        <button id="add-bookmark-btn" class="add-bookmark-btn"><i class="fas fa-plus"></i></button>
                     </div>
-                    <div class="side-bar-section-content">
+                    <div class="side-bar-section-content" id="side-bar-section-content">
+                        <!-- <div class="bookmark-card"></div>
                         <div class="bookmark-card"></div>
                         <div class="bookmark-card"></div>
                         <div class="bookmark-card"></div>
@@ -179,8 +232,7 @@ $userRole = "student";
                         <div class="bookmark-card"></div>
                         <div class="bookmark-card"></div>
                         <div class="bookmark-card"></div>
-                        <div class="bookmark-card"></div>
-                        <div class="bookmark-card"></div>
+                        <div class="bookmark-card"></div> -->
                     </div>
                     <div class="side-bar-section-expand-collaps">
                         <button class="side-bar-section-expand-collaps-btn">
@@ -189,7 +241,7 @@ $userRole = "student";
                         </button>
                     </div>
 
-            </div>
+                </div>
 
                 <div class="side-bar-section">
                     <div class="side-bar-section-top">
@@ -216,34 +268,36 @@ $userRole = "student";
 
 
             <?php if ($permission == "READ_DOWNLOAD") { ?>
-                <a href="<?= $url ?>" class="edit-anchor" download>
-                <div class="side-bar-section">
+                <a href="<?= $url ?>" class="edit-anchor" download="<?= $contentName ?>.pdf">
+                    <div class="side-bar-section">
+                        <div class="side-bar-section-top">
+                            <i class="fas fa-download"></i>
+                            <p>Download</p>
+                            <button id="download-btn" class="download-btn"></button>
+                        </div>
+                        <div class="side-bar-section-expand-collaps no-content">
+                        </div>
+                    </div>
+                </a>
+            <?php } ?>
+
+            <?php if ($contentType != 4) { ?>
+                <div class="side-bar-section get-citation-btn" id="get-citation-btn">
                     <div class="side-bar-section-top">
-                        <i class="fas fa-download"></i>
-                        <p>Download</p>
-                        <button id="download-btn" class="download-btn"></button>
+                        <i class="fas fa-quote-right"></i>
+                        <p>Get Citations</p>
+                        <!-- <button id="get-citation-btn" class="get-citation-btn"></button> -->
                     </div>
                     <div class="side-bar-section-expand-collaps no-content">
                     </div>
                 </div>
-                </a>
             <?php } ?>
 
-            <div class="side-bar-section">
-                <div class="side-bar-section-top">
-                    <i class="fas fa-quote-right"></i>
-                    <p>Get Citations</p>
-                    <button id="get-citation-btn" class="get-citation-btn"></button>
-                </div>
-                <div class="side-bar-section-expand-collaps no-content">
-                </div>
-            </div>
-
-            <div class="side-bar-section">
+            <div class="side-bar-section share-btn">
                 <div class="side-bar-section-top">
                     <i class="fas fa-share"></i>
                     <p>Share</p>
-                    <button id="share-btn" class="share-btn"></button>
+                    <!-- <button id="share-btn" class="share-btn"></button> -->
                 </div>
                 <div class="side-bar-section-expand-collaps no-content">
                 </div>

@@ -8,11 +8,13 @@ use app\core\exception\ForbiddenException;
 use app\core\exception\NotFoundException;
 use app\core\Mail;
 use app\core\Request;
+use app\models\Bookmark;
 use app\models\CollectionPermission;
 use app\models\Community;
 use app\models\Content;
 use app\models\ContentCollectionPermission;
 use app\models\ContentSuggestion;
+use app\models\ContentViewRecords;
 use app\models\Note;
 use app\models\DeleteUsers;
 use app\models\Role;
@@ -34,6 +36,7 @@ class UserController extends Controller
 
     public function userCollection()
     {
+        $userCollectionModel = new UserCollection();
         return $this->render('user/create-user-collection');
     }
 
@@ -95,6 +98,53 @@ class UserController extends Controller
         // exit;
     }
 
+    public function editCollection(Request $request)
+    {
+        $userCollectionModel = new UserCollection();
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('collection-id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        // var_dump($data);
+        // exit;
+        $userCollectionID = $data['collection-id'];
+        $userCollection = $userCollectionModel->findOne(['user_collection_id' => $userCollectionID]);
+        if ($userCollection) {
+            return $this->render('user/edit-user-collection', ['model' => $userCollection]);
+        }
+        throw new NotFoundException();
+    }
+
+    public function saveEditCollection(Request $request)
+    {
+        $userCollectionModel = new UserCollection();
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('collection-id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        // var_dump($data);
+        // exit;
+        $userCollectionID = $data['collection-id'];
+        $userCollection = $userCollectionModel->findOne(['user_collection_id' => $userCollectionID]);
+        if ($userCollection) {
+            if ($userCollectionModel->editUserCollection($data)) {
+                Application::$app->session->setFlashMessage('success', 'Collection edited');
+                Application::$app->response->redirect('/profile');
+                exit;
+            }             
+            return $this->render('/user/edit-user-collection', ['model' => $userCollectionModel]);
+
+            // return $userCollectionModel->editUserCollection($data);
+        }
+        throw new NotFoundException();
+    }
+
     public function removeUserCollection(Request $request)
     {
         $data = $request->getBody();
@@ -111,10 +161,10 @@ class UserController extends Controller
             // Application::$app->response->redirect('/profile');
             // echo Application::$app->session->getFlashMessage('success');
             exit;
-        }
-        else{
+        } else {
             return Application::$app->session->setFlashMessage('error', 'Something went wrong');
             // Application::$app->response->redirect('/profile');
+            exit;
         }
     }
 
@@ -251,9 +301,58 @@ class UserController extends Controller
             $regNo = 0;
         }
         if ($content->publish_state == 1 || $regNo == 2 || $regNo == 1) {
+            if($content->publish_state == 1){
+                $contentViewRecordsModel = new ContentViewRecords();
+                $contentViewRecordsModel->addRecord(['content_id' => $data['content_id']]);
+            }
             if ($content->type <= 6 && $content->type >= 1)
                 return $this->render('pdf-viewer', ['content' => $content, 'permission' => $permission->grant_type, 'user_reg_no' => $regNo]);
         }
+    }
+
+    //here
+    public function addContentBookmark()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+        $pageNo = $_POST["page_no"];
+        // $data = $request->getBody();
+        // var_dump($contentId,$pageNo);
+        $bookmarkModel = new Bookmark();
+        $reg_no = Application::$app->user->reg_no;
+        $bookmark = $bookmarkModel->findOne(['content_id' => $contentId, 'reg_no' => $reg_no, 'page_no' => $pageNo]);
+        if($bookmark){
+            echo "Bookmark already exists on page ". $pageNo. "!";
+        }
+        else{
+            $bookmarkModel->saveBookmark(['content_id' => $contentId, 'page_no' => $pageNo]);
+            echo "Bookmark added for page ". $pageNo. "!";
+        }
+    }
+
+    public function getContentBookmark()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+ 
+        // $data = $request->getBody();
+        // var_dump($contentId,$pageNo);
+        $bookmarkModel = new Bookmark();
+        $reg_no = Application::$app->user->reg_no;
+        $bookmarks = $bookmarkModel->findAll(['content_id' => $contentId, 'reg_no' => $reg_no]);
+        $bookmarkData = [];
+        foreach($bookmarks as $bookmark){
+            $temp = new stdClass;
+            $temp->id = $bookmark['bookmark_id'];
+            $temp->page = $bookmark['page_no'];
+            $temp->content = $bookmark['content_id'];
+            array_push($bookmarkData,$temp);
+        }
+        return json_encode($bookmarkData);
+        // var_dump($bookmarks);
+        // return $bookmarks;
+        // return "test";
+        // return $bookmarks;
     }
 
     public function saveContentNote(Request $request)
@@ -315,7 +414,7 @@ class UserController extends Controller
                 Application::$app->response->redirect('/profile');
                 // echo Application::$app->session->getFlashMessage('success');
                 exit;
-            }
+            } 
             return $this->render('/user/create-user-collection', ['model' => $userCollectionModel]);
         }
     }

@@ -307,4 +307,13 @@ class Content extends DbModel
                 break;
         }
     }
+
+    public function UpdateApprovedState($content_id)
+    {
+        $tableName = self::tableName();
+        $sql = "UPDATE $tableName set approved = 1 WHERE content_id = $content_id";
+        $statement = self::prepare($sql);
+        // echo $sql;
+        return $statement->execute();
+    }
 }
