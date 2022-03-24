@@ -47,7 +47,7 @@ class ImportController extends Controller
             if (move_uploaded_file($file['tmp_name'], $location)) {
                 $zip = new ZipArchive();
                 if ($zip->open($location)) {
-                    // $zip->extractTo($path);
+                    $zip->extractTo($path);
                     $zip->close();
                 }
             }
@@ -55,7 +55,7 @@ class ImportController extends Controller
             $name_arr = explode(".", $location);
 
             //read the csv file
-            $csv_name = $name_arr[0] . "/metadata.csv";
+            $csv_name =  "temp/metadata.csv";
 
             $fp = fopen($csv_name, "r");
 
@@ -75,7 +75,7 @@ class ImportController extends Controller
             $data = fgetcsv($fp);
             $headings = $data;
             $data = fgetcsv($fp);
-            $collection_description = $data[0];
+            $collection_description = $data[0] ?? "";
 
             $collection->name = $collection_name;
             $collection->description = $collection_description;
@@ -126,12 +126,12 @@ class ImportController extends Controller
 
 
                 $file['name'] = $newfilename;
-                if($file_path==="")$saved_content->url="";
+                if ($file_path === "") $saved_content->url = "";
                 else $saved_content->url = "data/content/uploads/" . $file['name'];
 
                 $saved_content->update();
 
-                if($file_path!=="")copy($file_path, $saved_content->url);
+                if ($file_path !== "") copy($file_path, $saved_content->url);
 
                 //insert creators
                 $creators = $data[array_search("creators", $headings)];
