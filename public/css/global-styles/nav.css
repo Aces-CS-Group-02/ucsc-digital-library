@@ -58,6 +58,35 @@
   /* display: block; */
 }
 
+#browse-nav-link {
+  position: relative;
+}
+
+.browse-drop-down {
+  position: absolute;
+  background-color: #202124;
+  display: flex;
+  flex-direction: column;
+  top: 36px;
+  left: 0;
+  width: 220px;
+  height: fit-content;
+  padding: 10px 0;
+  display: none;
+}
+
+.browse-drop-down.active {
+  display: flex;
+}
+
+.browse-drop-down > .nav-link {
+  padding: 10px 0;
+}
+
+#browse-main-link {
+  cursor: pointer;
+}
+
 .notifications-count-label {
   background-color: #cc0000;
   color: white;

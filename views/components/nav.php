@@ -24,15 +24,23 @@ if ($user) {
 
         <div class="nav-links">
             <div class="nav-bar-search-component-container">
-                
-                    <div class="nav-bar-search-input-wrapper">
-                        <input type="text" placeholder="Search" id="nav-search" onkeydown="if(event.keyCode===13)navSearch()">
-                        <button id="nav-search-btn" onclick="navSearch()"><i class="fas fa-search"></i></button>
-                    </div>
-                
+
+                <div class="nav-bar-search-input-wrapper">
+                    <input type="text" placeholder="Search" id="nav-search" onkeydown="if(event.keyCode===13)navSearch()">
+                    <button id="nav-search-btn" onclick="navSearch()"><i class="fas fa-search"></i></button>
+                </div>
+
             </div>
-            <a class="nav-link" href="/browse">Browse</a>
-            <a class="nav-link" href="/help">Help</a>
+
+            <div id="browse-nav-link">
+                <a id="browse-main-link" class="nav-link">Browse</a>
+                <div class="browse-drop-down">
+                    <a class="nav-link" href="/browse?type=title">Browse by title</a>
+                    <a class="nav-link" href="/browse?type=dateissued">Browse by date issued</a>
+                    <a class="nav-link" href="/community-list">Communities & Collections</a>
+                </div>
+            </div>
+            <a class="nav-link" href="#">Help</a>
 
 
             <?php if (!$user) { ?>

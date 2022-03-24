@@ -12,7 +12,12 @@ use app\models\Content;
 use app\models\Notification;
 use app\models\User;
 use app\models\Collection;
+use app\models\ContentCreator;
+use app\models\LendPermission;
+use app\models\LendRequest;
 use app\models\SubCommunity;
+use DateTime;
+use stdClass;
 
 class SiteController extends Controller
 {
@@ -147,7 +152,10 @@ class SiteController extends Controller
     {
         $communityModel = new Community();
         $topLevelCommunities = $communityModel->getAllTopLevelCommunities(0, 1000);
-        return $this->render('browse-by-communities-and-collections-into-view', ['topLevelCommunities' => $topLevelCommunities->payload]);
+
+        $breadcrum = [self::BREADCRUM_HOME];
+
+        return $this->render('browse-by-communities-and-collections-into-view', ['topLevelCommunities' => $topLevelCommunities->payload, 'breadcrum' => $breadcrum, 'redirect-parent' => null]);
     }
 
     public function browseByCommunity(Request $request)
@@ -226,7 +234,7 @@ class SiteController extends Controller
         $collections_of_dir = $collectionModel->findAll(['community_id' => $data['community_id']]);
 
 
-        return $this->render('browse-by-communities-and-collections', ['type' => 'community', 'selected-item' => $selected_community, 'communities_of_dir' => $sub_communities_of_dir, 'collections_of_dir' => $collections_of_dir, 'breadcrum' => $breadcrum]);
+        return $this->render('browse-by-communities-and-collections', ['type' => 'community', 'selected-item' => $selected_community, 'communities_of_dir' => $sub_communities_of_dir, 'collections_of_dir' => $collections_of_dir, 'breadcrum' => $breadcrum, 'redirect-parent' => $selected_community->community_id]);
     }
 
     public function browseByCollection(Request $request)
@@ -282,5 +290,255 @@ class SiteController extends Controller
     public function help()
     {
         return $this->render('help');
+    }
+
+    public function getAccess(Request $request)
+    {
+        $data = $request->getBody();
+
+        $_POST = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($_POST['content-id'])) throw new NotFoundException();
+
+        $contentModel = new Content();
+        $content = $contentModel->findOne(['content_id' => $_POST['content-id']]);
+
+        $contentObj = new stdClass;
+
+        if (!Application::$app->user) {
+            return "false";
+        }
+
+        if ($content) {
+            $contentObj->status = true;
+            $contentObj->content_id = $content->content_id;
+            $contentObj->title = $content->title;
+        } else {
+            $contentObj->status = false;
+        }
+
+        return json_encode($contentObj);
+        // return $this->render('/user/get-access', ['content' => $content]);
+    }
+
+    public function getAccessRequest(Request $request)
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+
+        $data = $request->getBody();
+
+
+        $contentModel = new Content();
+        $content = $contentModel->findOne(['content_id' => $_POST['content-id']]);
+        if (!$content) throw new NotFoundException();
+
+        // If user not logged in, then redirect
+        if (!Application::$app->user) {
+            // Application::$app->response->redirect('/login');
+            // exit;
+            return "false";
+        }
+
+
+
+
+        $duration = $_POST['lend-duration'];
+        $currentUser = Application::$app->user->reg_no;
+
+        $lendRequestModel = new LendRequest();
+
+        // Check wheather a lend request is already exists for the current content by current user
+        $record = $lendRequestModel->findOne(['content_id' => $content->content_id, 'user_id' => $currentUser, 'status' => 0]);
+
+
+        $retObj = new stdClass;
+        if ($record && $record->status == 0) {
+            // return $this->render('/user/get-access', ['content' => $content, 'record-exists' => true, 'err-msg' => "You have already requested to lend this book"]);
+            $retObj->status = false;
+            $retObj->msg = "You have already requested to lend this book";
+            return json_encode($retObj);
+        }
+
+        // Check wheather the permission is alreaty exists
+        $lendPermissionModel = new LendPermission();
+        $lendPermissionRecords = $lendPermissionModel->findAll(['content_id' => $content->content_id, 'user_id' => Application::$app->user->reg_no]);
+        if ($lendPermissionRecords) {
+            $flag = false;
+            date_default_timezone_set('Asia/Colombo');
+            $currentTime = date('Y-m-d H:i:s');
+            $currentTime = new DateTime($currentTime);
+            foreach ($lendPermissionRecords as $lend_perm) {
+                $exp = new DateTime($lend_perm['lend_exp_date']);
+                if ($currentTime < $exp) {
+                    $flag = true;
+                }
+            }
+            if ($flag) {
+                // return $this->render('/user/get-access', ['content' => $content, 'record-exists' => true, 'err-msg' => "Already you have permission to access this content."]);
+                $retObj->status = false;
+                $retObj->msg = "Already you have permission to access this content.";
+                return json_encode($retObj);
+            }
+        }
+
+
+        $lendRequestModel->loadData(['content_id' => $content->content_id, 'user_id' => $currentUser, 'duration' => $duration]);
+        if ($lendRequestModel->save()) {
+            // Application::$app->session->setFlashMessage("success", "Request made success");
+            // return $this->render('/user/get-access', ['content' => $content]);
+            $retObj->status = true;
+            $retObj->msg = "Success";
+            return json_encode($retObj);
+        } else {
+            // Application::$app->session->setFlashMessage("error", "Something went wrong");
+            // return $this->render('/user/get-access', ['content' => $content]);
+            $retObj->status = false;
+            $retObj->msg = "Something went wrong";
+            return json_encode($retObj);
+        }
+    }
+
+    public function reviewLendRequests()
+    {
+        $lendRequestModel = new LendRequest();
+        $requests = $lendRequestModel->findAll(['status' => 0]);
+
+        $contentModel = new Content();
+        $userModel = new User();
+
+        $requestInfo = [];
+
+        foreach ($requests as $request) {
+            $content = $contentModel->findOne(['content_id' => $request['content_id']]);
+            $user = $userModel->findOne(['reg_no' => $request['user_id']]);
+
+            $temp = new stdClass;
+            $temp->request_id = $request['id'];
+            $temp->content_id = $content->content_id;
+            $temp->content_title = $content->title;
+            $temp->user_reg_no = $user->reg_no;
+            $temp->user_first_name = $user->first_name;
+            $temp->user_last_name = $user->last_name;
+            $temp->lend_duration = $request['duration'];
+
+            array_push($requestInfo, $temp);
+        }
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_REVIEW_LEND_REQUESTS
+        ];
+
+        return $this->render('admin/approve/review-lend-requests', ['requests' => $requestInfo, 'breadcrum' => $breadcrum]);
+    }
+
+    public function processLendRequest(Request $request)
+    {
+        $data = $request->getBody();
+
+        switch ($data['action']) {
+            case 1:
+                $lendPermissionModel = new LendPermission;
+                if (!($lendPermissionModel->findOne(['content_id' => $data['content_id'], 'user_id' => $data['user_reg_no']]))) {
+                    if ($lendPermissionModel->acceptRequest($data)) {
+                        Application::$app->response->redirect('/admin/review-lend-requests');
+                    } else {
+                        Application::$app->response->redirect('/admin/review-lend-requests');
+                    }
+                    // } else {
+                    //     Application::$app->response->redirect('/admin/review-lend-requests');
+                    // }
+                } else {
+                    // Checl dates (Expired or not)
+                    $lendPermission = $lendPermissionModel->findAll(['content_id' => $data['content_id'], 'user_id' => Application::$app->user->reg_no]);
+
+                    $flag = false;
+                    date_default_timezone_set('Asia/Colombo');
+                    $currentTime = date('Y-m-d H:i:s');
+                    $currentTime = new DateTime($currentTime);
+                    foreach ($lendPermission as $lend_perm) {
+                        $exp = new DateTime($lend_perm['lend_exp_date']);
+                        if ($currentTime < $exp) {
+                            $flag = true;
+                        }
+                        // var_dump($lend_perm['lend_exp_date']);
+                    }
+                    if (!$flag) {
+                        if ($lendPermissionModel->acceptRequest($data)) {
+                            Application::$app->response->redirect('/admin/review-lend-requests');
+                        } else {
+                            Application::$app->response->redirect('/admin/review-lend-requests');
+                        }
+                    } else {
+                        Application::$app->response->redirect('/admin/review-lend-requests');
+                    }
+                }
+                break;
+            case 2:
+                $lendRequestModel = new LendRequest;
+                if ($lendRequestModel->reject($data['content_id'], $data['user_reg_no'])) {
+                    Application::$app->response->redirect('/admin/review-lend-requests');
+                } else {
+                    Application::$app->response->redirect('/admin/review-lend-requests');
+                }
+                break;
+        }
+    }
+
+    public function approveLendRequest(Request $request)
+    {
+        $data = $request->getBody();
+
+        $lendRequest = new LendRequest;
+        $req = $lendRequest->findOne(['id' => $data['request_id']]);
+        var_dump($req);
+
+        $lendPermissionModel = new LendPermission;
+        if (!($lendPermissionModel->findOne(['content_id' => $req->content_id, 'user_id' => $req->user_id]))) {
+            if ($lendPermissionModel->acceptRequest($req)) {
+                Application::$app->response->redirect('/admin/review-lend-requests');
+            } else {
+                Application::$app->response->redirect('/admin/review-lend-requests');
+            }
+        } else {
+            // Checl dates (Expired or not)
+            $lendPermission = $lendPermissionModel->findAll(['content_id' => $req->content_id, 'user_id' => Application::$app->user->reg_no]);
+
+            $flag = false;
+            date_default_timezone_set('Asia/Colombo');
+            $currentTime = date('Y-m-d H:i:s');
+            $currentTime = new DateTime($currentTime);
+            foreach ($lendPermission as $lend_perm) {
+                $exp = new DateTime($lend_perm['lend_exp_date']);
+                if ($currentTime < $exp) {
+                    $flag = true;
+                }
+                // var_dump($lend_perm['lend_exp_date']);
+            }
+            if (!$flag) {
+                if ($lendPermissionModel->acceptRequest($data)) {
+                    Application::$app->session->setFlashMessage('success', 'Lend request approved');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Lend request rejected');
+                }
+                Application::$app->response->redirect('/admin/review-lend-requests');
+            } else {
+                Application::$app->response->redirect('/admin/review-lend-requests');
+            }
+        }
+    }
+
+    public function rejectLendRequest(Request $request)
+    {
+        $data = $request->getBody();
+        var_dump($data);
+        $lendRequestModel = new LendRequest;
+        if ($lendRequestModel->reject($data['req_id'])) {
+            Application::$app->session->setFlashMessage('success', 'Lend request rejected');
+        } else {
+            Application::$app->session->setFlashMessage('error', 'Something went wrong');
+        }
+        Application::$app->response->redirect('/admin/review-lend-requests');
     }
 }

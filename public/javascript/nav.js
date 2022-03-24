@@ -1,3 +1,5 @@
+const browseLink = document.querySelector("#browse-main-link");
+const browseDropDown = document.querySelector(".browse-drop-down");
 const burgerMenu = document.querySelector(".burger-menu");
 const crossLine = document.querySelectorAll(".cross-line");
 const profileBtn = document.querySelectorAll(".user-profile-circle");
@@ -124,4 +126,8 @@ notificationBtn.addEventListener("click", () => {
   };
   req.setRequestHeader("Content-Type", "application/json");
   req.send();
+});
+
+browseLink.addEventListener("click", () => {
+  browseDropDown.classList.toggle("active");
 });
