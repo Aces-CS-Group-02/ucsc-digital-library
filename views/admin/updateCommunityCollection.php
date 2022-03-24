@@ -23,7 +23,7 @@
 
 
 
-    <title>Create Community</title>
+    <title>Create Collection</title>
 </head>
 
 <body>
@@ -40,9 +40,8 @@
 
     <div id="update-user-main-content">
         <div class="page-header-container">
-            <p id="page-header-title">Create Community</p>
+            <p id="page-header-title">Create Collection</p>
             <?php include_once dirname(__DIR__) . '/components/breadcrum.php'; ?>
-
         </div>
 
         <div class="wrapper">
@@ -95,6 +94,8 @@
 
             <form id="create-community-form" action="" method="POST">
                 <input type="hidden" name="redirect" value="<?= $params['redirect'] ?>" />
+                <input type="hidden" name="collection-id" value="<?= $params['collection-id'] ?>" />
+
                 <div class="input-row-group">
 
                     <?php {
@@ -108,7 +109,7 @@
                         <div class="input-group">
                             <label class="labelPlace <?php if ($errors_on_name) {
                                                             echo "danger-text";
-                                                        } ?>" for="Name">Community Name</label>
+                                                        } ?>" for="Name">Collection Name</label>
                             <input class="form-control <?php if ($errors_on_name) {
                                                             echo "danger-border";
                                                         } ?>" id="Name" type="text" name="name" value="<?php echo $params['model']->name ?? "" ?>" />
@@ -130,19 +131,15 @@
                     <?php } ?>
 
                     <div class="input-group">
-                        <label class="labelPlace" for="description-text-area">Community description</label>
-                        <textarea class="form-control" id="description-text-area" type="text" name="description" value="<?php echo $params['model']->description ?? "" ?>"></textarea>
+                        <label class="labelPlace" for="description-text-area">Collection Description</label>
+                        <textarea class="form-control" id="description-text-area" type="text" name="description"><?php echo $params['model']->description ?? "" ?></textarea>
 
 
                     </div>
 
-                    <button class="btn btn-primary" id="create-community-btn" <?php if (isset($params['parent_community_id'])) {
-                                                                                    echo 'name="parent_community_id"';
-                                                                                } ?> "
-                                                                                
-                                                                                <?php if (isset($params['parent_community_id'])) {
-                                                                                    echo 'value="' . $params['parent_community_id'];
-                                                                                }  ?>">Create</button>
+                    <button class="btn btn-primary" id="create-community-btn" name="community-id" <?php if (isset($params['community-id'])) {
+                                                                                                        echo 'value="' . $params['community-id'];
+                                                                                                    }  ?>">Update</button>
                 </div>
             </form>
 
@@ -156,7 +153,7 @@
     include_once dirname(__DIR__) . '/components/footer.php';
     ?>
 
-    <script src="/javascript/nav.js"></script>
+    <script src=" /javascript/nav.js"></script>
     <script src="/javascript/profile.js"></script>
 
 </body>

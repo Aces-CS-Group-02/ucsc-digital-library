@@ -78,6 +78,8 @@ class Controller
 
     public const BREADCRUM_APPROVE_USER_GROUPS = ['name' => 'Approve user groups', 'link' => '/admin/approve-user-groups'];
 
+    public const BREADCRUM_REVIEW_LEND_REQUESTS = ['name' => "Review lend requests", 'link' => '/admin/review-lend-requests'];
+
 
 
 

@@ -93,6 +93,7 @@
 
 
             <form id="create-community-form" action="" method="POST">
+                <input type="hidden" name="redirect" value="<?= $params['redirect'] ?>" />
                 <div class="input-row-group">
 
                     <?php {

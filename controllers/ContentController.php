@@ -20,6 +20,7 @@ use app\models\ContentPublishStateChange;
 use app\models\ContentType;
 use app\models\Creator;
 use app\models\DeleteContent;
+use app\models\LendPermission;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
@@ -122,7 +123,7 @@ class ContentController extends Controller
                 $content->publish_state = 0;
                 $user_role = Application::getUserRole();
 
-                if($user_role==1 || $user_role==2)$content->approved = 1;
+                if ($user_role == 1 || $user_role == 2) $content->approved = 1;
 
                 // var_dump(Application::$app->user->regNo);
                 // exit;
@@ -802,8 +803,25 @@ class ContentController extends Controller
         $contentCollectionPermissionModel = new ContentCollectionPermission();
         $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content->content_id);
 
+        $lendPermissionModel = new LendPermission();
+        $lendPermission = $lendPermissionModel->findAll(['content_id' => $content->content_id, 'user_id' => Application::$app->user->reg_no ?? false]);
+
+        // var_dump($lendPermission);
+
+        $lendContentPermission = false;
+        date_default_timezone_set('Asia/Colombo');
+        $currentTime = date('Y-m-d H:i:s');
+        $currentTime = new DateTime($currentTime);
+        foreach ($lendPermission as $lend_perm) {
+            $exp = new DateTime($lend_perm['lend_exp_date']);
+            if ($currentTime < $exp) {
+                $lendContentPermission = true;
+            }
+            // var_dump($lend_perm['lend_exp_date']);
+        }
+
         $permission = new stdClass;
-        if ($collectionPermissionObj->permission || $contentCollectionPermissionObj->permission) {
+        if ($collectionPermissionObj->permission || $contentCollectionPermissionObj->permission || $lendContentPermission) {
             $permission->permission = true;
 
             if ($collectionPermissionObj->grant_type === "READ_DOWNLOAD" || $contentCollectionPermissionObj->grant_type === "READ_DOWNLOAD") {
@@ -815,7 +833,6 @@ class ContentController extends Controller
             $permission->permission = false;
             $permission->grant_type = "NULL";
         }
-
 
         $collectionModel = new Collection();
         $collection = $collectionModel->findOne(['collection_id' => $content->collection_id]);
@@ -832,6 +849,7 @@ class ContentController extends Controller
 
 
         $contentObj = new stdClass;
+        $contentObj->id = $content->content_id;
         $contentObj->contentInfo = $content;
         $contentObj->authors = $authors ? $authors :  '';
         $contentObj->language = $contentLanguage ?  $contentLanguage->language : '';

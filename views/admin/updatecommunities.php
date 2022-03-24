@@ -99,6 +99,7 @@
             ?>
 
             <form action="" method="POST" id="edit-community-form">
+                <input type="hidden" name="redirect" value="<?= $params['redirect'] ?>" />
                 <div class="input-group">
 
                     <label class="labelPlace <?php if ($errors_on_name) {

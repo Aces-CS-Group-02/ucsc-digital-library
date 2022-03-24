@@ -53,6 +53,10 @@ $userRole = "student";
                 <div class="access-forbidden-container">
                     <i class="fas fa-lock"></i>
                     <p>You can't access this content</p>
+                    <!-- <form action="/get-access-to-content" method="GET"> -->
+                    <input id="content-id-selector" type="hidden" name='content-id' value="<?= $params['content']->id ?>" />
+                    <button id="get-access-btn" class="get-access-btn">Get Access</button>
+                    <!-- </form> -->
                 </div>
             <?php } ?>
         </div>
@@ -139,8 +143,32 @@ $userRole = "student";
         </div>
     </div>
 
+    <div class="popup-overlay"></div>
 
+    <div id="pop-up-model" class="model-pop-up">
+        <div class="model-header">
+            <p class="model-header-title">Lend Books</p>
+            <span class="model-close-btn">&times;</span>
+        </div>
 
+        <div class="model-content">
+            <p id="model-msg"></p>
+            <p id="content-title-field"></p>
+            <input id="content-id-field" type="hidden" name="content-id" value="" />
+            <div class="input-group-c">
+                <label>Select lend period</label>
+                <select id="lend-duration" name="lend-duration" class="custom-select">
+                    <option value="1">1 Week</option>
+                    <option value="2">2 Week</option>
+                    <option value="3">3 Week</option>
+                    <option value="4">4 Week</option>
+                </select>
+            </div>
+        </div>
+        <div class="model-bottom-line">
+            <button id="request-access-btn" class="btn btn-info">Request to Get Access</button>
+        </div>
+    </div>
 
     <!-- FOOTER -->
 
@@ -154,6 +182,80 @@ $userRole = "student";
 
     <script src="./javascript/nav.js"></script>
     <!-- <script src="./javascript/pdf-viewer.js"></script> -->
+    <script>
+        const popupModel = document.getElementById("pop-up-model");
+        const popupOverlay = document.querySelector(".popup-overlay");
+        const popupCloseBtn = document.querySelector('.model-close-btn');
+        const requestAccessBtn = document.querySelector('#request-access-btn');
+        const modelMsgBox = document.querySelector("#model-msg");
+
+        const getAccessBtn = document.getElementById('get-access-btn');
+        const contentId = document.getElementById('content-id-selector').value;
+        getAccessBtn.addEventListener('click', () => {
+            const req = new XMLHttpRequest();
+            req.open('POST', '/ajax/get-access-to-content');
+            req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            req.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    responseData = JSON.parse(this.responseText);
+                    // console.log(responseData);
+                    if (responseData) {
+                        if (responseData.status) {
+                            document.getElementById('content-id-field').value = responseData.content_id;
+                            document.getElementById('content-title-field').innerText = responseData.title;
+                            popupOverlay.classList.add('active');
+                            popupModel.classList.add('active');
+                        }
+                    } else {
+                        window.location = "/login";
+                    }
+                }
+            };
+            req.send(JSON.stringify({
+                "content-id": contentId
+            }))
+        })
+
+        popupCloseBtn.addEventListener('click', () => {
+            popupOverlay.classList.remove('active');
+            popupModel.classList.remove('active');
+        })
+
+        popupOverlay.addEventListener('click', () => {
+            popupOverlay.classList.remove('active');
+            popupModel.classList.remove('active');
+
+        })
+
+        requestAccessBtn.addEventListener('click', () => {
+            let contentId = document.querySelector('#content-id-field').value;
+            let lendDuration = document.querySelector('#lend-duration').value;
+            const req = new XMLHttpRequest();
+            req.open('POST', '/ajax/get-access-to-content/make-request');
+            req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            req.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    responseData = JSON.parse(this.responseText);
+                    if (responseData.status) {
+                        if (modelMsgBox.classList.contains('err-msg')) {
+                            modelMsgBox.classList.remove('err-msg');
+                        }
+                        modelMsgBox.classList.add('success-msg');
+                    } else {
+                        if (modelMsgBox.classList.contains('success-msg')) {
+                            modelMsgBox.classList.remove('success-msg');
+                        }
+                        modelMsgBox.classList.add('err-msg');
+                    }
+                    modelMsgBox.innerText = responseData.msg;
+                }
+            };
+            req.send(JSON.stringify({
+                "content-id": contentId,
+                "lend-duration": lendDuration
+            }))
+        })
+    </script>
 </body>
 
 </html>

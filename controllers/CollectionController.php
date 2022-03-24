@@ -62,9 +62,14 @@ class CollectionController extends Controller
         $data_keys = array_keys($data);
         if (!in_array('community-id', $data_keys)) throw new NotFoundException();
 
+
+        $redirect = $data['redirect'] ?? false;
+
         $communityModel = new Community();
 
-        if (!$communityModel->findCommunity($data['community-id'])) throw new NotFoundException();
+        $community_data = $communityModel->findCommunity($data['community-id']);
+
+        if (!$community_data) throw new NotFoundException();
 
         // ---------------------------------Breadcrum---------------------------------------------
         $breadcrum = [
@@ -86,20 +91,29 @@ class CollectionController extends Controller
             $collectionModel = new Collection();
             $return_val = $collectionModel->createNewCollection($data);
             if (is_array($return_val)) {
-                $this->render("admin/createCollection", ['community-id' => $data['community-id'], 'model' => $return_val[1], 'breadcrum' => $breadcrum]);
+                $this->render("admin/createCollection", ['community-id' => $data['community-id'], 'model' => $return_val[1], 'breadcrum' => $breadcrum, 'redirect' => $redirect]);
                 exit;
             }
             if (!$return_val) { // If return value is just false
                 Application::$app->session->setFlashMessage("error", "Something went wrong");
-                Application::$app->response->redirect("/admin/manage-community/collections?community-id=" . $data['community-id']);
+
+                if ($redirect == "browse") {
+                    Application::$app->response->redirect("/browse/community?community_id=" . $data['community-id']);
+                } else {
+                    Application::$app->response->redirect("/admin/manage-community/collections?community-id=" . $data['community-id']);
+                }
             }
             // If operation successfull
             Application::$app->session->setFlashMessage("success", "Collection successfully created");
-            Application::$app->response->redirect("/admin/manage-community/collections?community-id=" . $data['community-id']);
+            if ($redirect == "browse") {
+                Application::$app->response->redirect("/browse/community?community_id=" . $data['community-id']);
+            } else {
+                Application::$app->response->redirect("/admin/manage-community/collections?community-id=" . $data['community-id']);
+            }
         }
 
 
-        $this->render("admin/createCollection", ['community-id' => $data['community-id'], 'breadcrum' => $breadcrum]);
+        $this->render("admin/createCollection", ['community-id' => $data['community-id'], 'breadcrum' => $breadcrum, 'redirect' => $redirect]);
     }
 
     public function deleteCollection(Request $request)
@@ -111,7 +125,66 @@ class CollectionController extends Controller
             exit;
         }
 
+        var_dump($data);
+
         $collectionModel = new Collection();
+        $collection = $collectionModel->findOne(['collection_id' => $data['collection-id']]);
+        if ($collection) {
+            if ($collection->delete()) {
+                Application::$app->session->setFlashMessage("success", "Collection successfully created");
+            } else {
+                Application::$app->session->setFlashMessage("error", "Collection successfully created");
+            }
+        } else {
+            Application::$app->session->setFlashMessage("error", "Collection successfully created");
+        }
+        Application::$app->response->redirect('/browse/community?community_id=' . $data['redirect-parent']);
         if ($data['deleteCollection']) $collectionModel->deleteCollection($data['collection-id']);
+    }
+
+
+    public function editCollection(Request $request)
+    {
+        $data = $request->getBody();
+
+        $collectionID = $data['collection-id'];
+        $redirect = $data['redirect'] ?? false;
+
+        $collectionModel = new Collection();
+        $collection = $collectionModel->findOne(['collection_id' => $collectionID]);
+
+        if ($request->getMethod() == "POST") {
+            // Post request
+
+            $updateInfo = $collection->findOne(['collection_id' => $collectionID]);
+            $updateInfo->name = $data['name'];
+            $updateInfo->description = $data['description'];
+
+            if ($updateInfo->validate()) {
+                if ($updateInfo->update()) {
+                    Application::$app->session->setFlashMessage("success", "Successfully updated");
+
+                    if ($redirect == "browse") {
+                        Application::$app->response->redirect('/browse/community?community_id=' . $updateInfo->collection_id);
+                    } else {
+                        Application::$app->response->redirect('/admin/manage-community/collections?community-id=' . $updateInfo->collection_id);
+                    }
+                } else {
+                    Application::$app->session->setFlashMessage("error", "Something went wrong");
+                    if ($redirect == "browse") {
+                        Application::$app->response->redirect('/browse/community?community_id=' . $updateInfo->collection_id);
+                    } else {
+                        Application::$app->response->redirect('/admin/manage-community/collections?community-id=' . $updateInfo->collection_id);
+                    }
+                }
+            } else {
+                return $this->render('admin/updateCommunityCollection', ['collection-id' => $collectionID, 'model' => $updateInfo, 'redirect' => $redirect]);
+            }
+
+            var_dump($updateInfo);
+        } else {
+            // Get request
+            return $this->render('admin/updateCommunityCollection', ['collection-id' => $collectionID, 'model' => $collection, 'redirect' => $redirect]);
+        }
     }
 }
