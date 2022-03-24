@@ -263,6 +263,8 @@ $app->router->get('/admin/user-groups', [UsergroupController::class, "getAllLive
 $app->router->get('/admin/approve-content-collections', [AdministrationController::class, "approveContentGroup"]);
 $app->router->get('/admin/approve-user-groups', [UsergroupController::class, "approveUserGroup"]);
 $app->router->get('/admin/approve-submissions', [AdministrationController::class, "approveSubmissions"]);
+$app->router->post('/admin/approve-submissions', [AdministrationController::class, "approveSubmissions"]);
+$app->router->post('/admin/reject-submissions', [AdministrationController::class, "rejectSubmissions"]);
 
 
 $app->router->post('/admin/reject-user-group', [UsergroupController::class, "rejectUserGroup"]);

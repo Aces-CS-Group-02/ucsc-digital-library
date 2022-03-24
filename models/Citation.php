@@ -50,7 +50,9 @@ class Citation
     {
         // Author(s) Initial(s). Surname(s), Title of the E-book, xth ed. City of Publisher, (U.S. State or Country if the City is not ‘well known’): Publisher, Year of Publication, pp. xxx–xxx. Accessed on: Abbreviated Month Day, Year.​ [Online]. Available: site/path/file (doi:xxxxx, database or URL)
         if ($citationType == 1) {
-            $citation = $this->authorsList. ", ". $this->title. ". " . (($this->publisher)?($this->publisher.", "):""). ($this->publishYear?($this->publishYear. ". "):"") .($this->lastAccessMonth?("Accessed on: ". $this->lastAccessMonth. ". ". $this->lastAccessDate. ", ". $this->lastAccessYear. ". "):""). "[Online]. Available: ". $this->shareLink;
+            $citation = $this->authorsList . ", " . $this->title . ". " . (($this->publisher) ? ($this->publisher . ", ") : "") . ($this->publishYear ? ($this->publishYear . ". ") : "") . ($this->lastAccessMonth ? ("Accessed on: " . $this->lastAccessMonth . ". " . $this->lastAccessDate . ", " . $this->lastAccessYear . ". ") : "") . "[Online]. Available: " . $this->shareLink;
+        } else {
+            $citation = $this->authorsList . ". " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". " . (($this->publisher) ? ($this->publisher . ". ") : "");
         }
         return $citation;
     }
@@ -58,14 +60,21 @@ class Citation
     public function thesis($citationType)
     {
         if ($citationType == 1) {
-            $citation = $this->authorsList. ", \"". $this->title. "\"" . (($this->publisher)?(", ".$this->publisher):""). ($this->publishYear?(", ".$this->publishYear):"") . ". [Online]. ". "Available: ". $this->shareLink;
+            $citation = $this->authorsList . ", \"" . $this->title . "\"" . (($this->publisher) ? (", " . $this->publisher) : "") . ($this->publishYear ? (", " . $this->publishYear) : "") . ". [Online]. " . "Available: " . $this->shareLink;
+        } else {
+            $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
         }
         return $citation;
     }
 
     public function publications($citationType)
     {
-        // $citation = 
+        if ($citationType == 1) {
+            $citation = $this->authorsList . ", " . $this->title . ". " . (($this->publisher) ? ($this->publisher . ", ") : "") . ($this->publishYear ? ($this->publishYear . ". ") : "") . ($this->lastAccessMonth ? ("Accessed on: " . $this->lastAccessMonth . ". " . $this->lastAccessDate . ", " . $this->lastAccessYear . ". ") : "") . "[Online]. Available: " . $this->shareLink;
+        } else {
+            $citation = $this->authorsList . ". " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". " . (($this->publisher) ? ($this->publisher . ". ") : "");
+        }
+        return $citation;
     }
 
     // public function pastPapers($citationType)
@@ -79,7 +88,10 @@ class Citation
     public function journals($citationType)
     {
         if ($citationType == 1) {
-            $citation = $this->authorsList. ", '". $this->title. "'" . ($this->publishYear?(", ".$this->publishYear):"") . ".";
+            $citation = $this->authorsList . ", '" . $this->title . "'" . ($this->publishYear ? (", " . $this->publishYear) : "") . ".";
+        } else {
+            //Author Surname, A., Year Published. Title. Publication Title, Volume number(Issue number), p.Pages Used.
+            $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
         }
         return $citation;
     }
@@ -96,7 +108,13 @@ class Citation
 
     public function video($citationType)
     {
-        // $citation = 
+        if ($citationType == 1) {
+            // $citation = $this->authorsList. ", ". $this->title. ". " . (($this->publisher)?($this->publisher.", "):""). ($this->publishYear?($this->publishYear. ". "):"") .($this->lastAccessMonth?("Accessed on: ". $this->lastAccessMonth. ". ". $this->lastAccessDate. ", ". $this->lastAccessYear. ". "):""). "[Online]. Available: ". $this->shareLink;
+        } else {
+            //Author Surname, A., Year Published. Title,
+            $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
+        }
+        return $citation;
     }
 
     // public function other($citationType)

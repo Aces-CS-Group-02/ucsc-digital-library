@@ -48,14 +48,14 @@ class ApproveController extends Controller
                 $pendingUser->email = $registrationRequest->email;
                 $pendingUser->token = $code;
 
-                $approvedBy = Application::$app->getUserDisplayName();
+                $approvedBy = Application::$app->user->reg_no;
 
                 $userApproval = new UserApproval();
 
                 $userApproval->email = $registrationRequest->email;
                 $userApproval->is_approved = true;
                 $userApproval->reason = $reason;
-                $userApproval->approved_by = $approvedBy["firstname"]." ".$approvedBy["lastname"];
+                $userApproval->approved_by = $approvedBy;
 
                 // var_dump($userApproval);
                 // if($reason){
@@ -113,7 +113,7 @@ class ApproveController extends Controller
             $registrationRequest = $registrationRequest->findOne($where);
             $reason = $requestData["reason"];
 
-            $approvedBy = Application::$app->getUserDisplayName();
+            $approvedBy = Application::$app->user->reg_no;
 
             $userApproval = new UserApproval();
 
@@ -121,7 +121,7 @@ class ApproveController extends Controller
             $userApproval->is_approved = false;
             $userApproval->reason = $reason;
             // $userApproval->approved_by = $approvedBy;
-            $userApproval->approved_by = $approvedBy["firstname"]." ".$approvedBy["lastname"];
+            $userApproval->approved_by = $approvedBy;
 
             // echo '<pre>';
             // var_dump($registrationRequest);
@@ -145,11 +145,12 @@ class ApproveController extends Controller
                 if ($registrationRequest->delete() && $userApproval->save()) {
                     Application::$app->session->setFlashMessage('success', 'Selected user is successfully rejected');
                     Application::$app->response->redirect('/admin/verify-new-users');
-                } else {
-                    echo '<pre>';
-                    var_dump($registrationRequest);
-                    echo '</pre>';
-                }
+                } 
+                // else {
+                //     echo '<pre>';
+                //     var_dump($registrationRequest);
+                //     echo '</pre>';
+                // }
             } else {
                 Application::$app->session->setFlashMessage('error', 'The user you are trying to approve does not exist!');
                 return $this->render('auth/registration-request');

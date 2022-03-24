@@ -46,17 +46,58 @@ $userRole = "student";
     </div>
 
     <div class="second-border">
+        <!-- Flash Message -->
+        <?php
+
+        use app\core\Application;
+
+        if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+
+
+        <?php } ?>
+
+        <?php
+
+
+        if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+            <div class="alert alert-success" id="flash-msg-alert">
+                <strong>Success!</strong>
+
+                <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                <button class="close" type="button" id="flash-msg-remove">
+                    <span class="font-weight-light"></span>
+                    <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                </button>
+            </div>
+
+
+        <?php } ?>
 
         <div class="search-N-sort-components-container">
             <div class="search-component-container">
-            <form action="">
-                        <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search contents by title" name='q' value="<?php echo $params['search_params'] ?? ''?>">
-                            <button>
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
+                <form action="">
+                    <div class="ug-search-input-wrapper">
+                        <input type="text" placeholder="Search contents by title" name='q' value="<?php echo $params['search_params'] ?? '' ?>">
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="sort-component-container">
                 <form action="">
@@ -129,8 +170,8 @@ $userRole = "student";
                     <div class="block-e">
                         <p>
                             <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                            <button class="btn btn-success mr-1 mb-1 btn2-edit" type="button">Approve</button>
-                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" type="button">Reject</button>
+                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $content->content_id ?>)" type="button">Approve</button>
+                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $content->content_id ?>)" type="button">Reject</button>
                         </p>
                     </div>
                 </div>
@@ -140,7 +181,28 @@ $userRole = "student";
                 <p class="no-records-available">No Records Available :(</p>
             <?php } ?>
 
+            <div id="approveModal" class="modal">
 
+                <div class="modal-content" id="modal-content">
+                    <form id="modal-form" action="" method="POST">
+                        <div class="modal-top-section modal-title">
+                            <div class="title-section">
+                                <p id="mtitle"></p>
+                            </div>
+                            <div class="close">
+                                <span class="edit-close">&times;</span>
+                            </div>
+                        </div>
+                        <div class="input-group edit-input-group">
+                            <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                        </div>
+                        <div class="modal-bottom-section">
+                            <button class="btn btn-info mr-1 mb-1" name="content_id" id="idOut" type="submit">Okay</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
 
             <?php
 
@@ -156,8 +218,8 @@ $userRole = "student";
     <?php
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
-    <script src="./javascript/nav.js"></script>
-    <script src="./javascript/admin-approve-submission.js"></script>
+    <script src="/javascript/nav.js"></script>
+    <script src="/javascript/admin-approve-submission.js"></script>
 
 </body>
 
