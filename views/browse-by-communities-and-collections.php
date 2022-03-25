@@ -194,7 +194,7 @@ use app\core\Application;
 
             if (exportCollection) {
                 exportCollection.addEventListener('click', (e) => {
-                    window.location = `/admin/edit-collection?collection-id=${e.target.dataset.id}&redirect=browse`;
+                    window.location = `/admin/export/collection?collection_id=${e.target.dataset.id}&redirect=browse`;
                 })
             }
         })();

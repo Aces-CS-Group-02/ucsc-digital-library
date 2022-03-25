@@ -132,27 +132,22 @@ class SearchController extends Controller
             $search_query .= " GROUP BY content.content_id 
             ORDER BY ";
 
-            if($data['sort_by']=='relavance')
-            {
-                $search_query.="score "; 
-            }elseif($data['sort_by']=='title')
-            {
-                $search_query.="content.title "; 
-            }elseif($data['sort_by']=='date')
-            {
-                $search_query.="content.date "; 
+            if ($data['sort_by'] == 'relavance') {
+                $search_query .= "score ";
+            } elseif ($data['sort_by'] == 'title') {
+                $search_query .= "content.title ";
+            } elseif ($data['sort_by'] == 'date') {
+                $search_query .= "content.date ";
             }
 
-            if($data['order']=='asc')
-            {
-                $search_query.="ASC";
-            }elseif($data['order']=='desc')
-            {
-                $search_query.="DESC";
+            if ($data['order'] == 'asc') {
+                $search_query .= "ASC";
+            } elseif ($data['order'] == 'desc') {
+                $search_query .= "DESC";
             }
 
             $page = isset($data['page']) ? $data['page'] : 1;
-            $limit  = 1;
+            $limit  = 10;
             $start = ($page - 1) * $limit;
 
             $content = new Content();
@@ -180,7 +175,7 @@ class SearchController extends Controller
 
             // echo '</pre>';
 
-            return $this->render("search-result", ['communities' => $communities, 'contents' => $content->payload, 'pageCount' => $content->pageCount, 'currentPage' => $page, 'filters'=>$filters, 'data' => $data]);
+            return $this->render("search-result", ['communities' => $communities, 'contents' => $content->payload, 'pageCount' => $content->pageCount, 'currentPage' => $page, 'filters' => $filters, 'data' => $data]);
         }
     }
 
