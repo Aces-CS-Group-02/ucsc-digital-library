@@ -97,7 +97,6 @@ $userRole = "student";
                     <div class="block-a">First Name</div>
                     <div class="block-b">Last Name</div>
                     <div class="block-c">Email</div>
-                    <div class="block-d">Action</div>
                 </div>
 
                 <div class="bulk-register-container">
@@ -126,11 +125,7 @@ $userRole = "student";
                                 <p><?= $user->email; ?><p>
 
                             </div>
-                            <div class="block-d">
-                                <p>
-                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button">Remove</button>
-                                </p>
-                            </div>
+                            
                         </div>
                     <?php } ?>
                     </div>

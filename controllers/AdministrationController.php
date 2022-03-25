@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\exception\ForbiddenException;
 use app\core\exception\NotFoundException;
+use app\core\Mail;
 use app\core\middlewares\AuthMiddleware;
 use app\core\middlewares\LIAAccessPermissionMiddleware;
 use app\core\middlewares\StaffAccessPermissionMiddleware;
@@ -15,6 +16,7 @@ use app\models\Content;
 use app\models\citationCount;
 use app\models\ContentSubmissionStatus;
 use app\models\ContentSuggestion;
+use app\models\CronEmail;
 use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;
@@ -266,9 +268,11 @@ class AdministrationController extends Controller
 
             $file = fopen("temp/sheet.csv", "r");
 
-            print_r(fgetcsv($file));
+            // echo '<pre>';
+            // var_dump(fgetcsv($file));
 
             $userArray = [];
+            $row = fgetcsv($file);
 
             while (!feof($file)) {
                 $user = new PendingUser();
@@ -279,13 +283,28 @@ class AdministrationController extends Controller
                 $user->last_name = $row[1];
                 $user->email = $row[2];
 
+                $code = substr(md5(mt_rand()), 0, 15);
+                $user->{"token"} = $code;
+
                 $user->validate();
 
+                // $email = $user->email;
+                // $host = $_SERVER['HTTP_ORIGIN'];
+                // $port = $_SERVER['SERVER_PORT'];
+                // $subject = "Verification Email";
+                // $link = "Click <a href='{$host}:{$port}/verify-email?email={$email}&token={$code}'>here</a> to verify.";
+                // $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
+                // $altBody = "this is the alt body";
+
+
+                // $mail = new Mail([$email], $subject, $body, $altBody);
+                // $mail->sendMail();
+
+                // $user->save();
+
                 array_push($userArray, $user);
-
-                print_r($userArray);
             }
-
+            // echo '</pre>';
             fclose($file);
             unlink("temp/sheet.csv");
 
@@ -473,11 +492,9 @@ class AdministrationController extends Controller
             // echo '</pre>';
             // exit;
 
-            foreach($contents->payload as $content)
-            {
+            foreach ($contents->payload as $content) {
                 $user = new User();
                 $user = $user->findOne(['reg_no' => $content->uploaded_by]);
-
                 // var_dump($user->first_name + $user->last_name);
 
                 $content->uploader = $user->first_name . " " . $user->last_name;

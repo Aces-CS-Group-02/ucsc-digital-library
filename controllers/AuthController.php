@@ -13,6 +13,7 @@ use app\models\PendingUser;
 use app\models\RegistrationRequest;
 use app\models\ResetPassword;
 use app\models\User;
+use app\models\UserCollection;
 use app\models\UsersLoginCount;
 
 class authController extends Controller
@@ -125,8 +126,10 @@ class authController extends Controller
 
                 if ($isUcscEmail === 1) {
 
+                    $host = $_SERVER['HTTP_ORIGIN'];
+                    $port = $_SERVER['SERVER_PORT'];
                     $subject = "Verification Email";
-                    $link = "Click <a href='http://localhost:8000/verify-email?email={$email}&token={$code}'>here</a> to verify.";
+                    $link = "Click <a href='{$host}:{$port}/verify-email?email={$email}&token={$code}'>here</a> to verify.";
                     $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
                     $altBody = "this is the alt body";
 
@@ -224,6 +227,16 @@ class authController extends Controller
             // echo '</pre>';
 
             if ($user->validate() && $user->save()) {
+
+                $new_user_id = Application::$app->db->pdo->lastInsertId();
+
+                $user_collection = new UserCollection();
+
+                $user_collection->reg_no = $new_user_id;
+                $user_collection->name = "Favourites";
+
+                $user_collection->save();
+
                 Application::$app->session->setFlashMessage('success', 'Thank you for registering');
                 Application::$app->response->redirect('/login');
             }
