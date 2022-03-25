@@ -41,4 +41,11 @@ class Bookmark extends DbModel
         }
         return false;
     }
+
+    public function removeUserBookmark($pageNo, $contentId, $reg_no)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("DELETE FROM $tableName WHERE page_no=$pageNo AND content_id=$contentId AND reg_no=$reg_no");
+        return $statement->execute();
+    }
 }

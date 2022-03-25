@@ -50,4 +50,11 @@ class Note extends DbModel
         // echo $sql;
         return $statement->execute();
     }
+
+    public function removeUserNote($contentId, $reg_no)
+    {
+        $tableName = self::tableName();
+        $statement = self::prepare("DELETE FROM $tableName WHERE content_id=$contentId AND reg_no=$reg_no");
+        return $statement->execute();
+    }
 }

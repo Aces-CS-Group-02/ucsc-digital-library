@@ -110,10 +110,12 @@ $app->router->get('/profile/recent-readings-view', [UserController::class, "view
 $app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
 $app->router->post('/ajax/user-bookmarks', [UserController::class, "addContentBookmark"]);
 $app->router->post('/ajax/get-user-bookmarks', [UserController::class, "getContentBookmark"]);
+$app->router->post('/ajax/delete-user-bookmarks', [UserController::class, "deleteContentBookmark"]);
 $app->router->post('/ajax/get-content-share-link', [ContentController::class, "getContentShareLink"]);
 $app->router->post('/ajax/get-citation', [ContentController::class, "getCitation"]);
 $app->router->post('/ajax/get-user-notes', [UserController::class, "saveContentNote"]);
 $app->router->get('/ajax/get-user-notes', [UserController::class, "getContentNote"]);
+$app->router->post('/ajax/delete-user-notes', [UserController::class, "deleteContentNote"]);
 $app->router->get('/ajax/get-user-collection-content', [UserController::class, "getCollectionContent"]);
 $app->router->post('/ajax/add-content-to-user-collection', [UserController::class, "addContentToCollection"]);
 $app->router->post('/ajax/remove-content-from-user-collection', [UserController::class, "removeContentFromCollection"]);
