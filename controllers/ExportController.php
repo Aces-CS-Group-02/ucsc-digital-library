@@ -32,7 +32,7 @@ class ExportController extends Controller
 
         //headers of the metadata csv file
         $data = [
-            ['content_hash', 'title', 'subject', 'creators', 'keywords', 'date', 'language', 'type', 'publish_state', 'upload_steps', 'isbn', 'abstract', 'publisher']
+            ['content_hash', 'title', 'subject', 'creators', 'keywords', 'date', 'language', 'type', 'publish_state', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by', 'approved']
         ];
 
         $description = [$collection->description];
@@ -87,6 +87,8 @@ class ExportController extends Controller
             array_push($data_row, $content_file->isbn);
             array_push($data_row, $content_file->abstract);
             array_push($data_row, $content_file->publisher);
+            array_push($data_row, $content_file->uploaded_by);
+            array_push($data_row, $content_file->approved);
 
             //push the data row into the data
             array_push($data, $data_row);

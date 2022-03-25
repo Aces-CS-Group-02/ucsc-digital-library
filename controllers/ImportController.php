@@ -15,6 +15,7 @@ use app\models\FileDelete;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ZipArchive;
+use Imagick;
 
 class ImportController extends Controller
 {
@@ -35,6 +36,8 @@ class ImportController extends Controller
 
             $form_input = $request->getBody();
 
+            // echo '<pre>';
+
 
             $file = $_FILES['collection-zip-file'];
             // var_dump($file);
@@ -42,9 +45,10 @@ class ImportController extends Controller
             $path = 'temp/';
             $location = $path . $file['name'];
 
-            // var_dump($file);
+            // var_dump($location);
 
             if (move_uploaded_file($file['tmp_name'], $location)) {
+                // var_dump("file moved");
                 $zip = new ZipArchive();
                 if ($zip->open($location)) {
                     $zip->extractTo($path);
@@ -69,6 +73,8 @@ class ImportController extends Controller
 
             $name_arr = explode(".", $file['name']);
             $collection_name = $name_arr[0];
+
+            // echo '</pre>';
 
             $collection = new Collection();
 
@@ -98,6 +104,8 @@ class ImportController extends Controller
                 $content->isbn = $data[array_search("isbn", $headings)];
                 $content->abstract = $data[array_search("abstract", $headings)];
                 $content->publisher = $data[array_search("publisher", $headings)];
+                $content->uploaded_by = $data[array_search("uploaded_by", $headings)];
+                $content->approved = $data[array_search("approved", $headings)];
 
                 $content->save();
                 $new_content_id = Application::$app->db->pdo->lastInsertId();
@@ -126,12 +134,29 @@ class ImportController extends Controller
 
 
                 $file['name'] = $newfilename;
-                if ($file_path === "") $saved_content->url = "";
-                else $saved_content->url = "data/content/uploads/" . $file['name'];
+                if ($file_path === "") 
+                {
+                    $saved_content->url = "";
+                    $saved_content->thumbnail = "";
+                }
+                else 
+                {
+                    $saved_content->url = "data/content/uploads/" . $file['name'];
+                    $saved_content->thumbnail = "data/content/thumbnails/".$new_content_id.".jpg";
+                }
 
                 $saved_content->update();
 
                 if ($file_path !== "") copy($file_path, $saved_content->url);
+
+                if ($file_path !== "") {
+                    $coverPage = new Imagick($saved_content->url . "[0]");
+                    $coverPage->setImageFormat('jpg');
+                    // header('Content-Type: image/jpeg');
+                    //var_dump("/data/content/thumbnails/".$data['content_id'].".jpg");
+                    // echo $coverPage;
+                    $coverPage->writeImage($saved_content->thumbnail);
+                }
 
                 //insert creators
                 $creators = $data[array_search("creators", $headings)];

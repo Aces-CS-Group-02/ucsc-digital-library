@@ -388,17 +388,21 @@ class ContentController extends Controller
 
             $file['name'] = $newfilename;
             $content->url = "data/content/uploads/" . $file['name'];
-            $content->thumbnail = "data/content/thumbnails/".$data['content_id'].".jpg";
+            $content->thumbnail = "data/content/thumbnails/" . $data['content_id'] . ".jpg";
 
             if ($content->upload_steps < 4) $content->upload_steps = 4;
             $content->update();
 
             if (move_uploaded_file($file['tmp_name'], $content->url)) {
-                $coverPage = new Imagick($content->url."[0]");
+                $coverPage = new Imagick($content->url . "[0]");
+                // $coverPage->setResolution(300, 300);
                 $coverPage->setImageFormat('jpg');
+                // $coverPage->setImageCompression(Imagick::COMPRESSION_JPEG);
+                // $coverPage->setImageCompressionQuality(100);
                 header('Content-Type: image/jpeg');
                 //var_dump("/data/content/thumbnails/".$data['content_id'].".jpg");
                 // echo $coverPage;
+                // exit;
                 $coverPage->writeImage($content->thumbnail);
 
                 Application::$app->response->redirect('/admin/upload-content/verify?content_id=' . $data['content_id']);
