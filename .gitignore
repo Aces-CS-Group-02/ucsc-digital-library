@@ -11,3 +11,4 @@ public/data/content/.DS_Store
 controllers/DemoController.php
 models/CronEmail.php
 public/scripts/
+controllers/DemoController.php
