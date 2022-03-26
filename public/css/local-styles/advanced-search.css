@@ -63,12 +63,19 @@ quote {
   height: 30px !important;
 }
 
-.result-info{
-    text-align: center;
+.result-info {
+  text-align: center;
 }
 
 .result-info > h5 {
   margin: 0px;
+}
+
+.content-title-link {
+  text-decoration: none;
+  color: #428bca;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 @media only screen and (max-width: 700px) {

@@ -48,3 +48,11 @@ body {
 .browse-go-btn:hover {
   background-color: #10c45b;
 }
+
+.content-title-link {
+  text-decoration: none;
+}
+
+.content-title-link > * {
+  color: #428bca;
+}

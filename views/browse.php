@@ -107,7 +107,7 @@ use app\core\Application;
 
 
                 <?php if ($params['type'] === 'title') { ?>
-                    <p>Browse By Title</p>
+                    <!-- <p>Browse By Title</p> -->
                     <form action="" method="GET">
                         <?php if ($params['browse-type']) { ?>
                             <?php if ($params['browse-type'] == 'community') { ?>
@@ -161,7 +161,7 @@ use app\core\Application;
                         </div>
                         <div class="search-card-details">
                             <div class="search-card-title">
-                                <a href="/content?content_id=<?= $result->content_id ?>">
+                                <a class="content-title-link" href="/content?content_id=<?= $result->content_id ?>">
                                     <h5><?= $result->title ?></h5>
                                 </a>
                             </div>
