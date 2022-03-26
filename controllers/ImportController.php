@@ -134,6 +134,7 @@ class ImportController extends Controller
 
 
                 $file['name'] = $newfilename;
+
                 if ($file_path === "") 
                 {
                     $saved_content->url = "";

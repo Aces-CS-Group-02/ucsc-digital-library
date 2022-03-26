@@ -16,10 +16,7 @@ use app\models\Content;
 use app\models\citationCount;
 use app\models\ContentSubmissionStatus;
 use app\models\ContentSuggestion;
-<<<<<<< HEAD
 use app\models\CronEmail;
-=======
->>>>>>> 1af9060 (approve submissions part added)
 use app\models\PendingUser;
 use app\models\User;
 use app\models\UserApproval;

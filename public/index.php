@@ -394,6 +394,9 @@ $app->router->get('/admin/review-lend-requests', [SiteController::class, 'review
 $app->router->post('/admin/process-lend-request/approve', [SiteController::class, 'approveLendRequest']);
 $app->router->post('/admin/process-lend-request/reject', [SiteController::class, 'rejectLendRequest']);
 
+$app->router->get('/test', [DemoController::class, 'test']);
+$app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
+
 
 $app->router->get('/test', [DemoController::class, 'test']);
 $app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);

@@ -49,6 +49,7 @@
                                 <option value="<?php echo $community->community_id; ?>"><?php echo $community->name; ?></option>
                             <?php } ?>
                         </select>
+
                         <input class="form-control add-margin change-height" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)"  id="search-box" type="text" value="<?php echo $data['search_query']; ?>"/>
                         <?php foreach($params['filters'] as $filter) { ?>
                         <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
@@ -61,6 +62,7 @@
                             <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
                             <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
                         </div>
+
                         <?php } ?>
                     </div>
                     <hr>
