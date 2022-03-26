@@ -654,21 +654,79 @@ class AdministrationController extends Controller
         return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList]);
     }
 
-    public function viewCitationHistoryReport()
+    public function viewCitationHistoryReport(Request $request)
     {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 20;
+        $start = ($page - 1) * $limit;
+
         $citationCountModel = new citationCount();
-        $citations = $citationCountModel->getAll();
+        $citations = $citationCountModel->getRecords($start, $limit);
+        // var_dump($citations->payload);
+        // exit;
+        // $citations = $citationCountModel->getAll();
+        $contentModel = new Content();
+        $contentData = [];
+        foreach($citations->payload as $citation){
+            $content = $contentModel->findOne(['content_id' => $citation->content_id]);
+            $tempContent = new stdClass;
+            $tempContent->id = $content->content_id;
+            $tempContent->title = $content->title;
+            array_push($contentData, $tempContent);
+        }
+        // var_dump( $contentData);
+        // exit;
+    
+        if ($page <= 0) throw new NotFoundException;
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_VIEW_REPORTS,
             self::CITATION_HISTORY_REPORT
         ];
-        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations]);
+        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
+    }
+
+    public function viewSuggestedContentReport(Request $request)
+    {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 20;
+        $start = ($page - 1) * $limit;
+
+        $citationCountModel = new citationCount();
+        $citations = $citationCountModel->getRecords($start, $limit);
+        // var_dump($citations->payload);
+        // exit;
+        // $citations = $citationCountModel->getAll();
+        $contentModel = new Content();
+        $contentData = [];
+        foreach($citations->payload as $citation){
+            $content = $contentModel->findOne(['content_id' => $citation->content_id]);
+            $tempContent = new stdClass;
+            $tempContent->id = $content->content_id;
+            $tempContent->title = $content->title;
+            array_push($contentData, $tempContent);
+        }
+        // var_dump( $contentData);
+        // exit;
+    
+        if ($page <= 0) throw new NotFoundException;
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::CITATION_HISTORY_REPORT
+        ];
+        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
     }
 
     public function viewLoginReport(Request $request)
     {
         $data = $request->getBody();
+        // var_dump($data);
+        // exit;
         $Search_params = $data['search-data'] ?? '';
         $page = isset($data['page']) ? $data['page'] : 1;
         $limit = 15;

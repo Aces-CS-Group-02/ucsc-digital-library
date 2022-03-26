@@ -190,6 +190,7 @@ $app->router->get('/admin/dashboard/view-reports', [AdministrationController::cl
 $app->router->get('/admin/user-approvals-report', [AdministrationController::class, "viewApprovalsReport"]);
 $app->router->get('/admin/users-login-report', [AdministrationController::class, "viewLoginReport"]);
 $app->router->get('/admin/citation-history-report', [AdministrationController::class, "viewCitationHistoryReport"]);
+$app->router->get('/admin/suggested-content-report', [AdministrationController::class, "viewSuggestedContentReport"]);
 
 
 // Still Implementing

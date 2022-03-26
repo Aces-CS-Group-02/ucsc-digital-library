@@ -84,7 +84,7 @@ $userRole = "admin";
                 </div>
 
                 <div class="card-container">
-                    <a href="" class="card box-shadow-1">
+                    <a href="/admin/suggested-content-report" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="\assets\admin-reports-dashboard\suggestion-1.png" alt=" content-add/update-image">
                         </div>

@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: fit-content;
+}
+
 .admin-dashboard-text {
   max-width: 1400px;
   width: 96%;
@@ -29,6 +36,74 @@
   margin: 10px auto;
   font-family: "Poppins", sans-serif !important;
 }
+
+.data-container {
+  width: 100%;
+  height: fit-content;
+  /* border: 1px solid black; */
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.list-title {
+  font-weight: 500 !important;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  color: rgb(63, 63, 63);
+  background-color: rgb(213, 217, 212);
+  border-radius: 5px;
+  /* margin: 5px 0; */
+  width: 100%;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.data-item-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.data-item {
+  margin: 5px;
+  font-size: 0.8rem;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  flex: 1;
+  max-width: 50%;
+  box-sizing: border-box;
+  min-height: 100%;
+  border-bottom: 1px solid rgb(195, 215, 216);
+}
+
+.edit-for-no-records {
+  border-bottom: none !important;
+}
+
+.edit-data-item {
+  text-align: left !important;
+  margin-left: 10px;
+}
+
+.paginate-component-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 
 @media only screen and (max-width: 854px) {
   .details-container {

@@ -104,6 +104,7 @@ $userRole = "student";
                     <textarea id="note-data" name="note"></textarea>
                     <input name="content_id" value="<?= $contentId ?>" type="hidden"></input>
                     <div class="notes-modal-bottom-section">
+                        <button id="delete-note-btn"><i class="bookmark-dlt-icon fas fa-trash" id="delete-content"></i></button>
                         <button class="btn btn-info mr-1 mb-1" id="add-note">Save</button>
                     </div>
                 </form>
@@ -247,7 +248,6 @@ $userRole = "student";
                     <div class="side-bar-section-top">
                         <i class="fas fa-notes-medical"></i>
                         <p>Notes</p>
-                        <button id="delete-note-btn"><i class="bookmark-dlt-icon fas fa-trash" id="delete-content"></i></button>
                         <button id="add-notes-btn" class="add-notes-btn"><i class="fas fa-plus"></i></button>
                     </div>
                     <div class="side-bar-section-expand-collaps no-content">

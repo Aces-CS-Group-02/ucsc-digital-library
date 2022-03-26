@@ -11,7 +11,9 @@ class Citation
     public string $title;
     public string $publisher;
     public string $authorsList;
-    public string $publishYear;
+    public int $publishYear;
+    public string $publishMonth;
+    public int $publishDay;
     public string $shareLink;
     public int $lastAccessDate;
     public string $lastAccessMonth;
@@ -31,6 +33,8 @@ class Citation
         $this->title = $content->title;
         $this->publisher = $content->publisher;
         $this->publishYear = date("Y", strtotime($content->date));
+        $this->publishMonth = date("M", strtotime($content->date));
+        $this->publishDay = date("d", strtotime($content->date));
         $this->shareLink = "http://localhost:8000/content?content_id=" . $content->content_id;
         if ($contentViewRecord) {
             $lastAccess = $contentViewRecord[0]->timestamp;
@@ -88,7 +92,7 @@ class Citation
     public function journals($citationType)
     {
         if ($citationType == 1) {
-            $citation = $this->authorsList . ", '" . $this->title . "'" . ($this->publishYear ? (", " . $this->publishYear) : "") . ".";
+            $citation = $this->authorsList . ", '" . $this->title . "'" . ($this->publishYear ? (", " . $this->publishDay . "-" . $this->publishMonth . "-" . $this->publishYear) : "") . ".";
         } else {
             //Author Surname, A., Year Published. Title. Publication Title, Volume number(Issue number), p.Pages Used.
             $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
@@ -98,18 +102,29 @@ class Citation
 
     public function newsletters($citationType)
     {
-        // $citation = 
+        if ($citationType == 1) {
+            $citation = $this->authorsList . ", \"" . $this->title . "\"" . ($this->publishYear ? (", " . $this->publishYear) : "") . ". [Online]. " . "Available: " . $this->shareLink;
+        } else {
+            $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
+        }
+        return $citation;
     }
 
     public function audio($citationType)
     {
-        // $citation = 
+        if ($citationType == 1) {
+            // Production company, Title of Audio, Year of Production. Accessed on: Abbrev. Month. Day, Year. [Type of medium]. Available: name of database
+            $citation = (($this->publisher) ? ($this->publisher . ", ") : ""). $this->title. ($this->publishYear ? (", ". $this->publishYear) : "") . ". ". ($this->lastAccessMonth ? ("Accessed on: " . $this->lastAccessMonth . ". " . $this->lastAccessDate . ", " . $this->lastAccessYear . ". ") : "") . "[Audio File]. Available: " . $this->shareLink;
+        } else {
+            $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";
+        }
+        return $citation;
     }
 
     public function video($citationType)
     {
         if ($citationType == 1) {
-            // $citation = $this->authorsList. ", ". $this->title. ". " . (($this->publisher)?($this->publisher.", "):""). ($this->publishYear?($this->publishYear. ". "):"") .($this->lastAccessMonth?("Accessed on: ". $this->lastAccessMonth. ". ". $this->lastAccessDate. ", ". $this->lastAccessYear. ". "):""). "[Online]. Available: ". $this->shareLink;
+            $citation = (($this->publisher) ? ($this->publisher . ", ") : ""). $this->title. ($this->publishYear ? (", ". $this->publishYear) : "") . ". ". ($this->lastAccessMonth ? ("Accessed on: " . $this->lastAccessMonth . ". " . $this->lastAccessDate . ", " . $this->lastAccessYear . ". ") : "") . "[Video File]. Available: " . $this->shareLink;
         } else {
             //Author Surname, A., Year Published. Title,
             $citation = $this->authorsList . ", " . ($this->publishYear ? ($this->publishYear . ". ") : "") . $this->title . ". ";

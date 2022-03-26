@@ -195,6 +195,24 @@ function copyCitation() {
   navigator.clipboard.writeText(citationTextArea.value);
 }
 
+const deleteNote = () => {
+  if (confirm("Are you sure?")) {
+    const deleteNoteReq = new XMLHttpRequest();
+    var url = "/ajax/delete-user-notes";
+    deleteNoteReq.open("POST", url);
+    deleteNoteReq.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        noteModal.style.display = "none";
+        deleteNoteBtn.style.display = "none";
+        alert(this.responseText);
+      }
+    };
+    deleteNoteReq.send(JSON.stringify({ content_id: contentId }));
+  }
+};
+
+deleteNoteBtn.addEventListener("click", deleteNote, false);
+
 const saveNote = (currentTarget) => {
   // var noteData = document.getElementById("note-data").value;
   // AJAX request
@@ -232,6 +250,8 @@ const getNoteData = () => {
   getNoteReq.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // console.log(this.responseText);
+      if (this.responseText) deleteNoteBtn.style.display = "flex";
+      else deleteNoteBtn.style.display = "none";
 
       var editor = CKEDITOR.instances["note-data"];
       editor.setData(this.responseText);
@@ -244,24 +264,6 @@ const getNoteData = () => {
 for (var btn of notesBtns) {
   btn.addEventListener("click", getNoteData, false);
 }
-
-const deleteNote = () => {
-  if (confirm("Are you sure?")) {
-    const deleteNoteReq = new XMLHttpRequest();
-    var url = "/ajax/delete-user-notes";
-    deleteNoteReq.open("POST", url);
-    deleteNoteReq.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-      }
-    };
-    deleteNoteReq.send(
-      JSON.stringify({ content_id: contentId })
-    );
-  }
-};
-
-deleteNoteBtn.addEventListener("click", deleteNote);
 
 const addBookmark = (currentTarget) => {
   const addBookmarkReq = new XMLHttpRequest();
@@ -325,6 +327,18 @@ function getBookmarkData() {
       parentDiv.innerHTML = "";
       var bookmarks = JSON.parse(this.responseText);
       // console.log(this.responseText);
+      if (bookmarks.length <= 3) {
+        document.querySelector(
+          ".side-bar-section-expand-collaps-btn"
+        ).style.display = "none";
+        document
+          .querySelector(".side-bar-section-content")
+          .classList.add("toggle-view");
+      } else {
+        document.querySelector(
+          ".side-bar-section-expand-collaps-btn"
+        ).style.display = "";
+      }
       for (var bookmark of bookmarks) {
         var div = document.createElement("div");
         div.classList.add("bookmark-card");
@@ -679,7 +693,7 @@ pdfjsLib
   .getDocument(url)
   .promise.then((pdfDoc_) => {
     pdfDoc = pdfDoc_;
-    //   console.log(pdfDoc);
+      console.log(pdfDoc);
 
     document.querySelector("#page-count").textContent = pdfDoc.numPages;
 
