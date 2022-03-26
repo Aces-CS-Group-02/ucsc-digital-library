@@ -21,6 +21,7 @@ use app\controllers\ExportController;
 use app\models\Collection;
 use app\models\ContentCollectionContent;
 use app\controllers\ImportController;
+use app\controllers\DemoController;
 
 require_once __DIR__ . "./../vendor/autoload.php";
 
@@ -391,6 +392,10 @@ $app->router->get('/admin/review-lend-requests', [SiteController::class, 'review
 
 $app->router->post('/admin/process-lend-request/approve', [SiteController::class, 'approveLendRequest']);
 $app->router->post('/admin/process-lend-request/reject', [SiteController::class, 'rejectLendRequest']);
+
+
+$app->router->get('/test', [DemoController::class, 'test']);
+$app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
 
 
 
