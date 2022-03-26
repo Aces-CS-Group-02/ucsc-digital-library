@@ -262,6 +262,9 @@ class AdministrationController extends Controller
 
         if ($request->getMethod() === 'POST') {
 
+            /* var_dump($_POST);
+            exit; */
+
             $file = $_FILES['sheet'];
 
             move_uploaded_file($file['tmp_name'], "temp/sheet.csv");
@@ -308,6 +311,11 @@ class AdministrationController extends Controller
             fclose($file);
             unlink("temp/sheet.csv");
 
+            // echo '<pre>';
+            // var_dump(array_values($userArray));
+            // echo '</pre>';
+            // exit;
+
             // exit;
 
             $breadcrum = [
@@ -316,6 +324,55 @@ class AdministrationController extends Controller
                 self::BREADCRUM_BULK_REGISTER
             ];
             return $this->render("admin/user/bulk-register", ['breadcrum' => $breadcrum, 'users' => $userArray]);
+        }
+    }
+
+    public function registerSelectedUsers(Request $request)
+    {
+        if($request->isPOST())
+        {
+            var_dump("this works!"); 
+            $users = [];
+            foreach($_POST['users'] as $k=>$v){
+             $val = intdiv($k,3);
+             $users[$val][key($v)]=$v[key($v)];
+            }
+
+            echo"<pre>";
+            // print_r($users);
+
+            foreach($users as $user)
+            {
+                $new_user = new PendingUser();
+
+                $new_user->first_name = $user['first_name'];
+                $new_user->last_name = $user['last_name'];
+                $new_user->email =$user['email'];
+
+                $code = substr(md5(mt_rand()), 0, 15);
+                $new_user->token = $code;
+
+                $email = $new_user->email;
+                $host = $_SERVER['HTTP_ORIGIN'];
+                $port = $_SERVER['SERVER_PORT'];
+                $subject = "Verification Email";
+                $link = "Click <a href='{$host}:{$port}/verify-email?email={$email}&token={$code}'>here</a> to verify.";
+                $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
+                $altBody = "this is the alt body";
+
+
+                $mail = new Mail([$email], $subject, $body, $altBody);
+                $mail->sendMail();
+
+                if ($new_user->save()) {
+                    Application::$app->session->setFlashMessage('success', 'Verification emaisl are sent to selected users');
+                    // Application::$app->response->redirect('/');
+                    return $this->render('admin/bulk-register');
+                }
+
+                // var_dump($new_user);
+            }
+            // exit;
         }
     }
 

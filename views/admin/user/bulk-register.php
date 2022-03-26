@@ -50,17 +50,6 @@ $userRole = "student";
 
             <div class="second-border">
 
-                <div class="upper-container">
-                    <div class="link-place">
-                        <p>File Name:
-                            <a href=" " class="file-name"> test.xls</a>
-                        </p>
-                    </div>
-                    <div class="button-place">
-                        <button class="btn btn-primary mr-1 mb-1" id="btn-edit" type="button">Register</button>
-                    </div>
-                </div>
-
                 <div class="search-N-sort-components-container">
                     <div class="search-component-container">
                         <form action="">
@@ -89,53 +78,82 @@ $userRole = "student";
 
             </div>
 
-            <!-- BULK REGISTERS INFORMATION -->
+            <form action="/admin/bulk-register/register-selected-users" method="POST">
+                <!-- <input type="submit" value="test"> -->
+                <!-- BULK REGISTERS INFORMATION -->
 
-            <div class="content-container">
+                <div class="content-container">
 
-                <div class="bulk-register-headers-container">
-                    <div class="block-a">First Name</div>
-                    <div class="block-b">Last Name</div>
-                    <div class="block-c">Email</div>
-                </div>
-
-                <div class="bulk-register-container">
-                    <?php foreach ($params['users'] as $user) { ?>
-                        <div class="bulk-register-info">
-                            <div class="block-a">
-                                <div class="block-title">
-                                    <p>First Name</p>
-                                    <p>:</p>
-                                </div>
-                                <p><?= $user->first_name; ?></p>
-                            </div>
-                            <div class="block-b">
-                                <div class="block-title">
-                                    <p>Last Name</p>
-                                    <p>:</p>
-                                </div>
-                                <p><?= $user->last_name; ?></p>
-
-                            </div>
-                            <div class="block-c">
-                                <div class="block-title">
-                                    <p>Email</p>
-                                    <p>:</p>
-                                </div>
-                                <p><?= $user->email; ?><p>
-
-                            </div>
-                            
+                    <div class="upper-container">
+                        <div class="link-place">
+                            <p>File Name:
+                                <a href=" " class="file-name"> test.xls</a>
+                            </p>
                         </div>
-                    <?php } ?>
+                        <div class="button-place">
+                            <button class="btn btn-primary mr-1 mb-1" id="btn-edit" type="submit">Register</button>
+                        </div>
+                    </div>
+
+                    <div class="bulk-register-headers-container">
+                        <div class="block-a">First Name</div>
+                        <div class="block-b">Last Name</div>
+                        <div class="block-c">Email</div>
+                        <div class="block-d">Action</div>
+                    </div>
+
+                    <div class="bulk-register-container">
+                        <?php foreach ($params['users'] as $kay => $user) { ?>
+
+                            <div class="bulk-register-info">
+                                <input type="hidden" name="users[][first_name]" value="<?= $user->first_name; ?>">
+                                <input type="hidden" name="users[][last_name]" value="<?= $user->last_name; ?>">
+                                <input type="hidden" name="users[][email]" value="<?= $user->email; ?>">
+                                <div class="block-a">
+                                    <div class="block-title">
+                                        <p>First Name</p>
+                                        <p>:</p>
+                                    </div>
+
+                                    <p><?= $user->first_name; ?></p>
+                                </div>
+                                <div class="block-b">
+                                    <div class="block-title">
+                                        <p>Last Name</p>
+                                        <p>:</p>
+                                    </div>
+                                    <p><?= $user->last_name; ?></p>
+
+                                </div>
+                                <div class="block-c">
+                                    <div class="block-title">
+                                        <p>Email</p>
+                                        <p>:</p>
+                                    </div>
+                                    <p><?= $user->email; ?>
+                                    <p>
+
+                                </div>
+                                <div class="block-d">
+                                    <p>
+                                        <button class="btn btn-danger mr-1 mb-1 btn-edit" type="button" onclick="removeRow(this)">Remove</button>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
 
-            </div>
-
         </div>
-    </div>
+        </form>
 
+    </div>
+    </div>
+    <script>
+        function removeRow(t) {
+            t.parentElement.parentElement.parentElement.remove()
+        }
+    </script>
     <!-- FOOTER -->
 
     <div class="footer-edit">
@@ -147,7 +165,6 @@ $userRole = "student";
     <!-- SCRITPT -->
 
     <script src="/javascript/nav.js"></script>
-
 </body>
 
 </html>
