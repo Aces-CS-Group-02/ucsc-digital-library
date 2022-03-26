@@ -3,11 +3,25 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\Request;
 
 class DummyController extends Controller
 {
-    public function test()
+    public function test(Request $request)
     {
+        if($request->isPOST())
+        {
+            $users = [];
+            foreach($_POST['users'] as $k=>$v){
+             $val = intdiv($k,3);
+             $users[$val][key($v)]=$v[key($v)];
+            }
+            $_POST['users']=$users;
+
+            echo"<pre>";
+            print_r($_POST);
+            exit;
+        }
         return $this->render('admin/content/info-publish-content');
     }
 }

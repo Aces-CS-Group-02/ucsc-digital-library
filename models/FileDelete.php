@@ -17,6 +17,7 @@ class FileDelete
                 }
             }
             reset($objects);
+            if($dir!=="temp")rmdir($dir);
         }
     }
 }

@@ -17,6 +17,7 @@ class Content extends DbModel
     public ?int $type = null;
     public ?int $publish_state = null;
     public ?string $url = null;
+    public ?string $thumbnail = null;
     public ?int $collection_id = null;
     public int $upload_steps = 0;
     public ?string $isbn = null;
@@ -33,7 +34,7 @@ class Content extends DbModel
 
     public function attributes(): array
     {
-        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by', 'approved'];
+        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'thumbnail', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by', 'approved'];
     }
 
     public static function primaryKey(): string

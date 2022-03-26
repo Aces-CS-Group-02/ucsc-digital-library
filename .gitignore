@@ -4,4 +4,10 @@ vendor
 .idea/
 Dockerfile
 public/phpmyadmin
+.DS_Store
+public/.DS_Store
+public/data/.DS_Store
+public/data/content/.DS_Store
 controllers/DemoController.php
+models/CronEmail.php
+public/scripts/

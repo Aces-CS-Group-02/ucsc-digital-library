@@ -174,6 +174,7 @@ $app->router->post('/admin/import/collection', [ImportController::class, "import
 // Admin Dashboard => Manage Users Routes
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
+$app->router->post('/admin/bulk-register/register-selected-users', [AdministrationController::class, "registerSelectedUsers"]);
 $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/reject-new-user', [ApproveController::class, "rejectNewUser"]);
@@ -393,6 +394,9 @@ $app->router->get('/admin/review-lend-requests', [SiteController::class, 'review
 $app->router->post('/admin/process-lend-request/approve', [SiteController::class, 'approveLendRequest']);
 $app->router->post('/admin/process-lend-request/reject', [SiteController::class, 'rejectLendRequest']);
 
+$app->router->get('/test', [DemoController::class, 'test']);
+$app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
+
 
 $app->router->get('/test', [DemoController::class, 'test']);
 $app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
@@ -401,6 +405,7 @@ $app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
 
 
 
+$app->router->post('/admin/testing', [DummyController::class, "test"]);
 
 
 
