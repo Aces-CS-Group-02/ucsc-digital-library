@@ -99,10 +99,10 @@
       </div>
       <div class="middle">
         <div class="main-searchbox-container">
-          <input id="main-searchbox-input" type="text" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)"/>
+          <input id="main-searchbox-input" type="text" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)" />
           <div class="search-N-advanced-search-btn-container">
-            <button id="main-search-btn" onclick="search()" >Search</button>
-            <a href="/advanced-search">Advanced Search</a>
+            <button id="main-search-btn" onclick="search()">Search</button>
+            <a id="advanced-search-btn" href="/advanced-search">Advanced Search</a>
           </div>
         </div>
 
