@@ -13,6 +13,7 @@ use app\models\CollectionPermission;
 use app\models\Community;
 use app\models\Content;
 use app\models\ContentCollectionPermission;
+use app\models\ContentLanguage;
 use app\models\ContentSuggestion;
 use app\models\ContentViewRecords;
 use app\models\Note;
@@ -137,7 +138,7 @@ class UserController extends Controller
                 Application::$app->session->setFlashMessage('success', 'Collection edited');
                 Application::$app->response->redirect('/profile');
                 exit;
-            }             
+            }
             return $this->render('/user/edit-user-collection', ['model' => $userCollectionModel]);
 
             // return $userCollectionModel->editUserCollection($data);
@@ -268,27 +269,9 @@ class UserController extends Controller
         $content = $contentModel->findOne(['content_id' => $data['content_id']]);
         if (!$content) throw new NotFoundException();
 
-        // Access Permission
-        $collectionPermissionModel = new CollectionPermission();
-        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content->collection_id);
 
-        $contentCollectionPermissionModel = new ContentCollectionPermission();
-        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content->content_id);
-
-        $permission = new stdClass;
-        if ($collectionPermissionObj->permission || $contentCollectionPermissionObj->permission) {
-            $permission->permission = true;
-
-            if ($collectionPermissionObj->grant_type === "READ_DOWNLOAD" || $contentCollectionPermissionObj->grant_type === "READ_DOWNLOAD") {
-                $permission->grant_type = "READ_DOWNLOAD";
-            } else {
-                $permission->grant_type = "READ";
-            }
-        } else {
-            $permission->permission = false;
-            // $permission->grant_type = "NULL";
-            throw new ForbiddenException();
-        }
+        $permission = ContentController::checkContentPermission($content->content_id);
+        if (!$permission->permission) throw new ForbiddenException();
         // echo '<pre>';
         // var_dump($content->type);
         // echo '</pre>';
@@ -301,7 +284,7 @@ class UserController extends Controller
             $regNo = 0;
         }
         if ($content->publish_state == 1 || $regNo == 2 || $regNo == 1) {
-            if($content->publish_state == 1){
+            if ($content->publish_state == 1) {
                 $contentViewRecordsModel = new ContentViewRecords();
                 $contentViewRecordsModel->addRecord(['content_id' => $data['content_id']]);
             }
@@ -321,12 +304,11 @@ class UserController extends Controller
         $bookmarkModel = new Bookmark();
         $reg_no = Application::$app->user->reg_no;
         $bookmark = $bookmarkModel->findOne(['content_id' => $contentId, 'reg_no' => $reg_no, 'page_no' => $pageNo]);
-        if($bookmark){
-            echo "Bookmark already exists on page ". $pageNo. "!";
-        }
-        else{
+        if ($bookmark) {
+            echo "Bookmark already exists on page " . $pageNo . "!";
+        } else {
             $bookmarkModel->saveBookmark(['content_id' => $contentId, 'page_no' => $pageNo]);
-            echo "Bookmark added for page ". $pageNo. "!";
+            echo "Bookmark added for page " . $pageNo . "!";
         }
     }
 
@@ -334,19 +316,19 @@ class UserController extends Controller
     {
         $_POST = json_decode(file_get_contents('php://input'), true);
         $contentId = $_POST["content_id"];
- 
+
         // $data = $request->getBody();
         // var_dump($contentId,$pageNo);
         $bookmarkModel = new Bookmark();
         $reg_no = Application::$app->user->reg_no;
         $bookmarks = $bookmarkModel->findAll(['content_id' => $contentId, 'reg_no' => $reg_no]);
         $bookmarkData = [];
-        foreach($bookmarks as $bookmark){
+        foreach ($bookmarks as $bookmark) {
             $temp = new stdClass;
             $temp->id = $bookmark['bookmark_id'];
             $temp->page = $bookmark['page_no'];
             $temp->content = $bookmark['content_id'];
-            array_push($bookmarkData,$temp);
+            array_push($bookmarkData, $temp);
         }
         return json_encode($bookmarkData);
         // var_dump($bookmarks);
@@ -414,7 +396,7 @@ class UserController extends Controller
                 Application::$app->response->redirect('/profile');
                 // echo Application::$app->session->getFlashMessage('success');
                 exit;
-            } 
+            }
             return $this->render('/user/create-user-collection', ['model' => $userCollectionModel]);
         }
     }
@@ -453,7 +435,7 @@ class UserController extends Controller
                 $deleteUser->email = $user->email;
                 $deleteUser->reason = $reason;
                 $deleteUser->deleted_by = Application::$app->user->reg_no;
-               
+
                 $subject = "Account is deleted";
 
                 if ($reason) {

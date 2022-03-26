@@ -786,35 +786,17 @@ class ContentController extends Controller
         }
     }
 
-
-
-    public function viewContentAbstract(Request $request)
+    public static function checkContentPermission($content_id)
     {
-        $data = $request->getBody();
-        if (!isset($data['content_id'])) throw new NotFoundException();
-
-        $contentModel = new Content();
-        $content = $contentModel->findOne(['content_id' => $data['content_id']]);
-        if (!$content) throw new NotFoundException();
-
-        $contentKeywordModel = new ContentKeyword();
-        $contentKeywords = $contentKeywordModel->findAll(['content_id' => $content->content_id]);
-
-        $contentLanguageModel = new ContentLanguage();
-        $contentLanguage = $contentLanguageModel->findOne(['language_id' => $content->language]);
-
-        $contentCreatorModel = new ContentCreator();
-        $authors = $contentCreatorModel->findContentAuthors($content->content_id);
-
         // Access Permission
         $collectionPermissionModel = new CollectionPermission();
-        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content->collection_id);
+        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content_id);
 
         $contentCollectionPermissionModel = new ContentCollectionPermission();
-        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content->content_id);
+        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content_id);
 
         $lendPermissionModel = new LendPermission();
-        $lendPermission = $lendPermissionModel->findAll(['content_id' => $content->content_id, 'user_id' => Application::$app->user->reg_no ?? false]);
+        $lendPermission = $lendPermissionModel->findAll(['content_id' => $content_id, 'user_id' => Application::$app->user->reg_no ?? false]);
 
         // var_dump($lendPermission);
 
@@ -843,6 +825,28 @@ class ContentController extends Controller
             $permission->permission = false;
             $permission->grant_type = "NULL";
         }
+        return $permission;
+    }
+
+    public function viewContentAbstract(Request $request)
+    {
+        $data = $request->getBody();
+        if (!isset($data['content_id'])) throw new NotFoundException();
+
+        $contentModel = new Content();
+        $content = $contentModel->findOne(['content_id' => $data['content_id']]);
+        if (!$content) throw new NotFoundException();
+
+        $contentKeywordModel = new ContentKeyword();
+        $contentKeywords = $contentKeywordModel->findAll(['content_id' => $content->content_id]);
+
+        $contentLanguageModel = new ContentLanguage();
+        $contentLanguage = $contentLanguageModel->findOne(['language_id' => $content->language]);
+
+        $contentCreatorModel = new ContentCreator();
+        $authors = $contentCreatorModel->findContentAuthors($content->content_id);
+
+        $permission = self::checkContentPermission($content->content_id);
 
         $collectionModel = new Collection();
         $collection = $collectionModel->findOne(['collection_id' => $content->collection_id]);
