@@ -126,7 +126,7 @@ $userRole = "student";
     <div class="content-container">
 
         <div class="content-categories-headers-container">
-            <div class="block-a"> </div>
+            <!-- <div class="block-a"> </div> -->
             <div class="block-b">Submitted Date</div>
             <div class="block-c">Title</div>
             <div class="block-d">Submitted By</div>
@@ -137,7 +137,7 @@ $userRole = "student";
         <div class="content-category-container">
             <?php foreach ($params['contents'] as $content) { ?>
                 <div class="content-category-info">
-                    <div class="block-a">
+                    <!-- <div class="block-a">
                         <p>
                         <div class="input-group custom-control">
                             <div class="checkbox checkbox-edit">
@@ -145,7 +145,7 @@ $userRole = "student";
                             </div>
                         </div>
                         </p>
-                    </div>
+                    </div> -->
                     <div class="block-b">
                         <div class="block-title">
                             <p>Submitted Date</p>
@@ -168,11 +168,11 @@ $userRole = "student";
                         <p><?php echo $content->uploader; ?></p>
                     </div>
                     <div class="block-e">
-                        <p>
+                        <!-- <p> -->
                             <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
                             <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $content->content_id ?>)" type="button">Approve</button>
                             <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $content->content_id ?>)" type="button">Reject</button>
-                        </p>
+                        <!-- </p> -->
                     </div>
                 </div>
             <?php } ?>

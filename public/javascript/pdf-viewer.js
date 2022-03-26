@@ -361,12 +361,12 @@ function getBookmarkData() {
         });
         div.addEventListener("click", (e) => {
           // alert();
-          // console.log(e.target.dataset.id);
+          console.log(e.target.dataset.id);
           var canvas = document.querySelector(".pdfCanvas");
           var pageHeight = canvas.height;
-          // console.log(pageHeight);
+          console.log(pageHeight);
           var scrollHeight = pageHeight * e.target.dataset.id;
-          // console.log(scrollHeight);
+          console.log(scrollHeight);
           var scrollDiv = document.querySelector("#scroll-div");
           scrollDiv.scrollTop = scrollHeight;
         });

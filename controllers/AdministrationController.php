@@ -690,36 +690,37 @@ class AdministrationController extends Controller
 
     public function viewSuggestedContentReport(Request $request)
     {
-        $data = $request->getBody();
-        $page = isset($data['page']) ? $data['page'] : 1;
-        $limit = 20;
-        $start = ($page - 1) * $limit;
+        // $data = $request->getBody();
+        // $page = isset($data['page']) ? $data['page'] : 1;
+        // $limit = 20;
+        // $start = ($page - 1) * $limit;
 
-        $citationCountModel = new citationCount();
-        $citations = $citationCountModel->getRecords($start, $limit);
-        // var_dump($citations->payload);
-        // exit;
-        // $citations = $citationCountModel->getAll();
-        $contentModel = new Content();
-        $contentData = [];
-        foreach($citations->payload as $citation){
-            $content = $contentModel->findOne(['content_id' => $citation->content_id]);
-            $tempContent = new stdClass;
-            $tempContent->id = $content->content_id;
-            $tempContent->title = $content->title;
-            array_push($contentData, $tempContent);
-        }
-        // var_dump( $contentData);
-        // exit;
+        // $citationCountModel = new citationCount();
+        // $citations = $citationCountModel->getRecords($start, $limit);
+        // // var_dump($citations->payload);
+        // // exit;
+        // // $citations = $citationCountModel->getAll();
+        // $contentModel = new Content();
+        // $contentData = [];
+        // foreach($citations->payload as $citation){
+        //     $content = $contentModel->findOne(['content_id' => $citation->content_id]);
+        //     $tempContent = new stdClass;
+        //     $tempContent->id = $content->content_id;
+        //     $tempContent->title = $content->title;
+        //     array_push($contentData, $tempContent);
+        // }
+        // // var_dump( $contentData);
+        // // exit;
     
-        if ($page <= 0) throw new NotFoundException;
+        // if ($page <= 0) throw new NotFoundException;
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_VIEW_REPORTS,
-            self::CITATION_HISTORY_REPORT
+            self::BREADCRUM_SUGGESTED_CONTENT_REPORT
         ];
-        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
+        // return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
+        return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum]);
     }
 
     public function viewLoginReport(Request $request)
