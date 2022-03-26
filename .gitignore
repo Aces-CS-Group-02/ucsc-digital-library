@@ -4,3 +4,4 @@ vendor
 .idea/
 Dockerfile
 public/phpmyadmin
+controllers/DemoController.php
