@@ -62,8 +62,8 @@ use app\core\Application;
                             <?php } ?>
                         <?php } ?>
                         <input type="hidden" name='type' value='dateissued' />
-                        <label>Choose Year</label>
-                        <select name="year">
+                        <label class="input-label">Choose Year</label>
+                        <select class="dropdown-list" name="year">
                             <option selected="selected" value="-1">Select a year</option>
                             <?php for ($i = 1950; $i <= (int)date("Y"); $i++) { ?>
                                 <option value="<?= $i ?>"><?= $i ?></option>
@@ -71,8 +71,8 @@ use app\core\Application;
                         </select>
 
 
-                        <label>Choose Year</label>
-                        <select name="month">
+                        <label class="input-label">Choose month</label>
+                        <select class="dropdown-list" name="month">
                             <option selected="selected" value="-1">Select a month</option>
                             <?php for ($i = 1; $i <= 12; $i++) { ?>
                                 <option value="<?= $i ?>"><?php
@@ -83,14 +83,14 @@ use app\core\Application;
                         </select>
 
                         <label>In Order</label>
-                        <select name="order">
+                        <select class="dropdown-list" name="order">
                             <option value="ASC">ASC</option>
                             <option value="DESC">DESC</option>
                         </select>
 
 
                         <label>Result per page</label>
-                        <select name="rpp">
+                        <select class="dropdown-list" name="rpp">
                             <?php for ($i = 5; $i <= 100; $i += 5) { ?>
                                 <option <?php if ($i == 20) {
                                             echo "selected='selected'";
@@ -101,13 +101,13 @@ use app\core\Application;
                             <?php } ?>
                         </select>
 
-                        <button>GO</button>
+                        <button class="browse-go-btn">GO</button>
                     </form>
                 <?php } ?>
 
 
                 <?php if ($params['type'] === 'title') { ?>
-                    <p>Browse By Title</p>
+                    <!-- <p>Browse By Title</p> -->
                     <form action="" method="GET">
                         <?php if ($params['browse-type']) { ?>
                             <?php if ($params['browse-type'] == 'community') { ?>
@@ -118,7 +118,7 @@ use app\core\Application;
                         <?php } ?>
                         <input type="hidden" name='type' value='title' />
 
-                        <select name="starts_with">
+                        <select class="dropdown-list" name="starts_with">
                             <option selected="selected" value="-1">Starts with</option>
                             <option value="100">0-9</option>
                             <?php for ($i = 65; $i <= 91; $i++) { ?>
@@ -128,14 +128,14 @@ use app\core\Application;
 
 
                         <label>In Order</label>
-                        <select name="order">
+                        <select class="dropdown-list" name="order">
                             <option value="ASC">ASC</option>
                             <option value="DESC">DESC</option>
                         </select>
 
 
                         <label>Result per page</label>
-                        <select name="rpp">
+                        <select class="dropdown-list" name="rpp">
                             <?php for ($i = 5; $i <= 100; $i += 5) { ?>
                                 <option <?php if ($i == 20) {
                                             echo "selected='selected'";
@@ -146,7 +146,7 @@ use app\core\Application;
                             <?php } ?>
                         </select>
 
-                        <button>GO</button>
+                        <button class="browse-go-btn">GO</button>
                     </form>
                 <?php } ?>
 
@@ -161,7 +161,7 @@ use app\core\Application;
                         </div>
                         <div class="search-card-details">
                             <div class="search-card-title">
-                                <a href="/content?content_id=<?= $result->content_id ?>">
+                                <a class="content-title-link" href="/content?content_id=<?= $result->content_id ?>">
                                     <h5><?= $result->title ?></h5>
                                 </a>
                             </div>

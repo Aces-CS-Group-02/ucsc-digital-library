@@ -1,3 +1,5 @@
+const browseLink = document.querySelector("#browse-main-link");
+const browseDropDown = document.querySelector(".browse-drop-down");
 const burgerMenu = document.querySelector(".burger-menu");
 const crossLine = document.querySelectorAll(".cross-line");
 const profileBtn = document.querySelectorAll(".user-profile-circle");
@@ -95,33 +97,39 @@ document.addEventListener("click", function (e) {
 const notificationPanel = document.getElementById("notifications-panel");
 const notificationBtn = document.getElementById("notification-nav-link");
 
-notificationBtn.addEventListener("click", () => {
-  if (notificationPanel.style.display == "block") {
-    console.log(notificationPanel.style.display);
-    notificationPanel.style.display = "none";
-  } else {
-    notificationPanel.style.display = "block";
-  }
-
-  const req = new XMLHttpRequest();
-  req.open("GET", "/ajax/open-notifications");
-  // req.onreadystatechange = () => {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     if (this.responseText === "success") {
-  //       document.querySelector(".notifications-count-label").style.display =
-  //         "none";
-  //     }
-  //   }
-  // };
-  req.onload = () => {
-    if (req.status == 200) {
-      console.log(req.responseText);
-      if (req.responseText === "viewed") {
-        document.querySelector(".notifications-count-label").style.display =
-          "none";
-      }
+if (notificationBtn) {
+  notificationBtn.addEventListener("click", () => {
+    if (notificationPanel.style.display == "block") {
+      console.log(notificationPanel.style.display);
+      notificationPanel.style.display = "none";
+    } else {
+      notificationPanel.style.display = "block";
     }
-  };
-  req.setRequestHeader("Content-Type", "application/json");
-  req.send();
+
+    const req = new XMLHttpRequest();
+    req.open("GET", "/ajax/open-notifications");
+    // req.onreadystatechange = () => {
+    //   if (this.readyState == 4 && this.status == 200) {
+    //     if (this.responseText === "success") {
+    //       document.querySelector(".notifications-count-label").style.display =
+    //         "none";
+    //     }
+    //   }
+    // };
+    req.onload = () => {
+      if (req.status == 200) {
+        console.log(req.responseText);
+        if (req.responseText === "viewed") {
+          document.querySelector(".notifications-count-label").style.display =
+            "none";
+        }
+      }
+    };
+    req.setRequestHeader("Content-Type", "application/json");
+    req.send();
+  });
+}
+
+browseLink.addEventListener("click", () => {
+  browseDropDown.classList.toggle("active");
 });

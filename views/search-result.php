@@ -43,24 +43,24 @@
                         <label class="labelPlace label-override add-margin" for="">Search items from :</label>
                         <select class="custom-select custom-select-override add-margin change-height" id="community-select">
 
-                            <option value="-1" <?php if($data['community']=="-1")echo "selected"; ?>>Anywhere</option>
+                            <option value="-1" <?php if ($data['community'] == "-1") echo "selected"; ?>>Anywhere</option>
 
                             <?php foreach ($params['communities']->payload as $community) { ?>
                                 <option value="<?php echo $community->community_id; ?>"><?php echo $community->name; ?></option>
                             <?php } ?>
                         </select>
-                        <input class="form-control add-margin change-height" onkeyup="validateOperators(event)" id="search-box" type="text" value="<?php echo $data['search_query']; ?>"/>
-                        <?php foreach($params['filters'] as $filter) { ?>
-                        <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
-                            <select class="custom-select custom-select-override add-margin change-height" disabled>
-                                <option selected><?php echo $filter['type']; ?></option>
-                            </select>
-                            <select class="custom-select custom-select-override add-margin change-height" disabled>
-                                <option selected><?php echo $filter['condition']; ?></option>
-                            </select>
-                            <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
-                            <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
-                        </div>
+                        <input class="form-control add-margin change-height" onkeyup="validateOperators(event)" id="search-box" type="text" value="<?php echo $data['search_query']; ?>" />
+                        <?php foreach ($params['filters'] as $filter) { ?>
+                            <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
+                                <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                    <option selected><?php echo $filter['type']; ?></option>
+                                </select>
+                                <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                    <option selected><?php echo $filter['condition']; ?></option>
+                                </select>
+                                <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
+                                <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
+                            </div>
                         <?php } ?>
                     </div>
                     <hr>
@@ -93,13 +93,13 @@
                         <div class="input-group input-group-override-1">
                             <label for="" style="width: 50%;">Sort results by: </label>
                             <select class="custom-select custom-select-override add-margin" id="sort-by">
-                                <option value="relavance" <?php if($data['sort_by']=="relavance")echo "selected"; ?>>Relavance</option>
-                                <option value="title" <?php if($data['sort_by']=="title")echo "selected"; ?>>Title</option>
-                                <option value="date" <?php if($data['sort_by']=="date")echo "selected"; ?>>Published date</option>
+                                <option value="relavance" <?php if ($data['sort_by'] == "relavance") echo "selected"; ?>>Relavance</option>
+                                <option value="title" <?php if ($data['sort_by'] == "title") echo "selected"; ?>>Title</option>
+                                <option value="date" <?php if ($data['sort_by'] == "date") echo "selected"; ?>>Published date</option>
                             </select>
                             <select class="custom-select custom-select-override add-margin" id="order">
-                                <option value="desc" <?php if($data['order']=="desc")echo "selected"; ?>>Descending</option>
-                                <option value="asc" <?php if($data['order']=="asc")echo "selected"; ?>>Ascending</option>
+                                <option value="desc" <?php if ($data['order'] == "desc") echo "selected"; ?>>Descending</option>
+                                <option value="asc" <?php if ($data['order'] == "asc") echo "selected"; ?>>Ascending</option>
 
                             </select>
                         </div>
@@ -120,11 +120,11 @@
 
                     <div class="search-card box-shadow-1">
                         <div class="search-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                            <img src="<?= $content->thumbnail ?>" alt="" />
                         </div>
                         <div class="search-card-details">
                             <div class="search-card-title">
-                                <h5><?php echo $content->title; ?></h5>
+                                <a class="content-title-link" href="/content?content_id=<?= $content->content_id ?>"><?php echo $content->title; ?></a>
                             </div>
                             <div class="search-card-views">
                                 <h6>1.5K views . 200 Cited</h6>

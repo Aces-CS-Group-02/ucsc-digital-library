@@ -20,3 +20,39 @@ body {
   border-bottom: 1px solid gray;
   padding-bottom: 20px;
 }
+
+.input-label {
+  margin-right: 5px;
+}
+
+.dropdown-list {
+  padding: 2px 4px;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.browse-go-btn {
+  outline: none;
+  padding: 1px 10px;
+  border: 1px solid #047e36;
+  border-radius: 5px;
+  background-color: #0faf51;
+  color: white;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 100px;
+  transition: background-color 0.2s ease;
+}
+
+.browse-go-btn:hover {
+  background-color: #10c45b;
+}
+
+.content-title-link {
+  text-decoration: none;
+}
+
+.content-title-link > * {
+  color: #428bca;
+}

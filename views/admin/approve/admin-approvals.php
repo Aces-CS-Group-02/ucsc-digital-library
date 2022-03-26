@@ -76,6 +76,16 @@ $userRole = "admin";
                 </a>
 
             </div>
+
+            <div class="card-container">
+                <a href="http://localhost:8080/admin/review-lend-requests" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-approvals\key.png" alt=" approve-access-image">
+                    </div>
+                    <div class="card-content">Review Lend Reqeusts</div>
+                </a>
+
+            </div>
         </div>
     </div>
 

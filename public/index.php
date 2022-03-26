@@ -18,8 +18,10 @@ use app\models\User;
 use app\controllers\ContentCollectionController;
 use app\models\Content;
 use app\controllers\ExportController;
+use app\models\Collection;
 use app\models\ContentCollectionContent;
 use app\controllers\ImportController;
+use app\controllers\DemoController;
 
 require_once __DIR__ . "./../vendor/autoload.php";
 
@@ -82,6 +84,8 @@ $app->router->get('/admin/manage-community/collections', [CollectionController::
 $app->router->get('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/admin/create-collection', [CollectionController::class, "createCollection"]);
 $app->router->post('/ajax/delete-community-collection', [CollectionController::class, "deleteCollection"]);
+$app->router->get('/admin/edit-collection', [CollectionController::class, "editCollection"]);
+$app->router->post('/admin/edit-collection', [CollectionController::class, "editCollection"]);
 
 
 //User routes
@@ -162,9 +166,9 @@ $app->router->get('/admin/edit-metadata', [AdministrationController::class, "edi
 $app->router->get('/admin/remove-content', [AdministrationController::class, "removeContent"]);
 $app->router->get('/admin/content-collections', [AdministrationController::class, "contentCollections"]);
 $app->router->get('/admin/admin-create-content-collection', [AdministrationController::class, "createContentCollection"]);
-$app->router->get('/admin/export/collection',[ExportController::class, "exportCollection"]);
-$app->router->get('/admin/import/collection',[ImportController::class,"importCollection"]);
-$app->router->post('/admin/import/collection',[ImportController::class,"importCollection"]);
+$app->router->get('/admin/export/collection', [ExportController::class, "exportCollection"]);
+$app->router->get('/admin/import/collection', [ImportController::class, "importCollection"]);
+$app->router->post('/admin/import/collection', [ImportController::class, "importCollection"]);
 
 
 // Admin Dashboard => Manage Users Routes
@@ -188,8 +192,8 @@ $app->router->post('/admin/create-user-group', [UsergroupController::class, "cre
 $app->router->get('/admin/add-users', [UsergroupController::class, "addUsers"]);
 $app->router->post('/admin/add-users', [UsergroupController::class, "pushUserToUserGroup"]);
 $app->router->get('/admin/approve-new-user/view', [ApproveController::class, "viewNewUserDetails"]);
-$app->router->get('/help',[SiteController::class,"help"]);
-$app->router->post('/admin/users/delete',[UserController::class, "deleteUsers"]);
+$app->router->get('/help', [SiteController::class, "help"]);
+$app->router->post('/admin/users/delete', [UserController::class, "deleteUsers"]);
 $app->router->get('/admin/publish-content', [ContentController::class, "loadPublishContentPage"]);
 $app->router->get('/admin/unpublish-content', [ContentController::class, "loadUnpublishContentPage"]);
 $app->router->get('/admin/publish-content/view', [ContentController::class, "viewPublishContentDetails"]);
@@ -378,9 +382,20 @@ $app->router->get('/browse/collection', [SiteController::class, 'browseByCollect
 // $app->router->post('/admin/set-access-permission/collections/set-permission', [PermissionsController::class, "setPermissionToCollection"]);
 
 
+$app->router->post('/admin/delete-collection', [CollectionController::class, 'deleteCollection']);
+$app->router->post('/admin/delete-community', [CommunitiesController::class, 'remove']);
+
+$app->router->post('/ajax/get-access-to-content', [SiteController::class, 'getAccess']);
+$app->router->post('/ajax/get-access-to-content/make-request', [SiteController::class, 'getAccessRequest']);
+
+$app->router->get('/admin/review-lend-requests', [SiteController::class, 'reviewLendRequests']);
+
+$app->router->post('/admin/process-lend-request/approve', [SiteController::class, 'approveLendRequest']);
+$app->router->post('/admin/process-lend-request/reject', [SiteController::class, 'rejectLendRequest']);
 
 
-
+$app->router->get('/test', [DemoController::class, 'test']);
+$app->router->get('/test/view', [DemoController::class, 'viewPdfViewer']);
 
 
 

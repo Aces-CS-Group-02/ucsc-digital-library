@@ -56,7 +56,7 @@ $userRole = "admin";
             </div>
             <?php if (Application::$app->getUserRole() <= 2) { ?>
 
-                <div class="card-container">
+                <!-- <div class="card-container">
                     <a href="/admin/bulk-upload" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="/assets\admin-manage-content\bulk.png" alt=" bulk-upload-image">
@@ -64,7 +64,7 @@ $userRole = "admin";
                         <div class="card-content ">Bulk Upload</div>
                     </a>
 
-                </div>
+                </div> -->
 
                 <div class="card-container">
                     <a href="/admin/publish-content" class="card box-shadow-1">
