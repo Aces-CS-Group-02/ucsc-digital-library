@@ -76,9 +76,10 @@ use app\core\Application;
                             <div class="communities-container">
                                 <p class='sub-community-title'>Sub communities</p>
                                 <div class='sub-communities-inner-container'>
+                                    <?php $rowTracker = 0; ?>
                                     <?php foreach ($params['communities_of_dir'] as $community) { ?>
-                                        <div class="collection-data-row">
-                                            <a href="/browse/community?community_id=<?= $community->community_id ?>"><?= $community->name ?></a>
+                                        <div class="data-row <?php if ($rowTracker % 2 == 0) echo 'highlight' ?>">
+                                            <a class='data-element-title' href="/browse/community?community_id=<?= $community->community_id ?>"><?= $community->name ?></a>
                                             <?php if (Application::$app->getUserRole() <= 2) { ?>
                                                 <form action="/admin/delete-community" method="POST" onclick="return confirm('Are you sure?')">
                                                     <input type="hidden" name="redirect-parent" value="<?= $params['redirect-parent']  ?>" />
@@ -86,7 +87,7 @@ use app\core\Application;
                                                 </form>
                                             <?php } ?>
                                         </div>
-
+                                        <?php $rowTracker += 1; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -97,9 +98,10 @@ use app\core\Application;
                             <div class="collections-container">
                                 <p class='collection-title'>Collections</p>
                                 <div class="collections-inner-container">
+                                    <?php $rowTracker = 0; ?>
                                     <?php foreach ($params['collections_of_dir'] as $collection) { ?>
-                                        <div class="collection-data-row">
-                                            <a href="/browse/collection?collection_id=<?= $collection['collection_id'] ?>"><?= $collection['name'] ?></a>
+                                        <div class="data-row <?php if ($rowTracker % 2 == 0) echo 'highlight' ?>">
+                                            <a class='data-element-title' href="/browse/collection?collection_id=<?= $collection['collection_id'] ?>"><?= $collection['name'] ?></a>
                                             <?php if (Application::$app->getUserRole() <= 2) { ?>
                                                 <form action="/admin/delete-collection" method="POST" onclick="return confirm('Are you sure?')">
                                                     <input type="hidden" name="redirect-parent" value="<?= $collection['community_id']  ?>" />
@@ -107,6 +109,7 @@ use app\core\Application;
                                                 </form>
                                             <?php } ?>
                                         </div>
+                                        <?php $rowTracker += 1; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -148,8 +151,8 @@ use app\core\Application;
 
     <!-- SCRITPT -->
 
-    <script src="./javascript/nav.js"></script>
-    <script src="./javascript/alert.js"></script>
+    <script src="/javascript/nav.js"></script>
+    <script src="/javascript/alert.js"></script>
 
     <script>
         (() => {

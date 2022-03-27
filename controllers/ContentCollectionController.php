@@ -137,10 +137,11 @@ class ContentCollectionController extends Controller
         $contentCreatorModel = new ContentCreator();
         $response = $contentCreatorModel->findAuthors($res->payload);
 
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_USERS,
-            self::BREADCRUM_MANAGE_USERGROUPS
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_CONTENT_COLLECTIONS
         ];
 
         array_push($breadcrum, ['name' => $content_collection->name, 'link' => "/admin/manage-content-collection?content-collection-id=$content_collection->id"]);
@@ -213,8 +214,8 @@ class ContentCollectionController extends Controller
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_USERS,
-            self::BREADCRUM_MANAGE_USERGROUPS
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_MANAGE_CONTENT_COLLECTIONS
         ];
 
 

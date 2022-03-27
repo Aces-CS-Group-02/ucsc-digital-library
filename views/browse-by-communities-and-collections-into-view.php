@@ -33,7 +33,7 @@ use app\core\Application;
 
 <body>
     <!-- NAVIGATION BAR -->
-    <?php include_once __DIR__ . '/components/nav.php'; ?>
+    <?php include_once __DIR__ . './components/nav.php'; ?>
 
     <div class="heading-container">
     </div>
@@ -43,9 +43,10 @@ use app\core\Application;
 
             <h1>Top Level Communities of UCSC Digital Library</h1>
             <div class="sub-communities-inner-container">
+                <?php $rowTracker = 0; ?>
                 <?php foreach ($params['topLevelCommunities'] as $toplevelcommunity) { ?>
-                    <div class="collection-data-row">
-                        <a href="/browse/community?community_id=<?= $toplevelcommunity->community_id ?>"><?= $toplevelcommunity->name ?></a>
+                    <div class="data-row <?php if ($rowTracker % 2 == 0) echo 'highlight' ?>">
+                        <a class='data-element-title' href="/browse/community?community_id=<?= $toplevelcommunity->community_id ?>"><?= $toplevelcommunity->name ?></a>
                         <?php if (Application::$app->getUserRole() <= 2) { ?>
                             <form action="/admin/delete-community" method="POST" onclick="return confirm('Are you sure?')">
                                 <input type="hidden" name="redirect-parent" value="<?= $params['redirect-parent'] ?>" />
@@ -55,6 +56,7 @@ use app\core\Application;
                             </form>
                         <?php } ?>
                     </div>
+                    <?php $rowTracker += 1; ?>
                 <?php } ?>
             </div>
         </div>

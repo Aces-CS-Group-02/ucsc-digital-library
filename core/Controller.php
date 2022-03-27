@@ -57,8 +57,8 @@ class Controller
 
     public const BREADCRUM_BULK_UPLOAD_REVIEW = ['name' => 'Review', 'link' => '/admin/bulk-upload/review'];
     public const BREADCRUM_MANAGE_CONTENTS = ['name' => 'Manage contents', 'link' => '/admin/manage-content'];
-    public const BREADCRUM_MANAGE_CONTENTS_VIEW = ['name' => 'Manage contents view', 'link' => '/admin/manage-content/view'];  
-    public const BREADCRUM_MY_SUBMISSIONS_VIEW = ['name' => 'My submissions view', 'link' => '/admin/my-submissions/view'];      
+    public const BREADCRUM_MANAGE_CONTENTS_VIEW = ['name' => 'Manage contents view', 'link' => '/admin/manage-content/view'];
+    public const BREADCRUM_MY_SUBMISSIONS_VIEW = ['name' => 'My submissions view', 'link' => '/admin/my-submissions/view'];
     public const BREADCRUM_MY_SUBMISSIONS = ['name' => 'My submissions', 'link' => '/admin/my-submissions'];
     public const BREADCRUM_VIEW_ALL_USER_GROUPS = ['name' => 'View all usergroups', 'link' => '/admin/user-groups'];
 
@@ -80,6 +80,13 @@ class Controller
     public const BREADCRUM_APPROVE_USER_GROUPS = ['name' => 'Approve user groups', 'link' => '/admin/approve-user-groups'];
 
     public const BREADCRUM_REVIEW_LEND_REQUESTS = ['name' => "Review lend requests", 'link' => '/admin/review-lend-requests'];
+    public const BREADCRUM_APPROVE_ACCESS = ['name' => 'Approve access', 'link' => '/admin/dashboard/manage-approvals/approve-access'];
+    public const BREADCRUM_REVIEW_COLLECTION_PERMISSION = ['name' => 'Review collection permission', 'link' => '/admin/approve-access-permission/collections'];
+    public const BREADCRUM_REVIEW_CONTENT_COLLECTION_PERMISSION = ['name' => 'Review content collection permission', 'link' => '/admin/approve-access-permission/content-collections'];
+
+    public const BREADCRUM_COMMUNITY_COLLECTION_ACCESS_PERMISSION = ['name' => 'Set collection permssion', 'link' => '/admin/set-access-permission'];
+
+    public const BREADCRUM_COMMUNITY_LIST = ['name' => 'Top level communities', 'link' => '/community-list'];
 
 
 
