@@ -135,7 +135,10 @@ use app\core\Application;
 
                             <?php if ($params['type'] == 'collection') { ?>
                                 <button id="edit-collection" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Edit this Collection</button>
-                                <button id="upload-content" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Upload Content</button>
+                                <form id="upload-content-form" action="/admin/upload-content" method="POST">
+                                    <input type="hidden" name="collection_id" value="<?= $params['selected-item']->collection_id ?>" />
+                                    <button id="upload-content" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Upload Content</button>
+                                </form>
                                 <button id="export-collection" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Export Collection</button>
                             <?php } ?>
                         </div>
@@ -189,11 +192,11 @@ use app\core\Application;
                 })
             }
 
-            if (uploadContentBtn) {
-                uploadContentBtn.addEventListener('click', (e) => {
-                    window.location = `/admin/edit-collection?collection-id=${e.target.dataset.id}&redirect=browse`;
-                })
-            }
+            // if (uploadContentBtn) {
+            //     uploadContentBtn.addEventListener('click', (e) => {
+            //         window.location = `/admin/upload-content/metadata?content_id=${e.target.dataset.id}`;
+            //     })
+            // }
 
             if (exportCollection) {
                 exportCollection.addEventListener('click', (e) => {

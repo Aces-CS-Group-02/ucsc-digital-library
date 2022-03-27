@@ -140,6 +140,10 @@ body {
   margin: 10px 0;
 }
 
+#upload-content-form > button {
+  width: 100%;
+}
+
 .collection-data-row > a {
   text-decoration: none;
   color: #428bca;
