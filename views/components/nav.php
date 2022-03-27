@@ -35,9 +35,9 @@ if ($user) {
             <div id="browse-nav-link">
                 <a id="browse-main-link" class="nav-link">Browse</a>
                 <div class="browse-drop-down">
+                    <a class="nav-link" href="/community-list">Communities & Collections</a>
                     <a class="nav-link" href="/browse?type=title">Browse by title</a>
                     <a class="nav-link" href="/browse?type=dateissued">Browse by date issued</a>
-                    <a class="nav-link" href="/community-list">Communities & Collections</a>
                 </div>
             </div>
             <a class="nav-link" href="/help">Help</a>
