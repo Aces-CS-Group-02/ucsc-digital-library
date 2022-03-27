@@ -54,7 +54,7 @@ $userRole = "student";
                     <form action="/admin/upload-content" method="GET">
                         <button class="btn btn-success mr-1 mb-1 btn-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id ?>">Update</button>
                     </form>
-                    <form action="/admin/manage-content/delete" method="POST">
+                    <form action="/admin/my-submissions/delete" method="POST">
                         <button class="btn btn-danger mr-1 mb-1 btn4-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id ?>">Delete</button>
                     </form>
                 </div>

@@ -50,4 +50,13 @@ class RegistrationRequest extends DbModel
         return $statement->fetchAll();
     }
 
+    public function getAllNewUsers($search_params, $start, $limit)
+    {
+        // var_dump($search_params);
+        $tableName = self::tableName();
+        $sql = "SELECT * FROM registration_request             
+                WHERE CONCAT(first_name,' ',last_name)  LIKE '%$search_params%'";
+        return $this->paginate($sql, $start, $limit);
+    }
+
 }

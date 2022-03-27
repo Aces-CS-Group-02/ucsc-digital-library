@@ -30,9 +30,33 @@ class UserController extends Controller
     {
         $userCollectionModel = new UserCollection();
         $userCollections = $userCollectionModel->getUserCollections();
-        // var_dump($userCollections);
+
+        $contentsModel = new Content();
+        $contentNotes = $contentsModel->getContentNotesInProfile();
+
+        $recentReadings = new Content();
+        $recentReadings = $recentReadings->getRecentReadings();
+
+        // var_dump($contentNotes);
         // exit;
-        return $this->render('user/profile', ['collections' => $userCollections]);
+        return $this->render('user/profile', ['collections' => $userCollections, 'contentNotes' => $contentNotes, 'recentReadings' => $recentReadings]);
+    }
+    public function viewContentNotes()
+    {
+        $content = new Content();
+        $allContentNotes = $content->getAllContentNotes();
+
+        return $this->render('user/view-all-content-notes', ['allContentNotes' => $allContentNotes]);
+    }
+    public function viewRecentReadings()
+    {
+        $content = new Content();
+        $allRecentReadings = $content->getAllRecentReadings();
+        // echo '<pre>';
+        // var_dump($allRecentReadings);
+        // echo '</pre>';
+
+        return $this->render('user/view-all-recent-readings', ['allRecentReadings' =>  $allRecentReadings]);
     }
 
     public function userCollection()

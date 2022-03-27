@@ -40,7 +40,7 @@ if ($user) {
                     <a class="nav-link" href="/community-list">Communities & Collections</a>
                 </div>
             </div>
-            <a class="nav-link" href="#">Help</a>
+            <a class="nav-link" href="/help">Help</a>
 
 
             <?php if (!$user) { ?>

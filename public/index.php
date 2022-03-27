@@ -44,7 +44,6 @@ $app->router->get('/search', [SiteController::class, "search"]);
 $app->router->get('/browse', [SiteController::class, "browse"]);
 $app->router->get('/advanced-search', [SearchController::class, "advancedSearch"]);
 $app->router->get('/search-result', [SearchController::class, "searchResult"]);
-
 $app->router->get('/login', [AuthController::class, "login"]);
 $app->router->post('/login', [AuthController::class, "login"]);
 
@@ -104,6 +103,9 @@ $app->router->get('/content/view', [UserController::class, "viewPdfViewer"]);
 $app->router->get('/profile/video-player', [UserController::class, "videoPlayer"]);
 $app->router->get('/suggest-content', [UserController::class, "suggestContent"]);
 $app->router->post('/suggest-content', [UserController::class, "createContentSuggestion"]);
+$app->router->get('/profile/content-notes-view', [UserController::class, "viewContentNotes"]);
+$app->router->get('/profile/recent-readings-view', [UserController::class, "viewRecentReadings"]);
+
 //here
 $app->router->get('/ajax/get-user-collections', [UserController::class, "getUserCollections"]);
 $app->router->post('/ajax/user-bookmarks', [UserController::class, "addContentBookmark"]);
@@ -175,7 +177,8 @@ $app->router->post('/admin/import/collection', [ImportController::class, "import
 $app->router->get('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register', [AdministrationController::class, "bulkRegister"]);
 $app->router->post('/admin/bulk-register/register-selected-users', [AdministrationController::class, "registerSelectedUsers"]);
-$app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+// $app->router->get('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
+$app->router->get('/admin/verify-new-users', [ApproveController::class, "allApproveNewUser"]);
 $app->router->post('/admin/verify-new-users', [ApproveController::class, "approveNewUser"]);
 $app->router->post('/admin/reject-new-user', [ApproveController::class, "rejectNewUser"]);
 $app->router->get('/admin/users', [AdministrationController::class, "manageUsers"]);
@@ -204,7 +207,11 @@ $app->router->post('/admin/unpublish-content/unpublish', [ContentController::cla
 $app->router->get('/admin/manage-content', [ContentController::class, "manageContent"]);
 $app->router->post('/admin/manage-content', [ContentController::class, "manageContent"]);
 $app->router->get('/admin/manage-content/view', [ContentController::class, "viewContent"]);
+$app->router->get('/admin/my-submissions/view', [ContentController::class, "viewMyContent"]);
 $app->router->post('/admin/manage-content/delete', [ContentController::class, "deleteContent"]);
+$app->router->post('/admin/my-submissions/delete', [ContentController::class, "deleteMyContent"]);
+
+
 
 
 

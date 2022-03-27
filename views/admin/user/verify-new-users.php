@@ -15,6 +15,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -90,7 +91,7 @@ $userRole = "student";
             <div class="search-component-container">
                 <form action="">
                     <div class="ug-search-input-wrapper">
-                        <input type="text" placeholder="Search new users">
+                        <input type="text" placeholder="Search new users by name" name='q' value="<?php echo $params['search_params'] ?? ''?>">
                         <button>
                             <i class="fas fa-search"></i>
                         </button>
@@ -195,13 +196,13 @@ $userRole = "student";
                         <p><?php echo $request->first_name; ?> <?php echo $request->last_name; ?></p>
                     </div>
                     <div class="block-e">
-                    <form action="/admin/approve-new-user/view" method="GET">
-                        <p>
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="id" value="<?php echo $request->request_id; ?>">View</button>
-                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Approve</button>
-                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Reject</button>
-                        </p>
-                    </form>
+                        <form action="/admin/approve-new-user/view" method="GET">
+                            <p>
+                                <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="id" value="<?php echo $request->request_id; ?>">View</button>
+                                <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Approve</button>
+                                <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Reject</button>
+                            </p>
+                        </form>
                         <!-- Modal to enter a message when approving or rejecting -->
                         <div id="myModal" class="modal">
 
@@ -210,7 +211,10 @@ $userRole = "student";
                                     <div class="modal-top-section modal-title">
                                         <div class="title-section">
                                             <p id="mtitle"></p>
-                                            <div id="break-modal-title"><p id="FName"></p><p id="LName"></p></div>
+                                            <div id="break-modal-title">
+                                                <p id="FName"></p>
+                                                <p id="LName"></p>
+                                            </div>
                                         </div>
                                         <div class="close">
                                             <span class="edit-close">&times;</span>
@@ -233,6 +237,12 @@ $userRole = "student";
             <?php if (empty($params['model'])) { ?>
                 <p class="no-records-available">No Records Available :(</p>
             <?php } ?>
+            <?php
+
+            if (!empty($params['model']) && isset($params['pageCount'])) {
+                include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+            }
+            ?>
 
         </div>
     </div>

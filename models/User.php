@@ -100,6 +100,14 @@ class User extends DbModel
         $statement->execute();
         return $statement->fetchAll();
     }
+    public function getAllUsers($search_params, $start, $limit)
+    {
+        $tableName = self::tableName();
+        $sql = "SELECT * FROM user              
+                         WHERE CONCAT(first_name,' ',last_name) LIKE '%$search_params%'";
+        return $this->paginate($sql, $start, $limit);
+    }
+
 
     public function update()
     {

@@ -19,6 +19,7 @@ $userRole = "student";
     <link rel="stylesheet" href="/css/global-styles/style.css">
     <link rel="stylesheet" href="/css/global-styles/nav.css">
     <link rel="stylesheet" href="/css/global-styles/footer.css">
+    <link rel="stylesheet" href="/css/global-styles/paginate.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -86,7 +87,7 @@ $userRole = "student";
                 <div class="search-component-container">
                     <form action="">
                         <div class="ug-search-input-wrapper">
-                            <input type="text" placeholder="Search user groups">
+                            <input type="text" placeholder="Search user by name" name='q' value="<?php echo $params['search_params'] ?? ''?>">
                             <button>
                                 <i class="fas fa-search"></i>
                             </button>
@@ -230,10 +231,9 @@ $userRole = "student";
                                                                     ?>"><?php echo Application::$app->getUserRoleNameByID($user->role_id); ?></span></p>
                             </div>
                             <div class="block-e">
-                                <p>
-                                    <button class="btn btn-danger mr-1 mb-1 btn1-edit" type="button">Update</button>
+                                
                                     <button class="btn btn-danger mr-1 mb-1 btn2-edit" onclick="showModal(<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Delete</button>
-                                </p>
+                                
                                 <!-- Modal to enter a message why deleting the user -->
                                 <div id="myModal" class="modal">
                                     <div class="modal-content">
@@ -267,7 +267,15 @@ $userRole = "student";
                 </div>
 
             </div>
+            <?php if (empty($params['users'])) { ?>
+                <p class="no-records-available">No Records Available :(</p>
+            <?php } ?>
+            <?php
 
+            if (!empty($params['users']) && isset($params['pageCount'])) {
+                include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+            }
+            ?>
         </div>
     </div>
 
@@ -277,7 +285,9 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/alert.js"></script>
     <script src="/javascript/users-view-update-delete.js"></script>
+    
 
     <!-- <script>
         (function() {

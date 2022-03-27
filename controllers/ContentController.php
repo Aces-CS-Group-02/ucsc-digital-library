@@ -21,6 +21,7 @@ use app\models\ContentType;
 use app\models\Creator;
 use app\models\DeleteContent;
 use app\models\LendPermission;
+use app\models\DeleteContentBy;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
@@ -79,12 +80,40 @@ class ContentController extends Controller
 
     public function mySubmissions(Request $request)
     {
+        $data = $request->getBody();
+
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] :1;
+        if($page<=0) $page = 1;
+        $limit = 10;
+        $start = ($page-1) * $limit;
+
+        $content = new Content();
+        $mySubmissions = $content->getMySubmissions($search_params, $start, $limit);
+        
+      
+        foreach ($mySubmissions->payload as $c) {
+            $content_creators = new ContentCreator();
+            $content_keywords = new ContentKeyword();
+
+            $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+            $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
+
+            $c->creators = $content_creators;
+            $c->keywords = $content_keywords;
+        }
+        // echo '<pre>';
+        // var_dump($mySubmissions->payload);
+        // echo '</pre>';
+        // exit;
+        
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_MY_SUBMISSIONS
         ];
-        return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum]);
+        return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum, 'mySubmission' => $mySubmissions->payload, 'currentPage' => $page, 'pageCount' => $mySubmissions->pageCount, 'search_params' => $search_params] );
     }
 
 
@@ -580,7 +609,7 @@ class ContentController extends Controller
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_CONTENT,
-                self::BREADCRUM_PUBLISH_CONTENT,
+                self::BREADCRUM_UNPUBLISH_CONTENT,
                 self::BREADCRUM_PUBLISH_CONTENT_VIEW
             ];
 
@@ -689,7 +718,7 @@ class ContentController extends Controller
 
         $contentModel = new Content();
         $allContent = $contentModel->getAllContent($search_params, $start, $limit);
-
+        
         foreach ($allContent->payload as $c) {
             $content_creators = new ContentCreator();
             $content_keywords = new ContentKeyword();
@@ -700,7 +729,10 @@ class ContentController extends Controller
             $c->creators = $content_creators;
             $c->keywords = $content_keywords;
         }
-
+        // echo '<pre>';
+        // var_dump($allContent->payload);
+        // echo '</pre>';
+        // exit;
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
@@ -708,6 +740,8 @@ class ContentController extends Controller
         ];
         return $this->render("admin/content/admin-inner-manage-content", ['content' => $allContent->payload, 'currentPage' => $page, 'pageCount' => $allContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
     }
+
+    
     public function viewContent(Request $request)
     {
         $contentModel = new Content();
@@ -746,7 +780,44 @@ class ContentController extends Controller
         }
         throw new NotFoundException();
     }
+    public function viewMyContent(Request $request)
+    {
+        $contentModel = new Content();
 
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoContent = $contentModel->getInfoContent($contentData->content_id);
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoContent->content_id]);
+
+        $infoContent->creators = $content_creators;
+        $infoContent->keywords = $content_keywords;
+
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_MY_SUBMISSIONS,
+                self::BREADCRUM_MY_SUBMISSIONS_VIEW
+
+            ];
+
+            return $this->render('admin/content/info-my-contents', ['model' => $infoContent, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
+    }
     public function deleteContent(Request $request)
     {
         $contentModel = new Content();
@@ -755,18 +826,64 @@ class ContentController extends Controller
 
             $data = $request->getBody();
             $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+            
 
             if ($contentData) {
-                $deleteCon = new DeleteContent();
-                $deleteCon->deleted_by = Application::$app->user->reg_no;
-
-                // $deleteContent = $contentModel->deleteContent($contentData->content_id);
-
+                $deleteContentModel = new DeleteContent();
+                $deleteContentModel = $contentData;
+                
+                $contentModel->loadData($data);
+                
                 // echo '<pre>';
-                // var_dump($contentData);
+                // var_dump($contentModel);
                 // echo '</pre>';
                 // exit;
-                if ($contentData->deleteContent($contentData->content_id) & $deleteCon->save()) {
+                // $deleteContentModel->title = 
+                // $deleteContentModel->language =
+                // $deleteContentModel->type =
+                // $deleteContentModel->subject =
+                // $deleteContentModel->publisher =
+                // date
+                //  'publish_state', 'url', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher'
+            //     ["title"]=>
+            //     string(38) "Bug Prediction Model Using Code Smells"
+            //     ["subject"]=>
+            //     string(0) ""
+            //     ["date"]=>
+            //     string(10) "2021-03-07"
+            //     ["language"]=>
+            //     int(0)
+            //     ["type"]=>
+            //     int(2)
+            //     ["publish_state"]=>
+            //     int(1)
+            //     ["url"]=>
+            //     string(27) "data/content/uploads/34.pdf"
+            //     ["collection_id"]=>
+            //     int(71)
+            //     ["upload_steps"]=>
+            //     int(5)
+            //     ["isbn"]=>
+            //     string(0) ""
+            //     ["abstract"]=>
+            //     string(2008) "The term ‘Code Smells’ was first coined in the book by Folwer [1]. A code smell is a surface indication that usually corresponds to a deeper problem in the system. These poor design choices have the potential to cause an error or failure in a computer program. The objective of this study is to use ‘Code Smells’ as a candidate metric to build a bug prediction model. Bug prediction models are often very useful. When bugs of a software can be predicted, the quality assurance teams can identify error prone components in advance and effectively allocate more resources to validate those components thoroughly. Bug prediction is an active research area in the community and various bug prediction models have been proposed using different metrics such as source code, process, network and code smells etc. In this study we have built a bug prediction model using both source code metrics and code smell based metrics proposed in the literature. We cannot use code smell based metrics only as a single predictor to predict buggy components of a software. There can be files in the source code which do not contain code smells. Therefore we will not be able to predict bug proneness of such components if we use code smell based metrics only. Therefore we initially built a basic model using source code metrics and then enhanced the basic model by using code smell based metrics. We used Naive Bayes, Random Forest and Logistic Regression as our candidate algorithms to build the model. We have trained our model against multiple versions of thirteen different Java based open source projects. The trained model was used to predict bugs in a particular version of a project and a particular project. We have also trained our model among different projects and trained model was used to predict bugs in an entirely different project. We were able to demonstrate in this study, that code smell based metrics can significantly improve the accuracy of a bug prediction model when integrated with source co"
+            //     ["publisher"]=>
+            //     string(0) ""
+            //     ["errors"]=>
+            //     array(0) {
+            //     }
+            //     ["content_id"]=>
+            //     string(2) "34"
+            //   }
+              
+                // $deleteByModel = new DeleteContentBy();
+                // $deleteByModel->deleted_by = Application::$app->user->reg_no;
+
+                
+
+                //create a new table to put the content details deleted 3 tables one for creators content details deleted by
+
+                if ($contentData->deleteContent($contentData->content_id)) {
                     Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
                     Application::$app->response->redirect('/admin/manage-content');
                 } else {
@@ -927,5 +1044,35 @@ class ContentController extends Controller
         // var_dump($_POST);
         // $data = $request->getBody();
         // var_dump($content->type);
+    }
+    
+    public function deleteMyContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        if ($request->isPost()) {
+
+            $data = $request->getBody();
+            $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+            
+
+            if ($contentData) {
+                $deleteContentModel = new DeleteContent();
+                $deleteContentModel = $contentData;
+                
+                $contentModel->loadData($data);
+
+                if ($contentData->deleteContent($contentData->content_id)) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
+                    Application::$app->response->redirect('/admin/my-submissions');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Selected content was not deleted from the system');
+                    Application::$app->response->redirect('/admin/my-submissions');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Selected content does not exist on the system');
+                Application::$app->response->redirect('/admin/my-submissions');
+            }
+        }
     }
 }
