@@ -32,10 +32,11 @@ use app\core\Application;
 
     <!-- NAVIGATION BAR -->
     <?php include_once __DIR__ . '/components/nav.php' ?>
-    <div id="scroll-bar">
+    <!-- <div id="scroll-bar"> -->
         <div class="head-container">
             UCSC Digital Library Help
         </div>
+        <button id="back-to-top-btn"><img class="card-icon-img" src="/assets\help\up-chevron.png"></button>
         <div class="main-container">
             <div class="btn-container">
                 <div class="container">
@@ -227,11 +228,12 @@ use app\core\Application;
         <!-- FOOTER -->
 
         <?php include_once __DIR__ . '/components/footer.php'; ?>
-    </div>
+    <!-- </div> -->
 
     <!-- SCRITP -->
 
     <script src="./javascript/nav.js"></script>
+    <script src="./javascript/help.js"></script>
 
 </body>
 
