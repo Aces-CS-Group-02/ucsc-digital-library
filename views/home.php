@@ -22,6 +22,8 @@
 
 
   <title>Home</title>
+
+
 </head>
 
 <body>
@@ -30,6 +32,8 @@
   <!-- NAVIGATION BAR -->
 
   <?php include_once __DIR__ . '/components/nav.php'; ?>
+
+ 
 
   <!-- HOMEPAGE CONTENT -->
 
@@ -183,15 +187,15 @@
           <div class="carousel-content">
 
             <?php if ($latestContent) {
-              foreach ($latestContent as $content) { 
-              
-                ?>
+              foreach ($latestContent as $content) {
+
+            ?>
 
                 <div class="item">
                   <div class="book-card box-shadow-2">
-                    <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
+                    <div class="book-cover-img" style="background-image: url('<?= $_SERVER['HTTP_HOST'] ?>/<?= $content->thumbnail ?>');"></div>
                     <div class="book-title-container">
-                      <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id?>"> <?php echo $content->title ?></p>
+                      <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
                     </div>
                   </div>
                 </div>
@@ -223,74 +227,19 @@
         </div>
         <div class="carousel-content-container">
           <div class="carousel-content">
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81bSa9px6qL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Software Engineering at Google</p>
+            <?php $popularContent = $params['popularContent'] ?>
+            <?php foreach ($popularContent as $content) { ?>
+              <div class="item">
+                <div class="book-card box-shadow-2">
+                  <div class="book-cover-img" style="background-image: url('http://localhost:8000/<?= $content->thumbnail ?>');"></div>
+                  <div class="book-title-container">
+                    <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/51NyB8d0+3L._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Software Architecture in Practice</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/619ht2WrGTL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Clean Architecture</p>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/616GVtyR77L._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Beginning Angular with TypeScript</p>
-                </div>
-              </div>
-            </div>
+            <?php } ?>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/81WXhXr2MrL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Learning Angular</p>
-                </div>
-              </div>
-            </div>
 
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91aTXNEtdjL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Programming PHP</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/71aDnbDuSWL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Angular</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="book-card box-shadow-2">
-                <div class="book-cover-img" style="background-image: url('https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg');"></div>
-                <div class="book-title-container">
-                  <p class="line-clamp line-clamp-2-description"> Learning PHP, MySQL & JavaScript</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="button-container">

@@ -23,6 +23,30 @@ class ApproveController extends Controller
         $this->registerMiddleware(new StaffAccessPermissionMiddleware(['approveNewUser']));
     }
 
+    public function allApproveNewUser(Request $request)
+    {
+
+        $data = $request->getBody();
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $registrationRequest = new RegistrationRequest();
+        $allNewUsers = $registrationRequest->getAllNewUsers($search_params, $start, $limit);
+        // echo '<pre>';
+        // var_dump($allNewUsers);
+        // echo '</pre>';
+        // exit;
+
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_USERS,
+            self::BREADCRUM_APPROVE_NEW_USERS
+        ];
+        return $this->render('admin/user/verify-new-users', ['model' => $allNewUsers->payload, 'breadcrum' => $breadcrum, 'currentPage' => $page, 'pageCount' => $allNewUsers->pageCount, 'search_params' => $search_params]);
+    }
     public function approveNewUser(Request $request)
     {
         $registrationRequest = new RegistrationRequest();
@@ -55,7 +79,7 @@ class ApproveController extends Controller
                 $userApproval->email = $registrationRequest->email;
                 $userApproval->is_approved = true;
                 $userApproval->reason = $reason;
-                $userApproval->approved_by = $approvedBy;
+                $userApproval->approved_by = $approvedBy["firstname"] . " " . $approvedBy["lastname"];
 
                 // var_dump($userApproval);
                 // if($reason){
@@ -88,15 +112,6 @@ class ApproveController extends Controller
                 return $this->render('auth/registration-request');
             }
         }
-
-        $allRequests = $registrationRequest->getAll();
-
-        $breadcrum = [
-            self::BREADCRUM_DASHBOARD,
-            self::BREADCRUM_MANAGE_USERS,
-            self::BREADCRUM_APPROVE_NEW_USERS
-        ];
-        return $this->render('admin/user/verify-new-users', ['model' => $allRequests, 'breadcrum' => $breadcrum]);
     }
 
     public function rejectNewUser(Request $request)
@@ -121,7 +136,7 @@ class ApproveController extends Controller
             $userApproval->is_approved = false;
             $userApproval->reason = $reason;
             // $userApproval->approved_by = $approvedBy;
-            $userApproval->approved_by = $approvedBy;
+            $userApproval->approved_by = $approvedBy["firstname"] . " " . $approvedBy["lastname"];
 
             // echo '<pre>';
             // var_dump($registrationRequest);
@@ -163,14 +178,14 @@ class ApproveController extends Controller
 
         $data = $request->getBody();
         $data_keys = array_keys($data);
- 
-         if(!in_array('id',$data_keys)){
-             throw new NotFoundException();
-         }
- 
-         
-         $registrationRequest = $registrationRequest->findOne(['request_id' => $data['id']]);
-         if($registrationRequest){
+
+        if (!in_array('id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+
+        $registrationRequest = $registrationRequest->findOne(['request_id' => $data['id']]);
+        if ($registrationRequest) {
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_USERS,
@@ -178,10 +193,8 @@ class ApproveController extends Controller
                 self::BREADCRUM_APPROVE_NEW_USER
             ];
 
-             return $this->render('admin/approve/info-approve-new-user',['model' => $registrationRequest, 'breadcrum'=>$breadcrum]);
-         }
-         throw new NotFoundException();
- 
-        
+            return $this->render('admin/approve/info-approve-new-user', ['model' => $registrationRequest, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
     }
 }

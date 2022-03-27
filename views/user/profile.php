@@ -210,152 +210,80 @@ use app\core\Application;
         </div>
     </div>
 
-    <!-- Section B -->
+    <!-- Recent Readings -->
 
     <div class="profile-section-a wrapper">
         <div class="section-header">
             <p class="section-header-title">Recent Readings</p>
-            <a class="section-header-view-all" href="#">View All</a>
+            <a class="section-header-view-all" href="profile/recent-readings-view">View All</a>
         </div>
 
         <div class="profile-grid">
-            <div class="profile-gird-container profile-section-b">
-                <a href="/profile/pdf-viewer" class="edit-link">
-                    <div class="profile-grid-item box-shadow-2">
-                        <div class="content-card ">
-                            <div class="content-card-img">
-                                <img src="/assets/profile/book-cover.jpg" alt="">
+            <?php
+            $recentReadings = $params['recentReadings'] ?? "";
+            ?>
+            <?php if (empty($recentReadings)) { ?>
+                <p class="no-records-available">No Records Available :(</p>
+            <?php } else { ?>
+
+                <?php foreach ($recentReadings as $content) { ?>
+
+                    <div class="profile-gird-container profile-section-b">
+                        <a href="/profile/pdf-viewer" class="edit-link">
+                            <div class="profile-grid-item box-shadow-2">
+                                <div class="content-card ">
+                                    <div class="content-card-img">
+                                        <img src="<?= $content->thumbnail ?>" alt="" />
+                                    </div>
+                                    <div class="content-card-bottom">
+                                        <p class="content-card-bottom-title line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"><?php echo $content->title ?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="content-card-bottom">
-                                <p class="content-card-bottom-title line-clamp line-clamp-2-description">A Christmas Carol</p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <a href="/profile/video-player" class="edit-link">
-                    <div class="profile-grid-item box-shadow-2">
-                        <div class="content-card">
-                            <div class="content-card-img edit-content-card-img">
-                                <img src="/assets/profile/video.svg" alt="">
-                            </div>
-                            <div class="content-card-bottom">
-                                <p class="content-card-bottom-title line-clamp line-clamp-2-description">Big Buck Bunny</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/810p+IMoNbL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Java coding problems</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/A1O2e-E1WkL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learning web design</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/61wEatFvokL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Modern CSS</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php }
+            } ?>
         </div>
     </div>
 
 
-    <!-- Section C (Bookmarked Contents) -->
+    <!-- Section C (Content Notes) -->
 
     <div class="profile-section-a wrapper">
         <div class="section-header">
-            <p class="section-header-title">Bookmarked Contents</p>
-            <a class="section-header-view-all" href="#">View All</a>
+            <p class="section-header-title">Content Notes</p>
+            <a class="section-header-view-all" href="profile/content-notes-view">View All</a>
         </div>
 
         <div class="profile-grid">
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg" alt="">
+            <?php
+            $contentNotes = $params['contentNotes'] ?? "";
+            ?>
+            <?php if (empty($contentNotes)) { ?>
+                <p class="no-records-available">No Records Available :(</p>
+            <?php } else { ?>
+
+                <?php foreach ($contentNotes as $content) { ?>
+
+                    <a href="/content/view?content_id=<?= $content->content_id ?>" class="edit-link">
+                        <div class="profile-gird-container profile-section-b">
+
+                            <div class="profile-grid-item box-shadow-2">
+                                <div class="content-card">
+                                    <div class="content-card-img">
+                                        <img src="<?= $content->thumbnail ?>" alt="" />
+                                    </div>
+                                    <div class="content-card-bottom">
+                                        <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">React coockbook</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91I1srPe8DL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Modern C++ programming cookbook</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91crsfALwBL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Begining c++ game programming</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/81bSa9px6qL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Software engineering at google</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-gird-container profile-section-b">
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="">
-                        </div>
-                        <div class="content-card-bottom">
-                            <p class="content-card-bottom-title line-clamp line-clamp-2-description">Learning PHP, MySQL, & Javascript</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </a>
+            <?php }
+            } ?>
         </div>
     </div>
 

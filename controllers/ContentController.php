@@ -89,14 +89,31 @@ class ContentController extends Controller
         $start = ($page-1) * $limit;
 
         $content = new Content();
-        // $mySubmissions = $content->getMySubmissions($search_params, $start, $limit);
+        $mySubmissions = $content->getMySubmissions($search_params, $start, $limit);
+        
+      
+        foreach ($mySubmissions->payload as $c) {
+            $content_creators = new ContentCreator();
+            $content_keywords = new ContentKeyword();
+
+            $content_creators = $content_creators->findAll(['content_id' => $c->content_id]);
+            $content_keywords = $content_keywords->findAll(['content_id' => $c->content_id]);
+
+            $c->creators = $content_creators;
+            $c->keywords = $content_keywords;
+        }
+        // echo '<pre>';
+        // var_dump($mySubmissions->payload);
+        // echo '</pre>';
+        // exit;
+        
 
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
             self::BREADCRUM_MY_SUBMISSIONS
         ];
-        return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum]);
+        return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum, 'mySubmission' => $mySubmissions->payload, 'currentPage' => $page, 'pageCount' => $mySubmissions->pageCount, 'search_params' => $search_params] );
     }
 
 
@@ -592,7 +609,7 @@ class ContentController extends Controller
             $breadcrum = [
                 self::BREADCRUM_DASHBOARD,
                 self::BREADCRUM_MANAGE_CONTENT,
-                self::BREADCRUM_PUBLISH_CONTENT,
+                self::BREADCRUM_UNPUBLISH_CONTENT,
                 self::BREADCRUM_PUBLISH_CONTENT_VIEW
             ];
 
@@ -701,7 +718,7 @@ class ContentController extends Controller
 
         $contentModel = new Content();
         $allContent = $contentModel->getAllContent($search_params, $start, $limit);
-
+        
         foreach ($allContent->payload as $c) {
             $content_creators = new ContentCreator();
             $content_keywords = new ContentKeyword();
@@ -712,7 +729,10 @@ class ContentController extends Controller
             $c->creators = $content_creators;
             $c->keywords = $content_keywords;
         }
-
+        // echo '<pre>';
+        // var_dump($allContent->payload);
+        // echo '</pre>';
+        // exit;
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_CONTENT,
@@ -760,7 +780,44 @@ class ContentController extends Controller
         }
         throw new NotFoundException();
     }
+    public function viewMyContent(Request $request)
+    {
+        $contentModel = new Content();
 
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoContent = $contentModel->getInfoContent($contentData->content_id);
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoContent->content_id]);
+
+        $infoContent->creators = $content_creators;
+        $infoContent->keywords = $content_keywords;
+
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_CONTENT,
+                self::BREADCRUM_MY_SUBMISSIONS,
+                self::BREADCRUM_MY_SUBMISSIONS_VIEW
+
+            ];
+
+            return $this->render('admin/content/info-my-contents', ['model' => $infoContent, 'breadcrum' => $breadcrum]);
+        }
+        throw new NotFoundException();
+    }
     public function deleteContent(Request $request)
     {
         $contentModel = new Content();
@@ -776,10 +833,11 @@ class ContentController extends Controller
                 $deleteContentModel = $contentData;
                 
                 $contentModel->loadData($data);
-                echo '<pre>';
-                var_dump($contentModel);
-                echo '</pre>';
-                exit;
+                
+                // echo '<pre>';
+                // var_dump($contentModel);
+                // echo '</pre>';
+                // exit;
                 // $deleteContentModel->title = 
                 // $deleteContentModel->language =
                 // $deleteContentModel->type =
@@ -825,7 +883,7 @@ class ContentController extends Controller
 
                 //create a new table to put the content details deleted 3 tables one for creators content details deleted by
 
-                if ($contentData->deleteContent($contentData->content_id) & $deleteContentModel->save()) {
+                if ($contentData->deleteContent($contentData->content_id)) {
                     Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
                     Application::$app->response->redirect('/admin/manage-content');
                 } else {
@@ -986,5 +1044,35 @@ class ContentController extends Controller
         // var_dump($_POST);
         // $data = $request->getBody();
         // var_dump($content->type);
+    }
+    
+    public function deleteMyContent(Request $request)
+    {
+        $contentModel = new Content();
+
+        if ($request->isPost()) {
+
+            $data = $request->getBody();
+            $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+            
+
+            if ($contentData) {
+                $deleteContentModel = new DeleteContent();
+                $deleteContentModel = $contentData;
+                
+                $contentModel->loadData($data);
+
+                if ($contentData->deleteContent($contentData->content_id)) {
+                    Application::$app->session->setFlashMessage('success', 'Selected content was successfully deleted from the system');
+                    Application::$app->response->redirect('/admin/my-submissions');
+                } else {
+                    Application::$app->session->setFlashMessage('error', 'Selected content was not deleted from the system');
+                    Application::$app->response->redirect('/admin/my-submissions');
+                }
+            } else {
+                Application::$app->session->setFlashMessage('error', 'Selected content does not exist on the system');
+                Application::$app->response->redirect('/admin/my-submissions');
+            }
+        }
     }
 }

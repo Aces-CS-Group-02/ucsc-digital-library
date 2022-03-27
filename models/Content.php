@@ -320,6 +320,7 @@ class Content extends DbModel
                 break;
         }
     }
+    
 
     public function UpdateApprovedState($content_id)
     {
@@ -337,34 +338,79 @@ class Content extends DbModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
+    public function getPopularContents()
+    {
+        $tableName = self::tableName();
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT COUNT(time_stamp), content_view_records.content_id, content.title
+                                    FROM content_view_records
+                                    INNER JOIN content
+                                    ON content_view_records.content_id = content.content_id
+                                    WHERE time_stamp between date_sub(now(),INTERVAL 1 WEEK) and now() 
+                                    GROUP BY content_id
+                                    ORDER BY COUNT(time_stamp) DESC LIMIT 8");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
 
-    public function getContentNotesInProfile($content_id)
+    public function getRecentReadings()
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT note.content_id, content.title, 
-                                    FROM note 
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title
+                                    FROM content_view_records
                                     INNER JOIN content
-                                    ON note.content_id = content.content_id
-                                    WHERE reg_no = user_id AND LIMIT 5 ");
+                                    ON content_view_records.content_id = content.content_id
+                                    WHERE reg_no = $user_id
+                                    ORDER BY time_stamp LIMIT 5");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
-    public function getAllContentNotes($content_id)
+    public function getAllRecentReadings()
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT note.content_id, content.title, 
-                                    FROM note 
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title
+                                    FROM content_view_records
                                     INNER JOIN content
-                                    ON note.content_id = content.content_id
-                                    WHERE reg_no = user_id");
+                                    ON content_view_records.content_id = content.content_id
+                                    WHERE reg_no = $user_id");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
-    // public function getMySubmissions($search_params, $start, $limit)
-    // {
-    //     $tableName = self::tableName();
-    //     $sql = "SELECT content_id, ";
-    // }
+
+    public function getContentNotesInProfile()
+    {
+        $user_id = Application::$app->user->reg_no;
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT note.content_id, content.title
+                                    FROM note 
+                                    INNER JOIN content
+                                    ON note.content_id = content.content_id
+                                    WHERE reg_no = $user_id LIMIT 5 ");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function getAllContentNotes()
+    {
+        $user_id = Application::$app->user->reg_no;
+        $tableName = self::tableName();
+        $statement = self::prepare("SELECT note.content_id, content.title
+                                    FROM note 
+                                    INNER JOIN content
+                                    ON note.content_id = content.content_id
+                                    WHERE reg_no = $user_id");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function getMySubmissions($search_params, $start, $limit)
+    {
+        $user_id = Application::$app->user->reg_no;
+        $tableName = self::tableName();
+        $sql = "SELECT content.content_id, content.title, content.date,content.publish_state, content_type.name as type_name, content.upload_steps, content.approved
+                FROM content  
+                LEFT JOIN content_type ON content.type = content_type.content_type_id             
+                WHERE title LIKE '%$search_params%' AND uploaded_by = $user_id" ;
+        return $this->paginate($sql, $start, $limit);
+    }
  }

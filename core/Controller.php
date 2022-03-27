@@ -40,8 +40,8 @@ class Controller
     public const BREADCRUM_BULK_UPLOAD = ['name' => 'Bulk upload', 'link' => '/admin/bulk-upload'];
     public const BREADCRUM_PUBLISH_CONTENT = ['name' => 'Publish content', 'link' => '/admin/publish-content'];
     public const BREADCRUM_UNPUBLISH_CONTENT = ['name' => 'Unpublish content', 'link' => '/admin/unpublish-content'];
-    public const BREADCRUM_PUBLISH_CONTENT_VIEW = ['name' => 'Published content view', 'link' => '/admin/publish-content/view'];
-    public const BREADCRUM_UNPUBLISH_CONTENT_VIEW = ['name' => 'Unpublished content view', 'link' => '/admin/unpublish-content/view'];
+    public const BREADCRUM_PUBLISH_CONTENT_VIEW = ['name' => 'Published content view', 'link' => ''];
+    public const BREADCRUM_UNPUBLISH_CONTENT_VIEW = ['name' => 'Unpublished content view', 'link' => ''];
     public const BREADCRUM_REMOVE_CONTENT = ['name' => 'Delete content', 'link' => '/admin/remove-content'];
     public const BREADCRUM_CREATE_SUB_COMMUNITY = ['name' => 'Create sub community', 'link' => ''];
     public const BREADCRUM_CREATE_COLLECTION = ['name' => 'Create collection', 'link' => ''];
@@ -57,7 +57,8 @@ class Controller
 
     public const BREADCRUM_BULK_UPLOAD_REVIEW = ['name' => 'Review', 'link' => '/admin/bulk-upload/review'];
     public const BREADCRUM_MANAGE_CONTENTS = ['name' => 'Manage contents', 'link' => '/admin/manage-content'];
-    public const BREADCRUM_MANAGE_CONTENTS_VIEW = ['name' => 'Manage contents view', 'link' => '/admin/manage-content/view'];    
+    public const BREADCRUM_MANAGE_CONTENTS_VIEW = ['name' => 'Manage contents view', 'link' => '/admin/manage-content/view'];  
+    public const BREADCRUM_MY_SUBMISSIONS_VIEW = ['name' => 'My submissions view', 'link' => '/admin/my-submissions/view'];      
     public const BREADCRUM_MY_SUBMISSIONS = ['name' => 'My submissions', 'link' => '/admin/my-submissions'];
     public const BREADCRUM_VIEW_ALL_USER_GROUPS = ['name' => 'View all usergroups', 'link' => '/admin/user-groups'];
 

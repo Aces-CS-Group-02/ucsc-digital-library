@@ -48,6 +48,49 @@ $userRole = "student";
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
         <div class="wrapper">
+        <div class="second-border">
+                <!-- Flash Message -->
+                <?php
+
+                use app\core\Application;
+
+                if (Application::$app->session->getFlashMessage('success')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('success'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+
+                <?php
+
+
+                if (Application::$app->session->getFlashMessage('error')) { ?>
+
+
+                    <div class="alert alert-success" id="flash-msg-alert">
+                        <strong>Success!</strong>
+
+                        <?php echo Application::$app->session->getFlashMessage('error'); ?>
+
+                        <button class="close" type="button" id="flash-msg-remove">
+                            <span class="font-weight-light"></span>
+                            <i class="fas fa-times icon-sucess" style="font-size: 0.73em"></i>
+                        </button>
+                    </div>
+
+
+                <?php } ?>
+            </div>
             <div class="search-N-sort-components-container">
                 <div class="search-component-container">
                     <form action="">
@@ -210,18 +253,15 @@ $userRole = "student";
                                 
                             </div>
                             <div class="block-f">
-                                <p>
                                 <form action="/admin/manage-content/view" method="GET">
                                     <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id?>">View</button>
                                 </form>
                                 <form action="/admin/upload-content" method="GET">
-                                    <button class="btn btn-success mr-1 mb-1 btn-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id?>">Update</button>
+                                    <button class="btn btn-success mr-1 mb-1 btn-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id?>">Update</button>
                                 </form>
                                 <form action="/admin/manage-content/delete" method="POST">
-                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id?>">Delete</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn4-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id?>">Delete</button>
                                 </form>
-
-                                </p>
                             </div>
                         </div>
 
@@ -248,6 +288,7 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/alert.js"></script>
 
 </body>
 

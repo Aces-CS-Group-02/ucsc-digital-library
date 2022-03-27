@@ -41,7 +41,12 @@ class SiteController extends Controller
         $latestContents = new Content();
         $latestContents = $latestContents->getLatestContents();
 
-        return $this->render('home', ['communities' => $topLevelCommunities->payload, 'latestContents' => $latestContents]);
+        $popularContents = new Content();
+        $popularContents = $popularContents->getPopularContents();
+
+        
+
+        return $this->render('home', ['communities' => $topLevelCommunities->payload, 'latestContents' => $latestContents, 'popularContent' => $popularContents]);
     }
 
     public function search()

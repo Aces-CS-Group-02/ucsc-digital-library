@@ -378,21 +378,29 @@ class AdministrationController extends Controller
 
     public function manageUsers(Request $request)
     {
+        $data = $request->getBody();
+        $search_params = $data['q'] ?? '';
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page <= 0) $page = 1;
+        $limit = 4;
+        $start = ($page - 1) * $limit;
+
+        $users = new User();
+        $users = $users->getAllUsers($search_params, $start, $limit);
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_MANAGE_USERS,
             self::BREADCRUM_UPDATE_USERS
         ];
 
-        $users = new User();
-
-        $users = $users->getAll();
+       
 
         // echo '<pre>';
         // var_dump($users);
         // echo '</pre>';
 
-        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum, 'users' => $users]);
+        return $this->render("admin/user/users-view-update-delete", ['breadcrum' => $breadcrum, 'users' => $users->payload, 'pageCount' => $users->pageCount, 'currentPage' => $page]);
     }
 
 

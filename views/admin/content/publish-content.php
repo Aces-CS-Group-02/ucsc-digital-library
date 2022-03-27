@@ -237,7 +237,7 @@ $userRole = "student";
                                     <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id; ?>">View</button>
                                 </form>
                                 <form action="/admin/publish-content/publish" method="POST">
-                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?= $content->content_id ?>">Publish</button>
+                                    <button class="btn btn-danger mr-1 mb-1 btn-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?= $content->content_id ?>">Publish</button>
                                 </form>
                                 </p>
                             </div>
@@ -248,7 +248,6 @@ $userRole = "student";
                         <p class="no-records-available">No Records Available :(</p>
                     <?php } ?>
                     <?php
-
                     if (!empty($params['content']) && isset($params['pageCount'])) {
                         include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
                     }
@@ -268,6 +267,7 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/alert.js"></script>
 
 </body>
 
