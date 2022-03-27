@@ -29,6 +29,8 @@
 <body>
 
 
+
+
   <!-- NAVIGATION BAR -->
 
   <?php include_once __DIR__ . '/components/nav.php'; ?>
@@ -146,7 +148,7 @@
                 <p class="content-item-title"><?php echo $community->name; ?></p>
                 <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community->description; ?></p>
                 <div class="content-item-view-more">
-                  <a class="content-item-view-more-link" href="#">
+                  <a class="content-item-view-more-link" href="/browse/community?community_id=<?= $community->community_id ?>">
                     <p>View more</p>
                     <i class="fas fa-long-arrow-alt-right"></i>
                   </a>
