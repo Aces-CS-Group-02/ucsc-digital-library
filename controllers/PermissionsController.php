@@ -279,7 +279,11 @@ class PermissionsController extends Controller
                 Application::$app->response->redirect('/admin/set-access-permission');
             }
         } else {
-            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
+
+            $permissionModel = new CollectionPermission();
+            $permission = $permissionModel->findOne(['collection_id' => $data['collection-id'], 'group_id' => $data['usergroup-id']]);
+
+            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'redirect' => $redirect, 'breadcrum' => $breadcrum, 'currentPermission' => $permission]);
         }
     }
 
