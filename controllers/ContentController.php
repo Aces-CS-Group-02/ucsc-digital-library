@@ -417,7 +417,7 @@ class ContentController extends Controller
 
             $file['name'] = $newfilename;
             $content->url = "data/content/uploads/" . $file['name'];
-            $content->thumbnail = "data/content/thumbnails/".$data['content_id'].".jpg";
+            $content->thumbnail = "data/content/thumbnails/" . $data['content_id'] . ".jpg";
 
             if ($content->upload_steps < 4) $content->upload_steps = 4;
             $content->update();
@@ -897,17 +897,17 @@ class ContentController extends Controller
         }
     }
 
-    public static function checkContentPermission($content_id)
+    public static function checkContentPermission($content)
     {
         // Access Permission
         $collectionPermissionModel = new CollectionPermission();
-        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content_id);
+        $collectionPermissionObj = $collectionPermissionModel->checkAccessPermission($content);
 
         $contentCollectionPermissionModel = new ContentCollectionPermission();
-        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content_id);
+        $contentCollectionPermissionObj = $contentCollectionPermissionModel->checkAccessPermission($content);
 
         $lendPermissionModel = new LendPermission();
-        $lendPermission = $lendPermissionModel->findAll(['content_id' => $content_id, 'user_id' => Application::$app->user->reg_no ?? false]);
+        $lendPermission = $lendPermissionModel->findAll(['content_id' => $content->content_id, 'user_id' => Application::$app->user->reg_no ?? false]);
 
         // var_dump($lendPermission);
 
@@ -957,7 +957,7 @@ class ContentController extends Controller
         $contentCreatorModel = new ContentCreator();
         $authors = $contentCreatorModel->findContentAuthors($content->content_id);
 
-        $permission = self::checkContentPermission($content->content_id);
+        $permission = self::checkContentPermission($content);
 
         $collectionModel = new Collection();
         $collection = $collectionModel->findOne(['collection_id' => $content->collection_id]);
