@@ -25,6 +25,7 @@ class Content extends DbModel
     public ?string $publisher = null;
     public ?int $uploaded_by = null;
     public int $approved = 0;
+    public int $views = 0;
 
 
     public static function tableName(): string
@@ -34,7 +35,7 @@ class Content extends DbModel
 
     public function attributes(): array
     {
-        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'thumbnail', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by', 'approved'];
+        return ['title', 'subject', 'date', 'language', 'type', 'publish_state', 'url', 'thumbnail', 'collection_id', 'upload_steps', 'isbn', 'abstract', 'publisher', 'uploaded_by', 'approved', 'views'];
     }
 
     public static function primaryKey(): string
