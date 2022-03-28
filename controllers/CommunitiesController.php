@@ -161,7 +161,7 @@ class CommunitiesController extends Controller
 
         $redirect = $data['redirect'] ?? false;
 
-        var_dump($redirect);
+        // var_dump($redirect);
 
         $communityModel = new Community();
 

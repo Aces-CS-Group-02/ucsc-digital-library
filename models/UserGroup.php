@@ -23,7 +23,7 @@ class Usergroup extends DbModel
 
     public function attributes(): array
     {
-        return ['name', 'description', 'creator', 'status', 'created_date'];
+        return ['name', 'description', 'creator', 'status'];
     }
 
     public static function primaryKey(): string

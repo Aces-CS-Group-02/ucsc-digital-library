@@ -42,6 +42,9 @@
                     <form id="form-features" action="/verify-email" method="POST">
                         <div class="input-row-group">
                             <div class="input-group">
+                                <input class="form-control" name="usergroup" value="<?php echo $params['usergroup'] ?>" id="Fname" type="hidden" />
+                            </div>
+                            <div class="input-group">
                                 <label class="labelPlace" for="Fname">First Name</label>
                                 <input class="form-control" name="first_name" value="<?php echo $params['model']->first_name ?>" id="Fname" type="text" readonly="readonly" />
                             </div>
@@ -52,11 +55,11 @@
                         </div>
                         <div class="input-group">
                             <label class="labelPlace <?php if ($params['model']->hasErrors('email')) {
-                                                                echo "danger-text";
-                                                            } ?>" for="email">Email</label>
+                                                            echo "danger-text";
+                                                        } ?>" for="email">Email</label>
                             <input class="form-control <?php if ($params['model']->hasErrors('email')) {
-                                                                echo "danger-border";
-                                                            } ?>" name="email" value="<?php echo $params['model']->email ?>" id="email" type="text" readonly="readonly" />
+                                                            echo "danger-border";
+                                                        } ?>" name="email" value="<?php echo $params['model']->email ?>" id="email" type="text" readonly="readonly" />
                             <?php
                             if ($params['model']->hasErrors('email')) {
                                 foreach ($params['model']->errors['email'] as $error) { ?>
@@ -75,8 +78,8 @@
                                                             } ?>" for="password">Password</label>
                             </div>
                             <div class="form-password <?php if ($params['model']->hasErrors('password')) {
-                                                                echo "danger-border";
-                                                            } ?>">
+                                                            echo "danger-border";
+                                                        } ?>">
                                 <input class="inputStyle" name="password" id="password" type="password" />
                                 <button id="hide-btn" type="button">
                                     <i class="fas fa-eye-slash"></i>
@@ -100,8 +103,8 @@
                                                             } ?>" for="confirm_password">Confirm password</label>
                             </div>
                             <div class="form-password <?php if ($params['model']->hasErrors('confirm_password')) {
-                                                                echo "danger-border";
-                                                            } ?>">
+                                                            echo "danger-border";
+                                                        } ?>">
                                 <input class="inputStyle" id="confirm_password" name="confirm_password" type="password" />
                                 <button id="hide-btn" type="button">
                                     <i class="fas fa-eye-slash"></i>

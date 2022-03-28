@@ -54,9 +54,9 @@ $userRole = "admin";
                     <div class="card-content ">Upload Content</div>
                 </a>
             </div>
-            <?php if (Application::$app->getUserRole() <= 2) { ?>
 
-                <!-- <div class="card-container">
+
+            <!-- <div class="card-container">
                     <a href="/admin/bulk-upload" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="/assets\admin-manage-content\bulk.png" alt=" bulk-upload-image">
@@ -66,28 +66,28 @@ $userRole = "admin";
 
                 </div> -->
 
-                <div class="card-container">
-                    <a href="/admin/publish-content" class="card box-shadow-1">
-                        <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\publish-content.png" alt=" cloud-image">
-                        </div>
-                        <div class="card-content ">Publish Content</div>
-                    </a>
+            <div class="card-container">
+                <a href="/admin/publish-content" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\publish-content.png" alt=" cloud-image">
+                    </div>
+                    <div class="card-content ">Publish Content</div>
+                </a>
 
-                </div>
-
-
-                <div class="card-container">
-                    <a href="/admin/unpublish-content" class="card box-shadow-1">
-                        <div class="card-icon">
-                            <img class="card-icon-img" src="/assets\admin-manage-content\unpublish-content.png" alt=" cloud-image">
-                        </div>
-                        <div class="card-content ">Unpublish Content</div>
-                    </a>
-
-                </div>
+            </div>
 
 
+            <div class="card-container">
+                <a href="/admin/unpublish-content" class="card box-shadow-1">
+                    <div class="card-icon">
+                        <img class="card-icon-img" src="/assets\admin-manage-content\unpublish-content.png" alt=" cloud-image">
+                    </div>
+                    <div class="card-content ">Unpublish Content</div>
+                </a>
+
+            </div>
+
+            <?php if (Application::$app->getUserRole() <= 2) { ?>
                 <div class="card-container">
                     <a href="/admin/manage-content" class="card box-shadow-1">
                         <div class="card-icon">

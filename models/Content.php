@@ -51,20 +51,50 @@ class Content extends DbModel
     {
         $tableName = static::tableName();
 
-        $sql = "SELECT content_id, title, date 
-                                    FROM content              
-                                    WHERE publish_state = 0 
-                                    AND title LIKE '%$search_params%'";
+        $user_level =  Application::$app->getUserRole();
 
+        if ($user_level <= 2) {
+            $sql = "SELECT content_id, title, date 
+            FROM content              
+            WHERE publish_state = 0 
+            AND upload_steps = 5
+            AND approved = 1
+            AND title LIKE '%$search_params%'";
+        } else {
+            $current_user_id = Application::$app->session->get('user');
+            $sql = "SELECT content_id, title, date 
+            FROM content              
+            WHERE publish_state = 0 
+            AND uploaded_by = $current_user_id
+            AND upload_steps = 5
+            AND approved = 1
+            AND title LIKE '%$search_params%'";
+        }
         return $this->paginate($sql, $start, $limit);
     }
     public function getAllPublishContent($search_params, $start, $limit)
     {
-        $tableName = self::tableName();
-        $sql = "SELECT content_id, title, date 
+        $tableName = static::tableName();
+
+        $user_level =  Application::$app->getUserRole();
+
+        if ($user_level <= 2) {
+            $sql = "SELECT content_id, title, date 
                                     FROM content               
                                     WHERE publish_state = 1
+                                    AND upload_steps = 5
+                                    AND approved = 1
                                     AND title LIKE '%$search_params%'";
+        } else {
+            $current_user_id = Application::$app->session->get('user');
+            $sql = "SELECT content_id, title, date 
+                                    FROM content               
+                                    WHERE publish_state = 1
+                                    AND uploaded_by=$current_user_id
+                                    AND upload_steps = 5
+                                    AND approved = 1
+                                    AND title LIKE '%$search_params%'";
+        }
 
 
         return $this->paginate($sql, $start, $limit);

@@ -22,6 +22,8 @@ use app\models\Creator;
 use app\models\DeleteContent;
 use app\models\LendPermission;
 use app\models\DeleteContentBy;
+use app\models\Metadata;
+use app\models\UploadFile;
 use DateTime;
 use Dotenv\Util\Regex;
 use Exception;
@@ -115,8 +117,6 @@ class ContentController extends Controller
         ];
         return $this->render("admin/content/admin-my-submission", ['breadcrum' => $breadcrum, 'mySubmission' => $mySubmissions->payload, 'currentPage' => $page, 'pageCount' => $mySubmissions->pageCount, 'search_params' => $search_params] );
     }
-
-
 
     public function uploadContent(Request $request)
     {
@@ -223,43 +223,76 @@ class ContentController extends Controller
             }
 
             $content = $content->findOne(['content_id' => $data['content_id']]);
+            $content->loadData($request->getBody());
 
             $form_input = $request->getBody();
 
             $content_creator = new ContentCreator();
 
+
+
             $where = [
                 'content_id' => $data['content_id']
             ];
 
-            try {
-                Application::$app->db->pdo->beginTransaction();
-                $content_creator->deleteAll($where);
+            $metadata = new Metadata();
 
-
-                foreach ($form_input['creators'] as $creator) {
-                    $content_creator = new ContentCreator();
-                    $content_creator->content_id = $data['content_id'];
-                    $content_creator->creator = $creator;
-
-                    $content_creator->save();
-                }
-
-                $content->loadData($request->getBody());
-                if ($content->upload_steps < 2) $content->upload_steps = 2;
-
-
-                $content->update();
-                // exit;
-
-                Application::$app->db->pdo->commit();
-            } catch (Exception $e) {
-                Application::$app->db->pdo->rollBack();
-            }
-
+            $metadata->loadData($request->getBody());
+            $metadata->creator = implode(",", $form_input['creators']);
+            // echo '<pre>';
+            // var_dump($metadata);
             // exit;
 
-            Application::$app->response->redirect('/admin/upload-content/insert-keyword-abstract?content_id=' . $data['content_id']);
+            if ($metadata->validate()) {
+
+                try {
+                    Application::$app->db->pdo->beginTransaction();
+                    $content_creator->deleteAll($where);
+
+
+                    foreach ($form_input['creators'] as $creator) {
+                        $content_creator = new ContentCreator();
+                        $content_creator->content_id = $data['content_id'];
+                        $content_creator->creator = $creator;
+
+                        $content_creator->save();
+                    }
+
+                    if ($content->upload_steps < 2) $content->upload_steps = 2;
+
+
+                    $content->update();
+                    // exit;
+
+                    Application::$app->db->pdo->commit();
+                } catch (Exception $e) {
+                    Application::$app->db->pdo->rollBack();
+                }
+
+                // exit;
+
+                Application::$app->response->redirect('/admin/upload-content/insert-keyword-abstract?content_id=' . $data['content_id']);
+            } else {
+                $upload_steps = $content->upload_steps;
+                $breadcrum = [
+                    self::BREADCRUM_DASHBOARD,
+                    self::BREADCRUM_MANAGE_CONTENT,
+                    self::BREADCRUM_UPLOAD_CONTENT
+                ];
+
+                $contentTypes = new ContentType();
+
+                $contentTypes = $contentTypes->getAll();
+
+                $languages = new ContentLanguage();
+                $languages = $languages->getAll();
+                $creators = [];
+                foreach ($form_input['creators'] as $creator) {
+                    array_push($creators, $creator);
+                }
+
+                return $this->render('admin/content/insert-metadata', ['breadcrum' => $breadcrum, 'content' => $content, 'creators' => $creators, 'languages' => $languages, 'contentTypes' => $contentTypes, 'upload_steps' => $upload_steps, 'data' => $data, 'metadata' => $metadata]);
+            }
         } else {
 
             $data = $request->getBody();
@@ -292,7 +325,9 @@ class ContentController extends Controller
                 array_push($creators, $content_creator['creator']);
             }
 
-            return $this->render("admin/content/insert-metadata", ['breadcrum' => $breadcrum, 'content' => $content, 'creators' => $creators, 'languages' => $languages, 'contentTypes' => $contentTypes, 'upload_steps' => $upload_steps, 'data' => $data]);
+            $metadata =  new Metadata();
+
+            return $this->render("admin/content/insert-metadata", ['breadcrum' => $breadcrum, 'content' => $content, 'creators' => $creators, 'languages' => $languages, 'contentTypes' => $contentTypes, 'upload_steps' => $upload_steps, 'data' => $data, 'metadata' => $metadata]);
         }
     }
 
@@ -404,7 +439,26 @@ class ContentController extends Controller
 
 
             $file = $_FILES['content-file'];
-            // var_dump($file);
+
+            $upload_file = new UploadFile();
+
+            if ($file['size'] == 0) {
+
+                $upload_file->addError('file','This field is required');
+
+                $breadcrum = [
+                    self::BREADCRUM_DASHBOARD,
+                    self::BREADCRUM_MANAGE_CONTENT,
+                    self::BREADCRUM_UPLOAD_CONTENT
+                ];
+
+                $upload_steps = $content->upload_steps;
+
+                return $this->render("admin/content/submit-content", ['breadcrum' => $breadcrum, 'upload_steps' => $upload_steps, 'data' => $data, 'file' => $upload_file]);
+            }
+
+            var_dump($file);
+            exit;
 
 
             if ($file['tmp_name'] == "" and $content->url != "") {
@@ -453,7 +507,9 @@ class ContentController extends Controller
 
             $upload_steps = $content->upload_steps;
 
-            return $this->render("admin/content/submit-content", ['breadcrum' => $breadcrum, 'upload_steps' => $upload_steps, 'data' => $data]);
+            $upload_file = new UploadFile();
+
+            return $this->render("admin/content/submit-content", ['breadcrum' => $breadcrum, 'upload_steps' => $upload_steps, 'data' => $data, 'file' => $upload_file]);
         }
     }
 

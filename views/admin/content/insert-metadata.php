@@ -105,7 +105,9 @@
 
                     <div class="input-row" id="creators">
                         <div class="input-column-1">
-                            <label class="labelPlace required" for="creator[]">Creator</label>
+                            <label class="labelPlace required <?php if ($params['metadata']->hasErrors('creator')) {
+                                                                    echo "danger-text";
+                                                                } ?>" for="creator[]">Creator</label>
 
                         </div>
                         <div class="input-column-2">
@@ -119,7 +121,21 @@
                                     <?php } ?>
                                 <?php } else { ?>
                                     <div class="input-row">
-                                        <input class="form-control" name="creators[]" type="text" placeholder="Enter the name of the creator" />
+                                        <input class="form-control <?php if ($params['metadata']->hasErrors('creator')) {
+                                                                        echo "danger-border";
+                                                                    } ?>" name="creators[]" type="text" placeholder="Enter the name of the creator" />
+                                    </div>
+                                    <div class="input-row">
+                                        <?php
+                                        if ($params['metadata']->hasErrors('creator')) {
+                                            foreach ($params['metadata']->errors['creators'] as $error) { ?>
+                                                <div class="validation-error">
+                                                    <i class="fas fa-exclamation-circle"></i>
+                                                    <p><?php echo $error ?></p>
+                                                </div>
+                                        <?php }
+                                        };
+                                        ?>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -129,21 +145,49 @@
 
                     <div class="input-row">
                         <div class="input-column-1">
-                            <label class="labelPlace required" for="title">Title</label>
+                            <label class="labelPlace required <?php if ($params['metadata']->hasErrors('title')) {
+                                                                    echo "danger-text";
+                                                                } ?>" for="title">Title</label>
 
                         </div>
                         <div class="input-column-2">
-                            <input class="form-control" name="title" id="title" type="text" placeholder="Enter the title of the content" value="<?php echo $params['content']->title; ?>" />
+                            <input class="form-control <?php if ($params['metadata']->hasErrors('title')) {
+                                                            echo "danger-border";
+                                                        } ?>" name="title" id="title" type="text" placeholder="Enter the title of the content" value="<?php echo $params['content']->title; ?>" />
+                            <?php
+                            if ($params['metadata']->hasErrors('title')) {
+                                foreach ($params['metadata']->errors['title'] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
                         </div>
                     </div>
 
                     <div class="input-row">
                         <div class="input-column-1">
-                            <label class="labelPlace required" for="subject">Subject</label>
+                            <label class="labelPlace required <?php if ($params['metadata']->hasErrors('subject')) {
+                                                                    echo "danger-text";
+                                                                } ?>" for="subject">Subject</label>
 
                         </div>
                         <div class="input-column-2">
-                            <input class="form-control" name="subject" id="subject" type="text" placeholder="Enter the subject of the content" value="<?php echo $params['content']->subject; ?>" />
+                            <input class="form-control <?php if ($params['metadata']->hasErrors('subject')) {
+                                                            echo "danger-border";
+                                                        } ?>" name="subject" id="subject" type="text" placeholder="Enter the subject of the content" value="<?php echo $params['content']->subject; ?>" />
+                            <?php
+                            if ($params['metadata']->hasErrors('subject')) {
+                                foreach ($params['metadata']->errors['subject'] as $error) { ?>
+                                    <div class="validation-error">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p><?php echo $error ?></p>
+                                    </div>
+                            <?php }
+                            };
+                            ?>
                         </div>
                     </div>
 
@@ -182,7 +226,7 @@
                         <div class="input-column-2">
                             <select class="custom-select custom-select-override" name="type">
                                 <?php foreach ($params['contentTypes'] as $contentType) { ?>
-                                    <option value="<?php echo $contentType->content_type_id; ?>"><?php echo $contentType->name; ?></option>
+                                    <option value="<?php echo $contentType->content_type_id; ?>" <?php if ($contentType->content_type_id == $params['content']->type) echo "selected"; ?>><?php echo $contentType->name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

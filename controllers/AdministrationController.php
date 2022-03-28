@@ -332,15 +332,35 @@ class AdministrationController extends Controller
     {
         if($request->isPOST())
         {
-            var_dump("this works!"); 
             $users = [];
             foreach($_POST['users'] as $k=>$v){
              $val = intdiv($k,3);
              $users[$val][key($v)]=$v[key($v)];
             }
 
-            echo"<pre>";
-            // print_r($users);
+            // echo"<pre>";
+            // var_dump($_POST);
+            
+            $user_group_name = $_POST['usergroup'];
+            $description = $_POST['description'];
+            // var_dump($user_group_name);
+            // var_dump($description);
+
+            $user_group = new UserGroup();
+
+            $user_group->name = $user_group_name;
+            $user_group->description = $description;
+            $user_group->creator = Application::$app->user->reg_no;
+
+            if (Application::getUserRole() <= 2) {
+                $user_group->status = 1;
+            } else {
+                $user_group->status = 3;
+            }
+
+            $user_group->save();
+
+            $user_group_id = Application::$app->db->pdo->lastInsertId();
 
             foreach($users as $user)
             {
@@ -357,18 +377,23 @@ class AdministrationController extends Controller
                 $host = $_SERVER['HTTP_ORIGIN'];
                 $port = $_SERVER['SERVER_PORT'];
                 $subject = "Verification Email";
-                $link = "Click <a href='{$host}:{$port}/verify-email?email={$email}&token={$code}'>here</a> to verify.";
+                $link = "Click <a href='{$host}:{$port}/verify-email?email={$email}&token={$code}&usergroup={$user_group_id}'>here</a> to verify.";
                 $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
                 $altBody = "this is the alt body";
 
-
+                // var_dump($link);
                 $mail = new Mail([$email], $subject, $body, $altBody);
-                $mail->sendMail();
+                // $mail->sendMail();
 
                 if ($new_user->save()) {
                     Application::$app->session->setFlashMessage('success', 'Verification emaisl are sent to selected users');
                     // Application::$app->response->redirect('/');
-                    return $this->render('admin/bulk-register');
+                    $breadcrum = [
+                        self::BREADCRUM_DASHBOARD,
+                        self::BREADCRUM_MANAGE_USERS,
+                        self::BREADCRUM_BULK_REGISTER
+                    ];
+                    return $this->render("admin/user/admin-bulk-registering", ['breadcrum' => $breadcrum]);
                 }
 
                 // var_dump($new_user);

@@ -87,11 +87,40 @@ $userRole = "student";
                     <div class="upper-container">
                         <div class="link-place">
                             <p>File Name:
-                                <a href=" " class="file-name"> test.xls</a>
+                                <a href=" " class="file-name"> test.csv</a>
                             </p>
                         </div>
                         <div class="button-place">
                             <button class="btn btn-primary mr-1 mb-1" id="btn-edit" type="submit">Register</button>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-column-1">
+                            <label class="labelPlace" for="usergroup">Usergroup name : </label>
+
+                        </div>
+                        <div class="input-column-2">
+
+                            <div class="input-row">
+                                <input class="form-control" name="usergroup" type="text" placeholder="Enter the name of the user group" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+
+                        <div class="input-column-1">
+                            <label class="labelPlace" for="description">Usergroup description : </label>
+
+                        </div>
+                        <div class="input-column-2">
+
+                            <div class="input-row">
+                                <input class="form-control" name="description" type="text" placeholder="Enter the description of the user group" />
+                            </div>
+
                         </div>
                     </div>
 
