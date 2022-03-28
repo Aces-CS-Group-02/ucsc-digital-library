@@ -338,13 +338,13 @@ class AdministrationController extends Controller
              $users[$val][key($v)]=$v[key($v)];
             }
 
-            echo"<pre>";
-            var_dump($_POST);
+            // echo"<pre>";
+            // var_dump($_POST);
             
             $user_group_name = $_POST['usergroup'];
             $description = $_POST['description'];
-            var_dump($user_group_name);
-            var_dump($description);
+            // var_dump($user_group_name);
+            // var_dump($description);
 
             $user_group = new UserGroup();
 
@@ -381,14 +381,19 @@ class AdministrationController extends Controller
                 $body    = "<h1>Pleasy verify your email</h1><p>{$link}</p>";
                 $altBody = "this is the alt body";
 
-                var_dump($link);
+                // var_dump($link);
                 $mail = new Mail([$email], $subject, $body, $altBody);
                 // $mail->sendMail();
 
                 if ($new_user->save()) {
                     Application::$app->session->setFlashMessage('success', 'Verification emaisl are sent to selected users');
                     // Application::$app->response->redirect('/');
-                    return $this->render('admin/bulk-register');
+                    $breadcrum = [
+                        self::BREADCRUM_DASHBOARD,
+                        self::BREADCRUM_MANAGE_USERS,
+                        self::BREADCRUM_BULK_REGISTER
+                    ];
+                    return $this->render("admin/user/admin-bulk-registering", ['breadcrum' => $breadcrum]);
                 }
 
                 // var_dump($new_user);
