@@ -434,7 +434,7 @@ class UserController extends Controller
         if ($request->getMethod() === 'POST') {
             if ($contentSuggestionModel->createContentSuggestion($request->getBody())) {
                 Application::$app->session->setFlashMessage('success', 'New content suggestion added');
-                Application::$app->response->redirect('/browse');
+                Application::$app->response->redirect('/');
                 exit;
             }
             return $this->render('/user/suggest-content', ['model' => $contentSuggestionModel]);

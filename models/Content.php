@@ -356,7 +356,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT content_view_records.content_id, content.title, content.tumbnail
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title, content.thumbnail
                                     FROM content_view_records
                                     INNER JOIN content
                                     ON content_view_records.content_id = content.content_id
@@ -369,7 +369,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT content_view_records.content_id, content.title. content.thumbnail
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title, content.thumbnail
                                     FROM content_view_records
                                     INNER JOIN content
                                     ON content_view_records.content_id = content.content_id
@@ -382,7 +382,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT note.content_id, content.title
+        $statement = self::prepare("SELECT note.content_id, content.title, content.thumbnail
                                     FROM note 
                                     INNER JOIN content
                                     ON note.content_id = content.content_id
@@ -394,7 +394,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT note.content_id, content.title
+        $statement = self::prepare("SELECT note.content_id, content.title, content.thumbnail
                                     FROM note 
                                     INNER JOIN content
                                     ON note.content_id = content.content_id

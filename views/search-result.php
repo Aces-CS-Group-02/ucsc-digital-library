@@ -116,9 +116,14 @@
                         <div class="search-card-details">
                             <div class="search-card-title result-info">
                                 <h5>No results found !</h5>
+                                <div class="suggest-content-text">
+                                    <P>Can not find what you're looking for? Suggest us using this <a class="suggest-content-text-link" href="/suggest-content">link</a></P>
+                                </div>
                             </div>
+
                         </div>
                     </div>
+
                 <?php } ?>
                 <?php foreach ($params['contents'] as $content) { ?>
 
