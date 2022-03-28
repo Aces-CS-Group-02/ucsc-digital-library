@@ -204,7 +204,8 @@ body {
 }
 
 .block-e {
-  flex-basis: 300px;
+  flex-basis: 270px;
+  display: flex;
 }
 
 .block-a,

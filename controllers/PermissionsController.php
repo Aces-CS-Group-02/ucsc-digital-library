@@ -53,7 +53,13 @@ class PermissionsController extends Controller
             array_push($payload, $tempObj);
         }
 
-        return $this->render('admin/set-permissions-browse-collections', ['page_step' => 1, 'data' => $payload, 'currentPage' => $page, 'pageCount' => $collections->pageCount]);
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_COMMUNITY_COLLECTION_ACCESS_PERMISSION,
+        ];
+
+        return $this->render('admin/set-permissions-browse-collections', ['page_step' => 1, 'data' => $payload, 'currentPage' => $page, 'pageCount' => $collections->pageCount, 'breadcrum' => $breadcrum]);
     }
 
     public function browseUsergroup(Request $request)
@@ -97,7 +103,13 @@ class PermissionsController extends Controller
         $collection = $collectionModel->findOne(['collection_id' => $data['collection-id']]);
         if (!$collection) throw new NotFoundException();
 
-        return $this->render('admin/set-permissions-browse-collections', ['page_step' => 2, 'data' => $res->payload, 'collection' => $collection, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_COMMUNITY_COLLECTION_ACCESS_PERMISSION,
+        ];
+
+        return $this->render('admin/set-permissions-browse-collections', ['page_step' => 2, 'data' => $res->payload, 'collection' => $collection, 'currentPage' => $page, 'pageCount' => $res->pageCount, 'breadcrum' => $breadcrum]);
     }
 
     public function setPermissionToCollection(Request $request)
@@ -127,6 +139,11 @@ class PermissionsController extends Controller
         array_push($temp_path, $collection->name);
         $collection_path_str = implode(' > ', $temp_path);
 
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_CONTENT,
+            self::BREADCRUM_COMMUNITY_COLLECTION_ACCESS_PERMISSION,
+        ];
 
         if ($request->getMethod() === "POST") {
             $permissionInput = isset($data['permission']) ? $data['permission'] : '';
@@ -149,7 +166,7 @@ class PermissionsController extends Controller
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect]);
+                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                     }
                 } else if (Application::getUserRole() == 3) {
                     $pendingContentCollectionPermissionModel = new PendingCollectionPermission();
@@ -171,7 +188,7 @@ class PermissionsController extends Controller
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
+                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                             }
                         }
                     } else {
@@ -189,7 +206,7 @@ class PermissionsController extends Controller
                             }
                         } else {
 
-                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
+                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                         }
                     }
                 }
@@ -207,7 +224,7 @@ class PermissionsController extends Controller
                             $msgType = 'error';
                         }
                     } else {
-                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect]);
+                        return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $permissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                     }
                 } else if (Application::getUserRole() == 3) {
 
@@ -232,7 +249,7 @@ class PermissionsController extends Controller
                                     $msgType = 'error';
                                 }
                             } else {
-                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
+                                return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                             }
                         }
                     } else {
@@ -248,7 +265,7 @@ class PermissionsController extends Controller
                                 $msgType = 'error';
                             }
                         } else {
-                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect]);
+                            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'permissionModel' => $pendingContentCollectionPermissionModel, 'redirect' => $redirect, 'breadcrum' => $breadcrum]);
                         }
                     }
                 }
@@ -262,7 +279,11 @@ class PermissionsController extends Controller
                 Application::$app->response->redirect('/admin/set-access-permission');
             }
         } else {
-            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'redirect' => $redirect]);
+
+            $permissionModel = new CollectionPermission();
+            $permission = $permissionModel->findOne(['collection_id' => $data['collection-id'], 'group_id' => $data['usergroup-id']]);
+
+            return $this->render('admin/set-permissions-select-collection-permissions', ['page_step' => 3, 'usergroup' => $usergroup, 'collection' => $collection_path_str, 'collection-id' => $collection->collection_id, 'redirect' => $redirect, 'breadcrum' => $breadcrum, 'currentPermission' => $permission]);
         }
     }
 
@@ -304,6 +325,11 @@ class PermissionsController extends Controller
         // echo '<pre>';
         // var_dump($res->payload);
         // echo '</pre>';
+        // $breadcrum = [
+        //     self::BREADCRUM_DASHBOARD,
+        //     self::BREADCRUM_MANAGE_CONTENT,
+        //     self::BREADCRUM_
+        // ]
 
 
         return $this->render('admin/view-collection-access-permission', ['data' => $res->payload, 'currentPage' => $page, 'pageCount' => $res->pageCount]);
@@ -543,7 +569,14 @@ class PermissionsController extends Controller
         $pendingContentCollectionPermissionModel = new PendingContentCollectionPermission();
         $req = $pendingContentCollectionPermissionModel->getAllRequests($start, $limit);
 
-        $this->render('admin/approve-content-collection-access-permission', ['data' => $req->payload, 'currentPage' => $page, 'pageCount' => $req->pageCount]);
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_ACCESS,
+            self::BREADCRUM_REVIEW_CONTENT_COLLECTION_PERMISSION
+        ];
+
+        $this->render('admin/approve-content-collection-access-permission', ['data' => $req->payload, 'currentPage' => $page, 'pageCount' => $req->pageCount, 'breadcrum' => $breadcrum]);
     }
 
     public function reviewCollectionAccessPermission(Request $request)
@@ -572,7 +605,14 @@ class PermissionsController extends Controller
             $i->collection_path = $path;
         }
 
-        $this->render('admin/approve-collection-access-permission', ['data' => $req->payload, 'currentPage' => $page, 'pageCount' => $req->pageCount]);
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_MANAGE_APPROVALS,
+            self::BREADCRUM_APPROVE_ACCESS,
+            self::BREADCRUM_REVIEW_COLLECTION_PERMISSION
+        ];
+
+        $this->render('admin/approve-collection-access-permission', ['data' => $req->payload, 'currentPage' => $page, 'pageCount' => $req->pageCount, 'breadcrum' => $breadcrum]);
     }
 
     public function approveCollectionAccessPermission(Request $request)

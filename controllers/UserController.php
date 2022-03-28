@@ -291,10 +291,12 @@ class UserController extends Controller
 
         $contentModel = new Content();
         $content = $contentModel->findOne(['content_id' => $data['content_id']]);
+        $content->views = $content->views + 1;
+        $content->update();
         if (!$content) throw new NotFoundException();
 
 
-        $permission = ContentController::checkContentPermission($content->content_id);
+        $permission = ContentController::checkContentPermission($content);
         if (!$permission->permission) throw new ForbiddenException();
         // echo '<pre>';
         // var_dump($content->type);
@@ -432,7 +434,7 @@ class UserController extends Controller
         if ($request->getMethod() === 'POST') {
             if ($contentSuggestionModel->createContentSuggestion($request->getBody())) {
                 Application::$app->session->setFlashMessage('success', 'New content suggestion added');
-                Application::$app->response->redirect('/browse');
+                Application::$app->response->redirect('/');
                 exit;
             }
             return $this->render('/user/suggest-content', ['model' => $contentSuggestionModel]);

@@ -229,7 +229,7 @@ use app\core\Application;
                 <?php foreach ($recentReadings as $content) { ?>
 
                     <div class="profile-gird-container profile-section-b">
-                        <a href="/profile/pdf-viewer" class="edit-link">
+                        <a href="/content?content_id=<?= $content->content_id ?>" class="edit-link">
                             <div class="profile-grid-item box-shadow-2">
                                 <div class="content-card ">
                                     <div class="content-card-img">
@@ -252,7 +252,7 @@ use app\core\Application;
 
     <div class="profile-section-a wrapper">
         <div class="section-header">
-            <p class="section-header-title">Content Notes</p>
+            <p class="section-header-title">Contents with Notes</p>
             <a class="section-header-view-all" href="profile/content-notes-view">View All</a>
         </div>
 
@@ -266,7 +266,7 @@ use app\core\Application;
 
                 <?php foreach ($contentNotes as $content) { ?>
 
-                    <a href="/content/view?content_id=<?= $content->content_id ?>" class="edit-link">
+                    <a href="/content?content_id=<?= $content->content_id ?>" class="edit-link">
                         <div class="profile-gird-container profile-section-b">
 
                             <div class="profile-grid-item box-shadow-2">

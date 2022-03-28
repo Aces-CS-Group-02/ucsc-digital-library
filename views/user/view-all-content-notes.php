@@ -106,41 +106,42 @@ use app\core\Application;
 
     <!-- Section A -->
 
-     <!-- Section C (Content Notes) -->
+    <!-- Section C (Content Notes) -->
 
-     <div class="profile-section-a wrapper">
+    <div class="profile-section-a wrapper">
         <div class="section-header">
-            <p class="section-header-title">Content Notes</p>
+            <p class="section-header-title">Contents with Notes</p>
         </div>
 
         <div class="profile-grid">
             <?php
-                $contentNotes = $params['allContentNotes'] ?? "";
+            $contentNotes = $params['allContentNotes'] ?? "";
             ?>
             <?php if (empty($contentNotes)) { ?>
                 <p class="no-records-available">No Records Available :(</p>
             <?php } else { ?>
-                
-            <?php foreach ($contentNotes as $content) { ?>
-            
-            <a href="/content/view?content_id=<?= $content->content_id?>" class="edit-link">
-            <div class="profile-gird-container profile-section-b">
-               
-                <div class="profile-grid-item box-shadow-2">
-                    <div class="content-card">
-                        <div class="content-card-img">
-                            <img src="https://m.media-amazon.com/images/I/8143qzQAuxL._AC_UY327_FMwebp_QL65_.jpg" alt="">
+
+                <?php foreach ($contentNotes as $content) { ?>
+
+
+                    <a href="/content/view?content_id=<?= $content->content_id ?>" class="edit-link">
+                        <div class="profile-gird-container profile-section-b">
+
+                            <div class="profile-grid-item box-shadow-2">
+                                <div class="content-card">
+                                    <div class="content-card-img">
+                                        <img src="/<?= $content->thumbnail ?>" alt="">
+                                    </div>
+                                    <div class="content-card-bottom">
+                                        <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="content-card-bottom">
-                        <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id?>"> <?php echo $content->title ?></p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            </a>
+                    </a>
             <?php }
-                } ?>
+            } ?>
         </div>
     </div>
 

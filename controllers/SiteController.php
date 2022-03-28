@@ -162,7 +162,7 @@ class SiteController extends Controller
         $communityModel = new Community();
         $topLevelCommunities = $communityModel->getAllTopLevelCommunities(0, 1000);
 
-        $breadcrum = [self::BREADCRUM_HOME];
+        $breadcrum = [self::BREADCRUM_HOME, self::BREADCRUM_COMMUNITY_LIST];
 
         return $this->render('browse-by-communities-and-collections-into-view', ['topLevelCommunities' => $topLevelCommunities->payload, 'breadcrum' => $breadcrum, 'redirect-parent' => null]);
     }
@@ -188,7 +188,7 @@ class SiteController extends Controller
 
         // var_dump($breadcrum);
 
-        $breadcrum = [self::BREADCRUM_HOME];
+        $breadcrum = [self::BREADCRUM_HOME, self::BREADCRUM_COMMUNITY_LIST];
         foreach ($breadcrumData as $link) {
             $breadcrumLinkName =  $link['name'];
             $breadcrumLink = '/browse/community?community_id=' . $link["community_id"];
@@ -284,7 +284,7 @@ class SiteController extends Controller
 
         // var_dump($breadcrum);
 
-        $breadcrum = [self::BREADCRUM_HOME];
+        $breadcrum = [self::BREADCRUM_HOME, self::BREADCRUM_COMMUNITY_LIST];
         foreach ($breadcrumData as $link) {
             $breadcrumLinkName =  $link['name'];
             $breadcrumLink = '/browse/community?community_id=' . $link["community_id"];

@@ -76,9 +76,10 @@ use app\core\Application;
                             <div class="communities-container">
                                 <p class='sub-community-title'>Sub communities</p>
                                 <div class='sub-communities-inner-container'>
+                                    <?php $rowTracker = 0; ?>
                                     <?php foreach ($params['communities_of_dir'] as $community) { ?>
-                                        <div class="collection-data-row">
-                                            <a href="/browse/community?community_id=<?= $community->community_id ?>"><?= $community->name ?></a>
+                                        <div class="data-row <?php if ($rowTracker % 2 == 0) echo 'highlight' ?>">
+                                            <a class='data-element-title' href="/browse/community?community_id=<?= $community->community_id ?>"><?= $community->name ?></a>
                                             <?php if (Application::$app->getUserRole() <= 2) { ?>
                                                 <form action="/admin/delete-community" method="POST" onclick="return confirm('Are you sure?')">
                                                     <input type="hidden" name="redirect-parent" value="<?= $params['redirect-parent']  ?>" />
@@ -86,7 +87,7 @@ use app\core\Application;
                                                 </form>
                                             <?php } ?>
                                         </div>
-
+                                        <?php $rowTracker += 1; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -97,9 +98,10 @@ use app\core\Application;
                             <div class="collections-container">
                                 <p class='collection-title'>Collections</p>
                                 <div class="collections-inner-container">
+                                    <?php $rowTracker = 0; ?>
                                     <?php foreach ($params['collections_of_dir'] as $collection) { ?>
-                                        <div class="collection-data-row">
-                                            <a href="/browse/collection?collection_id=<?= $collection['collection_id'] ?>"><?= $collection['name'] ?></a>
+                                        <div class="data-row <?php if ($rowTracker % 2 == 0) echo 'highlight' ?>">
+                                            <a class='data-element-title' href="/browse/collection?collection_id=<?= $collection['collection_id'] ?>"><?= $collection['name'] ?></a>
                                             <?php if (Application::$app->getUserRole() <= 2) { ?>
                                                 <form action="/admin/delete-collection" method="POST" onclick="return confirm('Are you sure?')">
                                                     <input type="hidden" name="redirect-parent" value="<?= $collection['community_id']  ?>" />
@@ -107,6 +109,7 @@ use app\core\Application;
                                                 </form>
                                             <?php } ?>
                                         </div>
+                                        <?php $rowTracker += 1; ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -132,7 +135,10 @@ use app\core\Application;
 
                             <?php if ($params['type'] == 'collection') { ?>
                                 <button id="edit-collection" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Edit this Collection</button>
-                                <button id="upload-content" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Upload Content</button>
+                                <form id="upload-content-form" action="/admin/upload-content" method="POST">
+                                    <input type="hidden" name="collection_id" value="<?= $params['selected-item']->collection_id ?>" />
+                                    <button id="upload-content" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Upload Content</button>
+                                </form>
                                 <button id="export-collection" class='admin-option-btn' data-id="<?= $params['selected-item']->collection_id ?>">Export Collection</button>
                             <?php } ?>
                         </div>
@@ -148,8 +154,8 @@ use app\core\Application;
 
     <!-- SCRITPT -->
 
-    <script src="./javascript/nav.js"></script>
-    <script src="./javascript/alert.js"></script>
+    <script src="/javascript/nav.js"></script>
+    <script src="/javascript/alert.js"></script>
 
     <script>
         (() => {
@@ -186,11 +192,11 @@ use app\core\Application;
                 })
             }
 
-            if (uploadContentBtn) {
-                uploadContentBtn.addEventListener('click', (e) => {
-                    window.location = `/admin/edit-collection?collection-id=${e.target.dataset.id}&redirect=browse`;
-                })
-            }
+            // if (uploadContentBtn) {
+            //     uploadContentBtn.addEventListener('click', (e) => {
+            //         window.location = `/admin/upload-content/metadata?content_id=${e.target.dataset.id}`;
+            //     })
+            // }
 
             if (exportCollection) {
                 exportCollection.addEventListener('click', (e) => {

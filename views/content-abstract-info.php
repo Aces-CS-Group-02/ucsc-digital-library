@@ -33,6 +33,7 @@ $userRole = "student";
 
     <?php include_once __DIR__ . '/components/nav.php'; ?>
 
+    <?php $contentObj = $params['content'] ?>
 
     <div class="wrapper">
         <div class="content-path-display">
@@ -46,7 +47,7 @@ $userRole = "student";
                         <a href="/content/view?content_id=<?= $params['content']->contentInfo->content_id ?>" class='read-btn'><i class="fas fa-book-reader"></i>Read</a>
                     <?php } ?>
                     <?php if ($params['content']->permission->grant_type === 'READ_DOWNLOAD') { ?>
-                        <a href="/content/view?content_id=<?= $params['content']->contentInfo->content_id ?>" class='download-btn'><i class="fas fa-download"></i>Download</a>
+                        <a href="/content/view?content_id=<?= $params['content']->contentInfo->content_id ?>" class='download-btn' download="<?= $contentObj->contentInfo->title ?>.pdf"><i class="fas fa-download"></i>Download</a>
                     <?php } ?>
                 </div>
             <?php } else { ?>
@@ -67,7 +68,6 @@ $userRole = "student";
 
         <div class="info-items-container">
 
-            <?php $contentObj = $params['content'] ?>
 
             <!-- Title -->
             <div class="info-item-container first-node">

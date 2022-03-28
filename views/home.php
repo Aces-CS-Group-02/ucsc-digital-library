@@ -29,11 +29,13 @@
 <body>
 
 
+
+
   <!-- NAVIGATION BAR -->
 
   <?php include_once __DIR__ . '/components/nav.php'; ?>
 
- 
+
 
   <!-- HOMEPAGE CONTENT -->
 
@@ -146,7 +148,7 @@
                 <p class="content-item-title"><?php echo $community->name; ?></p>
                 <p class="content-item-description line-clamp line-clamp-x-description"><?php echo $community->description; ?></p>
                 <div class="content-item-view-more">
-                  <a class="content-item-view-more-link" href="#">
+                  <a class="content-item-view-more-link" href="/browse/community?community_id=<?= $community->community_id ?>">
                     <p>View more</p>
                     <i class="fas fa-long-arrow-alt-right"></i>
                   </a>
@@ -188,17 +190,17 @@
 
             <?php if ($latestContent) {
               foreach ($latestContent as $content) {
-
             ?>
-
-                <div class="item">
-                  <div class="book-card box-shadow-2">
-                    <div class="book-cover-img" style="background-image: url('<?= $_SERVER['HTTP_HOST'] ?>/<?= $content->thumbnail ?>');"></div>
-                    <div class="book-title-container">
-                      <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                <a class="clickable-card" href="/content?content_id=<?= $content->content_id ?>">
+                  <div class="item">
+                    <div class="book-card box-shadow-2">
+                      <div class="book-cover-img" style="background-image: url('http://localhost:8000/<?= $content->thumbnail ?>');"></div>
+                      <div class="book-title-container">
+                        <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
             <?php }
             } ?>
 
@@ -229,14 +231,16 @@
           <div class="carousel-content">
             <?php $popularContent = $params['popularContent'] ?>
             <?php foreach ($popularContent as $content) { ?>
-              <div class="item">
-                <div class="book-card box-shadow-2">
-                  <div class="book-cover-img" style="background-image: url('http://localhost:8000/<?= $content->thumbnail ?>');"></div>
-                  <div class="book-title-container">
-                    <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+              <a class="clickable-card" href="/content?content_id=<?= $content->content_id ?>">
+                <div class="item">
+                  <div class="book-card box-shadow-2">
+                    <div class="book-cover-img" style="background-image: url('http://localhost:8000/<?= $content->thumbnail ?>');"></div>
+                    <div class="book-title-container">
+                      <p class="line-clamp line-clamp-2-description" name="content_id" value="<?php $content->content_id ?>"> <?php echo $content->title ?></p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             <?php } ?>
 
 

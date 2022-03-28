@@ -51,7 +51,7 @@ class SearchController extends Controller
             $search_term = $parser->parse($data['search_query']);
 
 
-            $search_query = "SELECT DISTINCT content.content_id, content.title, content.subject, content.abstract, content.date,
+            $search_query = "SELECT DISTINCT content.content_id, content.title, content.subject, content.abstract, content.date,content.thumbnail,content.views,
                         MAX(MATCH(content.title) AGAINST('{$search_term}' IN BOOLEAN MODE) +
                         MATCH(content.subject) AGAINST('{$search_term}' IN BOOLEAN MODE) +
                         MATCH(content.abstract) AGAINST('{$search_term}' IN BOOLEAN MODE) +

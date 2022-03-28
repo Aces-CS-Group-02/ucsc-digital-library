@@ -41,9 +41,7 @@ use app\core\Application;
 
     <?php
     include_once dirname(__DIR__) . '/components/nav.php';
-
     ?>
-
     <!-- Main Content Container -->
 
     <div id="update-user-main-content">
@@ -150,11 +148,11 @@ use app\core\Application;
                             <input type="hidden" name="redirect" value="<?= $params['redirect'] ?>" />
                             <div class='radio-btns-container'>
                                 <div class='radio-btn-input-group'>
-                                    <input type="radio" name='permission' value="1" />
+                                    <input type="radio" name='permission' value="1" <?php if (isset($params['currentPermission']) && $params['currentPermission']  && $params['currentPermission']->permission == 1) echo "checked" ?> />
                                     <label>READ ONLY</label>
                                 </div>
                                 <div class='radio-btn-input-group'>
-                                    <input type="radio" name='permission' value="2" />
+                                    <input type="radio" name='permission' value="2" <?php if (isset($params['currentPermission']) && $params['currentPermission'] && $params['currentPermission']->permission == 2) echo "checked" ?> />
                                     <label>READ/DOWNLOAD</label>
                                 </div>
 

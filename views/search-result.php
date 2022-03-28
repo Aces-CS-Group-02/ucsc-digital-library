@@ -33,6 +33,8 @@
     <?php include_once __DIR__ . '/components/nav.php'; ?>
     <?php $data = $params['data']; ?>
 
+    <!-- <?php echo var_dump($params['contents']) ?> -->
+
     <!-- Advanced Search Content -->
 
     <div class="main-container">
@@ -50,18 +52,18 @@
                             <?php } ?>
                         </select>
 
-                        <input class="form-control add-margin change-height" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)"  id="search-box" type="text" value="<?php echo $data['search_query']; ?>"/>
-                        <?php foreach($params['filters'] as $filter) { ?>
-                        <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
-                            <select class="custom-select custom-select-override add-margin change-height" disabled>
-                                <option selected><?php echo $filter['type']; ?></option>
-                            </select>
-                            <select class="custom-select custom-select-override add-margin change-height" disabled>
-                                <option selected><?php echo $filter['condition']; ?></option>
-                            </select>
-                            <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
-                            <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
-                        </div>
+                        <input class="form-control add-margin change-height" onkeydown="if(event.keyCode===13)search()" onkeyup="validateOperators(event)" id="search-box" type="text" value="<?php echo $data['search_query']; ?>" />
+                        <?php foreach ($params['filters'] as $filter) { ?>
+                            <div class="filter input-group input-group-override-1" data-type="<?php echo $filter['type']; ?>" data-condition="<?php echo $filter['condition']; ?>" data-query="<?php echo $filter['query']; ?>">
+                                <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                    <option selected><?php echo $filter['type']; ?></option>
+                                </select>
+                                <select class="custom-select custom-select-override add-margin change-height" disabled>
+                                    <option selected><?php echo $filter['condition']; ?></option>
+                                </select>
+                                <input class="form-control add-margin change-height" disabled="" type="text" value="<?php echo $filter['query']; ?>">
+                                <button class="btn btn-secondary" type="button" onclick="removeFilter(event)"><i class="fas fa-times add-margin"></i></button>
+                            </div>
 
                         <?php } ?>
                     </div>
@@ -114,22 +116,27 @@
                         <div class="search-card-details">
                             <div class="search-card-title result-info">
                                 <h5>No results found !</h5>
+                                <div class="suggest-content-text">
+                                    <P>Can not find what you're looking for? Suggest us using this <a class="suggest-content-text-link" href="/suggest-content">link</a></P>
+                                </div>
                             </div>
+
                         </div>
                     </div>
+
                 <?php } ?>
                 <?php foreach ($params['contents'] as $content) { ?>
 
                     <div class="search-card box-shadow-1">
                         <div class="search-card-img">
-                            <img src="<?= $content->thumbnail ?>" alt="" />
+                            <img src="<?= $content->thumbnail ?? "" ?>" alt="" />
                         </div>
                         <div class="search-card-details">
                             <div class="search-card-title">
                                 <a class="content-title-link" href="/content?content_id=<?= $content->content_id ?>"><?php echo $content->title; ?></a>
                             </div>
                             <div class="search-card-views">
-                                <h6>1.5K views . 200 Cited</h6>
+                                <h6><?= $content->views ?> views . 200 Cited</h6>
                             </div>
                             <div class="search-card-creator">
                                 <h6>

@@ -155,9 +155,10 @@ use app\core\Application;
 
             <div class="result-container">
                 <?php foreach ($params['data'] as $result) { ?>
+
                     <div class="search-card box-shadow-1">
                         <div class="search-card-img">
-                            <img src="https://m.media-amazon.com/images/I/91FlBY2B6yL._AC_UY327_FMwebp_QL65_.jpg" alt="" />
+                            <img src="<?= $result->thumbnail ?>" alt="" />
                         </div>
                         <div class="search-card-details">
                             <div class="search-card-title">
@@ -166,7 +167,7 @@ use app\core\Application;
                                 </a>
                             </div>
                             <div class="search-card-views">
-                                <h6>1.5K views . 200 Cited</h6>
+                                <h6><?= $result->views ?> views . 200 Cited</h6>
                             </div>
                             <div class="search-card-creator">
                                 <h6>
