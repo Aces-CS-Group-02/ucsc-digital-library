@@ -14,6 +14,8 @@ use app\models\RegistrationRequest;
 use app\models\ResetPassword;
 use app\models\User;
 use app\models\UserCollection;
+use app\models\Usergroup;
+use app\models\UsergroupUser;
 use app\models\UsersLoginCount;
 
 class authController extends Controller
@@ -216,17 +218,23 @@ class authController extends Controller
 
             $user->loadData($request->getBody());
 
-            // echo '<pre>';
-            // var_dump($user);
-            // echo '</pre>';
+            $usergroup = $_POST['usergroup'];
 
             $user->role_id = $user->setRoleId();
 
-            // echo '<pre>';
-            // var_dump($user);
-            // echo '</pre>';
 
             if ($user->validate() && $user->save()) {
+
+                if ($usergroup != "") {
+                    
+                    $usergroup_user = new UsergroupUser();
+
+                    $usergroup_user->group_id = $usergroup;
+                    $usergroup_user->user_reg_no = Application::$app->db->pdo->lastInsertId();
+
+                    $usergroup_user->save();
+
+                }
 
                 $new_user_id = Application::$app->db->pdo->lastInsertId();
 
@@ -248,6 +256,23 @@ class authController extends Controller
 
         $pendingUser->loadData($request->getBody());
 
+        $data = [];
+        foreach ($_GET as $key => $value) {
+            $data[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        }
+
+        $data_keys = array_keys($data);
+
+        $usergroup = "";
+
+        if (in_array('usergroup', $data_keys)) {
+            $usergroup = $data['usergroup'];
+        }
+
+        // echo '<pre>';
+        // var_dump($data);
+        // exit;
+
         $where = [
             'email' => $pendingUser->{"email"},
             'token' => $pendingUser->{"token"}
@@ -257,7 +282,7 @@ class authController extends Controller
 
         if (!$user) throw new NotFoundException(); //throw not found exception
 
-        return $this->render('auth/verify-email', ['model' => $user]);
+        return $this->render('auth/verify-email', ['model' => $user, 'usergroup' => $usergroup]);
     }
 
     public function forgotPassword(Request $request)
