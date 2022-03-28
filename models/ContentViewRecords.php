@@ -36,21 +36,23 @@ class ContentViewRecords extends DbModel
     public function addRecord($data)
     {
         $this->loadData($data);
-        $this->reg_no = Application::$app->user->reg_no;
-        $dataExists = $this->findOne(['reg_no' => $this->reg_no, 'content_id' => $this->content_id]);
-        if ($dataExists) {
-            $tableName = self::tableName();
-            $sql = "UPDATE $tableName set timestamp = CURRENT_TIMESTAMP WHERE reg_no = $this->reg_no AND content_id = $this->content_id";
-            $statement = self::prepare($sql);
-            // echo $sql;
-            return $statement->execute();
-        } else {
-            if ($this->save()) {
-                return true;
+        if (Application::$app->user->reg_no) {
+            $this->reg_no = Application::$app->user->reg_no;
+            $dataExists = $this->findOne(['reg_no' => $this->reg_no, 'content_id' => $this->content_id]);
+            if ($dataExists) {
+                $tableName = self::tableName();
+                $sql = "UPDATE $tableName set timestamp = CURRENT_TIMESTAMP WHERE reg_no = $this->reg_no AND content_id = $this->content_id";
+                $statement = self::prepare($sql);
+                // echo $sql;
+                return $statement->execute();
+            } else {
+                if ($this->save()) {
+                    return true;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     public function getLatestRecord($data)

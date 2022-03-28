@@ -104,6 +104,7 @@ $userRole = "student";
                     <textarea id="note-data" name="note"></textarea>
                     <input name="content_id" value="<?= $contentId ?>" type="hidden"></input>
                     <div class="notes-modal-bottom-section">
+                        <button class="btn btn-danger mr-1 mb-1 btn-edit" id="delete-note-btn">Delete</button>
                         <button class="btn btn-info mr-1 mb-1" id="add-note">Save</button>
                     </div>
                 </form>

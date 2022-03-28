@@ -39,6 +39,7 @@ $userRole = "student";
     ?>
     <?php
     $content = $params['model'];
+    $suggestContent = $params['submittedContent'] ?? false;
     ?>
 
 
@@ -50,14 +51,22 @@ $userRole = "student";
 
         <div class="table-responsive table-margin">
             <div class="btn-grid-container">
-                <div class="btn-container">
-                    <form action="/admin/upload-content" method="GET">
-                        <button class="btn btn-success mr-1 mb-1 btn-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id ?>">Update</button>
-                    </form>
-                    <form action="/admin/manage-content/delete" method="POST">
-                        <button class="btn btn-danger mr-1 mb-1 btn4-edit" onclick="return(confirm('Are you sure?'))" name="content_id" value="<?php echo $content->content_id ?>">Delete</button>
-                    </form>
-                </div>
+                <?php if (!$suggestContent) { ?>
+                    <div class="btn-container">
+                        <form action="/admin/upload-content" method="GET">
+                            <button class="btn btn-success mr-1 mb-1 btn-edit btn2-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id ?>">Update</button>
+                        </form>
+                        <form action="/admin/manage-content/delete" method="POST">
+                            <button class="btn btn-danger mr-1 mb-1 btn4-edit btn3-edit" onclick="confirm('Are you sure?')" name="content_id" value="<?php echo $content->content_id ?>">Delete</button>
+                        </form>
+                    </div>
+                <?php } ?>
+                <?php if ($suggestContent) { ?>
+                    <div class="btn-container">
+                        <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $content->content_id ?>)" type="button">Approve</button>
+                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $content->content_id ?>)" type="button">Reject</button>
+                    </div>
+                <?php } ?>
 
                 <div class="info-items-container">
 
@@ -210,6 +219,28 @@ $userRole = "student";
             </div>
         </div>
 
+        <div id="approveModal" class="modal">
+
+            <div class="modal-content" id="modal-content">
+                <form id="modal-form" action="" method="POST">
+                    <div class="modal-top-section modal-title">
+                        <div class="title-section">
+                            <p id="mtitle"></p>
+                        </div>
+                        <div class="close">
+                            <span class="edit-close">&times;</span>
+                        </div>
+                    </div>
+                    <div class="input-group edit-input-group">
+                        <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                    </div>
+                    <div class="modal-bottom-section">
+                        <button class="btn btn-info mr-1 mb-1" name="content_id" id="idOut" type="submit">Okay</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
 
     </div>
 
@@ -219,6 +250,7 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/admin-approve-submission.js"></script>
 
 </body>
 

@@ -83,13 +83,22 @@ body {
   width: 100%;
 }
 
+.no-records{
+  border-bottom: none !important;
+}
+
+.edited-container{
+  flex-direction: column;
+  margin: 10px 10px 0 0;
+}
+
 .data-item {
   margin: 5px;
   font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 50%;
+  /* max-width: 50%; */
   box-sizing: border-box;
   min-height: 100%;
   border-bottom: 1px solid rgb(195, 215, 216);

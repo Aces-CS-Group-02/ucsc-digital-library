@@ -48,4 +48,12 @@ class citationCount extends DbModel{
 
         return false;
     }
+
+    public function getRecords($start, $limit)
+    {
+        $tableName = self::tableName();
+        $sql = "SELECT * FROM $tableName ORDER BY count DESC";
+        return $this->paginate($sql, $start, $limit);
+    
+    }
 }

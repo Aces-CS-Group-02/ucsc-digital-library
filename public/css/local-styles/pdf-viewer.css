@@ -158,13 +158,18 @@ body {
   padding: 10px;
 }
 
+.side-bar-section-content.toggle-view {
+  min-height: 0;
+  height: fit-content !important;
+}
+
 .side-bar-section-content.expand {
   height: fit-content;
 }
 
 .side-bar-section-expand-collaps {
   width: 100%;
-  height: 50px;
+  /* height: 50px; */
   background-color: rgb(255, 255, 255);
   border-bottom: 1px solid rgb(187, 187, 187);
 
@@ -192,11 +197,18 @@ body {
   background-color: rgb(219, 219, 219);
   margin: 5px 0;
   border-radius: 10px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-weight: 600;
   color: rgb(99, 99, 99);
   cursor: pointer;
+  padding: 10px 20px;
+}
+
+.bookmark-header-title {
+  flex: 1;
+  text-align: center;
+  pointer-events: none;
 }
 
 .hover-text {
@@ -274,6 +286,12 @@ body {
   /* padding: 0.7rem 2rem; */
 }
 
+.btn-edit {
+  background-color: #ff635b !important;
+  /* border-color: #ed534b !important; */
+}
+
+
 .btn:hover {
   opacity: 0.9;
 }
@@ -295,6 +313,30 @@ body {
   margin: 0 auto !important;
   /* overflow: scroll; */
   /* min-height: 100vh; */
+}
+
+.bookmark-delete-btn {
+  all: unset;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bookmark-dlt-icon {
+  width: 20px;
+  height: 20px;
+  color: #807e7e;
+  filter: invert(42%) sepia(0%) saturate(11%) hue-rotate(360deg) brightness(93%)
+    contrast(88%);
+  pointer-events: none;
+}
+
+#delete-note-btn {
+  /* margin: 0 10px 0 0; */
+  all: unset;
+  margin: 5px 10px 0 0;
+  cursor: pointer;
+  display: none;
+  /* transform: scale(0.65); */
 }
 
 /* --------------------------------------all modals css-------------------------------------------- */

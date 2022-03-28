@@ -797,7 +797,6 @@ class ContentController extends Controller
         return $this->render("admin/content/admin-inner-manage-content", ['content' => $allContent->payload, 'currentPage' => $page, 'pageCount' => $allContent->pageCount, 'search_params' => $search_params, 'breadcrum' => $breadcrum]);
     }
 
-    
     public function viewContent(Request $request)
     {
         $contentModel = new Content();
@@ -874,6 +873,48 @@ class ContentController extends Controller
         }
         throw new NotFoundException();
     }
+
+    public function viewSubmittedContentAbstract(Request $request)
+    {
+        $contentModel = new Content();
+        $submittedContent = true;
+
+        $data = $request->getBody();
+        $data_keys = array_keys($data);
+
+        if (!in_array('content_id', $data_keys)) {
+            throw new NotFoundException();
+        }
+
+        $contentData = $contentModel->findOne(['content_id' => $data['content_id']]);
+
+        $infoContent = $contentModel->getInfoContent($contentData->content_id);
+
+        $content_creators = new ContentCreator();
+        $content_keywords = new ContentKeyword();
+
+
+        $content_creators = $content_creators->findAll(['content_id' => $infoContent->content_id]);
+        $content_keywords = $content_keywords->findAll(['content_id' => $infoContent->content_id]);
+
+        $infoContent->creators = $content_creators;
+        $infoContent->keywords = $content_keywords;
+
+
+        if ($contentData) {
+            $breadcrum = [
+                self::BREADCRUM_DASHBOARD,
+                self::BREADCRUM_MANAGE_APPROVALS,
+                self::BREADCRUM_APPROVE_SUBMISSIONS,
+                self::BREADCRUM_APPROVE_SUBMISSIONS_VIEW
+
+            ];
+
+            return $this->render('admin/content/info-content', ['model' => $infoContent, 'breadcrum' => $breadcrum, 'submittedContent' => $submittedContent]);
+        }
+        throw new NotFoundException();
+    }
+
     public function deleteContent(Request $request)
     {
         $contentModel = new Content();

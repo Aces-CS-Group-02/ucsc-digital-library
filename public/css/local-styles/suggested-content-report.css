@@ -13,6 +13,13 @@ body {
   padding: 15px 0;
 }
 
+.content-container {
+  max-width: 1400px;
+  width: 96%;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
 #page-header-title {
   font-size: 1.3rem;
   font-weight: 700;
@@ -21,6 +28,61 @@ body {
 
 .admin-dashboard-main-content {
   flex-grow: 1;
+}
+
+.selection-division-container{
+  display: flex;
+  justify-content: center;
+}
+
+.selection-division {
+  display: flex;
+  flex-direction: row;
+  /* width: 1400px; */
+  /* width: 100%; */
+  /* width: fit-content; */
+  /* border: 1px solid red; */
+}
+
+.edit-form-conrol.add-error {
+  border: 1px solid red !important;
+}
+
+.error-text {
+  color: red;
+  display: none;
+}
+
+.error-text.show-text {
+  display: block;
+}
+
+.input-group-override {
+  flex-direction: row;
+}
+
+.labelPlace-override {
+  margin: 5px 10px 0 0;
+}
+
+.n-a {
+  color: rgb(172, 172, 172);
+}
+
+.edit-input-group {
+  width: 50px !important;
+}
+
+.edit-form-conrol {
+  flex: 1;
+  margin-bottom: 5px !important;
+}
+
+.btn-edit {
+  height: 2rem;
+  width: 70px;
+  text-align: center;
+  justify-content: center;
 }
 
 .details-container {
@@ -50,6 +112,7 @@ body {
   display: flex;
   flex-direction: row;
   width: 100%;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .list-title {
@@ -62,6 +125,7 @@ body {
   border-radius: 5px;
   /* margin: 5px 0; */
   width: 100%;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .data {
@@ -91,6 +155,7 @@ body {
 
 .edit-for-no-records {
   border-bottom: none !important;
+  max-width: 100% !important;
 }
 
 .edit-data-item {
@@ -98,12 +163,11 @@ body {
   margin-left: 10px;
 }
 
-.paginate-component-container{
+.paginate-component-container {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-
 
 @media only screen and (max-width: 854px) {
   .details-container {

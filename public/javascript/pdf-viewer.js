@@ -24,6 +24,7 @@ var citationBtns = document.getElementsByClassName("get-citation-btn");
 var citationModal = document.getElementById("citationsModal");
 var citationSpan = document.getElementsByClassName("close-citation")[0];
 var citationSelect = document.getElementById("select-citation");
+var deleteNoteBtn = document.getElementById("delete-note-btn");
 
 var collectionBtns = document.getElementsByClassName("add-to-collection-btn");
 var collectionModal = document.getElementById("collectionsModal");
@@ -194,10 +195,25 @@ function copyCitation() {
   navigator.clipboard.writeText(citationTextArea.value);
 }
 
+const deleteNote = () => {
+  if (confirm("Are you sure?")) {
+    const deleteNoteReq = new XMLHttpRequest();
+    var url = "/ajax/delete-user-notes";
+    deleteNoteReq.open("POST", url);
+    deleteNoteReq.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        noteModal.style.display = "none";
+        deleteNoteBtn.style.display = "none";
+        alert(this.responseText);
+      }
+    };
+    deleteNoteReq.send(JSON.stringify({ content_id: contentId }));
+  }
+};
+
+deleteNoteBtn.addEventListener("click", deleteNote, false);
+
 const saveNote = (currentTarget) => {
-  // var noteData = document.getElementById("note-data").value;
-  // AJAX request
-  // console.log(currentTarget);
   currentTarget.preventDefault();
   for (instance in CKEDITOR.instances) {
     CKEDITOR.instances[instance].updateElement();
@@ -221,7 +237,7 @@ const saveNote = (currentTarget) => {
 // console.log(noteData);
 noteSave.addEventListener("submit", saveNote, false);
 
-const getNoteData = ({ currentTarget }) => {
+const getNoteData = () => {
   const getNoteReq = new XMLHttpRequest();
   let params = [];
   params = `content_id=${contentId}`;
@@ -231,6 +247,8 @@ const getNoteData = ({ currentTarget }) => {
   getNoteReq.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // console.log(this.responseText);
+      if (this.responseText) deleteNoteBtn.style.display = "flex";
+      else deleteNoteBtn.style.display = "none";
 
       var editor = CKEDITOR.instances["note-data"];
       editor.setData(this.responseText);
@@ -277,6 +295,26 @@ const getBookmarks = () => {
   bookmarkReq.send(JSON.stringify({ content_id: contentId }));
 };
 
+const deleteBookmark = ({ currentTarget }) => {
+  // console.log(currentTarget.value);
+  // console.log(currentTarget.dataset.bookmarkId);
+  // var contentId = currentTarget.value;
+  var pageNo = currentTarget.dataset.bookmarkId;
+
+  const deleteBookmarkReq = new XMLHttpRequest();
+  var url = "/ajax/delete-user-bookmarks";
+  deleteBookmarkReq.open("POST", url);
+  deleteBookmarkReq.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      alert(this.responseText);
+      getBookmarks();
+    }
+  };
+  deleteBookmarkReq.send(
+    JSON.stringify({ content_id: contentId, page_no: pageNo })
+  );
+};
+
 function getBookmarkData() {
   var parentDiv = document.getElementById("side-bar-section-content"); //from here
 
@@ -286,21 +324,46 @@ function getBookmarkData() {
       parentDiv.innerHTML = "";
       var bookmarks = JSON.parse(this.responseText);
       // console.log(this.responseText);
+      if (bookmarks.length <= 3) {
+        document.querySelector(
+          ".side-bar-section-expand-collaps-btn"
+        ).style.display = "none";
+        document
+          .querySelector(".side-bar-section-content")
+          .classList.add("toggle-view");
+      } else {
+        document.querySelector(
+          ".side-bar-section-expand-collaps-btn"
+        ).style.display = "";
+      }
       for (var bookmark of bookmarks) {
         var div = document.createElement("div");
         div.classList.add("bookmark-card");
         // div.setAttribute("id", bookmark.page);
         div.dataset.id = bookmark.page;
-        div.innerText = "Page: " + bookmark.page;
+        div.innerHTML =
+          "<p class='bookmark-header-title'>Page: " + bookmark.page + "</p>";
+        var dltBtn = document.createElement("button");
+        dltBtn.classList.add("bookmark-delete-btn");
+        dltBtn.innerHTML =
+          '<i class="bookmark-dlt-icon fas fa-trash" id="delete-content">';
+        dltBtn.value = contentId;
+        dltBtn.dataset.bookmarkId = bookmark.page;
+        div.appendChild(dltBtn);
         parentDiv.appendChild(div);
+        dltBtn.addEventListener("click", (e) => {
+          // console.log(e.target.dataset.bookmarkId);
+          // console.log(e.target.value);
+          deleteBookmark(e);
+        });
         div.addEventListener("click", (e) => {
           // alert();
-          console.log(e.target.dataset.id);
+          // console.log("😊" + e.target);
           var canvas = document.querySelector(".pdfCanvas");
           var pageHeight = canvas.height;
-          console.log(pageHeight);
-          var scrollHeight = pageHeight * e.target.dataset.id;
-          console.log(scrollHeight);
+          // console.log(pageHeight);
+          var scrollHeight = pageHeight * (e.target.dataset.id-0.9);
+          // console.log(scrollHeight);
           var scrollDiv = document.querySelector("#scroll-div");
           scrollDiv.scrollTop = scrollHeight;
         });
@@ -627,7 +690,7 @@ pdfjsLib
   .getDocument(url)
   .promise.then((pdfDoc_) => {
     pdfDoc = pdfDoc_;
-    //   console.log(pdfDoc);
+      console.log(pdfDoc);
 
     document.querySelector("#page-count").textContent = pdfDoc.numPages;
 

@@ -22,7 +22,7 @@ class Controller
     // Manage Users Dashboard
     public const BREADCRUM_BULK_REGISTER = ['name' => 'Bulk register', 'link' => '/admin/bulk-register'];
     public const BREADCRUM_APPROVE_NEW_USERS = ['name' => 'Approve new users', 'link' => '/admin/verify-new-users'];
-    public const BREADCRUM_APPROVE_NEW_USER = ['name' => 'Approve new user', 'link' => '/admin/info-verify-new-users'];
+    public const BREADCRUM_APPROVE_NEW_USER = ['name' => 'Approve new user', 'link' => ''];
     public const BREADCRUM_UPDATE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_DELETE_USERS = ['name' => 'Users', 'link' => '/admin/users'];
     public const BREADCRUM_CREATE_USER_GROUPS = ['name' => 'Create user group', 'link' => '/admin/create-user-group'];
@@ -73,9 +73,11 @@ class Controller
     public const BREADCRUM_VIEW_REPORTS = ['name' => 'View reports', 'link' => '/admin/dashboard/view-reports'];
     public const BREADCRUM_USER_APPROVALS_REPORT = ['name' => 'User approvals report', 'link' => '/admin/user-approvals-report'];
     public const BREADCRUM_USERS_LOGIN_REPORT = ['name' => 'Users\' login report', 'link' => '/admin/users-login-report'];
+    public const BREADCRUM_SUGGESTED_CONTENT_REPORT = ['name' => 'Suggested content report', 'link' => '/admin/suggested-content-report'];
     public const CITATION_HISTORY_REPORT = ['name' => 'Citation history report', 'link' => '/admin/citation-history-report'];
 
     public const BREADCRUM_APPROVE_SUBMISSIONS = ['name' => 'Approve submissions', 'link' => '/admin/approve-submissions'];
+    public const BREADCRUM_APPROVE_SUBMISSIONS_VIEW = ['name' => 'Approve submissions view', 'link' => ''];
 
     public const BREADCRUM_APPROVE_USER_GROUPS = ['name' => 'Approve user groups', 'link' => '/admin/approve-user-groups'];
 

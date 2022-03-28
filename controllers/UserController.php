@@ -363,6 +363,30 @@ class UserController extends Controller
         // return $bookmarks;
     }
 
+    public function deleteContentBookmark()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+        $pageNo = $_POST["page_no"];
+        // var_dump($contentId,$pageNo);
+
+        $bookmarkModel = new Bookmark();
+        $reg_no = Application::$app->user->reg_no;
+        $bookmarkExists = $bookmarkModel->findOne(['content_id' => $contentId, 'reg_no' => $reg_no, 'page_no' => $pageNo]);
+        if ($bookmarkExists) {
+            if ($bookmarkModel->removeUserBookmark($pageNo, $contentId, $reg_no)) {
+                $message = '❌ Bookmark removed from the content!';
+                return $message;
+            } else {
+                $message = '❗ Error. Something went wrong!';
+                return $message;
+            }
+        } else {
+            $message = '❗ The bookmark doesn\'t exist!';
+            return $message;
+        }
+    }
+
     public function saveContentNote(Request $request)
     {
         $data = $request->getBody();
@@ -371,10 +395,14 @@ class UserController extends Controller
 
         $note = $noteModel->findOne(['content_id' => $data['content_id'], 'reg_no' => $reg_no]);
         if ($note) {
-            $ifUpdated = $noteModel->UpdateNote($data['note'], $note->note_id);
+            if ($data['note'])
+                $ifUpdated = $noteModel->UpdateNote($data['note'], $note->note_id);
+            else
+                $noteModel->removeUserNote($data['content_id'], $reg_no);
             // var_dump($ifUpdated);
         } else {
-            $noteModel->saveNote($request->getBody());
+            if ($data['note'])
+                $noteModel->saveNote($request->getBody());
             // echo "saved";
         }
     }
@@ -395,6 +423,30 @@ class UserController extends Controller
                 // var_dump($noteDataHtml);
                 return $noteDataHtml;
             }
+        }
+    }
+
+    public function deleteContentNote()
+    {
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        $contentId = $_POST["content_id"];
+        // var_dump($contentId,$pageNo);
+
+        $noteModel = new Note();
+        $reg_no = Application::$app->user->reg_no;
+        $noteExists = $noteModel->findOne(['content_id' => $contentId, 'reg_no' => $reg_no]);
+        // var_dump($noteModel->removeUserNote($contentId, $reg_no));
+        if ($noteExists) {
+            if ($noteModel->removeUserNote($contentId, $reg_no)) {
+                $message = '❌ Note removed from the content!';
+                return $message;
+            } else {
+                $message = '❗ Error. Something went wrong!';
+                return $message;
+            }
+        } else {
+            $message = '❗ A note doesn\'t exist for this content!';
+            return $message;
         }
     }
 

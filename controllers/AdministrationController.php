@@ -333,9 +333,9 @@ class AdministrationController extends Controller
         if($request->isPOST())
         {
             $users = [];
-            foreach($_POST['users'] as $k=>$v){
-             $val = intdiv($k,3);
-             $users[$val][key($v)]=$v[key($v)];
+            foreach ($_POST['users'] as $k => $v) {
+                $val = intdiv($k, 3);
+                $users[$val][key($v)] = $v[key($v)];
             }
 
             // echo"<pre>";
@@ -362,13 +362,12 @@ class AdministrationController extends Controller
 
             $user_group_id = Application::$app->db->pdo->lastInsertId();
 
-            foreach($users as $user)
-            {
+            foreach ($users as $user) {
                 $new_user = new PendingUser();
 
                 $new_user->first_name = $user['first_name'];
                 $new_user->last_name = $user['last_name'];
-                $new_user->email =$user['email'];
+                $new_user->email = $user['email'];
 
                 $code = substr(md5(mt_rand()), 0, 15);
                 $new_user->token = $code;
@@ -583,8 +582,7 @@ class AdministrationController extends Controller
             // echo '</pre>';
             // exit;
 
-            foreach($contents->payload as $content)
-            {
+            foreach ($contents->payload as $content) {
                 $user = new User();
                 $user = $user->findOne(['reg_no' => $content->uploaded_by]);
                 // var_dump($user->first_name + $user->last_name);
@@ -646,29 +644,186 @@ class AdministrationController extends Controller
     {
         $userApproval = new UserApproval();
         $userList = $userApproval->getAll();
+        $userModel = new User();
+        $userData = [];
+        foreach ($userList as $data) {
+            $user = $userModel->findOne(['reg_no' => $data->approved_by]);
+            $tempUser = new stdClass;
+            $tempUser->id = $user->reg_no;
+            $tempUser->name = $user->first_name . " " . $user->last_name;
+            // var_dump($tempUser);
+            array_push($userData, $tempUser);
+        };
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_VIEW_REPORTS,
             self::BREADCRUM_USER_APPROVALS_REPORT
         ];
-        return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList]);
+        return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userList' => $userList, 'users' => $userData]);
     }
 
-    public function viewCitationHistoryReport()
+    public function viewApprovals(Request $request)
     {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $userApproval = new UserApproval();
+        $userList = $userApproval->getApprovedUsers($start, $limit);
+        $rejectedCount = $userApproval->getRejectedCount();
+        $approvedCount = $userApproval->getApprovedCount();
+        $userModel = new User();
+        $userData = [];
+        foreach ($userList->payload as $data) {
+            $user = $userModel->findOne(['reg_no' => $data->approved_by]);
+            $tempUser = new stdClass;
+            $tempUser->id = $user->reg_no;
+            $tempUser->name = $user->first_name . " " . $user->last_name;
+            // var_dump($tempUser);
+            array_push($userData, $tempUser);
+        };
+        // var_dump($userList->payload);
+        // exit;
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::BREADCRUM_USER_APPROVALS_REPORT
+        ];
+        return $this->render("admin/reports/user-approvals-report", ['breadcrum' => $breadcrum, 'userListA' => $userList->payload, 'users' => $userData, 'currentPage' => $page, 'pageCount' => $userList->pageCount, 'rejectedCount' => $rejectedCount, 'approvedCount' => $approvedCount]);
+    }
+
+    public function viewRejections(Request $request)
+    {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 10;
+        $start = ($page - 1) * $limit;
+
+        $userApproval = new UserApproval();
+        $userList = $userApproval->getRejectedUsers($start, $limit);
+        $rejectedCount = $userApproval->getRejectedCount();
+        $approvedCount = $userApproval->getApprovedCount();
+        $userModel = new User();
+        $userData = [];
+        foreach ($userList->payload as $data) {
+            $user = $userModel->findOne(['reg_no' => $data->approved_by]);
+            $tempUser = new stdClass;
+            $tempUser->id = $user->reg_no;
+            $tempUser->name = $user->first_name . " " . $user->last_name;
+            // var_dump($tempUser);
+            array_push($userData, $tempUser);
+        };
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::BREADCRUM_USER_APPROVALS_REPORT
+        ];
+        return $this->render("admin/reports/user-approvals-report-rejected", ['breadcrum' => $breadcrum, 'userListR' => $userList->payload, 'users' => $userData, 'currentPage' => $page, 'pageCount' => $userList->pageCount, 'rejectedCount' => $rejectedCount, 'approvedCount' => $approvedCount]);
+    }
+
+    public function viewCitationHistoryReport(Request $request)
+    {
+        $data = $request->getBody();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $limit = 20;
+        $start = ($page - 1) * $limit;
+
         $citationCountModel = new citationCount();
-        $citations = $citationCountModel->getAll();
+        $citations = $citationCountModel->getRecords($start, $limit);
+        // var_dump($citations->payload);
+        // exit;
+        // $citations = $citationCountModel->getAll();
+        $contentModel = new Content();
+        $contentData = [];
+        foreach ($citations->payload as $citation) {
+            $content = $contentModel->findOne(['content_id' => $citation->content_id]);
+            $tempContent = new stdClass;
+            $tempContent->id = $content->content_id;
+            $tempContent->title = $content->title;
+            array_push($contentData, $tempContent);
+        }
+        // var_dump( $contentData);
+        // exit;
+
+        if ($page <= 0) throw new NotFoundException;
+
         $breadcrum = [
             self::BREADCRUM_DASHBOARD,
             self::BREADCRUM_VIEW_REPORTS,
             self::CITATION_HISTORY_REPORT
         ];
-        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations]);
+        return $this->render("admin/reports/citation-history-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
+    }
+
+    public function viewSuggestedContentReport(Request $request)
+    {
+        $breadcrum = [
+            self::BREADCRUM_DASHBOARD,
+            self::BREADCRUM_VIEW_REPORTS,
+            self::BREADCRUM_SUGGESTED_CONTENT_REPORT
+        ];
+        if ($request->isPOST()) {
+            $data = $request->getBody();
+            $page = isset($data['page']) ? $data['page'] : 1;
+            $limit = 20;
+            $start = ($page - 1) * $limit;
+
+            $startDate = $data["start-date"];
+            $endDate = $data["end-date"];
+
+            if (!($startDate) && !($endDate)) {
+                $errorMsg = true;
+                $error = "both";
+                return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'error' => $errorMsg, 'errorMsg' => $error]);
+            
+            } elseif (!($endDate)) {
+                $errorMsg = true;
+                $error = "end";
+                return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'error' => $errorMsg, 'errorMsg' => $error]);
+            } elseif (!($startDate)) {
+                $errorMsg = true;
+                $error = "both";
+                return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'error' => $errorMsg, 'errorMsg' => $error]);
+            } else {
+                $contentSuggestionModel = new ContentSuggestion();
+                if ($endDate > $startDate) {
+                    $allData = $contentSuggestionModel->getContentSuggestions($startDate, $endDate, $start, $limit);
+                } else {
+                    $allData = $contentSuggestionModel->getContentSuggestions($endDate, $startDate, $start, $limit);
+                }
+                // echo '<pre>';
+                // var_dump($allData->payload);
+                // echo '</pre>';
+                // exit;
+                $userModel = new User();
+                $userData = [];
+                foreach ($allData->payload as $data) {
+                    $user = $userModel->findOne(['reg_no' => $data->reg_no]);
+                    $tempUser = new stdClass;
+                    $tempUser->id = $user->reg_no;
+                    $tempUser->name = $user->first_name . " " . $user->last_name;
+                    // var_dump($tempUser);
+                    array_push($userData, $tempUser);
+                };
+                // echo '<pre>';
+                // var_dump($userData);
+                // echo '</pre>';
+                // exit;
+                return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'contentSuggestions' => $allData->payload, 'pageCount' => $allData->pageCount, 'currentPage' => $page, 'resultCount' => $allData->resultCount, 'users' => $userData]);
+            }
+        } else {
+
+            // return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum, 'citations' => $citations->payload, 'content' => $contentData, 'pageCount' => $citations->pageCount, 'currentPage' => $page, 'resultCount' => $citations->resultCount]);
+            return $this->render("admin/reports/suggested-content-report", ['breadcrum' => $breadcrum]);
+        }
     }
 
     public function viewLoginReport(Request $request)
     {
         $data = $request->getBody();
+        // var_dump($data);
+        // exit;
         $Search_params = $data['search-data'] ?? '';
         $page = isset($data['page']) ? $data['page'] : 1;
         $limit = 15;

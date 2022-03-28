@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\core\Application;
 use app\core\DbModel;
+use PDO;
 
 class ContentSuggestion extends DbModel{
     public int $reg_no = 0;
@@ -45,5 +46,18 @@ class ContentSuggestion extends DbModel{
             return true;
         }
         return false;
+    }
+
+    public function getContentSuggestions($startDate, $endDate, $start, $limit)
+    {
+        $startDate = str_replace('-',"", $startDate);
+        $endDate = str_replace('-',"", $endDate);
+        $tableName = self::tableName();
+        $sql = "SELECT * FROM $tableName WHERE timestamp >= $startDate AND timestamp <= $endDate ORDER BY timestamp";
+        // $statement = self::prepare($sql);
+        // // echo $sql;
+        // $statement->execute();
+        // return $statement->fetchAll(PDO::FETCH_OBJ);
+        return $this->paginate($sql, $start, $limit);
     }
 }
