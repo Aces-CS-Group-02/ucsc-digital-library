@@ -169,9 +169,11 @@ $userRole = "student";
                     </div>
                     <div class="block-e">
                         <!-- <p> -->
-                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="button">View</button>
-                            <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $content->content_id ?>)" type="button">Approve</button>
-                            <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $content->content_id ?>)" type="button">Reject</button>
+                        <form action="/admin/approve-submissions/view" method="GET">
+                            <button class="btn btn-info mr-1 mb-1 btn1-edit" type="submit" name="content_id" value="<?php echo $content->content_id ?>">View</button>
+                        </form>
+                        <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $content->content_id ?>)" type="button">Approve</button>
+                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $content->content_id ?>)" type="button">Reject</button>
                         <!-- </p> -->
                     </div>
                 </div>

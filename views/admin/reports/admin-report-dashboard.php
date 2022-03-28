@@ -55,7 +55,7 @@ $userRole = "admin";
                         <div class="card-content ">Users' Login Report</div>
                     </a>
                 </div>
-                <div class="card-container">
+                <!-- <div class="card-container">
                     <a href="" class="card box-shadow-1">
                         <div class="card-icon">
                             <img class="card-icon-img" src="\assets\admin-reports-dashboard\system.png" alt=" bulk-upload-image">
@@ -63,7 +63,7 @@ $userRole = "admin";
                         <div class="card-content ">System Log Report</div>
                     </a>
 
-                </div>
+                </div> -->
                 <div class="card-container">
                     <a href="/admin/user-approvals-report" class="card box-shadow-1">
                         <div class="card-icon">

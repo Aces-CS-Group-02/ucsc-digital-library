@@ -35,8 +35,8 @@
         </div>
 
         <?php
-        $allCitationData = $params['citations'];
-        $allContentData = $params['content'];
+        $allCitationData = $params['citations'] ?? false;
+        $allContentData = $params['content'] ?? false;
         // var_dump($allContentData);
         ?>
 
@@ -50,20 +50,22 @@
                         Citation Count
                     </div>
                 </div>
-                <?php foreach ($allCitationData as $citationData) { ?>
-                    <div class="data-item-container">
-                        <div class="data-item edit-data-item">
-                            <?php foreach ($allContentData as $contentData) {
-                                if ($citationData->content_id == $contentData->id) { ?>
-                                    <p><?= $contentData->title ?></p>
-                            <?php }
-                            } ?>
+                <?php if ($allCitationData) { ?>
+                    <?php foreach ($allCitationData as $citationData) { ?>
+                        <div class="data-item-container">
+                            <div class="data-item edit-data-item">
+                                <?php foreach ($allContentData as $contentData) {
+                                    if ($citationData->content_id == $contentData->id) { ?>
+                                        <p><?= $contentData->title ?></p>
+                                <?php }
+                                } ?>
+                            </div>
+                            <div class="data-item">
+                                <p><?= $citationData->count ?></p>
+                            </div>
                         </div>
-                        <div class="data-item">
-                            <p><?= $citationData->count ?></p>
-                        </div>
-                    </div>
-                <?php } ?>
+                <?php }
+                } ?>
                 <div class="data">
                     <?php if (empty($allCitationData)) { ?>
                         <div class="data-item-container">
@@ -77,16 +79,16 @@
                     <?php } ?>
                 </div>
             </div>
-            
+
             <div class="paginate-component-container">
-            
-            <?php
+
+                <?php
 
 
-            if (!empty($allCitationData) && isset($params['pageCount'])) {
-                include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
-            }
-            ?>
+                if (!empty($allCitationData) && isset($params['pageCount'])) {
+                    include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
+                }
+                ?>
             </div>
         </div>
     </div>

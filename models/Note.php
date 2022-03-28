@@ -55,6 +55,7 @@ class Note extends DbModel
     {
         $tableName = self::tableName();
         $statement = self::prepare("DELETE FROM $tableName WHERE content_id=$contentId AND reg_no=$reg_no");
+        // echo "DELETE FROM $tableName WHERE content_id=$contentId AND reg_no=$reg_no";
         return $statement->execute();
     }
 }

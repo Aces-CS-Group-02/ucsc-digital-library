@@ -55,15 +55,15 @@
         <div class="details-container">
             <div class="data-container">
                 <div class="tab-btn-container">
-                    <a class="tab-link-btn active" href="/admin/user-approvals-report/approvals">Approved Users(<?php echo $approvedCount; ?>)</a>
-                    <a class="tab-link-btn blured" href="/admin/user-approvals-report/rejections">Rejected Users (<?php echo $rejectedCount; ?>)</a>
+                    <a class="tab-link-btn blured" href="/admin/user-approvals-report/approvals">Approved Users(<?php echo $approvedCount; ?>)</a>
+                    <a class="tab-link-btn active" href="/admin/user-approvals-report/rejections">Rejected Users (<?php echo $rejectedCount; ?>)</a>
                 </div>
-                <?php if ($usersApproved) { ?>
+                <?php if ($usersRejected) { ?>
                     <div class="data-item-container edited-container">
-                        <?php foreach ($usersApproved as $user) { ?>
+                        <?php foreach ($usersRejected as $user) { ?>
                             <div class="data-item">
                                 <p class="heading">User email: </p> <?= $user->email; ?></br>
-                                <p class="heading">Approved By:
+                                <p class="heading">Rejected By:
                                     <?php foreach ($userData as $uData) {
                                         if ($user->approved_by == $uData->id) { ?>
                                 <p><?= $uData->name ?></br>
@@ -79,16 +79,10 @@
                             </div>
                         <?php } ?>
                     </div>
-                <?php } elseif ($usersRejected) { ?>
-                    <div class="data-item-container">
-                        <?php foreach ($usersRejected as $user) { ?>
-                            <div class="data-item"></div>
-                        <?php } ?>
-                    </div>
                 <?php } ?>
                 <div class="data">
 
-                    <?php if (empty($usersApproved)) { ?>
+                    <?php if (empty($usersRejected)) { ?>
                         <div class="data-item-container">
                             <div class="data-item no-records">
                                 <p class="no-records-available">No Records Available :(</p>
@@ -98,10 +92,11 @@
                 </div>
 
                 <?php
-                if (!empty($usersApproved) && isset($params['pageCount'])) {
+                if (!empty($usersRejected) && isset($params['pageCount'])) {
                     include_once dirname(dirname(__DIR__)) . '/components/paginate.php';
                 }
                 ?>
+
             </div>
 
             <div class="chart-container">

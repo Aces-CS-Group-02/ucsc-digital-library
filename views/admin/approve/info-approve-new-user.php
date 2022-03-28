@@ -24,10 +24,10 @@ $userRole = "student";
 
     <!-- Local Styles -->
     <link rel="stylesheet" href="/css/local-styles/info-approve-content-collection.css">
+    <link rel="stylesheet" href="/css/local-styles/verify-new-users.css">
 
 
-
-    <title>Document</title>
+    <title>Approve New Users Information</title>
 </head>
 
 <body>
@@ -39,7 +39,7 @@ $userRole = "student";
     ?>
 
     <?php
-        $newUser = $params['model'];
+    $newUser = $params['model'];
     ?>
 
 
@@ -50,12 +50,14 @@ $userRole = "student";
             <?php include_once dirname(dirname(__DIR__)) . '/components/breadcrum.php'; ?>
         </div>
 
-        
+
         <div class="table-responsive table-margin">
             <div class="btn-grid-container">
                 <div class="btn-container">
-                    <button class="btn btn-success mr-1 mb-1" type="button">Approve</button>
-                    <button class="btn btn-danger mr-1 mb-1" type="button">Reject</button>
+                    <!-- <form action="/admin/approve-new-user/view" method="GET">
+                        <button class="btn btn-success mr-1 mb-1 btn2-edit" onclick="showModal(true,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Approve</button>
+                        <button class="btn btn-danger mr-1 mb-1 btn3-edit" onclick="showModal(false,this,<?= $id ?>,'<?= $fName ?>','<?= $lName ?>')" type="button">Reject</button>
+                    </form> -->
                 </div>
                 <div class="info-items-container">
 
@@ -71,13 +73,13 @@ $userRole = "student";
                         </div>
                     </div>
 
-                   <!-- first name -->
-                   <div class="info-item-container ">
+                    <!-- first name -->
+                    <div class="info-item-container ">
                         <div class="info-item-title">
                             <p>First Name:</p>
                         </div>
                         <div class="info-item-content">
-                        <p><?php echo $newUser->first_name?></p>
+                            <p><?php echo $newUser->first_name ?></p>
                         </div>
                     </div>
 
@@ -87,7 +89,7 @@ $userRole = "student";
                             <p>Last Name:</p>
                         </div>
                         <div class="info-item-content">
-                        <p><?php echo $newUser->last_name?></p>
+                            <p><?php echo $newUser->last_name ?></p>
                         </div>
                     </div>
 
@@ -98,7 +100,7 @@ $userRole = "student";
                             <p>User Email:</p>
                         </div>
                         <div class="info-item-content">
-                            <p><?php echo $newUser->email?></p>
+                            <p><?php echo $newUser->email ?></p>
                         </div>
                     </div>
 
@@ -108,45 +110,70 @@ $userRole = "student";
                             <p>NIC:</p>
                         </div>
                         <div class="info-item-content ">
-                        <img src="http://localhost:8000/<?php echo $newUser->verification;?>" alt="nic-image" style='width:400px;height:400px'>
+                            <img src="http://localhost:8000/<?php echo $newUser->verification; ?>" alt="nic-image" style='width:400px;height:400px'>
                         </div>
-                    </div>  
+                    </div>
 
-                     <!-- message -->
-                     <div class="info-item-container">
+                    <!-- message -->
+                    <div class="info-item-container">
                         <div class="info-item-title">
                             <p>Message:</p>
                         </div>
                         <div class="info-item-content">
-                            
+
                             <p class="line-clamp line-clamp-1-description"><?php
-                            if ($newUser->message === "") {
-                                echo "N/A";
-                            } else {
-                                echo $newUser->message;
-                            }  ?></p>
+                                                                            if ($newUser->message === "") {
+                                                                                echo "N/A";
+                                                                            } else {
+                                                                                echo $newUser->message;
+                                                                            }  ?></p>
                         </div>
                     </div>
 
-                     <!-- Date -->
-                     <div class="info-item-container ">
+                    <!-- Date -->
+                    <div class="info-item-container ">
                         <div class="info-item-title">
                             <p>Date:</p>
                         </div>
                         <div class="info-item-content">
-                        <p><?php
-                            $date = new DateTime($newUser->date);
-                            echo $date->format('Y-m-d'); ?></p>
+                            <p><?php
+                                $date = new DateTime($newUser->date);
+                                echo $date->format('Y-m-d'); ?></p>
                         </div>
 
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
-        
-        
+
+        <div id="myModal" class="modal">
+
+            <div class="modal-content" id="modal-content">
+                <form id="modal-form" action="" method="POST">
+                    <div class="modal-top-section modal-title">
+                        <div class="title-section">
+                            <p id="mtitle"></p>
+                            <div id="break-modal-title">
+                                <p id="FName"></p>
+                                <p id="LName"></p>
+                            </div>
+                        </div>
+                        <div class="close">
+                            <span class="edit-close">&times;</span>
+                        </div>
+                    </div>
+                    <div class="input-group edit-input-group">
+                        <input type="textarea" class="form-control edit-form-control" id="reason" name="reason" placeholder="Enter the reason"></input>
+                    </div>
+                    <div class="modal-bottom-section">
+                        <button class="btn btn-info mr-1 mb-1" name="request_id" id="idOut" type="submit">Okay</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
 
     </div>
 
@@ -156,6 +183,7 @@ $userRole = "student";
     include_once dirname(dirname(__DIR__)) . '/components/footer.php';
     ?>
     <script src="/javascript/nav.js"></script>
+    <script src="/javascript/verify-new-users.js"></script>
 
 </body>
 

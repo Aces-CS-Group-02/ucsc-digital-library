@@ -435,9 +435,10 @@ class UserController extends Controller
         $noteModel = new Note();
         $reg_no = Application::$app->user->reg_no;
         $noteExists = $noteModel->findOne(['content_id' => $contentId, 'reg_no' => $reg_no]);
+        // var_dump($noteModel->removeUserNote($contentId, $reg_no));
         if ($noteExists) {
             if ($noteModel->removeUserNote($contentId, $reg_no)) {
-                $message = '❌ Note removed from the content !';
+                $message = '❌ Note removed from the content!';
                 return $message;
             } else {
                 $message = '❗ Error. Something went wrong!';

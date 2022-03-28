@@ -187,10 +187,13 @@ $app->router->get('/admin/users', [AdministrationController::class, "manageUsers
 
 // Admin Dashboard => Manage Reports Routes
 $app->router->get('/admin/dashboard/view-reports', [AdministrationController::class, "viewReports"]);
-$app->router->get('/admin/user-approvals-report', [AdministrationController::class, "viewApprovalsReport"]);
+$app->router->get('/admin/user-approvals-report', [AdministrationController::class, "viewApprovals"]);
+$app->router->get('/admin/user-approvals-report/approvals', [AdministrationController::class, "viewApprovals"]);
+$app->router->get('/admin/user-approvals-report/rejections', [AdministrationController::class, "viewRejections"]);
 $app->router->get('/admin/users-login-report', [AdministrationController::class, "viewLoginReport"]);
 $app->router->get('/admin/citation-history-report', [AdministrationController::class, "viewCitationHistoryReport"]);
 $app->router->get('/admin/suggested-content-report', [AdministrationController::class, "viewSuggestedContentReport"]);
+$app->router->post('/admin/suggested-content-report', [AdministrationController::class, "viewSuggestedContentReport"]);
 
 
 // Still Implementing
@@ -211,6 +214,7 @@ $app->router->get('/admin/manage-content', [ContentController::class, "manageCon
 $app->router->post('/admin/manage-content', [ContentController::class, "manageContent"]);
 $app->router->get('/admin/manage-content/view', [ContentController::class, "viewContent"]);
 $app->router->get('/admin/my-submissions/view', [ContentController::class, "viewMyContent"]);
+$app->router->get('/admin/approve-submissions/view', [ContentController::class, "viewSubmittedContentAbstract"]);
 $app->router->post('/admin/manage-content/delete', [ContentController::class, "deleteContent"]);
 $app->router->post('/admin/my-submissions/delete', [ContentController::class, "deleteMyContent"]);
 

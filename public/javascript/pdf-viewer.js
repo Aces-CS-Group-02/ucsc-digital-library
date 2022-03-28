@@ -214,9 +214,6 @@ const deleteNote = () => {
 deleteNoteBtn.addEventListener("click", deleteNote, false);
 
 const saveNote = (currentTarget) => {
-  // var noteData = document.getElementById("note-data").value;
-  // AJAX request
-  // console.log(currentTarget);
   currentTarget.preventDefault();
   for (instance in CKEDITOR.instances) {
     CKEDITOR.instances[instance].updateElement();
@@ -361,12 +358,12 @@ function getBookmarkData() {
         });
         div.addEventListener("click", (e) => {
           // alert();
-          console.log(e.target.dataset.id);
+          // console.log("😊" + e.target);
           var canvas = document.querySelector(".pdfCanvas");
           var pageHeight = canvas.height;
-          console.log(pageHeight);
-          var scrollHeight = pageHeight * e.target.dataset.id;
-          console.log(scrollHeight);
+          // console.log(pageHeight);
+          var scrollHeight = pageHeight * (e.target.dataset.id-0.9);
+          // console.log(scrollHeight);
           var scrollDiv = document.querySelector("#scroll-div");
           scrollDiv.scrollTop = scrollHeight;
         });
