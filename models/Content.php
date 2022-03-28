@@ -122,8 +122,6 @@ class Content extends DbModel
                                     AND upload_steps<=4");
 
         return $statement->execute();
-
-
     }
     public function deleteContent($content_id)
     {
@@ -321,7 +319,7 @@ class Content extends DbModel
                 break;
         }
     }
-    
+
 
     public function UpdateApprovedState($content_id)
     {
@@ -335,7 +333,7 @@ class Content extends DbModel
     public function getLatestContents()
     {
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT content_id, title FROM content ORDER BY time_stamp LIMIT 8");
+        $statement = self::prepare("SELECT content_id, title, thumbnail FROM content ORDER BY time_stamp LIMIT 8");
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
@@ -343,7 +341,7 @@ class Content extends DbModel
     {
         $tableName = self::tableName();
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT COUNT(time_stamp), content_view_records.content_id, content.title
+        $statement = self::prepare("SELECT COUNT(time_stamp), content_view_records.content_id, content.title, content.thumbnail
                                     FROM content_view_records
                                     INNER JOIN content
                                     ON content_view_records.content_id = content.content_id
@@ -358,7 +356,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT content_view_records.content_id, content.title
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title, content.tumbnail
                                     FROM content_view_records
                                     INNER JOIN content
                                     ON content_view_records.content_id = content.content_id
@@ -371,7 +369,7 @@ class Content extends DbModel
     {
         $user_id = Application::$app->user->reg_no;
         $tableName = self::tableName();
-        $statement = self::prepare("SELECT content_view_records.content_id, content.title
+        $statement = self::prepare("SELECT content_view_records.content_id, content.title. content.thumbnail
                                     FROM content_view_records
                                     INNER JOIN content
                                     ON content_view_records.content_id = content.content_id
@@ -411,7 +409,7 @@ class Content extends DbModel
         $sql = "SELECT content.content_id, content.title, content.date,content.publish_state, content_type.name as type_name, content.upload_steps, content.approved
                 FROM content  
                 LEFT JOIN content_type ON content.type = content_type.content_type_id             
-                WHERE title LIKE '%$search_params%' AND uploaded_by = $user_id" ;
+                WHERE title LIKE '%$search_params%' AND uploaded_by = $user_id";
         return $this->paginate($sql, $start, $limit);
     }
- }
+}
