@@ -87,6 +87,7 @@ class Controller
     public const BREADCRUM_COMMUNITY_COLLECTION_ACCESS_PERMISSION = ['name' => 'Set collection permssion', 'link' => '/admin/set-access-permission'];
 
     public const BREADCRUM_COMMUNITY_LIST = ['name' => 'Top level communities', 'link' => '/community-list'];
+    public const BREADCRUM_ADD_CONTENTS = ['name' => 'Add contents', 'link' => ''];
 
 
 
